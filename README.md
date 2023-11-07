@@ -1,8 +1,29 @@
-# React + Vite
+# 2MorrowTools
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este repositório contém o código do frontend do sistema 2MorrowTools, um catálogo de sites que ajuda os usuários a encontrar ferramentas úteis para seus interesses.
 
-Currently, two official plugins are available:
+## Descrição
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+O sistema consiste em uma página inicial com filtros por tipo de ferramenta, sites mais avaliados, favoritados, etc. Os usuários podem pesquisar e ser redirecionados para outros sites, e fazer login para avaliar sites, favoritar e ver o que foi salvo no seu perfil.
+
+## Tecnologias
+
+O sistema é desenvolvido em React.js com styled components, utilizando o framework Vite.
+
+## Como rodar
+1. Clone o repositório em sua máquina:
+```
+git clone https://github.com/seu-usuario/2morrowtools-frontend.git
+```
+2. Navegue no diretório do projeto:
+```
+cd 2morrowtools-frontend
+```
+3. Instale as dependências:
+```
+npm install
+```
+4. Rode o sistema
+```
+npm run dev
+```
