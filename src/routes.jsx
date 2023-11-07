@@ -7,7 +7,7 @@ import {
 
 import { AppLayout } from "./layouts";
 
-import { Home, IAProfile, Login, Favorites, NewTool } from "./pages";
+import { Home, IAProfile, Favorites, NewTool } from "./pages";
 
 function Routes() {
   const router = createBrowserRouter(
@@ -17,7 +17,6 @@ function Routes() {
           <Route path='/favorites' element={<Favorites />} />
           <Route path='/adicionar-ia' element={<NewTool />} />
           <Route path='/perfil-ia' element={<IAProfile />} />
-          <Route path='/login' element={<Login />} />
           <Route index element={<Home />} />
           <Route path='*' element={<Home />} />
         </Route>
