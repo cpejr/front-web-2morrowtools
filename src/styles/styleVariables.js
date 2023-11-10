@@ -2,6 +2,7 @@ export const colors = {
   blue: {
     backgroud: "#080B10",
     accent: "#013C9D",
+    accentShadow: "rgba(1, 60, 157, 0.25)",
   },
   grey: {
     cardBackground: "#111720",

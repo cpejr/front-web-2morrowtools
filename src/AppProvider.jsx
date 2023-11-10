@@ -11,12 +11,18 @@ export default function AppProvider() {
           colorBgContainer: colors.blue.backgroud,
           colorText: colors.white,
           fontFamily: fonts.Exo2,
+          fontSize: "15px",
         },
         components: {
           Button: { primaryShadow: "0" },
           Card: {
             colorBgContainer: colors.grey.cardBackground,
             colorBorderSecondary: colors.transparent,
+          },
+          Input: {
+            activeBorderColor: colors.blue.accent,
+            activeShadow: `0 0 0 0.5px ${colors.blue.accentShadow}`,
+            colorTextPlaceholder: colors.white,
           },
         },
       }}
