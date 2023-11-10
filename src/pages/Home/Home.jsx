@@ -1,5 +1,12 @@
+import { Card } from "../../components";
 import { Container } from "./Styles";
+import { Button } from "antd";
 
 export default function Home() {
-  return <Container>Home</Container>;
+  return (
+    <div>
+      <Card />
+      <Button type='primary'>Aperte-me</Button>
+    </div>
+  );
 }
