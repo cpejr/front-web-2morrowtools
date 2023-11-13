@@ -8,7 +8,7 @@ export default function AppProvider() {
       theme={{
         token: {
           colorPrimary: colors.blue.accent,
-          colorBgContainer: colors.blue.backgroud,
+          colorBgContainer: colors.blue.background,
           colorText: colors.white,
           fontFamily: fonts.Exo2,
           fontSize: "15px",
@@ -23,6 +23,14 @@ export default function AppProvider() {
             activeBorderColor: colors.blue.accent,
             activeShadow: `0 0 0 0.5px ${colors.blue.accentShadow}`,
             colorTextPlaceholder: colors.white,
+          },
+          Select: {
+            activeBorderColor: colors.blue.accent,
+            activeShadow: `0 0 0 0.5px ${colors.blue.accentShadow}`,
+            colorTextPlaceholder: colors.white,
+            colorBgElevated: colors.blue.background,
+            optionActiveBg: colors.blue.light,
+            optionSelectedBg: colors.blue.accent,
           },
         },
       }}
