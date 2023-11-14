@@ -36,6 +36,7 @@ export const FilterArea = styled.div`
   display: flex;
   width: 80%;
   height: 130px;
+  margin-bottom: 20px;
 `;
 
 export const CheckboxDiv = styled.div`
@@ -82,3 +83,11 @@ export const SelectStyled = styled(Select)`
     top: 50%;
   }
 `;
+export const Line = styled.div`
+  display: flex;
+  width: 80%;
+  height: auto;
+  flex-direction: row;
+  justify-content: space-around;
+`;
+export const MobileLine = styled.div``;

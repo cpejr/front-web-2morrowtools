@@ -6,6 +6,7 @@ export const colors = {
     accentShadow: "rgba(1, 60, 157, 0.25)",
     dark: "#232A36",
     strong: "#195fd3",
+    hover: "#1655BC",
   },
   grey: {
     cardBackground: "#111720",
