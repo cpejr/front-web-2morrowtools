@@ -1,11 +1,12 @@
 import { StyledCard, BlueButton, Line, Tags, Tag, Image, Stars, LineSVG, Group } from "./Style";
-import { FaRegBookmark } from "react-icons/fa";import PropTypes from "prop-types";
+import { FaRegBookmark } from "react-icons/fa";
+import PropTypes from "prop-types";
 
 export default function Card({ dados }) {
-  const groupedStars = [];
+  const groupedTags = [];
 
   for (let i = 0; i < dados.tags.length; i += 2) {
-    groupedStars.push(dados.tags.slice(i, i + 2));
+    groupedTags.push(dados.tags.slice(i, i + 2));
   }
   return (
     <StyledCard>
@@ -26,7 +27,7 @@ export default function Card({ dados }) {
       <Line>
         <p>{dados?.description}</p>
       </Line>
-      {groupedStars.map((tags) => (
+      {groupedTags.map((tags) => (
         <Tags key={tags}>
           {tags.map((content) => (
             <Tag key={content}>{content}</Tag>

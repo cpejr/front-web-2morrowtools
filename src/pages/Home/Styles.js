@@ -1,6 +1,7 @@
 import { Input, Select } from "antd";
 import styled from "styled-components";
 import { colors } from "../../styles/styleVariables";
+const mobileBreakPoint = "700px";
 
 export const Container = styled.div`
   display: flex;
@@ -89,5 +90,8 @@ export const Line = styled.div`
   height: auto;
   flex-direction: row;
   justify-content: space-around;
+  margin-bottom: 20px;
+  @media (max-width: ${mobileBreakPoint}) {
+    margin-bottom: 0;
+  }
 `;
-export const MobileLine = styled.div``;

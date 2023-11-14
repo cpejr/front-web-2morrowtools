@@ -101,7 +101,7 @@ export default function Home() {
       </FilterArea>
 
       {groupedData.map((group) => (
-        <Line style={{ marginBottom: "20px" }} key={group?.name}>
+        <Line key={group?.name}>
           {group.map((content) => (
             <Card dados={content} key={content?.name} />
           ))}
