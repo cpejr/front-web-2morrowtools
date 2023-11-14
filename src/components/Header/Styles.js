@@ -9,7 +9,7 @@ export const Container = styled.div`
   z-index: 1;
   background-color: #080b10;
   width: 100%;
-  height: 148px;
+  height: 120px;
   font-size: 2rem;
   img {
     width: 15rem;
@@ -25,7 +25,7 @@ export const Links = styled.div`
   width: 30rem;
   a {
     font-family: ${fonts.Exo2};
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     &:hover {
       color: ${colors.blue.light};
       cursor: pointer;
@@ -41,6 +41,9 @@ export const LoginSocial = styled.div`
 `;
 
 export const LoginButton = styled.button`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
   width: 15rem;
   height: 60px;
   border: 1px solid;
@@ -48,7 +51,7 @@ export const LoginButton = styled.button`
   color: white;
   background-color: transparent;
   font-family: ${fonts.Exo2};
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 400;
   word-wrap: break-word;
   &:hover {

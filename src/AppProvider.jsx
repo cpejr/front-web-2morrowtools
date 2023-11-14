@@ -28,9 +28,10 @@ export default function AppProvider() {
             activeBorderColor: colors.blue.accent,
             activeShadow: `0 0 0 0.5px ${colors.blue.accentShadow}`,
             colorTextPlaceholder: colors.white,
-            colorBgElevated: colors.blue.background,
+            colorBgElevated: colors.blue.dark,
             optionActiveBg: colors.blue.light,
-            optionSelectedBg: colors.blue.accent,
+            optionSelectedBg: colors.blue.light,
+            colorIcon: "white",
           },
         },
       }}

@@ -4,6 +4,8 @@ export const colors = {
     accent: "#013C9D",
     light: "#639dff",
     accentShadow: "rgba(1, 60, 157, 0.25)",
+    dark: "#232A36",
+    strong: "#195fd3",
   },
   grey: {
     cardBackground: "#111720",

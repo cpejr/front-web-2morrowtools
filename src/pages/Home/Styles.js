@@ -8,6 +8,7 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 150px;
+  margin-bottom: 100px;
   img {
     width: 100%;
   }
@@ -26,6 +27,9 @@ export const InputStyled = styled(Input)`
   height: 35px;
   font-size: 1.3rem;
   margin-bottom: 2rem;
+  .ant-input-prefix {
+    padding: 0.5rem;
+  }
 `;
 
 export const FilterArea = styled.div`
@@ -65,12 +69,16 @@ export const SearchBar = styled.div`
 export const SearchBarInput = styled(Input)`
   width: 15rem;
   height: 35px;
+  padding: 0.8rem;
 `;
 
 export const SelectStyled = styled(Select)`
   width: 15rem;
   height: 35px;
-  .ant-select-suffix {
+  .ant-select-arrow {
     color: white;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
   }
 `;
