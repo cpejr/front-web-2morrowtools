@@ -82,3 +82,32 @@ export const Section2 = styled.section`
     width: 80%;
   }
 `;
+
+export const ManageItems = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  gap: 3rem;
+`;
+
+export const ToolList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+`;
+
+export const ToolListItem = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding: 8px;
+`;
+
+export const ToolButtons = styled.div`
+  display: flex;
+  gap: 8px;
+
+  svg {
+    cursor: pointer;
+  }
+`;

@@ -2,31 +2,27 @@ import { Empty } from "antd";
 import PropTypes from "prop-types";
 import { Controller } from "react-hook-form";
 
-import { Container, ErrorMessage, Label, StyledSelect } from "./Styles";
+import {
+  Container,
+  //ErrorMessage,
+  Label,
+  StyledSelect,
+} from "./Styles";
 
 export default function FormSelect({
   data,
   name,
   control,
-  errors,
-  isBudget,
-  isProfile,
-  isRegister,
-  subtitle,
+  //errors,
   ...props
 }) {
-  const errorMessage = errors?.[name]?.message;
+  //const errorMessage = errors?.[name]?.message;
 
   return (
     <Container
-      error={errorMessage ? 1 : 0}
-      isBudget={isBudget}
-      isProfile={isProfile}
-      isRegister={isRegister}
+    //error={errorMessage ? 1 : 0}
     >
-      <Label htmlFor={name} isBudget={isBudget}>
-        {subtitle}
-      </Label>
+      <Label htmlFor={name}></Label>
       <Controller
         control={control}
         name={name}
@@ -47,25 +43,17 @@ export default function FormSelect({
           </StyledSelect>
         )}
       />
-      <ErrorMessage error={errorMessage ? 1 : 0}>{errorMessage}</ErrorMessage>
+      {/* <ErrorMessage error={errorMessage ? 1 : 0}>{errorMessage}</ErrorMessage> */}
     </Container>
   );
 }
 
 FormSelect.defaultProps = {
   data: [],
-  isBudget: false,
-  isProfile: false,
-  isRegister: false,
-  subtitle: "",
 };
 FormSelect.propTypes = {
   name: PropTypes.string.isRequired,
   data: PropTypes.array,
   control: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
-  isBudget: PropTypes.bool,
-  isProfile: PropTypes.bool,
-  isRegister: PropTypes.bool,
-  subtitle: PropTypes.string,
+  //errors: PropTypes.object.isRequired,
 };

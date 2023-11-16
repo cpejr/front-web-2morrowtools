@@ -31,6 +31,7 @@ export const Input = styled.input`
   border: solid;
   border-color: white;
   background-color: black;
+  width: 100%;
 
   @media (max-width: 700px) {
     font-weight: 400;
@@ -40,5 +41,16 @@ export const Input = styled.input`
   }
   @media (max-width: 370px) {
     font-size: 1.2rem;
+  }
+`;
+
+export const IconContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  svg {
+    position: absolute;
+    left: 10px;
   }
 `;
