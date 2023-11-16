@@ -73,8 +73,8 @@ export default function NewTool() {
           <ToolListItem key={tool._id}>
             {tool.name}
             <ToolButtons>
-              <FaTrash /> {/* Ícone de lixeira */}
-              <FaEdit /> {/* Ícone de lápis */}
+              <FaTrash />
+              <FaEdit />
             </ToolButtons>
           </ToolListItem>
         ))}
