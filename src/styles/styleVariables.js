@@ -1,8 +1,15 @@
 export const colors = {
   blue: {
-    1: "#080B10",
+    backgroud: "#080B10",
+    accent: "#013C9D",
+    accentShadow: "rgba(1, 60, 157, 0.25)",
+  },
+  grey: {
+    cardBackground: "#111720",
   },
   white: "#FFF",
+  transparent: "rgba(0, 0, 0, 0)",
+  shadow: "rgba(0, 0, 0, 0.25)",
 };
 
 export const fonts = {

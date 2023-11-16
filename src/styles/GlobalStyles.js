@@ -5,7 +5,7 @@ export const GlobalStyles = createGlobalStyle`
   html, body {
     font-family: ${fonts.Exo2};
     font-size: 15px;
-    background-color: ${colors.blue[1]};
+    background-color: ${colors.blue.backgroud};
     color: ${colors.white};
 
     padding: 0;
