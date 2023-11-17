@@ -5,10 +5,9 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  //gap: 2rem;
 
   width: 100%;
-  max-width: 100rem;
   height: 100%;
 `;
 

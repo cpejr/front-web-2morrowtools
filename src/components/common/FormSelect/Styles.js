@@ -14,6 +14,8 @@ export const Container = styled.div`
   .ant-select-selection-placeholder {
     color: #9f9f9f;
   }
+  .ant-select {
+  }
 `;
 
 export const StyledSelect = styled(Select)`

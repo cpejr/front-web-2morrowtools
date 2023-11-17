@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Select } from "antd";
 
 export const Container = styled.div`
   display: flex;
@@ -48,9 +49,18 @@ export const IconContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
 
   svg {
     position: absolute;
     left: 10px;
+  }
+`;
+
+export const StyledSelect = styled(Select)`
+  height: 6rem;
+
+  .ant-select-body {
+    background-color;
   }
 `;

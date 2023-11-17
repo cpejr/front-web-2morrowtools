@@ -29,22 +29,25 @@ export const Label = styled.label`
 `;
 
 export const Input = styled.input`
-  display: flex;
-  align-items: flex-start;
-  padding: 0.8rem 1.1rem;
-  gap: 1rem;
-  border: ${({ error }) => (error ? "0.2rem solid red" : "none")};
-  color: black;
-
-  font-style: normal;
-  font-weight: 400;
+  height: 6rem;
   font-size: 2rem;
-  line-height: 2.4rem;
-
-  width: 40rem;
-  height: 4rem;
-
+  padding: 0.8rem 1.6rem;
   border-radius: 0.4rem;
+  color: white;
+  border: solid;
+  border-color: white;
+  background-color: black;
+  width: 100%;
+
+  @media (max-width: 700px) {
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    height: 3rem;
+  }
+  @media (max-width: 370px) {
+    font-size: 1.2rem;
+  }
 `;
 
 export const ErrorMessage = styled.p`

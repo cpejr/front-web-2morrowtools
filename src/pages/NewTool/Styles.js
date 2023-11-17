@@ -93,14 +93,18 @@ export const ManageItems = styled.div`
 export const ToolList = styled.ul`
   list-style-type: none;
   padding: 0;
+  width: 50%;
+  height: 6rem;
+  font-size: 2rem;
+  padding: 0.8rem 1.6rem;
+  color: white;
 `;
 
 export const ToolListItem = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #ccc;
-  padding: 8px;
+  padding: 1rem;
 `;
 
 export const ToolButtons = styled.div`

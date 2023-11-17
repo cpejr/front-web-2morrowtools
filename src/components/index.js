@@ -6,3 +6,4 @@ export { default as FormsTextArea } from "./common/FormsTextArea/FormsTextArea";
 export { default as ModalDelete } from "./features/Modals/ModalDelete/ModalDelete";
 export { default as ModalEdit } from "./features/Modals/ModalEdit/ModalEdit";
 export { default as SocialMediaInput } from "./common/SocialMediaInput/SocialMediaInput";
+export { default as NewLink } from "./features/Modals/NewLink/NewLink";

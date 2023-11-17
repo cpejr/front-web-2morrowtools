@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Container, Input, IconContainer } from "./Styles";
+import { Container, Input, IconContainer, StyledSelect } from "./Styles";
 import { Select } from "antd";
 import {
   FaLinkedin,
@@ -32,6 +32,12 @@ export default function SocialMediaInput({ name, placeholder, icon: Icon }) {
 
   return (
     <Container>
+      <StyledSelect
+        defaultValue='linkedin'
+        style={{ width: 120 }}
+        onChange={handleChange}
+        options={socialMediaOptions}
+      />
       <Select
         defaultValue='linkedin'
         style={{ width: 120 }}

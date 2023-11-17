@@ -7,6 +7,7 @@ import {
   ModalDelete,
   ModalEdit,
   SocialMediaInput,
+  NewLink,
 } from "../../components";
 import { useForm } from "react-hook-form";
 import {
@@ -73,35 +74,7 @@ export default function NewTool() {
           <FormInput name='shortDescription' placeholder='Descrição curta:' />
           <FormsTextArea name='message' rows={11} placeholder='Descrição longa:' />
           <FormInput name='link' placeholder='Link do site:' />
-          <Section2>
-            <FormSelect
-              name='category'
-              control={control}
-              data={categories.map(({ _id, name }) => ({
-                label: name,
-                value: _id,
-              }))}
-              placeholder='Selecione a categoria'
-            />
-            <FormSelect
-              name='category'
-              control={control}
-              data={categories.map(({ _id, name }) => ({
-                label: name,
-                value: _id,
-              }))}
-              placeholder='Selecione a categoria'
-            />
-            <FormSelect
-              name='category'
-              control={control}
-              data={categories.map(({ _id, name }) => ({
-                label: name,
-                value: _id,
-              }))}
-              placeholder='Selecione a categoria'
-            />
-          </Section2>
+          <NewLink />
           <SocialMediaInput
             name='category'
             control={control}
@@ -109,12 +82,16 @@ export default function NewTool() {
               label: name,
               value: _id,
             }))}
-            placeholder='Selecione a categoria'
+            placeholder='Rede social'
           />
         </Section>
         <SubmitButton type='submit'>Enviar</SubmitButton>
       </Form>
       <Title>GERENCIAR ITENS</Title>
+      {isDeleteModalOpen && <ModalDelete _id={selectedToolId} close={handleCloseDeleteModal} />}
+      {isEditModalOpen && selectedTool && (
+        <ModalEdit tool={selectedTool} close={handleCloseEditModal} />
+      )}
       <ToolList>
         {tools.map((tool) => (
           <ToolListItem key={tool._id}>
@@ -126,10 +103,6 @@ export default function NewTool() {
           </ToolListItem>
         ))}
       </ToolList>
-      {isDeleteModalOpen && <ModalDelete _id={selectedToolId} close={handleCloseDeleteModal} />}
-      {isEditModalOpen && selectedTool && (
-        <ModalEdit tool={selectedTool} close={handleCloseEditModal} />
-      )}
     </Container>
   );
 }
