@@ -1,12 +1,6 @@
 import { Card, Button, Rate } from "antd";
 import styled from "styled-components";
-import { colors } from "../../styles/styleVariables";
-
-const firstBreakPoint = "1370px";
-const secondBreakPoint = "1024px";
-const thirdBreakPoint = "800px";
-const mobileBreakPoint = "700px";
-const ultraSmallBreakPoint = "350px";
+import { breakpoints, colors } from "../../styles/styleVariables";
 
 export const StyledCard = styled(Card)`
   display: flex;
@@ -19,18 +13,18 @@ export const StyledCard = styled(Card)`
   &:hover {
     background-color: #1c2431;
   }
-  @media (max-width: ${firstBreakPoint}) {
+  @media (max-width: ${breakpoints.desktop}) {
     width: 400px;
     margin-top: 80px;
   }
-  @media (max-width: ${secondBreakPoint}) {
+  @media (max-width: ${breakpoints.tablet}) {
     width: 300px;
   }
-  @media (max-width: ${thirdBreakPoint}) {
+  @media (max-width: ${breakpoints.smallTablet}) {
     width: 270px;
     margin-top: 150px;
   }
-  @media (max-width: ${mobileBreakPoint}) {
+  @media (max-width: ${breakpoints.mobile}) {
     width: 400px;
   }
   > div {
@@ -42,17 +36,17 @@ export const StyledCard = styled(Card)`
 export const Stars = styled(Rate)`
   color: ${colors.white};
   font-size: 30px;
-  @media (max-width: ${firstBreakPoint}) {
+  @media (max-width: ${breakpoints.desktop}) {
     font-size: 24px;
   }
-  @media (max-width: ${secondBreakPoint}) {
+  @media (max-width: ${breakpoints.tablet}) {
     font-size: 18px;
   }
 
-  @media (max-width: ${thirdBreakPoint}) {
+  @media (max-width: ${breakpoints.smallTablet}) {
     font-size: 18px;
   }
-  @media (max-width: ${mobileBreakPoint}) {
+  @media (max-width: ${breakpoints.mobile}) {
     font-size: 24px;
   }
 `;
@@ -63,17 +57,17 @@ export const Image = styled.div`
   > img {
     width: 100%;
     height: 229px;
-    @media (max-width: ${firstBreakPoint}) {
+    @media (max-width: ${breakpoints.desktop}) {
       height: 183.2px;
     }
-    @media (max-width: ${secondBreakPoint}) {
+    @media (max-width: ${breakpoints.tablet}) {
       height: 137.4px;
     }
 
-    @media (max-width: ${thirdBreakPoint}) {
+    @media (max-width: ${breakpoints.smallTablet}) {
       height: 123.66px;
     }
-    @media (max-width: ${mobileBreakPoint}) {
+    @media (max-width: ${breakpoints.mobile}) {
       height: 183.2px;
     }
   }
@@ -84,49 +78,49 @@ export const Line = styled.div`
   width: 100%;
   height: auto;
   font-size: 35px;
-  @media (max-width: ${firstBreakPoint}) {
+  @media (max-width: ${breakpoints.desktop}) {
     font-size: 31.5px;
   }
-  @media (max-width: ${secondBreakPoint}) {
+  @media (max-width: ${breakpoints.tablet}) {
     font-size: 23.625px;
   }
 
-  @media (max-width: ${thirdBreakPoint}) {
+  @media (max-width: ${breakpoints.smallTablet}) {
     font-size: 21.2625px;
   }
-  @media (max-width: ${mobileBreakPoint}) {
+  @media (max-width: ${breakpoints.mobile}) {
     font-size: 31.5px;
   }
 
   > p {
     font-size: 22px;
-    @media (max-width: ${firstBreakPoint}) {
+    @media (max-width: ${breakpoints.desktop}) {
       font-size: 17.6px;
     }
-    @media (max-width: ${secondBreakPoint}) {
+    @media (max-width: ${breakpoints.tablet}) {
       font-size: 13.2px;
     }
 
-    @media (max-width: ${thirdBreakPoint}) {
+    @media (max-width: ${breakpoints.smallTablet}) {
       font-size: 11.88px;
     }
-    @media (max-width: ${mobileBreakPoint}) {
+    @media (max-width: ${breakpoints.mobile}) {
       font-size: 17.6px;
     }
   }
   > span {
     font-size: 22px;
-    @media (max-width: ${firstBreakPoint}) {
+    @media (max-width: ${breakpoints.desktop}) {
       font-size: 17.6px;
     }
-    @media (max-width: ${secondBreakPoint}) {
+    @media (max-width: ${breakpoints.tablet}) {
       font-size: 13.2px;
     }
 
-    @media (max-width: ${thirdBreakPoint}) {
+    @media (max-width: ${breakpoints.smallTablet}) {
       font-size: 11.88px;
     }
-    @media (max-width: ${mobileBreakPoint}) {
+    @media (max-width: ${breakpoints.mobile}) {
       font-size: 17.6px;
     }
   }
@@ -135,17 +129,17 @@ export const Group = styled.div`
   display: flex;
   flex-direction: row;
   font-size: 35px;
-  @media (max-width: ${firstBreakPoint}) {
+  @media (max-width: ${breakpoints.desktop}) {
     font-size: 31.5px;
   }
-  @media (max-width: ${secondBreakPoint}) {
+  @media (max-width: ${breakpoints.tablet}) {
     font-size: 23.625px;
   }
 
-  @media (max-width: ${thirdBreakPoint}) {
+  @media (max-width: ${breakpoints.smallTablet}) {
     font-size: 21.2625px;
   }
-  @media (max-width: ${mobileBreakPoint}) {
+  @media (max-width: ${breakpoints.mobile}) {
     font-size: 31.5px;
   }
 `;
@@ -164,20 +158,20 @@ export const BlueButton = styled(Button)`
   background-color: ${colors.blue.accent};
   border: none;
   margin-top: 1rem;
-  @media (max-width: ${firstBreakPoint}) {
+  @media (max-width: ${breakpoints.desktop}) {
     width: 128px;
     height: 40px;
   }
-  @media (max-width: ${secondBreakPoint}) {
+  @media (max-width: ${breakpoints.tablet}) {
     width: 96px;
     height: 30px;
   }
 
-  @media (max-width: ${thirdBreakPoint}) {
+  @media (max-width: ${breakpoints.smallTablet}) {
     width: 86.4px;
     height: 27px;
   }
-  @media (max-width: ${mobileBreakPoint}) {
+  @media (max-width: ${breakpoints.mobile}) {
     width: 128px;
     height: 40px;
   }
@@ -205,24 +199,24 @@ export const Tag = styled.div`
   align-items: center;
   text-align: center;
   cursor: pointer;
-  @media (max-width: ${firstBreakPoint}) {
+  @media (max-width: ${breakpoints.desktop}) {
     height: 32px;
     font-size: 12px;
   }
-  @media (max-width: ${secondBreakPoint}) {
+  @media (max-width: ${breakpoints.tablet}) {
     height: 24px;
     font-size: 9px;
   }
 
-  @media (max-width: ${thirdBreakPoint}) {
+  @media (max-width: ${breakpoints.smallTablet}) {
     height: 21.6px;
     font-size: 8.1px;
   }
-  @media (max-width: ${mobileBreakPoint}) {
+  @media (max-width: ${breakpoints.mobile}) {
     height: 32px;
     font-size: 12px;
   }
-  @media (max-width: ${ultraSmallBreakPoint}) {
+  @media (max-width: ${breakpoints.smallDevice}) {
     font-size: 9px;
   }
   &:hover {

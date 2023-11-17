@@ -1,4 +1,13 @@
-import { Container, Line, Links, LoginButton, LoginSocial, SocialMedias } from "./Styles";
+import {
+  Container,
+  ContainerMenu,
+  GroupMedias,
+  Line,
+  Links,
+  LoginButton,
+  LoginSocial,
+  SocialMedias,
+} from "./Styles";
 import logo from "../../assets/logo.png";
 import {
   FacebookOutlined,
@@ -8,17 +17,20 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
-import { Favorites } from "../../pages";
+import MenuHeader from "./MenuHeader";
 
 export default function Header() {
   const navigate = useNavigate();
 
   return (
     <Container>
-      <img onClick={() => navigate("/")} src={logo} />
+      <ContainerMenu>
+        <MenuHeader />
+        <img onClick={() => navigate("/")} src={logo} />
+      </ContainerMenu>
       <Links>
         <Link to={"/"}>Lorem Ipsur</Link>
-        <Link to={"/favorites"}>Meus Favoritos</Link>
+        <Link to={"/favoritos"}>Meus Favoritos</Link>
       </Links>
       <LoginSocial>
         <LoginButton>
@@ -27,10 +39,14 @@ export default function Header() {
         </LoginButton>
         <Line />
         <SocialMedias>
-          <FacebookOutlined />
-          <TwitterOutlined />
-          <InstagramOutlined />
-          <LinkedinOutlined />
+          <GroupMedias>
+            <FacebookOutlined />
+            <TwitterOutlined />
+          </GroupMedias>
+          <GroupMedias>
+            <InstagramOutlined />
+            <LinkedinOutlined />
+          </GroupMedias>
         </SocialMedias>
       </LoginSocial>
     </Container>

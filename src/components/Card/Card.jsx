@@ -34,7 +34,7 @@ export default function Card({ dados }) {
           ))}
         </Tags>
       ))}
-      <BlueButton>BOTÃO</BlueButton>
+      <BlueButton type='primary'>BOTÃO</BlueButton>
     </StyledCard>
   );
 }

@@ -14,7 +14,7 @@ function Routes() {
     createRoutesFromElements(
       <Route>
         <Route path='/' element={<AppLayout />}>
-          <Route path='/favorites' element={<Favorites />} />
+          <Route path='/favoritos' element={<Favorites />} />
           <Route path='/adicionar-ia' element={<NewTool />} />
           <Route path='/perfil-ia' element={<IAProfile />} />
           <Route index element={<Home />} />
