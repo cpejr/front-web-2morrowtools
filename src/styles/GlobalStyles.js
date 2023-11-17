@@ -10,6 +10,21 @@ export const GlobalStyles = createGlobalStyle`
 
     padding: 0;
     margin: 0;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #232a36;
+      border-radius: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: #000000;
+    }
+
     @media (max-width: 700px) {
       font-size: 12px;
     }
