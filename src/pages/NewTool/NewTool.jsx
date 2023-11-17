@@ -1,4 +1,13 @@
-import { FormInput, SubmitButton, FormsTextArea, FormSelect } from "../../components";
+import { useState } from "react";
+import {
+  FormInput,
+  SubmitButton,
+  FormsTextArea,
+  FormSelect,
+  ModalDelete,
+  ModalEdit,
+  SocialMediaInput,
+} from "../../components";
 import { useForm } from "react-hook-form";
 import {
   Container,
@@ -14,9 +23,34 @@ import { FaUpload, FaTrash, FaEdit } from "react-icons/fa";
 
 export default function NewTool() {
   const { control, handleSubmit } = useForm();
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [selectedToolId, setSelectedToolId] = useState(null);
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [selectedTool, setSelectedTool] = useState(null);
 
   const onSubmit = (data) => {
     console.log("Formulário enviado com sucesso!", data);
+  };
+
+  const handleOpenDeleteModal = (toolId) => {
+    setSelectedToolId(toolId);
+    setDeleteModalOpen(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setSelectedToolId(null);
+    setDeleteModalOpen(false);
+  };
+
+  // Funções para o ModalEdit
+  const handleOpenEditModal = (tool) => {
+    setSelectedTool(tool);
+    setEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setSelectedTool(null);
+    setEditModalOpen(false);
   };
   const categories = [
     { _id: "1", name: "Categoria 1" },
@@ -36,26 +70,39 @@ export default function NewTool() {
         <Section>
           <FormInput name='title' placeholder='Título:' />
           <FormInput name='upload' placeholder='Upload de Imagem:' icon={FaUpload} />
-          <Section2>
-            <FormInput name='link1' placeholder='Link Linkedin:' />
-            <FormInput name='link2' placeholder='Link Discord:' />
-            <FormInput name='link3' placeholder='Link  Twitter / X:' />
-          </Section2>
-          <Section2>
-            <FormInput name='link4' placeholder='Link Instagram:' />
-            <FormInput name='link5' placeholder='Link TikTok:' />
-            <FormInput name='link6' placeholder='Link Facebook:' />
-          </Section2>
-          <Section2>
-            <FormInput name='link7' placeholder='Link Reddit:' />
-            <FormInput name='link8' placeholder='Link Pinterest:' />
-            <FormInput name='link9' placeholder='Link Youtube:' />
-          </Section2>
           <FormInput name='shortDescription' placeholder='Descrição curta:' />
           <FormsTextArea name='message' rows={11} placeholder='Descrição longa:' />
-          <FormInput name='longDescription' placeholder='Descrição longa:' />
           <FormInput name='link' placeholder='Link do site:' />
-          <FormSelect
+          <Section2>
+            <FormSelect
+              name='category'
+              control={control}
+              data={categories.map(({ _id, name }) => ({
+                label: name,
+                value: _id,
+              }))}
+              placeholder='Selecione a categoria'
+            />
+            <FormSelect
+              name='category'
+              control={control}
+              data={categories.map(({ _id, name }) => ({
+                label: name,
+                value: _id,
+              }))}
+              placeholder='Selecione a categoria'
+            />
+            <FormSelect
+              name='category'
+              control={control}
+              data={categories.map(({ _id, name }) => ({
+                label: name,
+                value: _id,
+              }))}
+              placeholder='Selecione a categoria'
+            />
+          </Section2>
+          <SocialMediaInput
             name='category'
             control={control}
             data={categories.map(({ _id, name }) => ({
@@ -73,12 +120,16 @@ export default function NewTool() {
           <ToolListItem key={tool._id}>
             {tool.name}
             <ToolButtons>
-              <FaTrash />
-              <FaEdit />
+              <FaTrash onClick={() => handleOpenDeleteModal(tool._id)} />
+              <FaEdit onClick={() => handleOpenEditModal(tool)} />
             </ToolButtons>
           </ToolListItem>
         ))}
       </ToolList>
+      {isDeleteModalOpen && <ModalDelete _id={selectedToolId} close={handleCloseDeleteModal} />}
+      {isEditModalOpen && selectedTool && (
+        <ModalEdit tool={selectedTool} close={handleCloseEditModal} />
+      )}
     </Container>
   );
 }

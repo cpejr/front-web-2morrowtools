@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
@@ -14,7 +14,6 @@ export const Container = styled.div`
 
 export const Message = styled.h1`
   font-size: 2.1rem;
-  font-family: ${(props) => props.theme.fonts.montserrat};
   text-align: center;
   margin: 1.4rem;
   color: white;
@@ -45,7 +44,6 @@ export const DeleteButton = styled.button`
 
   margin-top: 1.5rem;
 
-  font-family: ${(props) => props.theme.fonts.montserrat};
   font-style: normal;
   font-weight: 500;
   font-size: 1.8rem;
@@ -53,7 +51,6 @@ export const DeleteButton = styled.button`
 
   :hover {
     transition-duration: 0.5s;
-    //colocar hover quando desclicar do botão
     background-color: rgba(255, 255, 255, 0.2);
   }
 
