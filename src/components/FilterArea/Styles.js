@@ -6,7 +6,7 @@ export const ContainerFilter = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  width: 100vw;
+  width: 100%;
   @media (max-width: ${breakpoints.mobile}) {
     flex-direction: column;
     justify-content: center;
@@ -18,6 +18,15 @@ export const ContainerFilter = styled.div`
 export const Checkboxes = styled.div`
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 35rem;
+  @media (max-width: ${breakpoints.tablet}) {
+    width: 25rem;
+  }
+  @media (max-width: ${breakpoints.smallTablet}) {
+    width: 22rem;
+  }
   @media (max-width: ${breakpoints.mobile}) {
     width: 90%;
   }

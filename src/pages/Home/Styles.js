@@ -26,10 +26,19 @@ export const Container = styled.div`
       font-size: 1.2rem;
     }
   }
+  @media (max-width: ${breakpoints.mobile}) {
+    h1 {
+      font-size: 2.7rem;
+    }
+    h2 {
+      font-size: 1.1rem;
+      text-align: center;
+    }
+  }
 `;
 
 export const HomeImage = styled.img`
-  width: 100vw;
+  width: 100%;
 `;
 
 export const InputStyled = styled(Input)`
