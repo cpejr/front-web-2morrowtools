@@ -1,6 +1,6 @@
-import { Input, Select } from "antd";
+import { Input } from "antd";
 import styled from "styled-components";
-import { breakpoints, colors } from "../../styles/styleVariables";
+import { breakpoints } from "../../styles/styleVariables";
 const mobileBreakPoint = "700px";
 
 export const Container = styled.div`

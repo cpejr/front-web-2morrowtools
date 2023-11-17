@@ -58,7 +58,7 @@ export default function Home() {
       <h1>2MORROW TOOLS</h1>
       <h2>O maior acervo de ferramentas e Inteligências Artificiais do Brasil </h2>
       <InputStyled type='primary' prefix={<SearchOutlined />}></InputStyled>
-      <FilterArea></FilterArea>
+      <FilterArea />
       {groupedData.map((group) => (
         <Line key={group?.name}>
           {group.map((content) => (

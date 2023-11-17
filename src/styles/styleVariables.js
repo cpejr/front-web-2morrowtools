@@ -9,10 +9,10 @@ export const colors = {
   },
   grey: {
     cardBackground: "#111720",
+    veryLight: "#d9d9d9",
   },
   white: "#FFF",
   black: "#000",
-  veryLightGrey: "#d9d9d9",
   transparent: "rgba(0, 0, 0, 0)",
   shadow: "rgba(0, 0, 0, 0.25)",
 };
