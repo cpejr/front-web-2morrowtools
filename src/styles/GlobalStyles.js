@@ -17,12 +17,12 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: #232a36;
+      background-color: ${colors.blue.dark};
       border-radius: 6px;
     }
 
     &::-webkit-scrollbar-track {
-      background-color: #000000;
+      background-color: ${colors.black};
     }
 
     @media (max-width: 700px) {
