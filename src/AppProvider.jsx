@@ -9,6 +9,7 @@ export default function AppProvider() {
         token: {
           colorPrimary: colors.blue.accent,
           colorBgContainer: colors.blue.background,
+          colorBgContainer: colors.blue.background,
           colorText: colors.white,
           fontFamily: fonts.Exo2,
           fontSize: "15px",
@@ -31,7 +32,14 @@ export default function AppProvider() {
             colorBgElevated: colors.blue.dark,
             optionActiveBg: colors.blue.light,
             optionSelectedBg: colors.blue.light,
-            colorIcon: "white",
+          },
+          Menu: {
+            colorBgElevated: colors.blue.background,
+            itemColor: colors.white,
+            itemSelectedBg: colors.blue.accent,
+            itemSelectedColor: colors.white,
+            iconSize: "30px",
+            lineType: "none",
           },
         },
       }}
