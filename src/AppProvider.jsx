@@ -9,13 +9,17 @@ export default function AppProvider() {
         token: {
           colorPrimary: colors.blue.accent,
           colorBgContainer: colors.blue.background,
-          colorBgContainer: colors.blue.background,
           colorText: colors.white,
           fontFamily: fonts.Exo2,
           fontSize: "15px",
         },
         components: {
-          Button: { primaryShadow: "0" },
+          Button: {
+            primaryShadow: "0",
+            defaultBg: colors.blue.accent,
+            controlHeight: "40px",
+            colorPrimaryHover: colors.blue.hover,
+          },
           Card: {
             colorBgContainer: colors.grey.cardBackground,
             colorBorderSecondary: colors.transparent,
@@ -40,6 +44,12 @@ export default function AppProvider() {
             itemSelectedColor: colors.white,
             iconSize: "30px",
             lineType: "none",
+          },
+          Tag: {
+            colorBgContainer: colors.white,
+            colorBorder: colors.white,
+            borderRadiusSM: "20px",
+            fontSizeSM: "18px ",
           },
         },
       }}
