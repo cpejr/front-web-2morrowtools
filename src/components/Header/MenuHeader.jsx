@@ -3,6 +3,7 @@ import { HeartOutlined, MenuOutlined, ToolOutlined, UserOutlined } from "@ant-de
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ContainerMenuHeader } from "./Styles";
+import { signInWithGooglePopup } from "./../../services/firebase"
 
 const itemsArray = [
   {
@@ -32,12 +33,28 @@ export default function MenuHeader() {
 
   const [matches, setMatches] = useState(window.matchMedia("(max-width: 350px)").matches);
   const [items, setItems] = useState(itemsArray);
+  const [loginLogoff, setLoginLogoff] = useState("Fazer Login");
+  const [photoURL, setPhotoURL] = useState();
 
   function handleItemClick(item) {
     if (item.onClick) {
       item.onClick(matches);
     }
   }
+
+  const logGoogleUser = async () => {
+
+    if(loginLogoff == "Fazer Login") {
+      const response = await signInWithGooglePopup();
+      console.log(response.user);
+      setPhotoURL(response.user.photoURL)
+      setLoginLogoff("Fazer Logoff");
+    } else {
+      sessionStorage.clear()
+      
+      setLoginLogoff("Fazer Login");
+    }
+}
 
   useEffect(() => {
     if (matches) {
@@ -46,10 +63,10 @@ export default function MenuHeader() {
           ...items[0].children,
           {
             key: "2",
-            label: "Fazer Login",
+            label: loginLogoff,
             type: "menu-item",
-            icon: <UserOutlined />,
-            onClick: () => navigate("/"),
+            icon: loginLogoff  == "Fazer Login" ? <UserOutlined /> : <img style={{}} src={photoURL}/>,
+            onClick: logGoogleUser,
           },
         ];
         const updatedItems = [...items];

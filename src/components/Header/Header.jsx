@@ -29,7 +29,7 @@ export default function Header() {
   const navigate = useNavigate();
   
   const [loginLogoff, setLoginLogoff] = useState("Fazer Login");
-  const [photoURL, setPhotoURL] = useState("Fazer Login");
+  const [photoURL, setPhotoURL] = useState();
 
   const logGoogleUser = async () => {
 
