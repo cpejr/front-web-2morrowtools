@@ -19,6 +19,7 @@ export default function AppProvider() {
             defaultBg: colors.blue.accent,
             controlHeight: "40px",
             colorPrimaryHover: colors.blue.hover,
+            colorBorder: null,
           },
           Card: {
             colorBgContainer: colors.grey.cardBackground,
@@ -50,6 +51,9 @@ export default function AppProvider() {
             colorBorder: colors.white,
             borderRadiusSM: "20px",
             fontSizeSM: "18px ",
+          },
+          Modal: {
+            contentBg: colors.blue.dark,
           },
         },
       }}
