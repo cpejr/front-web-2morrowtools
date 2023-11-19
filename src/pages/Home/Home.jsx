@@ -2,7 +2,7 @@ import { Container, HomeImage, InputStyled, Line } from "./Styles";
 import homeImage from "../../assets/home-image.svg";
 import { SearchOutlined } from "@ant-design/icons";
 import { Card } from "../../components";
-import techImage from "../../assets/tech.jpeg";
+import techImage from "../../assets/tech.png";
 import { useMediaQuery } from "react-responsive";
 import FilterArea from "../../components/FilterArea/FilterArea";
 
