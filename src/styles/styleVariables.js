@@ -1,9 +1,7 @@
 export const colors = {
   blue: {
     background: "#080B10",
-    background: "#080B10",
     accent: "#013C9D",
-    light: "#639dff",
     light: "#639dff",
     accentShadow: "rgba(1, 60, 157, 0.25)",
     dark: "#232A36",

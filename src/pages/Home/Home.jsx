@@ -39,17 +39,54 @@ const data = [
       "Descrição Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris.",
     tags: ["tag lorem impsum", "tag lorem impsum", "tag lorem impsum"],
   },
+  {
+    image: techImage,
+    name: "NOME",
+    stars: 5,
+    description:
+      "Descrição Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris.",
+    tags: ["tag lorem impsum", "tag lorem impsum", "tag lorem impsum"],
+  },
+  {
+    image: techImage,
+    name: "NOME",
+    stars: 4,
+    description:
+      "Descrição Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris.",
+    tags: ["tag lorem impsum", "tag lorem impsum"],
+  },
+  {
+    image: techImage,
+    name: "NOME",
+    stars: 2,
+    description:
+      "Descrição Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris.",
+    tags: ["tag lorem impsum"],
+  },
+  {
+    image: techImage,
+    name: "NOME",
+    stars: 3,
+    description:
+      "Descrição Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris.",
+    tags: ["tag lorem impsum", "tag lorem impsum", "tag lorem impsum"],
+  },
 ];
 export default function Home() {
   const groupedData = [];
+  const isTabletScreen = useMediaQuery({ maxWidth: 1130 });
   const isMobileScreen = useMediaQuery({ maxWidth: 700 });
   if (isMobileScreen) {
     for (let i = 0; i < data.length; i += 1) {
       groupedData.push(data.slice(i, i + 1));
     }
-  } else {
+  } else if (isTabletScreen) {
     for (let i = 0; i < data.length; i += 2) {
       groupedData.push(data.slice(i, i + 2));
+    }
+  } else {
+    for (let i = 0; i < data.length; i += 4) {
+      groupedData.push(data.slice(i, i + 4));
     }
   }
   return (

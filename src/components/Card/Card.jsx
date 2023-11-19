@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 export default function Card({ dados }) {
   const groupedTags = [];
 
-  for (let i = 0; i < dados.tags.length; i += 2) {
-    groupedTags.push(dados.tags.slice(i, i + 2));
+  for (let i = 0; i < dados?.tags?.length; i += 2) {
+    groupedTags.push(dados?.tags?.slice(i, i + 2));
   }
   return (
     <StyledCard>
