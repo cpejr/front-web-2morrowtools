@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Select } from "antd";
+import { Select, Input } from "antd";
 
 export const Container = styled.div`
   display: flex;
@@ -23,15 +23,14 @@ export const Label = styled.label`
   }
 `;
 
-export const Input = styled.input`
+export const StyledInput = styled(Input)`
   height: 6rem;
   font-size: 2rem;
   padding: 0.8rem 1.6rem;
   border-radius: 0.4rem;
   color: white;
-  border: solid;
+  border: solid 0.1rem;
   border-color: white;
-  background-color: black;
   width: 100%;
 
   @media (max-width: 700px) {
@@ -59,8 +58,4 @@ export const IconContainer = styled.div`
 
 export const StyledSelect = styled(Select)`
   height: 6rem;
-
-  .ant-select-body {
-    background-color;
-  }
 `;

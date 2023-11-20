@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Input } from "antd";
+const { TextArea } = Input;
 
 export const Container = styled.div`
   display: flex;
@@ -22,15 +24,12 @@ export const Label = styled.label`
   }
 `;
 
-export const TextArea = styled.textarea`
-  height: 12rem;
+export const StyledTextArea = styled(TextArea)`
+  height: 6rem;
   font-size: 2rem;
   padding: 0.8rem 1.6rem;
   border-radius: 0.4rem;
   color: white;
-  border: solid;
-  border-color: white;
-  background-color: black;
 
   @media (max-width: 700px) {
     font-weight: 400;

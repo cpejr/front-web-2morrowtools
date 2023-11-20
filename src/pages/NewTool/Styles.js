@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Modal } from "antd";
+import { colors } from "../../styles/styleVariables";
 
 export const Container = styled.div`
   display: flex;
@@ -113,5 +115,17 @@ export const ToolButtons = styled.div`
 
   svg {
     cursor: pointer;
+  }
+`;
+
+export const StyledModal = styled(Modal)`
+  .ant-modal-content {
+    background-color: ${colors.grey.cardBackground};
+  }
+  .ant-modal-body {
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: none;
   }
 `;

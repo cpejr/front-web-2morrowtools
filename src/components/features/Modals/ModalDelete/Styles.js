@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Button } from "antd";
+import { colors } from "../../../../styles/styleVariables";
 
 export const Container = styled.div`
   display: flex;
@@ -22,7 +24,7 @@ export const Message = styled.h1`
   }
 `;
 
-export const DeleteButton = styled.button`
+export const DeleteButton = styled(Button)`
   cursor: pointer;
 
   width: 15rem;
@@ -48,11 +50,11 @@ export const DeleteButton = styled.button`
   font-size: 1.8rem;
   line-height: 2.2rem;
 
-  :hover {
-    transition-duration: 0.5s;
-    background-color: rgba(255, 255, 255, 0.2);
+  &:hover {
+    background-color: ${colors.white};
+    color: black;
+    cursor: pointer;
   }
-
   svg {
     margin-right: 0.5rem;
     margin-left: 0.5rem;

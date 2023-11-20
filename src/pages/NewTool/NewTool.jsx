@@ -3,7 +3,6 @@ import {
   FormInput,
   SubmitButton,
   FormsTextArea,
-  FormSelect,
   ModalDelete,
   ModalEdit,
   SocialMediaInput,
@@ -15,10 +14,10 @@ import {
   Title,
   Form,
   Section,
-  Section2,
   ToolList,
   ToolListItem,
   ToolButtons,
+  StyledModal,
 } from "./Styles";
 import { FaUpload, FaTrash, FaEdit } from "react-icons/fa";
 
@@ -43,7 +42,6 @@ export default function NewTool() {
     setDeleteModalOpen(false);
   };
 
-  // Funções para o ModalEdit
   const handleOpenEditModal = (tool) => {
     setSelectedTool(tool);
     setEditModalOpen(true);
@@ -53,11 +51,13 @@ export default function NewTool() {
     setSelectedTool(null);
     setEditModalOpen(false);
   };
+
   const categories = [
     { _id: "1", name: "Categoria 1" },
     { _id: "2", name: "Categoria 2" },
     { _id: "3", name: "Categoria 3" },
   ];
+
   const tools = [
     { _id: "1", name: "Ferramenta 1" },
     { _id: "2", name: "Ferramenta 2" },
@@ -72,7 +72,7 @@ export default function NewTool() {
           <FormInput name='title' placeholder='Título:' />
           <FormInput name='upload' placeholder='Upload de Imagem:' icon={FaUpload} />
           <FormInput name='shortDescription' placeholder='Descrição curta:' />
-          <FormsTextArea name='message' rows={11} placeholder='Descrição longa:' />
+          <FormsTextArea name='message' rows={4} placeholder='Descrição longa:' />
           <FormInput name='link' placeholder='Link do site:' />
           <NewLink />
           <SocialMediaInput
@@ -82,15 +82,41 @@ export default function NewTool() {
               label: name,
               value: _id,
             }))}
-            placeholder='Rede social'
+            placeholder='Rede social:'
           />
         </Section>
         <SubmitButton type='submit'>Enviar</SubmitButton>
       </Form>
       <Title>GERENCIAR ITENS</Title>
-      {isDeleteModalOpen && <ModalDelete _id={selectedToolId} close={handleCloseDeleteModal} />}
+      {isDeleteModalOpen && (
+        <StyledModal
+          open={isDeleteModalOpen}
+          onCancel={handleCloseDeleteModal}
+          width={500}
+          height={250}
+          padding={0}
+          footer={null}
+          closeIcon={true}
+          centered
+          destroyOnClose
+        >
+          <ModalDelete _id={selectedToolId} close={handleCloseDeleteModal} />
+        </StyledModal>
+      )}
       {isEditModalOpen && selectedTool && (
-        <ModalEdit tool={selectedTool} close={handleCloseEditModal} />
+        <StyledModal
+          open={isEditModalOpen}
+          onCancel={handleCloseEditModal}
+          width={500}
+          height={250}
+          padding={0}
+          footer={null}
+          closeIcon={true}
+          centered
+          destroyOnClose
+        >
+          <ModalEdit tool={selectedTool} close={handleCloseEditModal} />
+        </StyledModal>
       )}
       <ToolList>
         {tools.map((tool) => (

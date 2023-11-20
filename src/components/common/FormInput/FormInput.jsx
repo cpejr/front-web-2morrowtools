@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Container, Label, Input, IconContainer } from "./Styles";
+import { Container, Label, IconContainer, StyledInput } from "./Styles";
 
 export default function FormInput({ name, label, placeholder, icon: Icon }) {
   return (
@@ -7,7 +7,7 @@ export default function FormInput({ name, label, placeholder, icon: Icon }) {
       <Label htmlFor={name}>{label}</Label>
       <IconContainer>
         {Icon && <Icon />}
-        <Input id={name} placeholder={placeholder} />
+        <StyledInput id={name} placeholder={placeholder} />
       </IconContainer>
     </Container>
   );

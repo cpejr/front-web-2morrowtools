@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
-import { Container, Input, IconContainer, StyledSelect } from "./Styles";
-import { Select } from "antd";
+import { Container, IconContainer, StyledSelect, StyledInput } from "./Styles";
 import {
   FaLinkedin,
   FaDiscord,
@@ -38,15 +37,9 @@ export default function SocialMediaInput({ name, placeholder, icon: Icon }) {
         onChange={handleChange}
         options={socialMediaOptions}
       />
-      <Select
-        defaultValue='linkedin'
-        style={{ width: 120 }}
-        onChange={handleChange}
-        options={socialMediaOptions}
-      />
       <IconContainer>
         {Icon && <Icon />}
-        <Input id={name} placeholder={placeholder} />
+        <StyledInput id={name} placeholder={placeholder} />
       </IconContainer>
     </Container>
   );

@@ -9,7 +9,6 @@ export default function AppProvider() {
         token: {
           colorPrimary: colors.blue.accent,
           colorBgContainer: colors.blue.background,
-          colorBgContainer: colors.blue.background,
           colorText: colors.white,
           fontFamily: fonts.Exo2,
           fontSize: "15px",
@@ -40,6 +39,11 @@ export default function AppProvider() {
             itemSelectedColor: colors.white,
             iconSize: "30px",
             lineType: "none",
+          },
+          Modal: {
+            activeBorderColor: colors.blue.accent,
+            activeShadow: `0 0 0 0.5px ${colors.blue.accentShadow}`,
+            colorTextPlaceholder: colors.white,
           },
         },
       }}

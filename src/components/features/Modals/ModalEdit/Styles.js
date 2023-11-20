@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Input, Button } from "antd";
+import { colors } from "../../../../styles/styleVariables";
 
 export const Container = styled.div`
   display: flex;
@@ -28,15 +30,12 @@ export const Label = styled.label`
   padding-bottom: 0.5rem;
 `;
 
-export const Input = styled.input`
+export const StyledInput = styled(Input)`
   height: 6rem;
   font-size: 2rem;
   padding: 0.8rem 1.6rem;
   border-radius: 0.4rem;
   color: white;
-  border: solid;
-  border-color: white;
-  background-color: black;
   width: 100%;
 
   @media (max-width: 700px) {
@@ -57,7 +56,7 @@ export const ErrorMessage = styled.p`
   margin-top: 0.5rem;
 `;
 
-export const ModalButton = styled.button`
+export const ModalButton = styled(Button)`
   cursor: pointer;
   gap: 0.7rem;
   align-self: center;
@@ -80,13 +79,12 @@ export const ModalButton = styled.button`
 
   margin-top: 1.5rem;
 
-  :hover {
-    transition-duration: 0.5s;
-    //colocar hover quando desclicar do botão
-    background-color: rgba(255, 255, 255, 0.2);
+  &:hover {
+    background-color: ${colors.white};
+    color: black;
+    cursor: pointer;
   }
-
-  p {
+  s p {
     font-style: normal;
     font-weight: 600;
     font-size: 1.8rem;

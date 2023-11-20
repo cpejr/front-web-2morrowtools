@@ -1,15 +1,14 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { FiSave } from "react-icons/fi";
-
-import { Container, Label, Input, ModalContent, ModalButton, Form } from "./Styles";
+import { Container, Label, ModalContent, ModalButton, Form, StyledInput } from "./Styles";
 
 export default function ModalEdit({ tool, close }) {
-  const [title, setTitle] = useState(tool.title);
-  const [image, setImage] = useState(tool.image);
-  const [shortDescription, setShortDescription] = useState(tool.shortDescription);
-  const [longDescription, setLongDescription] = useState(tool.longDescription);
-  const [link, setLink] = useState(tool.link);
+  const [title, setTitle] = useState(tool?.title || "");
+  const [image, setImage] = useState(tool?.image || "");
+  const [shortDescription, setShortDescription] = useState(tool?.shortDescription || "");
+  const [longDescription, setLongDescription] = useState(tool?.longDescription || "");
+  const [link, setLink] = useState(tool?.link || "");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,7 +30,7 @@ export default function ModalEdit({ tool, close }) {
       <Form onSubmit={handleSubmit}>
         <ModalContent>
           <Label htmlFor='title'>Título:</Label>
-          <Input
+          <StyledInput
             id='title'
             name='title'
             placeholder='Digite aqui o título'
@@ -40,7 +39,7 @@ export default function ModalEdit({ tool, close }) {
           />
 
           <Label htmlFor='image'>Imagem:</Label>
-          <Input
+          <StyledInput
             id='image'
             name='image'
             placeholder='Digite aqui o URL da imagem'
@@ -49,7 +48,7 @@ export default function ModalEdit({ tool, close }) {
           />
 
           <Label htmlFor='shortDescription'>Descrição Curta:</Label>
-          <Input
+          <StyledInput
             id='shortDescription'
             name='shortDescription'
             placeholder='Digite aqui a descrição curta'
@@ -58,7 +57,7 @@ export default function ModalEdit({ tool, close }) {
           />
 
           <Label htmlFor='longDescription'>Descrição Longa:</Label>
-          <Input
+          <StyledInput
             id='longDescription'
             name='longDescription'
             placeholder='Digite aqui a descrição longa'
@@ -67,7 +66,7 @@ export default function ModalEdit({ tool, close }) {
           />
 
           <Label htmlFor='link'>Link do Site:</Label>
-          <Input
+          <StyledInput
             id='link'
             name='link'
             placeholder='Digite aqui o link do site'
@@ -86,6 +85,6 @@ export default function ModalEdit({ tool, close }) {
 }
 
 ModalEdit.propTypes = {
-  tool: PropTypes.object.isRequired,
+  tool: PropTypes.object,
   close: PropTypes.func.isRequired,
 };

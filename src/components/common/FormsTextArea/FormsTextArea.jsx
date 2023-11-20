@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {
   Container,
   Label,
-  TextArea,
+  StyledTextArea,
   //ErrorMessage
 } from "./Styles";
 
@@ -19,7 +19,7 @@ export default function FormsTextArea({
   return (
     <Container>
       <Label htmlFor={name}>{label}</Label>
-      <TextArea
+      <StyledTextArea
         id={name}
         //error={!!errorMessage}
         placeholder={placeholder}
