@@ -3,6 +3,7 @@ import { useState } from "react";
 import CustomModal from "../../components/Modal/modal";
 import { Button } from "antd";
 import CustomForm from "../../components/Form/Form";
+import CustomCarousel from "../../components/Carousel/Carousel";
 
 export default function Favorites() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -20,6 +21,7 @@ export default function Favorites() {
   return (
     <Container>
       <Button onClick={handleOpenModal}>Abrir Modal</Button>
+      <CustomCarousel />
       <CustomModal visible={modalVisible} onClose={handleCloseModal} />
       <CustomForm onSubmit={handleSubmit}></CustomForm>
     </Container>
