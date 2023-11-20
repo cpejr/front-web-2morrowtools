@@ -1,4 +1,5 @@
 export { default as Header } from "./Header/Header";
+export { default as Card } from "./Card/Card";
 export { default as FormInput } from "./common/FormInput/FormInput";
 export { default as SubmitButton } from "./common/SubmitButton/SubmitButton";
 export { default as FormSelect } from "./common/FormSelect/FormSelect";
