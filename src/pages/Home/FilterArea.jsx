@@ -1,12 +1,12 @@
 import { Checkbox } from "antd";
 import {
   BlueCheckboxes,
+  CheckboxItem,
   Checkboxes,
   ContainerFilter,
+  FilterInputStyled,
   SearchBar,
-  InputStyled,
   SelectStyled,
-  CheckboxItem,
 } from "./Styles";
 
 const checkboxes = [
@@ -63,7 +63,7 @@ export default function FilterArea() {
             },
           ]}
         />
-        <InputStyled placeholder='Lorem Impsum'></InputStyled>
+        <FilterInputStyled placeholder='Lorem Impsum'></FilterInputStyled>
       </SearchBar>
     </ContainerFilter>
   );

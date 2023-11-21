@@ -1,10 +1,10 @@
-import { Container, HomeImage, InputStyled, Line } from "./Styles";
+import { Container, HomeImage, FilterInputStyled, Line } from "./Styles";
 import homeImage from "../../assets/home-image.svg";
 import { SearchOutlined } from "@ant-design/icons";
 import { Card } from "../../components";
 import techImage from "../../assets/tech.jpeg";
 import { useMediaQuery } from "react-responsive";
-import FilterArea from "../../components/FilterArea/FilterArea";
+import FilterArea from "./FilterArea";
 
 const data = [
   {
@@ -57,7 +57,7 @@ export default function Home() {
       <HomeImage src={homeImage} />
       <h1>2MORROW TOOLS</h1>
       <h2>O maior acervo de ferramentas e Inteligências Artificiais do Brasil </h2>
-      <InputStyled type='primary' prefix={<SearchOutlined />}></InputStyled>
+      <FilterInputStyled type='primary' prefix={<SearchOutlined />}></FilterInputStyled>
       <FilterArea />
       {groupedData.map((group) => (
         <Line key={groupedData.indexOf(group)}>
