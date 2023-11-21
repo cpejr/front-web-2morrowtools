@@ -17,12 +17,6 @@ export const ToolCollumn = styled.div`
   height: auto;
   justify-content: center;
 `;
-export const Line = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: auto;
-`;
 
 export const LetComment = styled.div`
   display: flex;
@@ -32,6 +26,18 @@ export const LetComment = styled.div`
   align-self: center;
   > h2 {
     font-size: 35px;
+    @media (max-width: ${breakpoints.desktop}) {
+    }
+    @media (max-width: ${breakpoints.tablet}) {
+    }
+    @media (max-width: ${breakpoints.smallTablet}) {
+    }
+    @media (max-width: ${breakpoints.mobile}) {
+      font-size: 30px;
+    }
+    @media (max-width: ${breakpoints.smallDevice}) {
+      font-size: 25px;
+    }
   }
 `;
 export const BlueButton = styled(Button)`
@@ -43,6 +49,10 @@ export const BlueButton = styled(Button)`
 export const CommentInput = styled(Input)`
   width: 100%;
   height: 3rem;
+
+  @media (max-width: ${breakpoints.smallDevice}) {
+    font-size: 13px;
+  }
 `;
 export const CommentDiv = styled.div`
   display: flex;
@@ -53,6 +63,17 @@ export const CommentDiv = styled.div`
   height: auto;
   > h1 {
     font-size: 50px;
+
+    @media (max-width: ${breakpoints.smallTablet}) {
+      align-self: center;
+      font-size: 40px;
+    }
+    @media (max-width: ${breakpoints.mobile}) {
+      font-size: 35px;
+    }
+    @media (max-width: ${breakpoints.smallDevice}) {
+      font-size: 30px;
+    }
   }
 `;
 export const Comment = styled.div`
@@ -76,6 +97,20 @@ export const OtherTools = styled.div`
   height: auto;
   > h1 {
     font-size: 50px;
+    @media (max-width: ${breakpoints.tablet}) {
+      font-size: 40px;
+    }
+    @media (max-width: ${breakpoints.smallTablet}) {
+      align-self: center;
+      text-align: center;
+      font-size: 32px;
+    }
+    @media (max-width: ${breakpoints.mobile}) {
+      font-size: 30px;
+    }
+    @media (max-width: ${breakpoints.smallDevice}) {
+      font-size: 25px;
+    }
   }
 `;
 export const CardLine = styled.div`
@@ -102,19 +137,35 @@ export const DiscoverDiv = styled.div`
   border: 2px solid ${colors.white};
   border-radius: 6px;
   padding: 4rem 2rem;
+  @media (max-width: ${breakpoints.smallTablet}) {
+    flex-direction: column;
+  }
+  @media (max-width: ${breakpoints.mobile}) {
+    margin-top: 2rem;
+  }
 `;
 export const DiscoverData = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
   width: 55%;
+  @media (max-width: ${breakpoints.smallTablet}) {
+    width: 100%;
+  }
   > h6 {
     font-size: 24px;
     margin: 0;
+
+    @media (max-width: ${breakpoints.smallTablet}) {
+      font-size: 20px;
+    }
   }
   > p {
     margin: 0;
     font-size: 22px;
+    @media (max-width: ${breakpoints.smallTablet}) {
+      font-size: 18px;
+    }
   }
 `;
 export const DiscoverInputs = styled.div`
@@ -123,14 +174,48 @@ export const DiscoverInputs = styled.div`
   align-self: center;
   width: 45%;
   gap: 1rem;
+  @media (max-width: ${breakpoints.smallTablet}) {
+    width: 100%;
+  }
 `;
 export const HalfInput = styled(Input)`
   width: 49%;
   height: 3rem;
   font-size: 22px;
+  @media (max-width: ${breakpoints.desktop}) {
+    font-size: 20px;
+  }
+  @media (max-width: ${breakpoints.tablet}) {
+    font-size: 18px;
+  }
+  @media (max-width: ${breakpoints.smallTablet}) {
+    width: 100%;
+    font-size: 20px;
+  }
 `;
 export const FullInput = styled(Input)`
   width: 100%;
   height: 3rem;
   font-size: 22px;
+  @media (max-width: ${breakpoints.desktop}) {
+    font-size: 20px;
+  }
+  @media (max-width: ${breakpoints.tablet}) {
+    font-size: 18px;
+  }
+  @media (max-width: ${breakpoints.smallTablet}) {
+    width: 100%;
+    font-size: 20px;
+  }
+`;
+export const DiscoverLine = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: auto;
+  gap: 2%;
+  @media (max-width: ${breakpoints.smallTablet}) {
+    flex-direction: column;
+    gap: 1rem;
+  }
 `;

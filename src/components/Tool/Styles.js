@@ -11,6 +11,9 @@ export const Row = styled.div`
   align-self: center;
   justify-content: center;
   margin-top: 1rem;
+  @media (max-width: ${breakpoints.smallTablet}) {
+    flex-direction: column;
+  }
 `;
 export const ImageCollumn = styled.div`
   display: flex;
@@ -19,6 +22,9 @@ export const ImageCollumn = styled.div`
   height: auto;
   gap: 1rem;
   flex: 1;
+  @media (max-width: ${breakpoints.smallTablet}) {
+    width: 90%;
+  }
 `;
 export const Image = styled.div`
   width: 100%;
@@ -37,8 +43,36 @@ export const DataCollumn = styled.div`
   height: 100%;
   align-self: start;
   gap: 2.5rem;
+  @media (max-width: ${breakpoints.desktop}) {
+    gap: 2rem;
+  }
+  @media (max-width: ${breakpoints.tablet}) {
+    gap: 1rem;
+  }
+  @media (max-width: ${breakpoints.smallTablet}) {
+    width: 90%;
+  }
+
+  @media (max-width: ${breakpoints.smallTablet}) {
+    margin-top: 1rem;
+    align-self: center;
+  }
+
   > p {
     font-size: 25px;
+    @media (max-width: ${breakpoints.desktop}) {
+      font-size: 20px;
+    }
+    @media (max-width: ${breakpoints.tablet}) {
+      font-size: 17px;
+    }
+
+    @media (max-width: ${breakpoints.mobile}) {
+      font-size: 15px;
+    }
+    @media (max-width: ${breakpoints.smallDevice}) {
+      font-size: 13px;
+    }
   }
 `;
 export const Group = styled.div`
@@ -53,8 +87,51 @@ export const LineSVG = styled.div`
   align-items: center;
   font-size: 55px;
   gap: 1rem;
+  @media (max-width: ${breakpoints.desktop}) {
+    font-size: 40px;
+  }
+  @media (max-width: ${breakpoints.tablet}) {
+    font-size: 30px;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    font-size: 25px;
+  }
+  @media (max-width: ${breakpoints.smallDevice}) {
+    font-size: 20px;
+  }
   > svg {
     cursor: pointer;
+  }
+`;
+export const TagsLine = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: auto;
+  gap: 1rem;
+  font-size: 55px;
+  @media (max-width: ${breakpoints.desktop}) {
+    font-size: 40px;
+  }
+  @media (max-width: ${breakpoints.tablet}) {
+    font-size: 30px;
+  }
+
+  @media (max-width: ${breakpoints.smallTablet}) {
+    display: none;
+  }
+`;
+export const TabletTagsLine = styled.div`
+  display: none;
+  flex-direction: row;
+  width: 100%;
+  height: auto;
+  gap: 1rem;
+  font-size: 55px;
+
+  @media (max-width: ${breakpoints.smallTablet}) {
+    display: flex;
   }
 `;
 export const Line = styled.div`
@@ -64,6 +141,19 @@ export const Line = styled.div`
   height: auto;
   gap: 1rem;
   font-size: 55px;
+  @media (max-width: ${breakpoints.desktop}) {
+    font-size: 40px;
+  }
+  @media (max-width: ${breakpoints.tablet}) {
+    font-size: 30px;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    font-size: 25px;
+  }
+  @media (max-width: ${breakpoints.smallDevice}) {
+    font-size: 20px;
+  }
 `;
 export const Tag = styled.div`
   display: flex;
@@ -77,16 +167,10 @@ export const Tag = styled.div`
   align-items: center;
   text-align: center;
   cursor: pointer;
-  @media (max-width: ${breakpoints.desktop}) {
-  }
-  @media (max-width: ${breakpoints.tablet}) {
-  }
 
-  @media (max-width: ${breakpoints.smallTablet}) {
-  }
-  @media (max-width: ${breakpoints.mobile}) {
-  }
   @media (max-width: ${breakpoints.smallDevice}) {
+    font-size: 13px;
+    padding: 5px 1rem;
   }
   &:hover {
     border: 1px solid ${colors.blue.light};
@@ -96,14 +180,21 @@ export const Tag = styled.div`
 export const Stars = styled(Rate)`
   color: ${colors.white};
   font-size: 55px;
+  .ant-rate-star-second {
+    color: ${colors.white};
+  }
   @media (max-width: ${breakpoints.desktop}) {
+    font-size: 45px;
   }
   @media (max-width: ${breakpoints.tablet}) {
+    font-size: 35px;
   }
 
-  @media (max-width: ${breakpoints.smallTablet}) {
-  }
   @media (max-width: ${breakpoints.mobile}) {
+    font-size: 30px;
+  }
+  @media (max-width: ${breakpoints.smallDevice}) {
+    font-size: 25px;
   }
 `;
 
@@ -112,6 +203,22 @@ export const BlueButton = styled(Button)`
   height: 3rem;
   align-self: center;
   font-size: 24px;
+  @media (max-width: ${breakpoints.desktop}) {
+    font-size: 22px;
+    width: 11rem;
+    height: 2.54rem;
+  }
+  @media (max-width: ${breakpoints.tablet}) {
+    font-size: 20px;
+    width: 10rem;
+    height: 2.31rem;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    font-size: 22px;
+    width: 11rem;
+    height: 3rem;
+  }
 `;
 export const RateDiv = styled.div`
   display: flex;
@@ -120,6 +227,17 @@ export const RateDiv = styled.div`
   gap: 1rem;
   > p {
     font-size: 35px;
+
+    @media (max-width: ${breakpoints.tablet}) {
+      font-size: 30px;
+    }
+    @media (max-width: ${breakpoints.mobile}) {
+      font-size: 25px;
+    }
+
+    @media (max-width: ${breakpoints.smallDevice}) {
+      font-size: 20px;
+    }
   }
 `;
 export const KnowMore = styled.div`
@@ -134,11 +252,28 @@ export const KnowMore = styled.div`
   padding: 2rem;
   margin-top: 2rem;
   align-self: center;
+
+  @media (max-width: ${breakpoints.smallTablet}) {
+    border: none;
+  }
+
   > h1 {
     font: 55px;
+    @media (max-width: ${breakpoints.smallTablet}) {
+      font-size: 40px;
+    }
+    @media (max-width: ${breakpoints.mobile}) {
+      font-size: 30px;
+    }
   }
   > p {
     font-size: 25px;
+    @media (max-width: ${breakpoints.smallTablet}) {
+      font-size: 20px;
+    }
+    @media (max-width: ${breakpoints.mobile}) {
+      font-size: 17px;
+    }
   }
 `;
 export const VideoDiv = styled.div`
@@ -146,4 +281,16 @@ export const VideoDiv = styled.div`
   width: 40rem;
   height: 22.5rem;
   border-radius: 6px;
+  @media (max-width: ${breakpoints.smallTablet}) {
+    width: 30rem;
+    height: 16.875rem;
+  }
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 25rem;
+    height: 14.0625rem;
+  }
+  @media (max-width: ${breakpoints.smallDevice}) {
+    width: 20rem;
+    height: 11.25rem;
+  }
 `;

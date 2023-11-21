@@ -10,14 +10,42 @@ import {
   RateDiv,
   Row,
   Stars,
+  TabletTagsLine,
   Tag,
+  TagsLine,
   VideoDiv,
 } from "./Styles";
 import PropTypes from "prop-types";
+import { useState } from "react";
 import { FaRegBookmark } from "react-icons/fa";
 import { IoShareSocial } from "react-icons/io5";
-
+import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 export default function Tool({ data }) {
+  const [starsValue, setStarsValue] = useState(0);
+  const [starsValue2, setStarsValue2] = useState(0);
+  const [hoverValue, setHoverValue] = useState(0);
+  const [hoverValue2, setHoverValue2] = useState(0);
+
+  const handleStarsChange = (value) => {
+    setStarsValue(value);
+  };
+  const handleStarsChange2 = (value) => {
+    setStarsValue2(value);
+  };
+
+  const handleHoverChange = (value) => {
+    setHoverValue(value);
+  };
+  const handleHoverChange2 = (value) => {
+    setHoverValue2(value);
+  };
+
+  const renderStarIcon = (index) => {
+    return index <= (hoverValue || starsValue) - 1 ? <RiStarSFill /> : <RiStarSLine />;
+  };
+  const renderStarIcon2 = (index) => {
+    return index <= (hoverValue2 || starsValue2) - 1 ? <RiStarSFill /> : <RiStarSLine />;
+  };
   return (
     <>
       {data.map((dados, index) => (
@@ -27,11 +55,11 @@ export default function Tool({ data }) {
               <Image>
                 <img src={dados.image} alt={`ToolImage ${index}`} />
               </Image>
-              <Line key={`line-${index}`}>
+              <TagsLine key={`line-${index}`}>
                 <Tag>{dados?.categoryFeatures}</Tag>
                 <Tag>{dados?.categoryPrices}</Tag>
                 <Tag>{dados?.categoryProfessions}</Tag>
-              </Line>
+              </TagsLine>
             </ImageCollumn>
             <DataCollumn>
               <Group>
@@ -42,10 +70,21 @@ export default function Tool({ data }) {
                 </LineSVG>
               </Group>
               <Line>
-                <Stars disabled defaultValue={dados?.stars} />
-                <span>({dados?.stars})</span>
+                <Stars
+                  value={starsValue}
+                  // allowClear={false}
+                  onChange={handleStarsChange}
+                  onHoverChange={handleHoverChange}
+                  character={({ index }) => renderStarIcon(index)}
+                />
+                <span>({starsValue})</span>
               </Line>
               <p>{dados?.description}</p>
+              <TabletTagsLine key={`line-${index}`}>
+                <Tag>{dados?.categoryFeatures}</Tag>
+                <Tag>{dados?.categoryPrices}</Tag>
+                <Tag>{dados?.categoryProfessions}</Tag>
+              </TabletTagsLine>
               <BlueButton type='primary'>ACESSE JÁ!</BlueButton>
             </DataCollumn>
           </Row>
@@ -53,8 +92,14 @@ export default function Tool({ data }) {
             <RateDiv>
               <p>Você recomendaria essa ferramenta?</p>
               <Line>
-                <Stars disabled defaultValue={dados?.stars} />
-                <span>({dados?.stars})</span>
+                <Stars
+                  value={starsValue2}
+                  // allowClear={false}
+                  onChange={handleStarsChange2}
+                  onHoverChange={handleHoverChange2}
+                  character={({ index }) => renderStarIcon2(index)}
+                />
+                <span>({starsValue2})</span>
               </Line>
             </RateDiv>
           </Row>

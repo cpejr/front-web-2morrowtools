@@ -8,10 +8,10 @@ import {
   DiscoverData,
   DiscoverDiv,
   DiscoverInputs,
+  DiscoverLine,
   FullInput,
   HalfInput,
   LetComment,
-  Line,
   OtherTools,
   ToolCollumn,
 } from "./Styles";
@@ -220,10 +220,10 @@ export default function Tools() {
       </CommentDiv>
       <OtherTools>
         <h1>OUTRAS FERRAMENTAS SIMILARES:</h1>
-        {groupedData.map((group) => (
-          <CardLine key={group?.name}>
-            {group.map((content) => (
-              <Card dados={content} key={content?.name} />
+        {groupedData.map((group, groupIndex) => (
+          <CardLine onClick={() => console.log(group)} key={groupIndex}>
+            {group.map((content, contentIndex) => (
+              <Card dados={content} key={contentIndex} />
             ))}
           </CardLine>
         ))}
@@ -237,10 +237,10 @@ export default function Tools() {
           </p>
         </DiscoverData>
         <DiscoverInputs>
-          <Line style={{ gap: "2%" }}>
+          <DiscoverLine>
             <HalfInput placeholder='Nome:' />
             <HalfInput placeholder='E-mail:' type='email' />
-          </Line>
+          </DiscoverLine>
           <FullInput placeholder='Mensagem:' />
           <BlueButton type='primary'>ENVIAR</BlueButton>
         </DiscoverInputs>
