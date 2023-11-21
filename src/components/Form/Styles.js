@@ -22,4 +22,24 @@ export const CustomInput = styled(Input)`
   width: 80rem;
   height: 40px;
   padding: 10px;
+
+  @media (max-width: 1230px){
+    width: 60rem;
+  }
+
+  @media (max-width: 940px){
+    width: 50rem;
+  }
+
+  @media (max-width: 800px){
+    width: 40rem;
+  }
+
+  @media (max-width: 515px){
+    width: 30rem;
+  }
+
+  @media (max-width: 390px){
+    width: 20rem;
+  }
 `;
