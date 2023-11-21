@@ -1,7 +1,6 @@
 import { HeartOutlined, MenuOutlined, ToolOutlined, UserOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { HamburgerMenu } from "./Styles";
-import { Menu } from "antd";
 
 function getItem(label, key, icon, children, type) {
   return {
