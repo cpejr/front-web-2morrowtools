@@ -13,19 +13,19 @@ const data = [
     stars: 5,
     description:
       "Descrição Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris.",
-    tags: ["tag lorem impsum", "tag lorem impsum", "tag lorem impsum"],
+    tags: ["tag lorem impsum", "tag2 lorem impsum", "tag3 lorem impsum"],
   },
   {
     image: techImage,
-    name: "NOME",
+    name: "NOME1",
     stars: 4,
     description:
       "Descrição Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris.",
-    tags: ["tag lorem impsum", "tag lorem impsum"],
+    tags: ["tag lorem impsum", "tag2 lorem impsum"],
   },
   {
     image: techImage,
-    name: "NOME",
+    name: "NOME2",
     stars: 2,
     description:
       "Descrição Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris.",
@@ -33,11 +33,11 @@ const data = [
   },
   {
     image: techImage,
-    name: "NOME",
+    name: "NOME3",
     stars: 3,
     description:
       "Descrição Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris.",
-    tags: ["tag lorem impsum", "tag lorem impsum", "tag lorem impsum"],
+    tags: ["tag lorem impsum", "tag2 lorem impsum", "tag3 lorem impsum"],
   },
   {
     image: techImage,
@@ -97,7 +97,7 @@ export default function Home() {
       <InputStyled type='primary' prefix={<SearchOutlined />}></InputStyled>
       <FilterArea />
       {groupedData.map((group) => (
-        <Line key={group?.name}>
+        <Line key={groupedData.indexOf(group)}>
           {group.map((content) => (
             <Card dados={content} key={content?.name} />
           ))}
