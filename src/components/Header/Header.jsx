@@ -18,9 +18,32 @@ import {
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import MenuHeader from "./MenuHeader";
+import { signInWithGooglePopup } from "./../../services/firebase"
+
+import { useState } from 'react';
+
+const profilePictureStyle = { width: "40px", 
+borderRadius: "50%" }
 
 export default function Header() {
   const navigate = useNavigate();
+  
+  const [loginLogoff, setLoginLogoff] = useState("Fazer Login");
+  const [photoURL, setPhotoURL] = useState();
+
+  const logGoogleUser = async () => {
+
+    if(loginLogoff == "Fazer Login") {
+      const response = await signInWithGooglePopup();
+      console.log(response);
+      setPhotoURL(response.user.photoURL)
+      setLoginLogoff("Fazer Logoff");
+    } else {
+      sessionStorage.clear()
+      
+      setLoginLogoff("Fazer Login");
+    }
+}
 
   return (
     <Container>
@@ -33,9 +56,9 @@ export default function Header() {
         <Link to={"/favoritos"}>Meus Favoritos</Link>
       </Links>
       <LoginSocial>
-        <LoginButton>
-          Fazer Login
-          <UserOutlined />
+        <LoginButton onClick={logGoogleUser}>
+          {loginLogoff}
+          {loginLogoff == "Fazer Login"? <UserOutlined /> : <img style={profilePictureStyle} src={photoURL}/>}
         </LoginButton>
         <Line />
         <SocialMedias>
