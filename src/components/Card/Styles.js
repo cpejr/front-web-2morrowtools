@@ -34,9 +34,14 @@ export const StyledCard = styled(Card)`
 export const Stars = styled(Rate)`
   color: ${colors.white};
   font-size: 30px;
+  .ant-rate-star-second {
+    color: ${colors.white};
+  }
+
   @media (max-width: ${breakpoints.desktop}) {
     font-size: 24px;
   }
+
   @media (max-width: ${breakpoints.tablet}) {
     font-size: 20px;
   }
@@ -44,10 +49,12 @@ export const Stars = styled(Rate)`
   @media (max-width: ${breakpoints.smallTablet}) {
     font-size: 18px;
   }
+
   @media (max-width: ${breakpoints.mobile}) {
     font-size: 20px;
   }
 `;
+
 export const Image = styled.div`
   display: flex;
   height: auto;
