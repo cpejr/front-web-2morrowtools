@@ -157,11 +157,11 @@ export const Group = styled.div`
     font-size: 15.75px;
   }
   @media (max-width: ${breakpoints.tablet}) {
-    font-size: 11.8125px;
+    font-size: 11.81px;
   }
 
   @media (max-width: ${breakpoints.smallTablet}) {
-    font-size: 10.63125px;
+    font-size: 10.63px;
   }
   @media (max-width: ${breakpoints.mobile}) {
     font-size: 15.75px;
