@@ -5,27 +5,25 @@ import { breakpoints, colors } from "../../styles/styleVariables";
 export const StyledCard = styled(Card)`
   display: flex;
   flex-direction: column;
-  width: 500px;
+  width: 30rem;
   height: auto;
   align-items: center;
-  gap: 50px;
+  gap: 3.33rem;
   box-shadow: 0px 4px 4px 0px ${colors.shadow};
   &:hover {
     background-color: #1c2431;
   }
   @media (max-width: ${breakpoints.desktop}) {
-    width: 400px;
-    margin-top: 80px;
+    width: 24rem;
   }
   @media (max-width: ${breakpoints.tablet}) {
-    width: 300px;
+    width: 25rem;
   }
   @media (max-width: ${breakpoints.smallTablet}) {
-    width: 270px;
-    margin-top: 150px;
+    width: 30rem;
   }
   @media (max-width: ${breakpoints.mobile}) {
-    width: 400px;
+    width: 26.66rem;
   }
   > div {
     display: flex;
@@ -36,39 +34,42 @@ export const StyledCard = styled(Card)`
 export const Stars = styled(Rate)`
   color: ${colors.white};
   font-size: 30px;
+  .ant-rate-star-second {
+    color: ${colors.white};
+  }
+
   @media (max-width: ${breakpoints.desktop}) {
     font-size: 24px;
   }
+
   @media (max-width: ${breakpoints.tablet}) {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   @media (max-width: ${breakpoints.smallTablet}) {
     font-size: 18px;
   }
+
   @media (max-width: ${breakpoints.mobile}) {
-    font-size: 24px;
+    font-size: 20px;
   }
 `;
+
 export const Image = styled.div`
   display: flex;
   height: auto;
   width: 100%;
   > img {
     width: 100%;
-    height: 229px;
+    height: 12.63rem;
     @media (max-width: ${breakpoints.desktop}) {
-      height: 183.2px;
+      height: 10rem;
     }
-    @media (max-width: ${breakpoints.tablet}) {
-      height: 137.4px;
-    }
-
     @media (max-width: ${breakpoints.smallTablet}) {
-      height: 123.66px;
+      height: 9rem;
     }
     @media (max-width: ${breakpoints.mobile}) {
-      height: 183.2px;
+      height: 10rem;
     }
   }
 `;
@@ -77,19 +78,19 @@ export const Line = styled.div`
   flex-direction: row;
   width: 100%;
   height: auto;
-  font-size: 35px;
+  font-size: 30px;
   @media (max-width: ${breakpoints.desktop}) {
-    font-size: 31.5px;
+    font-size: 24px;
   }
   @media (max-width: ${breakpoints.tablet}) {
-    font-size: 23.625px;
+    font-size: 20px;
   }
 
   @media (max-width: ${breakpoints.smallTablet}) {
-    font-size: 21.2625px;
+    font-size: 18px;
   }
   @media (max-width: ${breakpoints.mobile}) {
-    font-size: 31.5px;
+    font-size: 20px;
   }
 
   > p {
@@ -125,24 +126,6 @@ export const Line = styled.div`
     }
   }
 `;
-export const Group = styled.div`
-  display: flex;
-  flex-direction: row;
-  font-size: 35px;
-  @media (max-width: ${breakpoints.desktop}) {
-    font-size: 31.5px;
-  }
-  @media (max-width: ${breakpoints.tablet}) {
-    font-size: 23.625px;
-  }
-
-  @media (max-width: ${breakpoints.smallTablet}) {
-    font-size: 21.2625px;
-  }
-  @media (max-width: ${breakpoints.mobile}) {
-    font-size: 31.5px;
-  }
-`;
 export const LineSVG = styled.div`
   display: flex;
   flex-direction: row;
@@ -150,31 +133,53 @@ export const LineSVG = styled.div`
   align-items: center;
   > svg {
     cursor: pointer;
+    font-size: 30px;
+    @media (max-width: ${breakpoints.desktop}) {
+      font-size: 24px;
+    }
+    @media (max-width: ${breakpoints.tablet}) {
+      font-size: 20px;
+    }
+
+    @media (max-width: ${breakpoints.smallTablet}) {
+      font-size: 18px;
+    }
+    @media (max-width: ${breakpoints.mobile}) {
+      font-size: 20px;
+    }
   }
 `;
-export const BlueButton = styled(Button)`
-  width: 160px;
-  height: 50px;
-  background-color: ${colors.blue.accent};
-  border: none;
-  margin-top: 1rem;
+export const Group = styled.div`
+  display: flex;
+  flex-direction: row;
+  font-size: 17.5px;
   @media (max-width: ${breakpoints.desktop}) {
-    width: 128px;
-    height: 40px;
+    font-size: 15.75px;
   }
   @media (max-width: ${breakpoints.tablet}) {
-    width: 96px;
-    height: 30px;
+    font-size: 11.81px;
   }
 
   @media (max-width: ${breakpoints.smallTablet}) {
-    width: 86.4px;
-    height: 27px;
+    font-size: 10.63px;
   }
   @media (max-width: ${breakpoints.mobile}) {
-    width: 128px;
-    height: 40px;
+    font-size: 15.75px;
   }
+`;
+
+export const BlueButton = styled(Button)`
+  width: 8rem;
+  height: 3rem;
+  background-color: ${colors.blue.accent};
+  border: none;
+  margin-top: 1rem;
+
+  @media (max-width: ${breakpoints.desktop}) {
+    width: 6rem;
+    height: 2.25rem;
+  }
+
   &:hover {
     background-color: ${colors.blue.hover};
   }
@@ -191,10 +196,10 @@ export const Tag = styled.div`
   display: flex;
   width: auto;
   padding: 5px 20px;
-  height: 40px;
+  height: 2.5rem;
   border: 1px solid ${colors.white};
   color: ${colors.white};
-  font-size: 15px;
+  font-size: 14px;
   border-radius: 20px;
   align-items: center;
   text-align: center;

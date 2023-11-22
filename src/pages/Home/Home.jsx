@@ -2,54 +2,36 @@ import { Container, HomeImage, InputStyled, Line } from "./Styles";
 import homeImage from "../../assets/home-image.svg";
 import { SearchOutlined } from "@ant-design/icons";
 import { Card } from "../../components";
-import techImage from "../../assets/tech.jpeg";
 import { useMediaQuery } from "react-responsive";
 import FilterArea from "../../components/FilterArea/FilterArea";
+import { useGetAITools } from "../../services/ManagerService";
+import { useEffect, useState } from "react";
 
-const data = [
-  {
-    image: techImage,
-    name: "NOME",
-    stars: 5,
-    description:
-      "Descrição Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris.",
-    tags: ["tag lorem impsum", "tag2 lorem impsum", "tag3 lorem impsum"],
-  },
-  {
-    image: techImage,
-    name: "NOME1",
-    stars: 4,
-    description:
-      "Descrição Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris.",
-    tags: ["tag lorem impsum", "tag2 lorem impsum"],
-  },
-  {
-    image: techImage,
-    name: "NOME2",
-    stars: 2,
-    description:
-      "Descrição Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris.",
-    tags: ["tag lorem impsum"],
-  },
-  {
-    image: techImage,
-    name: "NOME3",
-    stars: 3,
-    description:
-      "Descrição Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris.",
-    tags: ["tag lorem impsum", "tag2 lorem impsum", "tag3 lorem impsum"],
-  },
-];
 export default function Home() {
+  const [aiTools, setAITools] = useState({});
+
+  async function GettingAIToolsData() {
+    const aiTools = await useGetAITools();
+    setAITools(aiTools);
+  }
+  useEffect(() => {
+    GettingAIToolsData();
+  }, []);
+
   const groupedData = [];
+  const isTabletScreen = useMediaQuery({ maxWidth: 1130 });
   const isMobileScreen = useMediaQuery({ maxWidth: 700 });
   if (isMobileScreen) {
-    for (let i = 0; i < data.length; i += 1) {
-      groupedData.push(data.slice(i, i + 1));
+    for (let i = 0; i < aiTools?.aiTools?.length; i += 1) {
+      groupedData.push(aiTools?.aiTools?.slice(i, i + 1));
+    }
+  } else if (isTabletScreen) {
+    for (let i = 0; i < aiTools?.aiTools?.length; i += 2) {
+      groupedData.push(aiTools?.aiTools?.slice(i, i + 2));
     }
   } else {
-    for (let i = 0; i < data.length; i += 2) {
-      groupedData.push(data.slice(i, i + 2));
+    for (let i = 0; i < aiTools?.aiTools?.length; i += 4) {
+      groupedData.push(aiTools?.aiTools?.slice(i, i + 4));
     }
   }
   return (
@@ -59,8 +41,9 @@ export default function Home() {
       <h2>O maior acervo de ferramentas e Inteligências Artificiais do Brasil </h2>
       <InputStyled type='primary' prefix={<SearchOutlined />}></InputStyled>
       <FilterArea />
-      {groupedData.map((group) => (
-        <Line key={groupedData.indexOf(group)}>
+
+      {groupedData.map((group, index) => (
+        <Line key={index}>
           {group.map((content) => (
             <Card dados={content} key={content?.name} />
           ))}
