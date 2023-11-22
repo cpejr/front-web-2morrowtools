@@ -30,8 +30,8 @@ export default function Home() {
       groupedData.push(aiTools?.aiTools?.slice(i, i + 2));
     }
   } else {
-    for (let i = 0; i < aiTools?.aiTools?.length; i += 3) {
-      groupedData.push(aiTools?.aiTools?.slice(i, i + 3));
+    for (let i = 0; i < aiTools?.aiTools?.length; i += 4) {
+      groupedData.push(aiTools?.aiTools?.slice(i, i + 4));
     }
   }
   return (
@@ -45,7 +45,7 @@ export default function Home() {
       {groupedData.map((group, index) => (
         <Line key={index}>
           {group.map((content) => (
-            <Card dados={content} key={content?.name} />
+            <Card dados={content} key={content?._id} />
           ))}
         </Line>
       ))}
