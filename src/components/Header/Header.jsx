@@ -30,14 +30,14 @@ borderRadius: "50%" }
 
 export default function Header() {
   const navigate = useNavigate();
-  const { setToken, clearAuth } = useAuthStore();
+  const { setToken, getToken, getUser, clearAuth } = useAuthStore();
   
-  const [loginLogoff, setLoginLogoff] = useState("Fazer Login");
-  const [photoURL, setPhotoURL] = useState();
+  const [loginLogoff, setLoginLogoff] = getToken() ? useState("Fazer Logoff") : useState("Fazer Login");
+
 
   const logGoogleUser = async () => {
 
-    if(loginLogoff == "Fazer Login") {
+    if(getToken() === null) {
       const response = await signInWithGooglePopup();
       
       const tokenObject = await usePostUser({
@@ -47,12 +47,10 @@ export default function Header() {
         type: "Admin"
       });
 
-      setToken(tokenObject.token, tokenObject.userId);
-      
-      setPhotoURL(response.user.photoURL)
+      setToken(tokenObject.token);
+    
       setLoginLogoff("Fazer Logoff");
     } else {
-      sessionStorage.clear()
       clearAuth();
       setLoginLogoff("Fazer Login");
     }
@@ -71,7 +69,7 @@ export default function Header() {
       <LoginSocial>
         <LoginButton onClick={logGoogleUser}>
           {loginLogoff}
-          {loginLogoff == "Fazer Login"? <UserOutlined /> : <img style={profilePictureStyle} src={photoURL}/>}
+          {getToken() === null ? <UserOutlined /> : <img style={profilePictureStyle} src={getUser().userFound.imageURL}/>}
         </LoginButton>
         <Line />
         <SocialMedias>
