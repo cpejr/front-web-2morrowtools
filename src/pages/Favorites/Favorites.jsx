@@ -21,7 +21,7 @@ export default function Favorites() {
       <Button onClick={handleOpenModal}>Abrir Modal</Button>
       <CustomCarousel />
       <CustomModal visible={modalVisible} onClose={handleCloseModal} />
-      <CustomForm onSubmit={handleSubmit}></CustomForm>
+      <CustomForm />
     </Container>
   );
 }

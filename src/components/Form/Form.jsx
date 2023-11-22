@@ -2,11 +2,11 @@ import { Form, Button } from "antd";
 import { StyledForm, CustomInput, ContainerForm } from "./Styles";
 
 const CustomForm = ({ onSubmit }) => {
-  if( typeof onSubmit != "function" ){
-    console.error("A propriedade onSubmit deve ser uma função");
-    return null;
-  }
-  
+  // if( typeof onSubmit != "function" ){
+  //   console.error("A propriedade onSubmit deve ser uma função");
+  //   return null;
+  // }
+
   const onFinish = (values) => {
     onSubmit(values);
   };
