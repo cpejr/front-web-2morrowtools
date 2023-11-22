@@ -28,7 +28,7 @@ export default function Card({ dados }) {
   return (
     <StyledCard>
       <Image>
-        <img src={dados?.image} alt={dados?.name} />
+        <img src={dados?.imageURL} alt={dados?.name} />
       </Image>
       <Group>
         <Line>{dados?.name}:</Line>
@@ -49,13 +49,14 @@ export default function Card({ dados }) {
       <Line>
         <p>{dados?.description}</p>
       </Line>
-      {groupedTags.map((tags, index) => (
-        <Tags key={index}>
-          {tags.map((content, i) => (
-            <Tag key={i}>{content}</Tag>
-          ))}
-        </Tags>
-      ))}
+
+      <Tags>
+        <Tag>{dados.id_categoryfeature.name} </Tag>
+        <Tag>{dados.id_categoryprice.name} </Tag>
+      </Tags>
+      <Tags>
+        <Tag>{dados.id_categoryprofession.name} </Tag>
+      </Tags>
       <BlueButton type='primary'>BOTÃO</BlueButton>
     </StyledCard>
   );
