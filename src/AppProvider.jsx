@@ -45,6 +45,7 @@ export default function AppProvider() {
             itemSelectedColor: colors.white,
             iconSize: "30px",
             lineType: "none",
+            colorPrimary: colors.blue.background,
           },
           Tag: {
             colorBgContainer: colors.white,
