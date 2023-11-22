@@ -20,6 +20,8 @@ import {
   StyledModal,
 } from "./Styles";
 import { FaUpload, FaTrash, FaEdit } from "react-icons/fa";
+//import { usePostAITools } from "../../services/ManagerService";
+import * as managerService from "../../services/ManagerService";
 
 export default function NewTool() {
   const { control, handleSubmit } = useForm();
@@ -64,9 +66,40 @@ export default function NewTool() {
     { _id: "3", name: "Ferramenta 3" },
   ];
 
+  const data = [
+    {
+      id_categoryfeature: "655d198cef3ca4729b1e27e8",
+      id_categoryprice: "655d199def3ca4729b1e27ea",
+      id_categoryprofession: "655d19abef3ca4729b1e27ec",
+      name: "Chat-GPT12",
+      shortDescription: "CPE",
+      longDescription: "Testando cabulosamente",
+      imageURL: "CPE",
+      link: "CPE",
+      priceType: "OI",
+      youtubeVideoLink: "https://www.youtube.com/embed/watch?v=5RahprejHPo",
+      linkedIn: "RianVieira",
+      discord: "RianVieira",
+      twitterX: "RianVieira",
+      instagram: "RianVieira",
+      tiktok: "RianVieira",
+      facebook: "RianVieira",
+      reddit: "RianVieira",
+      pinterest: "RianVieira",
+      youtube: "RianVieira",
+    },
+  ];
+  async function Teste() {
+    await managerService.usePostAITools(data);
+  }
   return (
     <Container>
       <Title>SUBMETER NOVO ITEM</Title>
+      <SubmitButton
+        onClick={() => {
+          Teste();
+        }}
+      ></SubmitButton>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Section>
           <FormInput name='title' placeholder='Título:' />
