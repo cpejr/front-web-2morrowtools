@@ -33,8 +33,8 @@ export default function FilterArea() {
     <ContainerFilter>
       <Checkboxes>
         {checkboxes.map((checkbox) => (
-          <CheckboxItem>
-            <Checkbox key={checkbox}>{checkbox}</Checkbox>
+          <CheckboxItem key={checkbox}>
+            <Checkbox>{checkbox}</Checkbox>
           </CheckboxItem>
         ))}
       </Checkboxes>

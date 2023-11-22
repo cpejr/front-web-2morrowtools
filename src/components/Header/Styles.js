@@ -126,7 +126,7 @@ export const LoginButton = styled.button`
 
 export const Line = styled.div`
   height: 80px;
-  border: 0.5px solid ${colors.veryLightGrey};
+  border: 0.5px solid ${colors.grey.veryLight};
   @media (max-width: ${breakpoints.smallTablet}) {
     display: none;
   }
