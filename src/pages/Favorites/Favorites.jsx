@@ -16,8 +16,6 @@ export default function Favorites() {
     setModalVisible(false);
   };
 
-  const handleSubmit = (values) => {};
-
   return (
     <Container>
       <Button onClick={handleOpenModal}>Abrir Modal</Button>

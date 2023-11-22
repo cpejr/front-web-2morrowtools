@@ -5,7 +5,6 @@ export const ContainerForm = styled.div`
   align-items: center;
 `;
 export const StyledForm = styled(Form)`
-  //max-width: 100px;
   margin: auto;
   display: flex;
   flex-direction: column;

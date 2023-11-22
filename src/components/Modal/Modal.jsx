@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Modal, Button } from "antd";
 import { StyledModalContent } from "./Styles";
 
-const CustomModal = ({ visible, onClose }) => {
+const CustomModal = ({ onClose }) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
+  //const [modalVisible, setModalVisible] = useState(false);
 
   const handleOk = () => {
     setConfirmLoading(true);
@@ -14,12 +15,17 @@ const CustomModal = ({ visible, onClose }) => {
   };
 
   const handleCancel = () => {
+    setModalVisible(false);
     onClose();
   };
 
+  // const handleShowModal = () => {
+  //   setModalVisible(true);
+  // }
+
   return (
     <Modal
-      visible={visible}
+      //visible={modalVisible}
       onOk={handleOk}
       confirmLoading={confirmLoading}
       onCancel={handleCancel}
