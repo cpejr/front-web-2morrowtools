@@ -21,12 +21,16 @@ import MenuHeader from "./MenuHeader";
 import { signInWithGooglePopup } from "./../../services/firebase"
 
 import { useState } from 'react';
+import { usePostUser } from "../../services/ManegerService";
+
+import useAuthStore from "../../stores/auth";
 
 const profilePictureStyle = { width: "40px", 
 borderRadius: "50%" }
 
 export default function Header() {
   const navigate = useNavigate();
+  const { setToken, clearAuth } = useAuthStore();
   
   const [loginLogoff, setLoginLogoff] = useState("Fazer Login");
   const [photoURL, setPhotoURL] = useState();
@@ -35,12 +39,21 @@ export default function Header() {
 
     if(loginLogoff == "Fazer Login") {
       const response = await signInWithGooglePopup();
-      console.log(response);
+      
+      const tokenObject = await usePostUser({
+        name: response.user.displayName,
+        email: response.user.email,
+        imageURL: response.user.photoURL,
+        type: "Admin"
+      });
+
+      setToken(tokenObject.token, tokenObject.userId);
+      
       setPhotoURL(response.user.photoURL)
       setLoginLogoff("Fazer Logoff");
     } else {
       sessionStorage.clear()
-      
+      clearAuth();
       setLoginLogoff("Fazer Login");
     }
 }

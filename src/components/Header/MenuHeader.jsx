@@ -46,7 +46,7 @@ export default function MenuHeader() {
 
     if(loginLogoff == "Fazer Login") {
       const response = await signInWithGooglePopup();
-      console.log(response.user);
+
       setPhotoURL(response.user.photoURL)
       setLoginLogoff("Fazer Logoff");
     } else {

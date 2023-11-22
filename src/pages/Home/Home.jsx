@@ -5,6 +5,7 @@ import { Card } from "../../components";
 import techImage from "../../assets/tech.jpeg";
 import { useMediaQuery } from "react-responsive";
 import FilterArea from "../../components/FilterArea/FilterArea";
+import { useEffect, useState } from 'react';
 
 const data = [
   {
@@ -41,6 +42,15 @@ const data = [
   },
 ];
 export default function Home() {
+  // const [ia, setIa] = useState({});
+  // //console.log(ia);
+  // async function getIaTools() {
+  //   const aleatorio = await useGetAITools();
+  //   setIa(aleatorio);
+  // }
+  // useEffect(()=> {
+  //   getIaTools();
+  // },[])
   const groupedData = [];
   const isMobileScreen = useMediaQuery({ maxWidth: 700 });
   if (isMobileScreen) {
