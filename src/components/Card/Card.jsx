@@ -51,11 +51,11 @@ export default function Card({ dados }) {
       </Line>
 
       <Tags>
-        <Tag>{dados.id_categoryfeature.name} </Tag>
-        <Tag>{dados.id_categoryprice.name} </Tag>
+        <Tag>{dados?.id_categoryfeature?.name} </Tag>
+        <Tag>{dados?.id_categoryprice?.name} </Tag>
       </Tags>
       <Tags>
-        <Tag>{dados.id_categoryprofession.name} </Tag>
+        <Tag>{dados?.id_categoryprofession?.name} </Tag>
       </Tags>
       <BlueButton type='primary'>BOTÃO</BlueButton>
     </StyledCard>
