@@ -3,10 +3,14 @@ import { StyledCard, BlueButton, Line, Tags, Tag, Image, Stars, LineSVG, Group }
 import { FaRegBookmark } from "react-icons/fa";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useCallback } from "react";
 
 export default function Card({ dados }) {
   const [starsValue, setStarsValue] = useState(dados.stars || 0);
   const [hoverValue, setHoverValue] = useState(0);
+  const navigate = useNavigate();
 
   const handleStarsChange = (value) => {
     setStarsValue(value);
@@ -25,13 +29,28 @@ export default function Card({ dados }) {
     groupedTags.push(dados?.tags?.slice(i, i + 2));
   }
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  const handleLineClick = useCallback(() => {
+    navigate(`/ferramenta/${dados?.name}`);
+    window.location.reload();
+  }, [navigate, dados?.name]);
+
+  useEffect(() => {
+    scrollToTop();
+  }, []);
   return (
     <StyledCard>
       <Image>
         <img src={dados?.imageURL} alt={dados?.name} />
       </Image>
       <Group>
-        <Line>{dados?.name}:</Line>
+        <Line onClick={handleLineClick}>{dados?.name}:</Line>
         <LineSVG>
           <FaRegBookmark />
         </LineSVG>

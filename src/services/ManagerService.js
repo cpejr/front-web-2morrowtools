@@ -7,3 +7,11 @@ export const useGetAITools = async () => {
   });
   return { aiTools };
 };
+
+export const useGetAIToolsByName = async ({ name }) => {
+  let aiTools = {};
+  await requesterService.getAIToolsByName(name).then((res) => {
+    aiTools = res.data;
+  });
+  return { aiTools };
+};

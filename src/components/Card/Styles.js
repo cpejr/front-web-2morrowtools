@@ -79,6 +79,7 @@ export const Line = styled.div`
   width: 100%;
   height: auto;
   font-size: 30px;
+  cursor: pointer;
   @media (max-width: ${breakpoints.desktop}) {
     font-size: 24px;
   }

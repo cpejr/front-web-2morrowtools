@@ -48,17 +48,17 @@ export default function Tool({ data }) {
   };
   return (
     <>
-      {data.map((dados, index) => (
+      {data?.aiTools?.map((dados, index) => (
         <>
           <Row key={index}>
             <ImageCollumn>
               <Image>
-                <img src={dados.image} alt={`ToolImage ${index}`} />
+                <img src={dados?.imageURL} alt={`ToolImage ${index}`} />
               </Image>
               <TagsLine key={`line-${index}`}>
-                <Tag>{dados?.categoryFeatures}</Tag>
-                <Tag>{dados?.categoryPrices}</Tag>
-                <Tag>{dados?.categoryProfessions}</Tag>
+                <Tag>{dados?.id_categoryfeature?.name}</Tag>
+                <Tag>{dados?.id_categoryprice?.name}</Tag>
+                <Tag>{dados?.id_categoryprofession?.name}</Tag>
               </TagsLine>
             </ImageCollumn>
             <DataCollumn>
@@ -79,11 +79,11 @@ export default function Tool({ data }) {
                 />
                 <span>({starsValue})</span>
               </Line>
-              <p>{dados?.description}</p>
+              <p>{dados?.shortDescription}</p>
               <TabletTagsLine key={`line-${index}`}>
-                <Tag>{dados?.categoryFeatures}</Tag>
-                <Tag>{dados?.categoryPrices}</Tag>
-                <Tag>{dados?.categoryProfessions}</Tag>
+                <Tag>{dados?.id_categoryfeature?.name}</Tag>
+                <Tag>{dados?.id_categoryprice?.name}</Tag>
+                <Tag>{dados?.id_categoryprofession?.name}</Tag>
               </TabletTagsLine>
               <BlueButton type='primary'>ACESSE JÁ!</BlueButton>
             </DataCollumn>
@@ -110,8 +110,8 @@ export default function Tool({ data }) {
               <iframe
                 width='100%'
                 height='100%'
-                src={dados.videosrc}
-                title={dados?.videoTitle}
+                src={dados.youtubeVideoLink}
+                title={"Video"}
                 allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
                 allowFullScreen
               ></iframe>

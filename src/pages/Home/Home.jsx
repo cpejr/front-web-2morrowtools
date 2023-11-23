@@ -19,6 +19,7 @@ export default function Home() {
   }, []);
 
   const groupedData = [];
+  const isSmallDesktop = useMediaQuery({ maxWidth: 1370 });
   const isTabletScreen = useMediaQuery({ maxWidth: 1130 });
   const isMobileScreen = useMediaQuery({ maxWidth: 700 });
   if (isMobileScreen) {
@@ -28,6 +29,10 @@ export default function Home() {
   } else if (isTabletScreen) {
     for (let i = 0; i < aiTools?.aiTools?.length; i += 2) {
       groupedData.push(aiTools?.aiTools?.slice(i, i + 2));
+    }
+  } else if (isSmallDesktop) {
+    for (let i = 0; i < aiTools?.aiTools?.length; i += 3) {
+      groupedData.push(aiTools?.aiTools?.slice(i, i + 3));
     }
   } else {
     for (let i = 0; i < aiTools?.aiTools?.length; i += 4) {
