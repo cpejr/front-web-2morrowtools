@@ -1,7 +1,6 @@
 import { Input } from "antd";
 import styled from "styled-components";
 import { breakpoints } from "../../styles/styleVariables";
-const mobileBreakPoint = "700px";
 
 export const Container = styled.div`
   display: flex;
@@ -10,6 +9,7 @@ export const Container = styled.div`
   justify-content: center;
   margin-top: 85px;
   margin-bottom: 100px;
+  gap: 2rem;
   h1 {
     font-size: 4rem;
     margin-bottom: 1rem;
@@ -59,12 +59,13 @@ export const InputStyled = styled(Input)`
 
 export const Line = styled.div`
   display: flex;
-  width: 80%;
+  width: 95%;
   height: auto;
   flex-direction: row;
-  justify-content: space-around;
   margin-bottom: 20px;
-  @media (max-width: ${mobileBreakPoint}) {
+  justify-content: space-around;
+  gap: 3rem;
+  @media (max-width: ${breakpoints.mobile}) {
     margin-bottom: 0;
   }
 `;

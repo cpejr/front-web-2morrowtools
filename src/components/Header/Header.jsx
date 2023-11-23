@@ -21,7 +21,7 @@ import MenuHeader from "./MenuHeader";
 import { signInWithGooglePopup } from "./../../services/firebase"
 
 import { useState } from 'react';
-import { usePostUser } from "../../services/ManegerService";
+import { usePostUser } from "../../services/ManagerService";
 
 import useAuthStore from "../../stores/auth";
 
