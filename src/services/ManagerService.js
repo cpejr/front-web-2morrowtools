@@ -18,16 +18,20 @@ export const useGetAITools = async () => {
 
 export const useEditAITools = async (_id, body) => {
   try {
-    await requesterService.editAITools(_id, body).then();
+    const response = await requesterService.editAITools(_id, body);
+    return response.data;
   } catch (error) {
-    return false;
+    console.error("Error updating tool", error);
+    throw error;
   }
 };
 
 export const useDeleteAITools = async (_id) => {
   try {
-    await requesterService.deleteAITools(_id).then();
+    const response = await requesterService.deleteAITools(_id);
+    return response.data;
   } catch (error) {
-    return false;
+    console.error("Error deleting tool", error);
+    throw error;
   }
 };

@@ -30,18 +30,22 @@ export default function NewTool() {
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [selectedTool, setSelectedTool] = useState(null);
 
-  const onSubmit = (data) => {
-    console.log("Formulário enviado com sucesso!", data);
+  const onSubmit = async (data) => {
+    try {
+      await managerService.createTool(data);
+      console.log("Formulário enviado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao enviar o formulário", error);
+    }
   };
 
-  const handleOpenDeleteModal = (toolId) => {
-    setSelectedToolId(toolId);
-    setDeleteModalOpen(true);
-  };
-
-  const handleCloseDeleteModal = () => {
-    setSelectedToolId(null);
-    setDeleteModalOpen(false);
+  const handleOpenDeleteModal = async (toolId) => {
+    try {
+      await managerService.deleteTool(toolId);
+      console.log("Ferramenta deletada com sucesso!");
+    } catch (error) {
+      console.error("Erro ao deletar ferramenta", error);
+    }
   };
 
   const handleOpenEditModal = (tool) => {
@@ -49,9 +53,15 @@ export default function NewTool() {
     setEditModalOpen(true);
   };
 
-  const handleCloseEditModal = () => {
-    setSelectedTool(null);
-    setEditModalOpen(false);
+  const handleCloseEditModal = async () => {
+    try {
+      await managerService.updateTool(selectedTool._id, selectedTool);
+      console.log("Ferramenta atualizada com sucesso!");
+      setEditModalOpen(false);
+      setSelectedTool(null);
+    } catch (error) {
+      console.error("Erro ao atualizar ferramenta", error);
+    }
   };
 
   const categories = [
