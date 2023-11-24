@@ -32,7 +32,7 @@ export default function NewTool() {
 
   const onSubmit = async (data) => {
     try {
-      await managerService.createTool(data);
+      await managerService.usePostAITools(data);
       console.log("Formulário enviado com sucesso!");
     } catch (error) {
       console.error("Erro ao enviar o formulário", error);
@@ -41,7 +41,8 @@ export default function NewTool() {
 
   const handleOpenDeleteModal = async (toolId) => {
     try {
-      await managerService.deleteTool(toolId);
+      setSelectedToolId(toolId);
+      await managerService.useDeleteAITools(toolId);
       console.log("Ferramenta deletada com sucesso!");
     } catch (error) {
       console.error("Erro ao deletar ferramenta", error);
@@ -55,13 +56,18 @@ export default function NewTool() {
 
   const handleCloseEditModal = async () => {
     try {
-      await managerService.updateTool(selectedTool._id, selectedTool);
+      await managerService.useEditAITools(selectedTool._id, selectedTool);
       console.log("Ferramenta atualizada com sucesso!");
       setEditModalOpen(false);
       setSelectedTool(null);
     } catch (error) {
       console.error("Erro ao atualizar ferramenta", error);
     }
+  };
+
+  const handleCloseDeleteModal = () => {
+    setSelectedToolId(null);
+    setDeleteModalOpen(false);
   };
 
   const categories = [
