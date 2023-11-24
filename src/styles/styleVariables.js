@@ -10,6 +10,8 @@ export const colors = {
   grey: {
     cardBackground: "#111720",
     veryLight: "#d9d9d9",
+    modalBackground: "#1F1F1F",
+    modalIconCLose: "#444444",
   },
   white: "#FFF",
   black: "#000",

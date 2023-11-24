@@ -54,7 +54,9 @@ export default function AppProvider() {
             fontSizeSM: "18px ",
           },
           Modal: {
-            contentBg: colors.blue.dark,
+            contentBg: colors.grey.modalBackground,
+            borderRadiusLG: "40px",
+            colorIcon: colors.grey.modalIconCLose,
           },
         },
       }}
