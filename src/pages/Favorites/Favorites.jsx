@@ -5,7 +5,7 @@ import { Button } from "antd";
 import CustomForm from "../../components/Form/Form";
 import CustomCarousel from "../../components/Carousel/Carousel";
 
-export default function Favorites() {
+function Favorites() {
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleOpenModal = () => {
@@ -25,3 +25,5 @@ export default function Favorites() {
     </Container>
   );
 }
+
+export default Favorites;
