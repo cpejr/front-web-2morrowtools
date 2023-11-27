@@ -7,6 +7,7 @@ import {
   ModalEdit,
   SocialMediaInput,
   NewLink,
+  FormSelect,
 } from "../../components";
 import { useForm } from "react-hook-form";
 import {
@@ -24,12 +25,23 @@ import { FaUpload, FaTrash, FaEdit } from "react-icons/fa";
 import * as managerService from "../../services/ManagerService";
 
 export default function NewTool() {
-  const { control, handleSubmit } = useForm();
+  //Set variables
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedToolId, setSelectedToolId] = useState(null);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [selectedTool, setSelectedTool] = useState(null);
 
+  //On submit
+  const { control, handleSubmit } = useForm();
+
+  const getCategoriesFeature = async () => {
+    try {
+      const res = await getCategoriesFeature;
+      setSessoes(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const onSubmit = async (data) => {
     try {
       await managerService.usePostAITools(data);
@@ -118,10 +130,10 @@ export default function NewTool() {
       ></SubmitButton>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Section>
-          <FormInput name='title' placeholder='Título:' />
-          <FormInput name='upload' placeholder='Upload de Imagem:' icon={FaUpload} />
+          <FormInput name='name' placeholder='Título:' />
+          <FormInput name='imageURL' placeholder='Upload de Imagem:' icon={FaUpload} />
           <FormInput name='shortDescription' placeholder='Descrição curta:' />
-          <FormsTextArea name='message' rows={4} placeholder='Descrição longa:' />
+          <FormsTextArea name='longDescription' rows={4} placeholder='Descrição longa:' />
           <FormInput name='link' placeholder='Link do site:' />
           <NewLink />
           <SocialMediaInput
@@ -134,6 +146,35 @@ export default function NewTool() {
             placeholder='Rede social:'
           />
         </Section>
+        <div>
+          <FormSelect
+            name='id_categoryfeature'
+            control={control}
+            data={categories.map(({ _id, name }) => ({
+              label: name,
+              value: _id,
+            }))}
+            placeholder='Rede social:'
+          />
+          <FormSelect
+            name='id_categoryprice'
+            control={control}
+            data={categories.map(({ _id, name }) => ({
+              label: name,
+              value: _id,
+            }))}
+            placeholder='Rede social:'
+          />
+          <FormSelect
+            name='id_categoryprofession'
+            control={control}
+            data={categories.map(({ _id, name }) => ({
+              label: name,
+              value: _id,
+            }))}
+            placeholder='Rede social:'
+          />
+        </div>
         <SubmitButton type='submit'>Enviar</SubmitButton>
       </Form>
       <Title>GERENCIAR ITENS</Title>

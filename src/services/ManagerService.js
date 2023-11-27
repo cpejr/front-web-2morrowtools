@@ -35,3 +35,27 @@ export const useDeleteAITools = async (_id) => {
     throw error;
   }
 };
+
+export const usegetCategoriesFeature = async () => {
+  let categoriesFeature = {};
+  await requesterService.getCategoriesFeature().then((res) => {
+    categoriesFeature = res.data;
+  });
+  return { categoriesFeature };
+};
+
+export const usegetCategoriesPrices = async () => {
+  let categoriesPrices = {};
+  await requesterService.getCategoriesPrice().then((res) => {
+    categoriesPrices = res.data;
+  });
+  return { categoriesPrices };
+};
+
+export const usegetCategoriesProfession = async () => {
+  let categoriesprofession = {};
+  await requesterService.getCategoriesProfession().then((res) => {
+    categoriesprofession = res.data;
+  });
+  return { categoriesprofession };
+};
