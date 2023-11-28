@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FormInput,
   SubmitButton,
@@ -30,18 +30,13 @@ export default function NewTool() {
   const [selectedToolId, setSelectedToolId] = useState(null);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [selectedTool, setSelectedTool] = useState(null);
+  const [categoriesFeature, setCategoriesFeature] = useState([]);
+  const [categoriesPrices, setCategoriesPrices] = useState([]);
+  const [categoriesProfession, setCategoriesProfession] = useState([]);
 
-  //On submit
+  // On submit
   const { control, handleSubmit } = useForm();
 
-  const getCategoriesFeature = async () => {
-    try {
-      const res = await getCategoriesFeature;
-      setSessoes(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const onSubmit = async (data) => {
     try {
       await managerService.usePostAITools(data);
@@ -51,6 +46,26 @@ export default function NewTool() {
     }
   };
 
+  // Get Categories
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const resultFeature = await managerService.usegetCategoriesFeature();
+        setCategoriesFeature(resultFeature.categoriesFeature);
+
+        const resultPrices = await managerService.usegetCategoriesPrices();
+        setCategoriesPrices(resultPrices.categoriesPrices);
+
+        const resultProfession = await managerService.usegetCategoriesProfession();
+        setCategoriesProfession(resultProfession.categoriesprofession);
+      } catch (error) {
+        console.error("Erro ao obter categorias", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // Modal Functions
   const handleOpenDeleteModal = async (toolId) => {
     try {
       setSelectedToolId(toolId);
@@ -94,40 +109,10 @@ export default function NewTool() {
     { _id: "3", name: "Ferramenta 3" },
   ];
 
-  const data = [
-    {
-      id_categoryfeature: "655d198cef3ca4729b1e27e8",
-      id_categoryprice: "655d199def3ca4729b1e27ea",
-      id_categoryprofession: "655d19abef3ca4729b1e27ec",
-      name: "Chat-GPT12",
-      shortDescription: "CPE",
-      longDescription: "Testando cabulosamente",
-      imageURL: "CPE",
-      link: "CPE",
-      priceType: "OI",
-      youtubeVideoLink: "https://www.youtube.com/embed/watch?v=5RahprejHPo",
-      linkedIn: "RianVieira",
-      discord: "RianVieira",
-      twitterX: "RianVieira",
-      instagram: "RianVieira",
-      tiktok: "RianVieira",
-      facebook: "RianVieira",
-      reddit: "RianVieira",
-      pinterest: "RianVieira",
-      youtube: "RianVieira",
-    },
-  ];
-  async function Teste() {
-    await managerService.usePostAITools(data);
-  }
   return (
     <Container>
       <Title>SUBMETER NOVO ITEM</Title>
-      <SubmitButton
-        onClick={() => {
-          Teste();
-        }}
-      ></SubmitButton>
+
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Section>
           <FormInput name='name' placeholder='Título:' />
@@ -150,29 +135,30 @@ export default function NewTool() {
           <FormSelect
             name='id_categoryfeature'
             control={control}
-            data={categories.map(({ _id, name }) => ({
+            data={categoriesFeature.map(({ _id, name }) => ({
               label: name,
               value: _id,
             }))}
-            placeholder='Rede social:'
+            placeholder='Categoria de Característica'
           />
           <FormSelect
             name='id_categoryprice'
             control={control}
-            data={categories.map(({ _id, name }) => ({
+            data={categoriesPrices.map(({ _id, name }) => ({
               label: name,
               value: _id,
             }))}
-            placeholder='Rede social:'
+            placeholder='Categoria de Preço'
           />
+
           <FormSelect
             name='id_categoryprofession'
             control={control}
-            data={categories.map(({ _id, name }) => ({
+            data={categoriesProfession.map(({ _id, name }) => ({
               label: name,
               value: _id,
             }))}
-            placeholder='Rede social:'
+            placeholder='Categoria de Profissão'
           />
         </div>
         <SubmitButton type='submit'>Enviar</SubmitButton>
