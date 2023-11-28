@@ -122,7 +122,6 @@ export default function NewTool() {
           <FormInput name='link' placeholder='Link do site:' />
           <NewLink />
           <SocialMediaInput
-            name='category'
             control={control}
             data={categories.map(({ _id, name }) => ({
               label: name,

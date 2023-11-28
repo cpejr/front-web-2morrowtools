@@ -11,11 +11,17 @@ import {
   FaPinterest,
   FaYoutube,
 } from "react-icons/fa";
+import { useState } from "react";
 
-export default function SocialMediaInput({ name, placeholder, icon: Icon }) {
+export default function SocialMediaInput({ placeholder, icon: Icon }) {
+  const [selectedSocialMedia, setSelectedSocialMedia] = useState("linkedin");
+
   const handleChange = (value) => {
+    setSelectedSocialMedia(value);
     console.log(`selected ${value}`);
   };
+
+  const name = selectedSocialMedia;
 
   const socialMediaOptions = [
     { value: "linkedin", label: <FaLinkedin /> },
@@ -46,7 +52,6 @@ export default function SocialMediaInput({ name, placeholder, icon: Icon }) {
 }
 
 SocialMediaInput.propTypes = {
-  name: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
   icon: PropTypes.elementType,
 };
