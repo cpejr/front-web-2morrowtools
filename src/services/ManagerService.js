@@ -1,6 +1,6 @@
 import * as requesterService from "./RequesterService";
 
-export const usePostAITools = async (body) => {
+export const useCreateAITools = async (body) => {
   console.log(body);
   const create = await requesterService.createAITools(body).then((res) => {
     return res;

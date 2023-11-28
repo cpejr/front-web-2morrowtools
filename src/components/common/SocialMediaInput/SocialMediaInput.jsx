@@ -21,8 +21,6 @@ export default function SocialMediaInput({ placeholder, icon: Icon }) {
     console.log(`selected ${value}`);
   };
 
-  const name = selectedSocialMedia;
-
   const socialMediaOptions = [
     { value: "linkedin", label: <FaLinkedin /> },
     { value: "discord", label: <FaDiscord /> },
@@ -45,7 +43,7 @@ export default function SocialMediaInput({ placeholder, icon: Icon }) {
       />
       <IconContainer>
         {Icon && <Icon />}
-        <StyledInput id={name} placeholder={placeholder} />
+        <StyledInput id={selectedSocialMedia} placeholder={placeholder} />
       </IconContainer>
     </Container>
   );

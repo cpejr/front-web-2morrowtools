@@ -38,8 +38,9 @@ export default function NewTool() {
   const { control, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
+    console.log(data);
     try {
-      await managerService.usePostAITools(data);
+      await managerService.useCreateAITools(data);
       console.log("Formulário enviado com sucesso!");
     } catch (error) {
       console.error("Erro ao enviar o formulário", error);
@@ -97,12 +98,6 @@ export default function NewTool() {
     setDeleteModalOpen(false);
   };
 
-  const categories = [
-    { _id: "1", name: "Categoria 1" },
-    { _id: "2", name: "Categoria 2" },
-    { _id: "3", name: "Categoria 3" },
-  ];
-
   const tools = [
     { _id: "1", name: "Ferramenta 1" },
     { _id: "2", name: "Ferramenta 2" },
@@ -121,14 +116,7 @@ export default function NewTool() {
           <FormsTextArea name='longDescription' rows={4} placeholder='Descrição longa:' />
           <FormInput name='link' placeholder='Link do site:' />
           <NewLink />
-          <SocialMediaInput
-            control={control}
-            data={categories.map(({ _id, name }) => ({
-              label: name,
-              value: _id,
-            }))}
-            placeholder='Rede social:'
-          />
+          <SocialMediaInput control={control} placeholder='Rede social:' />
         </Section>
         <div>
           <FormSelect
