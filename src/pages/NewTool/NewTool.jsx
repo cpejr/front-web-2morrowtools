@@ -22,6 +22,7 @@ import {
 } from "./Styles";
 import { FaUpload, FaTrash, FaEdit } from "react-icons/fa";
 import * as managerService from "../../services/ManagerService";
+import { newToolValidationSchema, buildNewToolErrorMessage } from "./utils";
 
 export default function NewTool() {
   // Set variables
@@ -35,8 +36,6 @@ export default function NewTool() {
   const [aiTools, setAiTools] = useState([]);
 
   // On submit
-  const { control, handleSubmit } = useForm();
-
   const onSubmit = async (data) => {
     console.log(data);
     try {
@@ -63,7 +62,8 @@ export default function NewTool() {
         const resultAiTools = await managerService.useGetAITools();
         setAiTools(resultAiTools.aiTools);
       } catch (error) {
-        console.error("Erro ao obter os dados", error);
+        const errorMessage = buildNewToolErrorMessage(error);
+        console.error(errorMessage);
       }
     };
     fetchData();
@@ -101,19 +101,41 @@ export default function NewTool() {
     setDeleteModalOpen(false);
   };
 
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({ newToolValidationSchema });
+
   return (
     <Container>
       <Title>SUBMETER NOVO ITEM</Title>
 
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Section>
-          <FormInput name='name' placeholder='Título:' />
-          <FormInput name='imageURL' placeholder='Upload de Imagem:' icon={FaUpload} />
-          <FormInput name='shortDescription' placeholder='Descrição curta:' />
-          <FormsTextArea name='longDescription' rows={4} placeholder='Descrição longa:' />
-          <FormInput name='link' placeholder='Link do site:' />
+          <FormInput name='name' placeholder='Título:' register={register} errors={errors} />
+          <FormInput
+            name='imageURL'
+            placeholder='Upload de Imagem:'
+            icon={FaUpload}
+            register={register}
+          />
+          <FormInput
+            name='shortDescription'
+            placeholder='Descrição curta:'
+            register={register}
+            errors={errors}
+          />
+          <FormsTextArea
+            name='longDescription'
+            rows={4}
+            placeholder='Descrição longa:'
+            register={register}
+          />
+          <FormInput name='link' placeholder='Link do site:' register={register} errors={errors} />
           <NewLink />
-          <SocialMediaInput control={control} placeholder='Rede social:' />
+          <SocialMediaInput placeholder='Rede social:' register={register} errors={errors} />
         </Section>
         <div>
           <FormSelect

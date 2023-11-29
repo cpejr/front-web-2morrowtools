@@ -2,26 +2,13 @@ import { Empty } from "antd";
 import PropTypes from "prop-types";
 import { Controller } from "react-hook-form";
 
-import {
-  Container,
-  //ErrorMessage,
-  Label,
-  StyledSelect,
-} from "./Styles";
+import { Container, ErrorMessage, Label, StyledSelect } from "./Styles";
 
-export default function FormSelect({
-  data,
-  name,
-  control,
-  //errors,
-  ...props
-}) {
-  //const errorMessage = errors?.[name]?.message;
+export default function FormSelect({ data, name, control, errors, ...props }) {
+  const errorMessage = errors?.[name]?.message;
 
   return (
-    <Container
-    //error={errorMessage ? 1 : 0}
-    >
+    <Container error={errorMessage ? 1 : 0}>
       <Label htmlFor={name}></Label>
       <Controller
         control={control}
@@ -43,7 +30,7 @@ export default function FormSelect({
           </StyledSelect>
         )}
       />
-      {/* <ErrorMessage error={errorMessage ? 1 : 0}>{errorMessage}</ErrorMessage> */}
+      <ErrorMessage error={errorMessage ? 1 : 0}>{errorMessage}</ErrorMessage>
     </Container>
   );
 }
@@ -55,5 +42,5 @@ FormSelect.propTypes = {
   name: PropTypes.string.isRequired,
   data: PropTypes.array,
   control: PropTypes.object.isRequired,
-  //errors: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
 };
