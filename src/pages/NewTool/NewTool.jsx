@@ -102,8 +102,8 @@ export default function NewTool() {
   };
 
   const {
-    register,
     handleSubmit,
+    register,
     control,
     formState: { errors },
   } = useForm({ newToolValidationSchema });

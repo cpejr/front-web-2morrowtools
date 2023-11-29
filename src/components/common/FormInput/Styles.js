@@ -54,3 +54,10 @@ export const IconContainer = styled.div`
     left: 10px;
   }
 `;
+
+export const ErrorMessage = styled.p`
+  font-size: 1.76rem;
+  color: red;
+  font-family: ${(props) => props.theme.fonts.montserrat};
+  font-weight: 700;
+`;
