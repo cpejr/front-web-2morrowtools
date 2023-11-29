@@ -13,13 +13,6 @@ export const Content = styled.div`
   width: 16rem;
 `;
 
-export const StyledCarouselDiv = styled.div`
-  height: 300px;
-  width: 70%;
-  line-height: 160px;
-  margin-top: 100px;
-`;
-
 export const StyledCarousel = styled(Carousel)`
   width: 70vw;
   .control-dots {

@@ -1,4 +1,3 @@
-// requires a loader
 import { Content, StyledCarousel } from "./Styles";
 
 export default function Carousel() {
