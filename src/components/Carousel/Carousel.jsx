@@ -1,35 +1,28 @@
-import React from "react";
-import { Carousel } from "antd";
-import { StyledCarouselContent, StyledCarouselDiv } from "./Styles";
+// requires a loader
+import { Content, StyledCarousel } from "./Styles";
 
-
-const CustomCarousel = () => {
-    
+export default function Carousel() {
   return (
-    <StyledCarouselDiv>
-    <Carousel > 
-        <div>
-            <StyledCarouselContent>
-                teste1
-            </StyledCarouselContent>
-        </div>
-        <div>
-            <StyledCarouselContent>
-                teste2
-            </StyledCarouselContent>
-        </div>
-        <div>
-            <StyledCarouselContent>
-                teste3
-            </StyledCarouselContent>
-        </div>
-        <div>
-            <StyledCarouselContent>
-                teste4
-            </StyledCarouselContent>
-        </div>
-    </Carousel>
-    </StyledCarouselDiv>
+    <StyledCarousel
+      autoPlay
+      infiniteLoop
+      interval={7000}
+      showStatus={false}
+      centerMode
+      centerSlidePercentage={30}
+    >
+      <div>
+        <Content>teste1</Content>
+      </div>
+      <div>
+        <Content>teste2</Content>
+      </div>
+      <div>
+        <Content>teste3</Content>
+      </div>
+      <div>
+        <Content>teste4</Content>
+      </div>
+    </StyledCarousel>
   );
-};
-export default CustomCarousel;
+}
