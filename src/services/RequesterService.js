@@ -1,7 +1,6 @@
 import api from "./api";
 
 // AI
-
 export const createAITools = async (body) => {
   await api.post(`/IA`, { ...body });
 };

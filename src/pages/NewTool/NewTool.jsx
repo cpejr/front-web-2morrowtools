@@ -21,11 +21,10 @@ import {
   StyledModal,
 } from "./Styles";
 import { FaUpload, FaTrash, FaEdit } from "react-icons/fa";
-//import { usePostAITools } from "../../services/ManagerService";
 import * as managerService from "../../services/ManagerService";
 
 export default function NewTool() {
-  //Set variables
+  // Set variables
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedToolId, setSelectedToolId] = useState(null);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -33,6 +32,7 @@ export default function NewTool() {
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [categoriesPrices, setCategoriesPrices] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
+  const [aiTools, setAiTools] = useState([]);
 
   // On submit
   const { control, handleSubmit } = useForm();
@@ -47,7 +47,7 @@ export default function NewTool() {
     }
   };
 
-  // Get Categories
+  // Get functions
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -59,8 +59,11 @@ export default function NewTool() {
 
         const resultProfession = await managerService.usegetCategoriesProfession();
         setCategoriesProfession(resultProfession.categoriesprofession);
+
+        const resultAiTools = await managerService.useGetAITools();
+        setAiTools(resultAiTools.aiTools);
       } catch (error) {
-        console.error("Erro ao obter categorias", error);
+        console.error("Erro ao obter os dados", error);
       }
     };
     fetchData();
@@ -97,12 +100,6 @@ export default function NewTool() {
     setSelectedToolId(null);
     setDeleteModalOpen(false);
   };
-
-  const tools = [
-    { _id: "1", name: "Ferramenta 1" },
-    { _id: "2", name: "Ferramenta 2" },
-    { _id: "3", name: "Ferramenta 3" },
-  ];
 
   return (
     <Container>
@@ -182,7 +179,7 @@ export default function NewTool() {
         </StyledModal>
       )}
       <ToolList>
-        {tools.map((tool) => (
+        {aiTools.map((tool) => (
           <ToolListItem key={tool._id}>
             {tool.name}
             <ToolButtons>
