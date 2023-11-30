@@ -1,6 +1,7 @@
 import { Input } from "antd";
+import { AutoComplete } from "primereact/autocomplete";
 import styled from "styled-components";
-import { breakpoints } from "../../styles/styleVariables";
+import { breakpoints, colors } from "../../styles/styleVariables";
 
 export const Container = styled.div`
   display: flex;
@@ -10,6 +11,9 @@ export const Container = styled.div`
   margin-top: 85px;
   margin-bottom: 100px;
   gap: 2rem;
+  .p-autocomplete-items-wrapper {
+    background-color: green;
+  }
   h1 {
     font-size: 4rem;
     margin-bottom: 1rem;
@@ -67,5 +71,48 @@ export const Line = styled.div`
   gap: 3rem;
   @media (max-width: ${breakpoints.mobile}) {
     margin-bottom: 0;
+  }
+`;
+export const IconWrapper = styled.div`
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border: 2px solid ${colors.white};
+  border-radius: 6px;
+`;
+export const SVGDiv = styled.div`
+  display: flex;
+  width: 5%;
+  > span {
+    > svg {
+      font-size: 2rem;
+      @media (max-width: ${breakpoints.mobile}) {
+        font-size: 1.5rem;
+      }
+      @media (max-width: ${breakpoints.smallMobile}) {
+        font-size: 1.2rem;
+      }
+    }
+  }
+`;
+export const AutoCompleteInput = styled(AutoComplete)`
+  width: 95%;
+  > input {
+    background-color: ${colors.blue.background};
+    width: 100%;
+    height: 35px;
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    color: ${colors.white};
+    border: none;
+    margin: 0;
+
+    &:focus {
+      outline: none;
+      border: none;
+    }
   }
 `;
