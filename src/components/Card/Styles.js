@@ -58,7 +58,7 @@ export const Stars = styled(Rate)`
 export const Image = styled.div`
   display: flex;
   height: auto;
-  width: 100%;
+  width: 250px;
   > img {
     width: 100%;
     height: 12.63rem;
@@ -154,6 +154,11 @@ export const Group = styled.div`
   display: flex;
   flex-direction: row;
   font-size: 17.5px;
+  .favoriteIcon {
+    &:hover {
+    color: ${colors.blue.accent};
+  }
+  }
   @media (max-width: ${breakpoints.desktop}) {
     font-size: 15.75px;
   }

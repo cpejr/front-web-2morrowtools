@@ -1,19 +1,32 @@
 import { useState } from "react";
 import { StyledCard, BlueButton, Line, Tags, Tag, Image, Stars, LineSVG, Group } from "./Styles";
 import { FaRegBookmark } from "react-icons/fa";
+import { FaBookmark } from "react-icons/fa6";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { useCallback } from "react";
+import { usePostFavorite } from "../../services/ManagerService"
+import  useAuthStore  from "../../stores/auth";
 
 export default function Card({ dados }) {
   const [starsValue, setStarsValue] = useState(dados.stars || 0);
   const [hoverValue, setHoverValue] = useState(0);
   const navigate = useNavigate();
 
+  const { getUser } = useAuthStore();
   const handleStarsChange = (value) => {
     setStarsValue(value);
   };
+
+  async function saveFavorite() {
+    const fav = await usePostFavorite({
+      userId: getUser().userFound._id || " ",
+      toolId: dados._id
+    })
+  }
+  const favoriteIcon = dados.favorite ? <FaBookmark className="favoriteIcon" onClick={saveFavorite}/> : <FaRegBookmark className="favoriteIcon" onClick={saveFavorite}/>;
+
 
   const handleHoverChange = (value) => {
     setHoverValue(value);
@@ -42,7 +55,7 @@ export default function Card({ dados }) {
       <Group>
         <Line onClick={handleLineClick}>{dados?.name}:</Line>
         <LineSVG>
-          <FaRegBookmark />
+          {favoriteIcon}
         </LineSVG>
       </Group>
       <Line>

@@ -4,22 +4,29 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Card } from "../../components";
 import { useMediaQuery } from "react-responsive";
 import FilterArea from "../../components/FilterArea/FilterArea";
-import { useGetAITools, useGetAIToolsByName } from "../../services/ManagerService";
+import { useGetAITools, useGetAIToolsByName, useGetFavorites } from "../../services/ManagerService";
 import { useEffect, useState } from "react";
+import  useAuthStore  from "../../stores/auth";
 import useDebounce from "../../services/useDebounce";
 
 export default function Home() {
+
   const [aiTools, setAITools] = useState({});
   const [aiToolsNames, setAIToolsNames] = useState({});
   const [names, setNames] = useState("");
   const debouncedName = useDebounce(names);
   const [namesArray, setNamesArray] = useState([]);
+  const [favoriteAiTools, setFavoriteAITools] = useState([]);
+  const { getUser } = useAuthStore();
 
   // Backend Calls
 
   async function GettingAIToolsDataByName() {
     const aiTools = await useGetAIToolsByName({ name: debouncedName });
     setAITools(aiTools);
+    const favorites = await useGetFavorites(getUser().userFound._id);
+    setFavoriteAITools(favorites);
+    
   }
   async function GettingAIToolsNames() {
     const aiTools = await useGetAITools();
@@ -90,7 +97,7 @@ export default function Home() {
       {groupedData.map((group, index) => (
         <Line key={index}>
           {group.map((content) => (
-            <Card dados={content} key={content?._id} load={GettingAIToolsDataByName} />
+            <Card dados={content} key={content?._id} />
           ))}
         </Line>
       ))}

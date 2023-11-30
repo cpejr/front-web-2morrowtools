@@ -54,7 +54,6 @@ export const ContainerMenu = styled.div`
 export const Links = styled.div`
   display: flex;
   justify-content: space-around;
-  word-wrap: break-word;
   width: 30rem;
   a {
     font-family: ${fonts.Exo2};
@@ -151,9 +150,11 @@ export const GroupMedias = styled.div`
   gap: 0.5rem;
 `;
 
-export const HamburgerMenu = styled(Menu)`
-  width: 0rem;
+export const ContainerMenuHeader = styled(Menu)`
+  display: none;
   @media (max-width: ${breakpoints.mobile}) {
-    width: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 `;
