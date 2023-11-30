@@ -192,15 +192,15 @@ export const BlueButton = styled(Button)`
 export const Tags = styled.div`
   display: flex;
   flex-direction: row;
-  width: 100%;
-  justify-content: start;
+  width: 90%;
+  justify-content: first baseline;
   height: auto;
   gap: 10px;
 `;
 export const Tag = styled.div`
   display: flex;
   width: auto;
-  padding: 5px 20px;
+  padding: 5px 0.8rem;
   height: 2.5rem;
   border: 1px solid ${colors.white};
   color: ${colors.white};
