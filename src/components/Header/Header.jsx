@@ -64,7 +64,7 @@ export default function Header() {
         <img onClick={() => navigate("/")} src={logo} />
       </ContainerMenu>
       <Links>
-        <Link to={"/"}>Lorem Ipsur</Link>
+        <Link to={"/"}>Página Inicial</Link>
         <Link to={"/favoritos"}>Meus Favoritos</Link>
       </Links>
       <LoginSocial>

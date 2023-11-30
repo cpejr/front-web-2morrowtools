@@ -21,7 +21,7 @@ export default function MenuHeader() {
       children: [
         {
           key: "0",
-          label: "Lorem Ipsur",
+          label: "Página Inicial",
           type: "menu-item",
           icon: <ToolOutlined />,
           onClick: () => navigate("/"),
