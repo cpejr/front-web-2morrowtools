@@ -7,3 +7,27 @@ export const useGetAITools = async () => {
   });
   return { aiTools };
 };
+
+export const usePostUser = async (user) => {
+  let token;
+await requesterService.postUser(user).then((res) => {
+  token = res.data;
+});
+return token ;
+};
+
+export const useGetFavorites = async (userId) => {
+  let favorites = [];
+  await requesterService.getFavorites(userId).then((res) => {
+    favorites = res.data;
+  });
+  return favorites;
+};
+
+export const usePostFavorite = async (data) => {
+  let favorite = {};
+  await requesterService.postFavorite(data).then((res) => {
+    favorite = res.data;
+  });
+  return favorite;
+};
