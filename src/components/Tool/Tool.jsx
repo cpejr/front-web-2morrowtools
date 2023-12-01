@@ -16,6 +16,7 @@ import {
   VideoDiv,
 } from "./Styles";
 import PropTypes from "prop-types";
+
 import { useState } from "react";
 import { FaRegBookmark } from "react-icons/fa";
 import { IoShareSocial } from "react-icons/io5";
@@ -85,7 +86,14 @@ export default function Tool({ data }) {
                 <Tag>{dados?.id_categoryprice?.name}</Tag>
                 <Tag>{dados?.id_categoryprofession?.name}</Tag>
               </TabletTagsLine>
-              <BlueButton type='primary'>ACESSE JÁ!</BlueButton>
+              <BlueButton
+                type='primary'
+                onClick={() => {
+                  window.open(dados?.link, "_blank");
+                }}
+              >
+                ACESSE JÁ!
+              </BlueButton>
             </DataCollumn>
           </Row>
           <Row>

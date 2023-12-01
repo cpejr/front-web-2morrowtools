@@ -93,7 +93,6 @@ export default function Tools() {
   }
 
   // Grouping Data
-
   const groupedData = [];
   const isSmallDesktop = useMediaQuery({ maxWidth: 1370 });
   const isTabletScreen = useMediaQuery({ maxWidth: 1130 });
