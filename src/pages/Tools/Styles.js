@@ -49,6 +49,7 @@ export const BlueButton = styled(Button)`
 export const CommentInput = styled(Input)`
   width: 100%;
   height: 3rem;
+  padding-left: 1rem;
 
   @media (max-width: ${breakpoints.smallDevice}) {
     font-size: 13px;
@@ -182,6 +183,7 @@ export const HalfInput = styled(Input)`
   width: 49%;
   height: 3rem;
   font-size: 22px;
+  padding-left: 1rem;
   @media (max-width: ${breakpoints.desktop}) {
     font-size: 20px;
   }
@@ -197,6 +199,7 @@ export const FullInput = styled(Input)`
   width: 100%;
   height: 3rem;
   font-size: 22px;
+  padding-left: 1rem;
   @media (max-width: ${breakpoints.desktop}) {
     font-size: 20px;
   }
