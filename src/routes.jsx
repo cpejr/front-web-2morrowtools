@@ -17,7 +17,7 @@ function Routes() {
           <Route path='/favoritos' element={<Favorites />} />
           <Route path='/adicionar-ia' element={<NewTool />} />
           <Route path='/perfil-ia' element={<IAProfile />} />
-          <Route path='ferramentas' element={<Tools />} />
+          <Route path='/ferramenta/:name' element={<Tools />} />
           <Route index element={<Home />} />
           <Route path='*' element={<Home />} />
         </Route>
