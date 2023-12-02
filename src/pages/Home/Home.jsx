@@ -6,11 +6,10 @@ import { useMediaQuery } from "react-responsive";
 import FilterArea from "../../components/FilterArea/FilterArea";
 import { useGetAITools, useGetAIToolsByName, useGetFavorites } from "../../services/ManagerService";
 import { useEffect, useState } from "react";
-import  useAuthStore  from "../../stores/auth";
+import useAuthStore from "../../stores/auth";
 import useDebounce from "../../services/useDebounce";
 
 export default function Home() {
-
   const [aiTools, setAITools] = useState({});
   const [aiToolsNames, setAIToolsNames] = useState({});
   const [names, setNames] = useState("");
@@ -20,13 +19,11 @@ export default function Home() {
   const { getUser } = useAuthStore();
 
   // Backend Calls
-
   async function GettingAIToolsDataByName() {
     const aiTools = await useGetAIToolsByName({ name: debouncedName });
     setAITools(aiTools);
     const favorites = await useGetFavorites(getUser().userFound._id);
     setFavoriteAITools(favorites);
-    
   }
   async function GettingAIToolsNames() {
     const aiTools = await useGetAITools();
@@ -44,7 +41,6 @@ export default function Home() {
   }, []);
 
   // Auto Complete
-
   const search = () => {
     const filteredNames = aiToolsNames?.aiTools?.map((tool) => tool.name) || [];
     const filteredSuggestions = filteredNames.filter((name) =>
@@ -54,7 +50,6 @@ export default function Home() {
   };
 
   // Rendering multiples Cards
-
   const groupedData = [];
   const isSmallDesktop = useMediaQuery({ maxWidth: 1370 });
   const isTabletScreen = useMediaQuery({ maxWidth: 1130 });

@@ -75,6 +75,7 @@ export const Line = styled.div`
 `;
 export const IconWrapper = styled.div`
   width: 50%;
+  height: 4rem;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -86,6 +87,7 @@ export const IconWrapper = styled.div`
 export const SVGDiv = styled.div`
   display: flex;
   width: 5%;
+  padding-left: 1rem;
   > span {
     > svg {
       font-size: 2rem;

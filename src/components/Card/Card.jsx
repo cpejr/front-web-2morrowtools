@@ -6,8 +6,8 @@ import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { useCallback } from "react";
-import { usePostFavorite } from "../../services/ManagerService"
-import  useAuthStore  from "../../stores/auth";
+import { usePostFavorite } from "../../services/ManagerService";
+import useAuthStore from "../../stores/auth";
 
 export default function Card({ dados }) {
   const [starsValue, setStarsValue] = useState(dados.stars || 0);
@@ -22,11 +22,14 @@ export default function Card({ dados }) {
   async function saveFavorite() {
     const fav = await usePostFavorite({
       userId: getUser().userFound._id || " ",
-      toolId: dados._id
-    })
+      toolId: dados._id,
+    });
   }
-  const favoriteIcon = dados.favorite ? <FaBookmark className="favoriteIcon" onClick={saveFavorite}/> : <FaRegBookmark className="favoriteIcon" onClick={saveFavorite}/>;
-
+  const favoriteIcon = dados.favorite ? (
+    <FaBookmark className='favoriteIcon' onClick={saveFavorite} />
+  ) : (
+    <FaRegBookmark className='favoriteIcon' onClick={saveFavorite} />
+  );
 
   const handleHoverChange = (value) => {
     setHoverValue(value);
@@ -54,9 +57,7 @@ export default function Card({ dados }) {
       </Image>
       <Group>
         <Line onClick={handleLineClick}>{dados?.name}:</Line>
-        <LineSVG>
-          {favoriteIcon}
-        </LineSVG>
+        <LineSVG>{favoriteIcon}</LineSVG>
       </Group>
       <Line>
         <Stars
