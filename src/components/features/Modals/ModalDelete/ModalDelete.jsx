@@ -1,11 +1,15 @@
 import PropTypes from "prop-types";
 import { Container, DeleteButton, Message } from "./Styles";
+import * as managerService from "../../../../services/ManagerService";
 
 export default function ModalDelete({ _id, close }) {
-  const handleDelete = () => {
-    console.log(`Excluir a ferramenta com ID ${_id}`);
-
-    close();
+  const handleDelete = async () => {
+    try {
+      await managerService.useDeleteAITools(_id);
+      close();
+    } catch (error) {
+      console.error("Erro ao deletar ferramenta", error);
+    }
   };
 
   return (

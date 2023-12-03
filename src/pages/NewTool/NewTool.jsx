@@ -5,8 +5,8 @@ import {
   FormsTextArea,
   ModalDelete,
   ModalEdit,
-  SocialMediaInput,
-  NewLink,
+  // SocialMediaInput,
+  // NewLink,
   FormSelect,
 } from "../../components";
 import { useForm } from "react-hook-form";
@@ -23,6 +23,9 @@ import {
 import { FaUpload, FaTrash, FaEdit } from "react-icons/fa";
 import * as managerService from "../../services/ManagerService";
 import { newToolValidationSchema, buildNewToolErrorMessage } from "./utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+// import { toast } from "react-toastify";
+// import { BlueButton } from "../../components/Card/Styles";
 
 export default function NewTool() {
   // Set variables
@@ -35,11 +38,27 @@ export default function NewTool() {
   const [categoriesProfession, setCategoriesProfession] = useState([]);
   const [aiTools, setAiTools] = useState([]);
 
+  // Forms values
+  const [formData, setFormData] = useState({
+    name: "",
+    imageURL: "",
+    shortDescription: "",
+    longDescription: "",
+    link: "",
+    youtubeVideoLink: "",
+    linkedIn: "",
+  });
+
   // On submit
   const onSubmit = async (data) => {
-    console.log(data);
+    const combinedData = {
+      ...formData,
+      id_categoryfeature: data.id_categoryfeature,
+      id_categoryprice: data.id_categoryprice,
+      id_categoryprofession: data.id_categoryprofession,
+    };
     try {
-      await managerService.useCreateAITools(data);
+      await managerService.useCreateAITools(combinedData);
       console.log("Formulário enviado com sucesso!");
     } catch (error) {
       console.error("Erro ao enviar o formulário", error);
@@ -70,14 +89,9 @@ export default function NewTool() {
   }, []);
 
   // Modal Functions
-  const handleOpenDeleteModal = async (toolId) => {
-    try {
-      setSelectedToolId(toolId);
-      await managerService.useDeleteAITools(toolId);
-      console.log("Ferramenta deletada com sucesso!");
-    } catch (error) {
-      console.error("Erro ao deletar ferramenta", error);
-    }
+  const handleOpenDeleteModal = (toolId) => {
+    setSelectedToolId(toolId);
+    setDeleteModalOpen(true);
   };
 
   const handleOpenEditModal = (tool) => {
@@ -103,10 +117,11 @@ export default function NewTool() {
 
   const {
     handleSubmit,
-    register,
     control,
     formState: { errors },
-  } = useForm({ newToolValidationSchema });
+  } = useForm({
+    resolver: zodResolver(newToolValidationSchema),
+  });
 
   return (
     <Container>
@@ -114,28 +129,49 @@ export default function NewTool() {
 
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Section>
-          <FormInput name='name' placeholder='Título:' register={register} errors={errors} />
+          <FormInput
+            name='name'
+            placeholder='Título:'
+            errors={errors}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          />
           <FormInput
             name='imageURL'
             placeholder='Upload de Imagem:'
             icon={FaUpload}
-            register={register}
+            errors={errors}
+            onChange={(e) => setFormData({ ...formData, imageURL: e.target.value })}
           />
           <FormInput
             name='shortDescription'
             placeholder='Descrição curta:'
-            register={register}
             errors={errors}
+            onChange={(e) => setFormData({ ...formData, shortDescription: e.target.value })}
           />
           <FormsTextArea
             name='longDescription'
             rows={4}
             placeholder='Descrição longa:'
-            register={register}
+            onChange={(e) => setFormData({ ...formData, longDescription: e.target.value })}
           />
-          <FormInput name='link' placeholder='Link do site:' register={register} errors={errors} />
-          <NewLink />
-          <SocialMediaInput placeholder='Rede social:' register={register} errors={errors} />
+          <FormInput
+            name='link'
+            placeholder='Link do site:'
+            errors={errors}
+            onChange={(e) => setFormData({ ...formData, link: e.target.value })}
+          />
+          <FormInput
+            name='youtubeVideoLink'
+            placeholder='Link do vídeo no Youtube:'
+            errors={errors}
+            onChange={(e) => setFormData({ ...formData, youtubeVideoLink: e.target.value })}
+          />
+          {/* <SocialMediaInput
+            placeholder='Rede social:'
+            errors={errors}
+            onChange={(e) => setFormData({ ...formData, linkedIn: e.target.value })}
+          />
+          <NewLink /> */}
         </Section>
         <div>
           <FormSelect
@@ -168,6 +204,7 @@ export default function NewTool() {
           />
         </div>
         <SubmitButton type='submit'>Enviar</SubmitButton>
+        {/* <BlueButton type='submit'>ENVIAR</BlueButton> */}
       </Form>
       <Title>GERENCIAR ITENS</Title>
       {isDeleteModalOpen && (

@@ -4,7 +4,7 @@ export default function NewLink() {
   return (
     <Container>
       <Icon />
-      <Text>Adicionar Link</Text>
+      <Text>Adicionar outra Rede Social</Text>
     </Container>
   );
 }
