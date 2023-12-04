@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { FiSave } from "react-icons/fi";
-import { Container, Tittle, Label, ModalContent, ModalButton, Form, Section } from "./Styles";
+import { Container, Tittle, Label, ModalContent, Form, Section } from "./Styles";
 import FormSelect from "../../../common/FormSelect/FormSelect";
 import { toast } from "react-toastify";
 import * as managerService from "../../../../services/ManagerService";
@@ -13,7 +12,7 @@ import { FaUpload } from "react-icons/fa";
 import { buildEditToolErrorMessage, editToolValidationSchema } from "./utils";
 import SubmitButton from "../../../common/SubmitButton/SubmitButton";
 
-export default function ModalEdit({ tool, close }) {
+export default function ModalEdit({ _id, tool, close }) {
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [categoriesPrices, setCategoriesPrices] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
@@ -36,10 +35,10 @@ export default function ModalEdit({ tool, close }) {
       id_categoryprice: data.id_categoryprice,
       id_categoryprofession: data.id_categoryprofession,
     };
-    console.log("Os dados enviados são:", combinedData);
+    console.log("O ID da ferramenta é:", _id);
 
     try {
-      await managerService.useEditAITools(combinedData);
+      await managerService.useEditAITools({ _id, body: combinedData });
       toast.success("Ferramenta editada com sucesso!");
       toast.clearWaitingQueue();
       close();
@@ -205,5 +204,6 @@ export default function ModalEdit({ tool, close }) {
 
 ModalEdit.propTypes = {
   tool: PropTypes.object,
+  _id: PropTypes.string.isRequired,
   close: PropTypes.func.isRequired,
 };

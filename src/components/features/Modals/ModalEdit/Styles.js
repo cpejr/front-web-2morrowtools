@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { Input, Button } from "antd";
-import { colors } from "../../../../styles/styleVariables";
+import { Input } from "antd";
 
 export const Container = styled.div`
   display: flex;
@@ -71,52 +70,4 @@ export const ErrorMessage = styled.p`
   color: red;
 
   margin-top: 0.5rem;
-`;
-
-export const ModalButton = styled(Button)`
-  cursor: pointer;
-  gap: 0.7rem;
-  align-self: center;
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-
-  flex-direction: row;
-  align-items: center;
-
-  width: 21.2rem;
-  height: 4.5rem;
-
-  background-color: transparent;
-  border: 0.1rem solid white;
-  border-radius: 0.5rem;
-  color: white;
-
-  margin-top: 1.5rem;
-
-  &:hover {
-    background-color: ${colors.white};
-    color: black;
-    cursor: pointer;
-  }
-  s p {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 1.8rem;
-  }
-`;
-
-export const Section = styled.section`
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-  width: 100%;
-  height: 100%;
-  gap: 2rem;
-
-  @media (max-width: 700px) {
-    width: 80%;
-  }
 `;

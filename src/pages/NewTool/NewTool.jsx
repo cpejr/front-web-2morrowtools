@@ -100,19 +100,15 @@ export default function NewTool() {
   };
 
   const handleOpenEditModal = (tool) => {
+    setSelectedToolId(tool._id);
     setSelectedTool(tool);
     setEditModalOpen(true);
   };
 
   const handleCloseEditModal = async () => {
-    try {
-      await managerService.useEditAITools(selectedTool._id, selectedTool);
-      console.log("Ferramenta atualizada com sucesso!");
-      setEditModalOpen(false);
-      setSelectedTool(null);
-    } catch (error) {
-      console.error("Erro ao atualizar ferramenta", error);
-    }
+    setSelectedTool(null);
+    setSelectedToolId(null);
+    setEditModalOpen(false);
   };
 
   const handleCloseDeleteModal = () => {
@@ -231,7 +227,7 @@ export default function NewTool() {
             <ModalDelete _id={selectedToolId} close={handleCloseDeleteModal} />
           </StyledModal>
         )}
-        {isEditModalOpen && selectedTool && (
+        {isEditModalOpen && (
           <StyledModal
             open={isEditModalOpen}
             onCancel={handleCloseEditModal}
@@ -243,7 +239,7 @@ export default function NewTool() {
             centered
             destroyOnClose
           >
-            <ModalEdit tool={selectedTool} close={handleCloseEditModal} />
+            <ModalEdit _id={selectedToolId} tool={selectedTool} close={handleCloseEditModal} />
           </StyledModal>
         )}
         <ToolList>
