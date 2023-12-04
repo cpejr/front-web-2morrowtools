@@ -85,6 +85,13 @@ export const Section2 = styled.section`
   }
 `;
 
+export const DivRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 3rem;
+`;
+
 export const ManageItems = styled.div`
   display: flex;
   flex-direction: row;

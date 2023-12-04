@@ -9,7 +9,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <GlobalStyles />
     <AppProvider />
     <ToastContainer
-      position='top-right'
+      position='bottom-right'
       autoClose={2000}
       limit={1}
       hideProgressBar={false}

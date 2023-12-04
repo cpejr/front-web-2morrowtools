@@ -19,6 +19,7 @@ import {
   ToolListItem,
   ToolButtons,
   StyledModal,
+  DivRow,
 } from "./Styles";
 import { FaUpload, FaTrash, FaEdit } from "react-icons/fa";
 import * as managerService from "../../services/ManagerService";
@@ -142,7 +143,7 @@ export default function NewTool() {
           />
           <FormInput
             name='imageURL'
-            placeholder='Upload de Imagem:'
+            placeholder='URL da imagem:'
             icon={FaUpload}
             errors={errors}
             onChange={(e) => setFormData({ ...formData, imageURL: e.target.value })}
@@ -177,37 +178,37 @@ export default function NewTool() {
             onChange={(e) => setFormData({ ...formData, linkedIn: e.target.value })}
           />
           <NewLink /> */}
-        </Section>
-        <div>
-          <FormSelect
-            name='id_categoryfeature'
-            control={control}
-            data={categoriesFeature.map(({ _id, name }) => ({
-              label: name,
-              value: _id,
-            }))}
-            placeholder='Categoria de Característica'
-          />
-          <FormSelect
-            name='id_categoryprice'
-            control={control}
-            data={categoriesPrices.map(({ _id, name }) => ({
-              label: name,
-              value: _id,
-            }))}
-            placeholder='Categoria de Preço'
-          />
+          <DivRow>
+            <FormSelect
+              name='id_categoryfeature'
+              control={control}
+              data={categoriesFeature.map(({ _id, name }) => ({
+                label: name,
+                value: _id,
+              }))}
+              placeholder='Característica'
+            />
+            <FormSelect
+              name='id_categoryprice'
+              control={control}
+              data={categoriesPrices.map(({ _id, name }) => ({
+                label: name,
+                value: _id,
+              }))}
+              placeholder='Preço'
+            />
 
-          <FormSelect
-            name='id_categoryprofession'
-            control={control}
-            data={categoriesProfession.map(({ _id, name }) => ({
-              label: name,
-              value: _id,
-            }))}
-            placeholder='Categoria de Profissão'
-          />
-        </div>
+            <FormSelect
+              name='id_categoryprofession'
+              control={control}
+              data={categoriesProfession.map(({ _id, name }) => ({
+                label: name,
+                value: _id,
+              }))}
+              placeholder='Profissão'
+            />
+          </DivRow>
+        </Section>
         <SubmitButton type='submit'>Enviar</SubmitButton>
         {/* <BlueButton type='submit'>ENVIAR</BlueButton> */}
       </Form>
