@@ -1,23 +1,26 @@
 import { z } from "zod";
 
-import { ERROR_CODES } from "../../utils/constants";
+import { ERROR_CODES } from "../.../../../../../utils/constants";
 
 // Form Validation
-export const newToolValidationSchema = z.object({
+export const editToolValidationSchema = z.object({
   name: z
-    .string({ required_error: "O nome é obrigatório" })
+    .string()
     .min(2, { message: "O nome deve ter pelo menos 2 caracteres" })
-    .max(60, { message: "O nome não pode exceder 60 caracteres" }),
+    .max(60, { message: "O nome não pode exceder 60 caracteres" })
+    .optional(),
 
   shortDescription: z
-    .string({ required_error: "A descrição curta é obrigatória" })
+    .string()
     .min(2, { message: "A descrição curta deve ter pelo menos 2 caracteres" })
-    .max(60, { message: "A descrição curta não pode exceder 60 caracteres" }),
+    .max(100, { message: "A descrição curta não pode exceder 100 caracteres" })
+    .optional(),
 
   longDescription: z
-    .string({ required_error: "A descrição é obrigatória" })
+    .string()
     .min(20, { message: "A descrição longa deve ter pelo menos 20 caracteres" })
-    .max(500, { message: "A descrição longa não pode exceder 500 caracteres" }),
+    .max(750, { message: "A descrição longa não pode exceder 750 caracteres" })
+    .optional(),
 
   youtubeVideoLink: z
     .string()
@@ -69,21 +72,21 @@ export const newToolValidationSchema = z.object({
     .min(5, { message: "O link do YouTube deve ter pelo menos 5 caracteres" })
     .optional(),
 
-  imageURL: z.string({ required_error: "A URL da imagem é obrigatória" }),
-  link: z.string({ required_error: "O link é obrigatório" }),
-  id_categoryfeature: z.string({ required_error: "A categoria de característica é obrigatória" }),
-  id_categoryprice: z.string({ required_error: "A categoria de preço é obrigatória" }),
-  id_categoryprofession: z.string({ required_error: "A categoria de profissão é obrigatória" }),
+  imageURL: z.string().optional(),
+  link: z.string().optional(),
+  id_categoryfeature: z.string().optional(),
+  id_categoryprice: z.string().optional(),
+  id_categoryprofession: z.string().optional(),
 });
 
 // Error Handling
-const newToolErrorMessages = {
+const editToolErrorMessages = {
   [ERROR_CODES.BAD_REQUEST]: "Dados inválidos",
   [ERROR_CODES.CONFLICT]: "O nome da AI já está sendo utilizado",
 };
-const newToolDefaultErrorMessage = "Erro ao criar nova ferramenta. Tente novamente mais tarde";
+const editToolDefaultErrorMessage = "Erro ao criar nova ferramenta. Tente novamente mais tarde";
 
-export function buildNewToolErrorMessage(err) {
+export function buildEditToolErrorMessage(err) {
   const code = err?.response?.data?.httpCode;
-  return newToolErrorMessages[code] || newToolDefaultErrorMessage;
+  return editToolErrorMessages[code] || editToolDefaultErrorMessage;
 }

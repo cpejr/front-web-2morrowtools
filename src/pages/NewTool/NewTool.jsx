@@ -24,7 +24,7 @@ import {
 import { FaUpload, FaTrash, FaEdit } from "react-icons/fa";
 import * as managerService from "../../services/ManagerService";
 import { newToolValidationSchema, buildNewToolErrorMessage } from "./utils";
-import { zodResolver } from "@hookform/resolvers/zod";
+// import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -66,7 +66,7 @@ export default function NewTool() {
     } catch (error) {
       toast.error("Erro ao criar ferramenta. Favor tentar novamente!");
       toast.clearWaitingQueue();
-      console.error("Erro ao enviar o formulário", error);
+      console.error("Erro ao criar a ferramenta", error);
     }
   };
 
