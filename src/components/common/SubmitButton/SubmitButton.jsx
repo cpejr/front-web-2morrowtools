@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import { SubmitSpace, Button } from './Styles';
+import { SubmitSpace, Button } from "./Styles";
 
 export default function SubmitButton({ children, relativeWidth }) {
   return (
     <SubmitSpace>
-      <Button type="submit" relativeWidth={relativeWidth}>
+      <Button type='submit' relativeWidth={relativeWidth}>
         {children}
       </Button>
     </SubmitSpace>
@@ -13,7 +13,7 @@ export default function SubmitButton({ children, relativeWidth }) {
 }
 
 SubmitButton.defaultProps = {
-  relativeWidth: '100%',
+  relativeWidth: "100%",
 };
 
 SubmitButton.propTypes = {

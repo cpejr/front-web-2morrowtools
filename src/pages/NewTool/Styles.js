@@ -8,7 +8,9 @@ export const Container = styled.div`
   flex-direction: column;
   width: 100%;
   height: auto;
-  padding-bottom: 4rem;
+  padding-bottom: 15rem;
+  padding-top: 8rem;
+  gap: 3rem;
 
   @media (max-width: 700px) {
     height: auto;
@@ -24,16 +26,14 @@ export const Title = styled.p`
   font-size: 4rem;
   color: white;
   font-weight: 600;
-  height: 20%;
-  padding-bottom: 1rem;
-  padding-top: 4rem;
+  margin: 0;
+  margin-left: 5rem;
   text-align: center;
-  margin-left: 5%;
 
   @media (max-width: 700px) {
     font-weight: 600;
     font-size: 2.5rem;
-    line-height: 3.9sarem;
+    line-height: 3.9rem;
     height: 3.9rem;
   }
 
@@ -90,6 +90,11 @@ export const DivRow = styled.div`
   flex-direction: row;
   width: 100%;
   gap: 3rem;
+
+  @media (max-width: 850px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
 `;
 
 export const ManageItems = styled.div`
@@ -105,7 +110,7 @@ export const ToolList = styled.ul`
   width: 50%;
   height: 6rem;
   font-size: 2rem;
-  padding: 0.8rem 1.6rem;
+  margin-left: 4rem;
   color: white;
 `;
 

@@ -209,51 +209,55 @@ export default function NewTool() {
             />
           </DivRow>
         </Section>
-        <SubmitButton type='submit'>Enviar</SubmitButton>
+        <SubmitButton type='submit'>
+          <p>Enviar</p>
+        </SubmitButton>
         {/* <BlueButton type='submit'>ENVIAR</BlueButton> */}
       </Form>
-      <Title>GERENCIAR ITENS</Title>
-      {isDeleteModalOpen && (
-        <StyledModal
-          open={isDeleteModalOpen}
-          onCancel={handleCloseDeleteModal}
-          width={500}
-          height={250}
-          padding={0}
-          footer={null}
-          closeIcon={true}
-          centered
-          destroyOnClose
-        >
-          <ModalDelete _id={selectedToolId} close={handleCloseDeleteModal} />
-        </StyledModal>
-      )}
-      {isEditModalOpen && selectedTool && (
-        <StyledModal
-          open={isEditModalOpen}
-          onCancel={handleCloseEditModal}
-          width={500}
-          height={250}
-          padding={0}
-          footer={null}
-          closeIcon={true}
-          centered
-          destroyOnClose
-        >
-          <ModalEdit tool={selectedTool} close={handleCloseEditModal} />
-        </StyledModal>
-      )}
-      <ToolList>
-        {aiTools.map((tool) => (
-          <ToolListItem key={tool._id}>
-            {tool.name}
-            <ToolButtons>
-              <FaTrash onClick={() => handleOpenDeleteModal(tool._id)} />
-              <FaEdit onClick={() => handleOpenEditModal(tool)} />
-            </ToolButtons>
-          </ToolListItem>
-        ))}
-      </ToolList>
+      <div>
+        <Title>GERENCIAR ITENS</Title>
+        {isDeleteModalOpen && (
+          <StyledModal
+            open={isDeleteModalOpen}
+            onCancel={handleCloseDeleteModal}
+            width={500}
+            height={250}
+            padding={0}
+            footer={null}
+            closeIcon={true}
+            centered
+            destroyOnClose
+          >
+            <ModalDelete _id={selectedToolId} close={handleCloseDeleteModal} />
+          </StyledModal>
+        )}
+        {isEditModalOpen && selectedTool && (
+          <StyledModal
+            open={isEditModalOpen}
+            onCancel={handleCloseEditModal}
+            width={500}
+            height={250}
+            padding={0}
+            footer={null}
+            closeIcon={true}
+            centered
+            destroyOnClose
+          >
+            <ModalEdit tool={selectedTool} close={handleCloseEditModal} />
+          </StyledModal>
+        )}
+        <ToolList>
+          {aiTools.map((tool) => (
+            <ToolListItem key={tool._id}>
+              {tool.name}
+              <ToolButtons>
+                <FaTrash onClick={() => handleOpenDeleteModal(tool._id)} />
+                <FaEdit onClick={() => handleOpenEditModal(tool)} />
+              </ToolButtons>
+            </ToolListItem>
+          ))}
+        </ToolList>
+      </div>
     </Container>
   );
 }

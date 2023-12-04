@@ -11,6 +11,14 @@ export const Container = styled.div`
     margin: 0 !important;
     padding-left: 1.6rem !important;
     font-size: 2rem;
+
+    @media (max-width: 700px) {
+      font-size: 1.6rem;
+    }
+
+    @media (max-width: 370px) {
+      font-size: 1.2rem;
+    }
   }
 
   .ant-select-selection-placeholder {
@@ -24,6 +32,10 @@ export const StyledSelect = styled(Select)`
   flex-grow: 1;
   width: 100%;
   height: 6rem;
+
+  @media (max-width: 700px) {
+    height: 3rem;
+  }
 `;
 
 export const ErrorMessage = styled.p`
