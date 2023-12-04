@@ -12,22 +12,39 @@ export const Container = styled.div`
   padding: 2rem 2.4rem;
 `;
 
-export const Form = styled.form``;
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+`;
+
+export const Tittle = styled.p`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 2.4rem;
+  align-self: baseline;
+  margin: 0;
+  align-self: center;
+
+  color: white;
+  padding-bottom: 2.5rem;
+`;
 
 export const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: baseline;
+  gap: 0.8rem;
 `;
 
 export const Label = styled.label`
   font-style: normal;
   font-weight: 500;
-  font-size: 2.4rem;
+  font-size: 1.6rem;
   align-self: baseline;
 
   color: white;
-  padding-bottom: 0.5rem;
+  padding-bottom: 1rem;
 `;
 
 export const StyledInput = styled(Input)`
@@ -88,5 +105,18 @@ export const ModalButton = styled(Button)`
     font-style: normal;
     font-weight: 600;
     font-size: 1.8rem;
+  }
+`;
+
+export const Section = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  width: 100%;
+  height: 100%;
+  gap: 2rem;
+
+  @media (max-width: 700px) {
+    width: 80%;
   }
 `;

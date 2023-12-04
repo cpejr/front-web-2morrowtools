@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { FiSave } from "react-icons/fi";
-import { Container, Label, ModalContent, ModalButton, Form } from "./Styles";
+import { Container, Tittle, Label, ModalContent, ModalButton, Form, Section } from "./Styles";
 import FormSelect from "../../../common/FormSelect/FormSelect";
 import { toast } from "react-toastify";
 import * as managerService from "../../../../services/ManagerService";
@@ -10,7 +10,8 @@ import { useForm } from "react-hook-form";
 import FormInput from "../../../common/FormInput/FormInput";
 import FormsTextArea from "../../../common/FormsTextArea/FormsTextArea";
 import { FaUpload } from "react-icons/fa";
-import { buildEditToolErrorMessage } from "./utils";
+import { buildEditToolErrorMessage, editToolValidationSchema } from "./utils";
+import SubmitButton from "../../../common/SubmitButton/SubmitButton";
 
 export default function ModalEdit({ tool, close }) {
   const [categoriesFeature, setCategoriesFeature] = useState([]);
@@ -36,7 +37,7 @@ export default function ModalEdit({ tool, close }) {
       id_categoryprofession: data.id_categoryprofession,
     };
     try {
-      await managerService.useCreateAITools(combinedData);
+      await managerService.useEditAITools(combinedData);
       toast.success("Ferramenta editada com sucesso!");
       toast.clearWaitingQueue();
       close();
@@ -71,97 +72,126 @@ export default function ModalEdit({ tool, close }) {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm();
-  //   {
-  //   resolver: zodResolver(editToolValidationSchema),
-  // }
+  } = useForm({
+    // resolver: zodResolver(editToolValidationSchema),
+  });
 
   return (
     <Container>
+      <Tittle>Editar Informações</Tittle>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <ModalContent>
-          <Label htmlFor='title'>Título:</Label>
-          <FormInput
-            name='name'
-            placeholder='Título:'
-            errors={errors}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          />
+          <Section>
+            <div>
+              <Label>Nome:</Label>
+              <FormInput
+                name='name'
+                value={tool.name}
+                placeholder='Título:'
+                errors={errors}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              />
+            </div>
 
-          <Label htmlFor='image'>Imagem:</Label>
-          <FormInput
-            name='imageURL'
-            placeholder='URL da imagem:'
-            icon={FaUpload}
-            errors={errors}
-            onChange={(e) => setFormData({ ...formData, imageURL: e.target.value })}
-          />
+            <div>
+              <Label>URL da imagem:</Label>
+              <FormInput
+                name='imageURL'
+                value={tool.imageURL}
+                placeholder='URL da imagem:'
+                icon={FaUpload}
+                errors={errors}
+                onChange={(e) => setFormData({ ...formData, imageURL: e.target.value })}
+              />
+            </div>
 
-          <Label htmlFor='shortDescription'>Descrição Curta:</Label>
-          <FormInput
-            name='shortDescription'
-            placeholder='Descrição curta:'
-            errors={errors}
-            onChange={(e) => setFormData({ ...formData, shortDescription: e.target.value })}
-          />
+            <div>
+              <Label>Descrição curta:</Label>
+              <FormInput
+                name='shortDescription'
+                value={tool.shortDescription}
+                placeholder='Descrição curta:'
+                errors={errors}
+                onChange={(e) => setFormData({ ...formData, shortDescription: e.target.value })}
+              />
+            </div>
 
-          <Label htmlFor='longDescription'>Descrição Longa:</Label>
-          <FormsTextArea
-            name='longDescription'
-            rows={4}
-            placeholder='Descrição longa:'
-            onChange={(e) => setFormData({ ...formData, longDescription: e.target.value })}
-          />
+            <div>
+              <Label>Descrição longa:</Label>
+              <FormsTextArea
+                name='longDescription'
+                rows={4}
+                value={tool.longDescription}
+                placeholder='Descrição longa:'
+                onChange={(e) => setFormData({ ...formData, longDescription: e.target.value })}
+              />
+            </div>
 
-          <Label htmlFor='link'>Link do Site:</Label>
-          <FormInput
-            name='link'
-            placeholder='Link do site:'
-            errors={errors}
-            onChange={(e) => setFormData({ ...formData, link: e.target.value })}
-          />
+            <div>
+              <Label>Link do site:</Label>
+              <FormInput
+                name='link'
+                value={tool.link}
+                placeholder='Link do site:'
+                errors={errors}
+                onChange={(e) => setFormData({ ...formData, link: e.target.value })}
+              />
+            </div>
 
-          <FormInput
-            name='youtubeVideoLink'
-            placeholder='Link do vídeo no Youtube:'
-            errors={errors}
-            onChange={(e) => setFormData({ ...formData, youtubeVideoLink: e.target.value })}
-          />
+            <div>
+              <Label>Link do vídeo no Youtube:</Label>
+              <FormInput
+                name='youtubeVideoLink'
+                value={tool.youtubeVideoLink}
+                placeholder='Link do vídeo no Youtube:'
+                errors={errors}
+                onChange={(e) => setFormData({ ...formData, youtubeVideoLink: e.target.value })}
+              />
+            </div>
 
-          <FormSelect
-            name='id_categoryfeature'
-            control={control}
-            data={categoriesFeature.map(({ _id, name }) => ({
-              label: name,
-              value: _id,
-            }))}
-            placeholder='Característica'
-          />
+            <div>
+              <Label>Category Feature:</Label>
+              <FormSelect
+                name='id_categoryfeature'
+                control={control}
+                data={categoriesFeature.map(({ _id, name }) => ({
+                  label: name,
+                  value: _id,
+                }))}
+                placeholder='Característica'
+              />
+            </div>
 
-          <FormSelect
-            name='id_categoryprice'
-            control={control}
-            data={categoriesPrices.map(({ _id, name }) => ({
-              label: name,
-              value: _id,
-            }))}
-            placeholder='Preço'
-          />
+            <div>
+              <Label>Category Price:</Label>
+              <FormSelect
+                name='id_categoryprice'
+                control={control}
+                data={categoriesPrices.map(({ _id, name }) => ({
+                  label: name,
+                  value: _id,
+                }))}
+                placeholder='Preço'
+              />
+            </div>
 
-          <FormSelect
-            name='id_categoryprofession'
-            control={control}
-            data={categoriesProfession.map(({ _id, name }) => ({
-              label: name,
-              value: _id,
-            }))}
-            placeholder='Profissão'
-          />
+            <div>
+              <Label>Category Profession:</Label>
+              <FormSelect
+                name='id_categoryprofession'
+                control={control}
+                data={categoriesProfession.map(({ _id, name }) => ({
+                  label: name,
+                  value: _id,
+                }))}
+                placeholder='Profissão'
+              />
+            </div>
+          </Section>
 
-          <ModalButton type='submit'>
-            <FiSave size={25} />
-            <p>Salvar Alterações</p>
-          </ModalButton>
+          <SubmitButton type='submit'>
+            <p>Salvar</p>
+          </SubmitButton>
         </ModalContent>
       </Form>
     </Container>
