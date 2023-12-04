@@ -4,7 +4,7 @@ import { Controller } from "react-hook-form";
 
 import { Container, ErrorMessage, Label, StyledSelect } from "./Styles";
 
-export default function FormSelect({ data, name, control, errors, ...props }) {
+export default function FormSelect({ data, name, control, defaultValue, errors, ...props }) {
   const errorMessage = errors?.[name]?.message;
 
   return (
@@ -13,6 +13,7 @@ export default function FormSelect({ data, name, control, errors, ...props }) {
       <Controller
         control={control}
         name={name}
+        defaultValue={defaultValue}
         render={({ field: { onChange, ref, value: currValue } }) => (
           <StyledSelect
             listHeight={120}
@@ -43,4 +44,5 @@ FormSelect.propTypes = {
   data: PropTypes.array,
   control: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired,
+  defaultValue: PropTypes.any,
 };

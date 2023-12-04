@@ -1,7 +1,15 @@
 import PropTypes from "prop-types";
 import { Container, Label, IconContainer, StyledInput, ErrorMessage } from "./Styles";
 
-export default function FormInput({ name, label, placeholder, errors, icon: Icon, ...props }) {
+export default function FormInput({
+  name,
+  label,
+  placeholder,
+  errors,
+  defaultValue,
+  icon: Icon,
+  ...props
+}) {
   const errorMessage = errors?.[name]?.message;
 
   return (
@@ -9,7 +17,7 @@ export default function FormInput({ name, label, placeholder, errors, icon: Icon
       <Label htmlFor={name}>{label}</Label>
       <IconContainer>
         {Icon && <Icon />}
-        <StyledInput id={name} placeholder={placeholder} {...props} />
+        <StyledInput id={name} defaultValue={defaultValue} placeholder={placeholder} {...props} />
       </IconContainer>
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </Container>
@@ -22,4 +30,5 @@ FormInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   icon: PropTypes.elementType,
   errors: PropTypes.object.isRequired,
+  defaultValue: PropTypes.string,
 };

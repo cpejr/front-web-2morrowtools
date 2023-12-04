@@ -20,12 +20,12 @@ export default function ModalEdit({ tool, close }) {
 
   // Forms values
   const [formData, setFormData] = useState({
-    name: "",
-    imageURL: "",
-    shortDescription: "",
-    longDescription: "",
-    link: "",
-    youtubeVideoLink: "",
+    name: tool.name,
+    imageURL: tool.imageURL,
+    shortDescription: tool.shortDescription,
+    longDescription: tool.longDescription,
+    link: tool.link,
+    youtubeVideoLink: tool.youtubeVideoLink,
   });
 
   // On submit
@@ -36,6 +36,8 @@ export default function ModalEdit({ tool, close }) {
       id_categoryprice: data.id_categoryprice,
       id_categoryprofession: data.id_categoryprofession,
     };
+    console.log("Os dados enviados são:", combinedData);
+
     try {
       await managerService.useEditAITools(combinedData);
       toast.success("Ferramenta editada com sucesso!");
@@ -86,7 +88,7 @@ export default function ModalEdit({ tool, close }) {
               <Label>Nome:</Label>
               <FormInput
                 name='name'
-                value={tool.name}
+                defaultValue={tool.name}
                 placeholder='Título:'
                 errors={errors}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -97,7 +99,7 @@ export default function ModalEdit({ tool, close }) {
               <Label>URL da imagem:</Label>
               <FormInput
                 name='imageURL'
-                value={tool.imageURL}
+                defaultValue={tool.imageURL}
                 placeholder='URL da imagem:'
                 icon={FaUpload}
                 errors={errors}
@@ -109,7 +111,7 @@ export default function ModalEdit({ tool, close }) {
               <Label>Descrição curta:</Label>
               <FormInput
                 name='shortDescription'
-                value={tool.shortDescription}
+                defaultValue={tool.shortDescription}
                 placeholder='Descrição curta:'
                 errors={errors}
                 onChange={(e) => setFormData({ ...formData, shortDescription: e.target.value })}
@@ -121,7 +123,7 @@ export default function ModalEdit({ tool, close }) {
               <FormsTextArea
                 name='longDescription'
                 rows={4}
-                value={tool.longDescription}
+                defaultValue={tool.longDescription}
                 placeholder='Descrição longa:'
                 onChange={(e) => setFormData({ ...formData, longDescription: e.target.value })}
               />
@@ -131,7 +133,7 @@ export default function ModalEdit({ tool, close }) {
               <Label>Link do site:</Label>
               <FormInput
                 name='link'
-                value={tool.link}
+                defaultValue={tool.link}
                 placeholder='Link do site:'
                 errors={errors}
                 onChange={(e) => setFormData({ ...formData, link: e.target.value })}
@@ -142,7 +144,7 @@ export default function ModalEdit({ tool, close }) {
               <Label>Link do vídeo no Youtube:</Label>
               <FormInput
                 name='youtubeVideoLink'
-                value={tool.youtubeVideoLink}
+                defaultValue={tool.youtubeVideoLink}
                 placeholder='Link do vídeo no Youtube:'
                 errors={errors}
                 onChange={(e) => setFormData({ ...formData, youtubeVideoLink: e.target.value })}
@@ -154,6 +156,7 @@ export default function ModalEdit({ tool, close }) {
               <FormSelect
                 name='id_categoryfeature'
                 control={control}
+                defaultValue={tool.id_categoryfeature._id}
                 data={categoriesFeature.map(({ _id, name }) => ({
                   label: name,
                   value: _id,
@@ -167,6 +170,7 @@ export default function ModalEdit({ tool, close }) {
               <FormSelect
                 name='id_categoryprice'
                 control={control}
+                defaultValue={tool.id_categoryprice._id}
                 data={categoriesPrices.map(({ _id, name }) => ({
                   label: name,
                   value: _id,
@@ -180,6 +184,7 @@ export default function ModalEdit({ tool, close }) {
               <FormSelect
                 name='id_categoryprofession'
                 control={control}
+                defaultValue={tool.id_categoryprofession._id}
                 data={categoriesProfession.map(({ _id, name }) => ({
                   label: name,
                   value: _id,
