@@ -64,11 +64,11 @@ export const InputStyled = styled(Input)`
 
 export const Line = styled.div`
   display: flex;
-  max-width: 70%;
+  width: 100%;
   height: auto;
   flex-direction: row;
   margin: 50px 0px 20px 0px;
-  justify-content: flex-star;
+  justify-content: center;
   gap: 4rem;
   @media (max-width: ${breakpoints.mobile}) {
     margin-bottom: 0;
