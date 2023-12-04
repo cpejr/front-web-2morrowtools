@@ -38,4 +38,16 @@ export const GlobalStyles = createGlobalStyle`
   * {
     box-sizing: border-box;
   }
+
+  .p-autocomplete-items-wrapper {
+      background-color: ${colors.blue.background};
+    }
+    .p-autocomplete-item{
+      color: ${colors.white};
+      &:hover{
+        background-color: ${colors.white};
+        color: ${colors.black};
+      }
+    }
+   
 `;

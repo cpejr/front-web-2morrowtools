@@ -39,6 +39,7 @@ export default function AppProvider() {
             itemSelectedColor: colors.white,
             iconSize: "30px",
             lineType: "none",
+            colorPrimary: colors.blue.background,
           },
           Modal: {
             activeBorderColor: colors.blue.accent,

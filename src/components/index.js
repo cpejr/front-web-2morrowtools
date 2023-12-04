@@ -8,3 +8,5 @@ export { default as ModalDelete } from "./features/Modals/ModalDelete/ModalDelet
 export { default as ModalEdit } from "./features/Modals/ModalEdit/ModalEdit";
 export { default as SocialMediaInput } from "./common/SocialMediaInput/SocialMediaInput";
 export { default as NewLink } from "./features/Modals/NewLink/NewLink";
+export { default as Tool } from "./Tool/Tool";
+export { default as Comments } from "./Comments/Comments";

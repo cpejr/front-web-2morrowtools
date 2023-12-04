@@ -1,11 +1,21 @@
 import api from "./api";
 
+//user
+export const postUser = (user) => api.post(`/User`, user);
+
+//favorite
+export const getFavorites = (userId) => api.get(`/Favorite/${userId}`);
+
+export const postFavorite = (data) => api.post(`/Favorite`, data);
+
 // AI
+export const getAITools = () => api.get(`/IA`);
+
+export const getAIToolsByName = (name) => api.get(`IA/search-by-name`, { params: { name } });
+
 export const createAITools = async (body) => {
   await api.post(`/IA`, { ...body });
 };
-
-export const getAITools = () => api.get(`/IA`);
 
 export const editAITools = (_id, body) => api.put(`/IA/${_id}`, body);
 
