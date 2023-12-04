@@ -5,6 +5,7 @@ import { breakpoints, colors } from "../../styles/styleVariables";
 
 export const Container = styled.div`
   display: flex;
+  width:100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -63,18 +64,18 @@ export const InputStyled = styled(Input)`
 
 export const Line = styled.div`
   display: flex;
-  width: 95%;
+  max-width: 70%;
   height: auto;
   flex-direction: row;
-  margin-bottom: 20px;
-  justify-content: space-around;
-  gap: 3rem;
+  margin: 50px 0px 20px 0px;
+  justify-content: flex-star;
+  gap: 4rem;
   @media (max-width: ${breakpoints.mobile}) {
     margin-bottom: 0;
   }
 `;
 export const IconWrapper = styled.div`
-  width: 50%;
+  width: 80%;
   height: 4rem;
   display: flex;
   flex-direction: row;
@@ -86,8 +87,8 @@ export const IconWrapper = styled.div`
 `;
 export const SVGDiv = styled.div`
   display: flex;
-  width: 5%;
-  padding-left: 1rem;
+  width: 3%;
+  padding-left: 0.7%;
   > span {
     > svg {
       font-size: 2rem;
