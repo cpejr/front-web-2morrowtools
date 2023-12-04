@@ -46,7 +46,6 @@ export default function NewTool() {
     longDescription: "",
     link: "",
     youtubeVideoLink: "",
-    linkedIn: "",
   });
 
   // On submit
@@ -119,9 +118,10 @@ export default function NewTool() {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm({
-    resolver: zodResolver(newToolValidationSchema),
-  });
+  } = useForm();
+  //   {
+  //   resolver: zodResolver(newToolValidationSchema),
+  // }
 
   return (
     <Container>
