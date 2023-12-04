@@ -71,3 +71,16 @@ export const ErrorMessage = styled.p`
 
   margin-top: 0.5rem;
 `;
+
+export const Section = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  width: 100%;
+  height: 100%;
+  gap: 2rem;
+
+  @media (max-width: 700px) {
+    width: 80%;
+  }
+`;
