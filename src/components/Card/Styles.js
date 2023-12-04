@@ -58,7 +58,6 @@ export const Stars = styled(Rate)`
 
 export const Image = styled.div`
   display: flex;
-  background-color: blue;
   height: auto;
   width: 290px;
   > img {
