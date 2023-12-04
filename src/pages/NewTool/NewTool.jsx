@@ -236,6 +236,13 @@ export default function NewTool() {
             padding={0}
             footer={null}
             closeIcon={true}
+            style={{
+              //display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: "100px",
+              marginBottom: "80%",
+            }}
             centered
             destroyOnClose
           >

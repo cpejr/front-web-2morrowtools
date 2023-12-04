@@ -78,9 +78,9 @@ export default function ModalEdit({ _id, tool, close }) {
 
   return (
     <Container>
-      <Tittle>Editar Informações</Tittle>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <ModalContent>
+          <Tittle>Editar Informações</Tittle>
           <Section>
             <div>
               <Label>Nome:</Label>
@@ -191,7 +191,6 @@ export default function ModalEdit({ _id, tool, close }) {
               />
             </div>
           </Section>
-
           <SubmitButton type='submit'>
             <p>Salvar</p>
           </SubmitButton>

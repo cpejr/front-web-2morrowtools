@@ -131,12 +131,16 @@ export const ToolButtons = styled.div`
 `;
 
 export const StyledModal = styled(Modal)`
+  //display: flex;
+  /* align-items: center;
+  justify-content: center; */
+
   .ant-modal-content {
     background-color: ${colors.grey.cardBackground};
   }
   .ant-modal-body {
-    align-items: center;
-    justify-content: center;
+    /* align-items: center;
+    justify-content: center; */
     color: white;
     border-radius: none;
   }
