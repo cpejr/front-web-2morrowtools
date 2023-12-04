@@ -27,18 +27,17 @@ export default function ModalEdit({ _id, tool, close }) {
     youtubeVideoLink: tool.youtubeVideoLink,
   });
 
-  // On submit
+  // On Submit
   const onSubmit = async (data) => {
-    const combinedData = {
+    const body = {
       ...formData,
       id_categoryfeature: data.id_categoryfeature,
       id_categoryprice: data.id_categoryprice,
       id_categoryprofession: data.id_categoryprofession,
     };
-    console.log("O ID da ferramenta é:", _id);
 
     try {
-      await managerService.useEditAITools({ _id, body: combinedData });
+      await managerService.useEditAITools(_id, body);
       toast.success("Ferramenta editada com sucesso!");
       toast.clearWaitingQueue();
       close();
