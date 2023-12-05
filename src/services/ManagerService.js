@@ -91,3 +91,69 @@ export const usegetCategoriesProfession = async () => {
   });
   return { categoriesprofession };
 };
+
+export const useGetComments = async () => {
+  let comments = {};
+  await requesterService.getComments().then((res) => {
+    comments = res.data;
+  });
+  return { comments };
+};
+
+export const useGetCommentsbyID = async (_id) => {
+  let comments = {};
+  await requesterService.getCommentsbyID(_id).then((res) => {
+    comments = res.data;
+  });
+  return { comments };
+};
+
+export const useGetCommentsbyUser = async (_id) => {
+  let comments = {};
+  await requesterService.getCommentsbyUser(_id).then((res) => {
+    comments = res.data;
+  });
+  return { comments };
+};
+
+export const useGetCommentsbyIA = async (_id) => {
+  let comments = {};
+  await requesterService.getCommentsbyIA(_id).then((res) => {
+    comments = res.data;
+  });
+  return { comments };
+};
+
+export const usePostComments = async (body) => {
+  let comments = {};
+  await requesterService.postComments(body).then((res) => {
+    comments = res.data;
+  });
+  return { comments };
+};
+
+export const useEditComments = async (_id,body) => {
+  let comments = {};
+  try{
+  await requesterService.editComments(_id,body).then((res) => {
+    comments = res.data;
+  });
+  return { comments };
+ } catch (error) {
+  console.error("Error editing comment", error);
+  throw error;
+ }
+};
+
+export const useDeleteComments = async (_id) => {
+  let comments = {};
+  try{
+  await requesterService.deleteComments(_id).then((res) => {
+    comments = res.data;
+  });
+  return { comments };
+  } catch (error) {
+    console.error("Error deleting comment", error);
+    throw error;
+  }
+};
