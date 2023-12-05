@@ -5,7 +5,8 @@ import { useGetFavorites } from "../../services/ManagerService";
 import { CaretLeftOutlined, CaretRightOutlined } from "@ant-design/icons"
 
 export default function Favorites() {
-  const { getUser } = useAuthStore();
+
+  const { getUser, getToken } = useAuthStore();
   const [aiTools, setAITools] = useState([]);
   
   function scrollContainer(component, amount) {
@@ -17,8 +18,10 @@ export default function Favorites() {
 
   let cards = [];
   async function getFavorites() {
-    const favorites = await useGetFavorites(getUser().userFound._id);
+    if(getUser() !== null){
+    const favorites = await useGetFavorites(getUser()._id);
     setAITools(favorites);
+  }
   }
 
   Object.values(aiTools).map(function(content) {
@@ -26,6 +29,9 @@ export default function Favorites() {
   });
 
   useEffect(() => {
+    if(getToken() === null){
+      window.location.href = "./";
+    }
     getFavorites();
   }, []);
 
@@ -37,14 +43,6 @@ export default function Favorites() {
       {cards}
     </CardsContainer>
     <CaretRightOutlined className="arrow" onClick={() =>scrollContainer("favorites", 250)}/>
-    </SectionContainer>
-    <h1>VISUALIZADOS RECENTEMENTE</h1>
-    <SectionContainer>
-    <CaretLeftOutlined className="arrow" onClick={() =>scrollContainer("mostViews", -250)}/>
-    <CardsContainer className="mostViews">
-      {cards}
-    </CardsContainer>
-    <CaretRightOutlined className="arrow" onClick={() =>scrollContainer("mostViews", 250)}/>
     </SectionContainer>
 
     </Container>;

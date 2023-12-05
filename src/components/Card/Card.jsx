@@ -6,23 +6,50 @@ import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import PropTypes from "prop-types";
 import { usePostFavorite } from "../../services/ManagerService"
 import  useAuthStore  from "../../stores/auth";
+import { signInWithGooglePopup } from "./../../services/firebase"
+import { usePostUser } from "../../services/ManagerService";
 
 export default function Card({ dados }) {
   const [starsValue, setStarsValue] = useState(dados.stars || 0);
   const [hoverValue, setHoverValue] = useState(0);
-  const { getUser } = useAuthStore();
+  const [favoriteIcon, setFavoriteIcon] = useState(dados.favorite ? <FaBookmark className="favoriteIcon"/> : <FaRegBookmark className="favoriteIcon"/>);
+
+  const { setToken, getUser, getToken } = useAuthStore();
   const handleStarsChange = (value) => {
     setStarsValue(value);
   };
 
   async function saveFavorite() {
+
+    if(getToken() === null) {
+      await logGoogleUser();
+    }
     const fav = await usePostFavorite({
-      userId: getUser().userFound._id || " ",
+      userId: getUser()._id || " ",
       toolId: dados._id
     })
+    console.log(dados.favorite);
+    dados.favorite = !dados.favorite;
+    setFavoriteIcon(dados.favorite ? <FaBookmark className="favoriteIcon"/> : <FaRegBookmark className="favoriteIcon"/>);
   }
-  const favoriteIcon = dados.favorite ? <FaBookmark className="favoriteIcon" onClick={saveFavorite}/> : <FaRegBookmark className="favoriteIcon" onClick={saveFavorite}/>;
+  let favorite = <span onClick={saveFavorite} style={{cursor:"pointer"}}>{favoriteIcon}</span>;
 
+  const logGoogleUser = async () => {
+
+    if(getToken() === null) {
+      const response = await signInWithGooglePopup();
+      const tokenObject = await usePostUser({
+        name: response.user.displayName,
+        email: response.user.email,
+        imageURL: response.user.photoURL,
+        type: "Admin"
+      });
+
+      setToken(tokenObject.token);
+    
+      window.location.reload();
+    } 
+}
 
   const handleHoverChange = (value) => {
     setHoverValue(value);
@@ -45,7 +72,7 @@ export default function Card({ dados }) {
       <Group>
         <Line>{dados?.name}:</Line>
         <LineSVG>
-          {favoriteIcon}
+          {favorite}
         </LineSVG>
       </Group>
       <Line>

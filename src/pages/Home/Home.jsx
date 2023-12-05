@@ -17,9 +17,10 @@ export default function Home() {
   async function GettingAIToolsData() {
     const aiTools = await useGetAITools();
     setAITools(aiTools);
-    const favorites = await useGetFavorites(getUser().userFound._id);
+    if(getUser() !== null){
+    const favorites = await useGetFavorites(getUser()._id);
     setFavoriteAITools(favorites);
-    
+    }
   }
   useEffect(() => {
     GettingAIToolsData();
@@ -52,8 +53,7 @@ export default function Home() {
       {groupedData.map((group, index) => (
         <Line key={index}>
           {group.map((content) => (
-            //console.log(favoriteAiTools[0], content)
-          <Card dados={{...content, favorite: favoriteAiTools.find( favoriteAiTool => favoriteAiTool['_id'] === content._id )}} key={content?.name} />
+          <Card dados={{...content, favorite: favoriteAiTools.find( favoriteAiTool => favoriteAiTool['_id'] === content._id)}} key={content?.name} />
           ))}
         </Line>
       ))}

@@ -16,30 +16,24 @@ import {
   TwitterOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom";
 import MenuHeader from "./MenuHeader";
 import { signInWithGooglePopup } from "./../../services/firebase"
-
 import { useState } from 'react';
 import { usePostUser } from "../../services/ManagerService";
-
 import useAuthStore from "../../stores/auth";
-
-const profilePictureStyle = { width: "40px", 
-borderRadius: "50%" }
 
 export default function Header() {
   const navigate = useNavigate();
-  const { setToken, getToken, getUser, clearAuth } = useAuthStore();
-  
-  const [loginLogoff, setLoginLogoff] = getToken() ? useState("Fazer Logoff") : useState("Fazer Login");
 
+  const { setToken, getToken, getUser, clearAuth } = useAuthStore();
+  const [loginLogoff, setLoginLogoff] =  useState(getToken() ? "Fazer Logoff" : "Fazer Login");
+  const [profilePicture, setProfilePicture] =  useState(loginLogoff == "Fazer Login" ? <UserOutlined /> : <img src={getUser().imageURL}/>);
 
   const logGoogleUser = async () => {
 
     if(getToken() === null) {
       const response = await signInWithGooglePopup();
-      
       const tokenObject = await usePostUser({
         name: response.user.displayName,
         email: response.user.email,
@@ -50,10 +44,25 @@ export default function Header() {
       setToken(tokenObject.token);
     
       setLoginLogoff("Fazer Logoff");
+      setProfilePicture(<img src={getUser().imageURL}/>);
+      window.location.reload();
     } else {
+
       clearAuth();
       setLoginLogoff("Fazer Login");
+      setProfilePicture(<UserOutlined />);
+
     }
+}
+
+const redirectToFavorites = async () => {
+  if(getToken() === null){
+    window.alert("Você deve estar logado para visualizar os favoritos.");
+    await logGoogleUser();
+  }
+  if(getToken() !== null){
+    window.location.href = "./favoritos"
+  }
 }
 
   return (
@@ -64,12 +73,12 @@ export default function Header() {
       </ContainerMenu>
       <Links>
         <Link to={"/"}>Lorem Ipsur</Link>
-        <Link to={"/favoritos"}>Meus Favoritos</Link>
+        <Link><span onClick={redirectToFavorites}>Meus Favoritos</span></Link>
       </Links>
       <LoginSocial>
         <LoginButton onClick={logGoogleUser}>
           {loginLogoff}
-          {getToken() === null ? <UserOutlined /> : <img style={profilePictureStyle} src={getUser().userFound.imageURL}/>}
+          {profilePicture}
         </LoginButton>
         <Line />
         <SocialMedias>

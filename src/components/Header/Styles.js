@@ -54,6 +54,7 @@ export const ContainerMenu = styled.div`
 export const Links = styled.div`
   display: flex;
   justify-content: space-around;
+  word-wrap: break-word;
   width: 30rem;
   a {
     font-family: ${fonts.Exo2};
@@ -104,6 +105,12 @@ export const LoginButton = styled.button`
   font-size: 1.2rem;
   font-weight: 400;
   word-wrap: break-word;
+
+  img {
+    width: 30%;
+    border-radius: 50%;
+  }
+
   &:hover {
     background-color: ${colors.white};
     color: black;
@@ -150,11 +157,9 @@ export const GroupMedias = styled.div`
   gap: 0.5rem;
 `;
 
-export const ContainerMenuHeader = styled(Menu)`
-  display: none;
+export const HamburgerMenu = styled(Menu)`
+  width: 0rem;
   @media (max-width: ${breakpoints.mobile}) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 6rem;
   }
 `;
