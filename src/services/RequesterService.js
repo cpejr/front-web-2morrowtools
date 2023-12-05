@@ -26,15 +26,3 @@ export const getCategoriesFeature = () => api.get(`/categoriesfeature`);
 export const getCategoriesPrice = () => api.get(`/categoriesprices`);
 
 export const getCategoriesProfession = () => api.get(`/categoriesprofession`);
-
-// Comments
-export const getComments = () => api.get("/comment")
-export const getCommentsbyID = (_id) => api.get(`/comment/${_id}`)
-export const getCommentsbyUser = (_id) => api.get(`/comment/user/${_id}`)
-export const getCommentsbyIA = (_id) => api.get(`/comment/IA/${_id}`)
-
-export const postComments = (body) => api.post(`/comment`, body)
-
-export const editComments = (_id,body) => api.put(`/comment/${_id}`, body)
-
-export const deleteComments = (_id) => api.delete(`/comment/${_id}`)
