@@ -132,11 +132,19 @@ export const ToolButtons = styled.div`
 
 export const StyledModal = styled(Modal)`
   //display: flex;
-  /* align-items: center;
-  justify-content: center; */
+  align-items: center;
+  justify-content: center;
+  margin-right: 50%;
+  @media (max-width: 700px) {
+    margin-right: 0%;
+  }
 
   .ant-modal-content {
+    width: 100rem;
     background-color: ${colors.grey.cardBackground};
+    @media (max-width: 700px) {
+      width: auto;
+    }
   }
   .ant-modal-body {
     /* align-items: center;

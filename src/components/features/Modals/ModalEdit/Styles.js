@@ -14,6 +14,10 @@ export const Container = styled.div`
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
+  width: 90rem;
+  @media (max-width: 700px) {
+    width: 25rem;
+  }
 `;
 
 export const Tittle = styled.p`
