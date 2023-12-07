@@ -31,11 +31,10 @@ export default function Card({ dados }) {
     if (getToken() === null) {
       await logGoogleUser();
     }
-    const fav = await usePostFavorite({
+    await usePostFavorite({
       userId: getUser()._id || " ",
       toolId: dados._id,
     });
-    console.log(dados.favorite);
     dados.favorite = !dados.favorite;
     setFavoriteIcon(
       dados.favorite ? (

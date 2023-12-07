@@ -16,7 +16,7 @@ import {
   TwitterOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Link, redirect, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MenuHeader from "./MenuHeader";
 import { signInWithGooglePopup } from "./../../services/firebase";
 import { useState } from "react";

@@ -8,7 +8,6 @@ export default function ModalDelete({ _id, close }) {
     try {
       await managerService.useDeleteAITools(_id);
       toast.success("Ferramenta deletada com sucesso!");
-      console.log("Ferramenta deletada com sucesso!");
       close();
     } catch (error) {
       toast.error("Erro ao deletar ferramenta. Favor tentar novamente!");

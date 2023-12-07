@@ -41,7 +41,6 @@ export const usePostFavorite = async (data) => {
 };
 
 export const useCreateAITools = async (body) => {
-  console.log(body);
   const create = await requesterService.createAITools(body).then((res) => {
     return res;
   });
