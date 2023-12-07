@@ -24,8 +24,8 @@ export const Label = styled.label`
 `;
 
 export const StyledInput = styled(Input)`
-  height: 6rem;
-  font-size: 2rem;
+  height: 3rem;
+  font-size: 1rem;
   padding: 0.8rem 1.6rem;
   border-radius: 0.4rem;
   color: white;

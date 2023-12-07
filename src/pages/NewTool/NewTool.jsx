@@ -49,6 +49,15 @@ export default function NewTool() {
     longDescription: "",
     link: "",
     youtubeVideoLink: "",
+    linkedIn: "",
+    discord: "",
+    twitterX: "",
+    instagram: "",
+    tiktok: "",
+    facebook: "",
+    reddit: "",
+    pinterest: "",
+    youtube: "",
   });
 
   // On submit
@@ -167,6 +176,60 @@ export default function NewTool() {
             placeholder='Link do vídeo no Youtube:'
             errors={errors}
             onChange={(e) => setFormData({ ...formData, youtubeVideoLink: e.target.value })}
+          />
+          <FormInput
+            name='linkedIn'
+            placeholder='Link do linkedIn:'
+            errors={errors}
+            onChange={(e) => setFormData({ ...formData, linkedIn: e.target.value })}
+          />
+          <FormInput
+            name='discord'
+            placeholder='Link do discord:'
+            errors={errors}
+            onChange={(e) => setFormData({ ...formData, discord: e.target.value })}
+          />
+          <FormInput
+            name='twitterX'
+            placeholder='Link do twitter/X:'
+            errors={errors}
+            onChange={(e) => setFormData({ ...formData, twitterX: e.target.value })}
+          />
+          <FormInput
+            name='instagram'
+            placeholder='Link do instagram:'
+            errors={errors}
+            onChange={(e) => setFormData({ ...formData, instagram: e.target.value })}
+          />
+          <FormInput
+            name='tiktok'
+            placeholder='Link do tiktok:'
+            errors={errors}
+            onChange={(e) => setFormData({ ...formData, tiktok: e.target.value })}
+          />
+          <FormInput
+            name='facebook'
+            placeholder='Link do facebook:'
+            errors={errors}
+            onChange={(e) => setFormData({ ...formData, facebook: e.target.value })}
+          />
+          <FormInput
+            name='reddit'
+            placeholder='Link do reddit:'
+            errors={errors}
+            onChange={(e) => setFormData({ ...formData, reddit: e.target.value })}
+          />
+          <FormInput
+            name='pinterest'
+            placeholder='Link do pinterest:'
+            errors={errors}
+            onChange={(e) => setFormData({ ...formData, pinterest: e.target.value })}
+          />
+          <FormInput
+            name='youtube'
+            placeholder='Link do Youtube:'
+            errors={errors}
+            onChange={(e) => setFormData({ ...formData, youtube: e.target.value })}
           />
           {/* <SocialMediaInput
             placeholder='Rede social:'

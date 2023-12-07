@@ -26,7 +26,7 @@ export const Label = styled.label`
 
 export const StyledTextArea = styled(TextArea)`
   height: 6rem;
-  font-size: 2rem;
+  font-size: 1rem;
   padding: 0.8rem 1.6rem;
   border-radius: 0.4rem;
   color: white;

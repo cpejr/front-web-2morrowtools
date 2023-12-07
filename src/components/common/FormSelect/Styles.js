@@ -31,7 +31,7 @@ export const Container = styled.div`
 export const StyledSelect = styled(Select)`
   flex-grow: 1;
   width: 100%;
-  height: 6rem;
+  height: 3rem;
 
   @media (max-width: 700px) {
     height: 3rem;
