@@ -6,8 +6,6 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: fixed;
-  z-index: 1;
   background-color: ${colors.blue.background};
   width: 100%;
   height: 85px;

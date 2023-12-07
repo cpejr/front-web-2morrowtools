@@ -150,6 +150,105 @@ export default function ModalEdit({ _id, tool, close }) {
             </div>
 
             <div>
+              <Label>Link do linkedIn:</Label>
+              <FormInput
+                name='linkedIn'
+                defaultValue={tool.linkedIn}
+                placeholder='Link do linkedIn:'
+                errors={errors}
+                onChange={(e) => setFormData({ ...formData, linkedIn: e.target.value })}
+              />
+            </div>
+
+            <div>
+              <Label>Link do discord:</Label>
+              <FormInput
+                name='discord'
+                defaultValue={tool.discord}
+                placeholder='Link do discord:'
+                errors={errors}
+                onChange={(e) => setFormData({ ...formData, discord: e.target.value })}
+              />
+            </div>
+
+            <div>
+              <Label>Link do twitterX:</Label>
+              <FormInput
+                name='twitterX'
+                defaultValue={tool.twitterX}
+                placeholder='Link do twitter/X:'
+                errors={errors}
+                onChange={(e) => setFormData({ ...formData, twitterX: e.target.value })}
+              />
+            </div>
+
+            <div>
+              <Label>Link do instagram:</Label>
+              <FormInput
+                name='instagram'
+                defaultValue={tool.instagram}
+                placeholder='Link do instagram:'
+                errors={errors}
+                onChange={(e) => setFormData({ ...formData, instagram: e.target.value })}
+              />
+            </div>
+
+            <div>
+              <Label>Link do tiktok:</Label>
+              <FormInput
+                name='tiktok'
+                defaultValue={tool.tiktok}
+                placeholder='Link do tiktok:'
+                errors={errors}
+                onChange={(e) => setFormData({ ...formData, tiktok: e.target.value })}
+              />
+            </div>
+
+            <div>
+              <Label>Link do facebook:</Label>
+              <FormInput
+                name='facebook'
+                defaultValue={tool.facebook}
+                placeholder='Link do facebook:'
+                errors={errors}
+                onChange={(e) => setFormData({ ...formData, facebook: e.target.value })}
+              />
+            </div>
+
+            <div>
+              <Label>Link do reddit:</Label>
+              <FormInput
+                name='reddit'
+                defaultValue={tool.reddit}
+                placeholder='Link do reddit:'
+                errors={errors}
+                onChange={(e) => setFormData({ ...formData, reddit: e.target.value })}
+              />
+            </div>
+
+            <div>
+              <Label>Link do pinterest:</Label>
+              <FormInput
+                name='pinterest'
+                defaultValue={tool.pinterest}
+                placeholder='Link do pinterest:'
+                errors={errors}
+                onChange={(e) => setFormData({ ...formData, pinterest: e.target.value })}
+              />
+            </div>
+
+            <div>
+              <Label>Link do Youtube:</Label>
+              <FormInput
+                name='youtube'
+                defaultValue={tool.youtube}
+                placeholder='Link do Youtube:'
+                errors={errors}
+                onChange={(e) => setFormData({ ...formData, youtube: e.target.value })}
+              />
+            </div>
+
+            <div>
               <Label>Category Feature:</Label>
               <FormSelect
                 name='id_categoryfeature'

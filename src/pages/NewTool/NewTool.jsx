@@ -5,8 +5,6 @@ import {
   FormsTextArea,
   ModalDelete,
   ModalEdit,
-  // SocialMediaInput,
-  // NewLink,
   FormSelect,
 } from "../../components";
 import { useForm } from "react-hook-form";
@@ -231,12 +229,6 @@ export default function NewTool() {
             errors={errors}
             onChange={(e) => setFormData({ ...formData, youtube: e.target.value })}
           />
-          {/* <SocialMediaInput
-            placeholder='Rede social:'
-            errors={errors}
-            onChange={(e) => setFormData({ ...formData, linkedIn: e.target.value })}
-          />
-          <NewLink /> */}
           <DivRow>
             <FormSelect
               name='id_categoryfeature'
@@ -294,7 +286,6 @@ export default function NewTool() {
           <StyledModal
             open={isEditModalOpen}
             onCancel={handleCloseEditModal}
-            width={500}
             height={250}
             padding={0}
             footer={null}

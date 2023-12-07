@@ -9,11 +9,11 @@ export const Container = styled.div`
   width: 100%;
   height: auto;
   padding-bottom: 15rem;
-  padding-top: 8rem;
+  padding-top: 3rem;
   gap: 3rem;
 
   @media (max-width: 700px) {
-    height: auto;
+    //height: auto;
     padding-top: 3rem;
     padding-bottom: 3rem;
     margin-bottom: 3rem;
@@ -23,7 +23,7 @@ export const Container = styled.div`
 export const Title = styled.p`
   display: flex;
   align-items: center;
-  font-size: 4rem;
+  font-size: 2.5rem;
   color: white;
   font-weight: 600;
   margin: 0;
@@ -35,10 +35,12 @@ export const Title = styled.p`
     font-size: 2.5rem;
     line-height: 3.9rem;
     height: 3.9rem;
+    margin-left: 2rem;
   }
 
   @media (max-width: 370px) {
     font-size: 2.5rem;
+    margin-left: 2rem;
   }
 `;
 
@@ -109,7 +111,6 @@ export const ToolList = styled.ul`
   padding: 0;
   width: 50%;
   height: 6rem;
-  font-size: 2rem;
   margin-left: 4rem;
   color: white;
 `;
@@ -131,16 +132,11 @@ export const ToolButtons = styled.div`
 `;
 
 export const StyledModal = styled(Modal)`
-  //display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 50%;
   @media (max-width: 700px) {
     margin-right: 0%;
   }
-
   .ant-modal-content {
-    width: 100rem;
+    width: auto;
     background-color: ${colors.grey.cardBackground};
     @media (max-width: 700px) {
       width: auto;

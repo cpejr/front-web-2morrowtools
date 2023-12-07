@@ -13,12 +13,11 @@ export const Container = styled.div`
 `;
 
 export const Message = styled.h1`
-  font-size: 2.1rem;
   text-align: center;
   margin: 1.4rem;
   color: white;
   @media (max-width: 375px) {
-    font-size: 1.5rem;
+    font-size: 1rem;
     margin: 1rem;
   }
 `;
@@ -26,8 +25,8 @@ export const Message = styled.h1`
 export const DeleteButton = styled(Button)`
   cursor: pointer;
 
-  width: 15rem;
-  height: 5rem;
+  /* width: 15rem;
+  height: 5rem; */
 
   display: flex;
   flex-direction: row;
@@ -37,7 +36,7 @@ export const DeleteButton = styled(Button)`
   flex-direction: row;
   align-items: center;
 
-  background-color: transparent;
+  background-color: ${colors.blue};
   border: 1px solid white;
   border-radius: 0.5rem;
   color: white;
@@ -46,7 +45,6 @@ export const DeleteButton = styled(Button)`
 
   font-style: normal;
   font-weight: 500;
-  font-size: 1.8rem;
   line-height: 2.2rem;
 
   &:hover {

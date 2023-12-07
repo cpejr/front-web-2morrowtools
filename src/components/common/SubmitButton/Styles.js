@@ -42,7 +42,6 @@ export const Button = styled.button`
     color: white;
     text-transform: uppercase;
     font-family: ${fonts.Exo2};
-    font-size: 2rem;
     margin: 0;
   }
 `;

@@ -10,7 +10,6 @@ export const Container = styled.div`
     border: 0.2rem solid ${(props) => (props.error ? "red" : "#9f9f9f ")};
     margin: 0 !important;
     padding-left: 1.6rem !important;
-    font-size: 2rem;
 
     @media (max-width: 700px) {
       font-size: 1.6rem;
@@ -22,7 +21,7 @@ export const Container = styled.div`
   }
 
   .ant-select-selection-placeholder {
-    color: #9f9f9f;
+    color: white;
   }
   .ant-select {
   }
