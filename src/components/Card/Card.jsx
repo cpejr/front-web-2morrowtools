@@ -11,11 +11,11 @@ import { signInWithGooglePopup } from "./../../services/firebase";
 import { usePostUser } from "../../services/ManagerService";
 import useAuthStore from "../../stores/auth";
 
-export default function Card({ dados }) {
-  const [starsValue, setStarsValue] = useState(dados.stars || 0);
+export default function Card({ data }) {
+  const [starsValue, setStarsValue] = useState(data.stars || 0);
   const [hoverValue, setHoverValue] = useState(0);
   const [favoriteIcon, setFavoriteIcon] = useState(
-    dados.favorite ? (
+    data.favorite ? (
       <FaBookmark className='favoriteIcon' />
     ) : (
       <FaRegBookmark className='favoriteIcon' />
@@ -33,11 +33,11 @@ export default function Card({ dados }) {
     }
     await usePostFavorite({
       userId: getUser()._id || " ",
-      toolId: dados._id,
+      toolId: data._id,
     });
-    dados.favorite = !dados.favorite;
+    data.favorite = !data.favorite;
     setFavoriteIcon(
-      dados.favorite ? (
+      data.favorite ? (
         <FaBookmark className='favoriteIcon' />
       ) : (
         <FaRegBookmark className='favoriteIcon' />
@@ -75,23 +75,23 @@ export default function Card({ dados }) {
   };
 
   const groupedTags = [];
-  for (let i = 0; i < dados?.tags?.length; i += 2) {
-    groupedTags.push(dados?.tags?.slice(i, i + 2));
+  for (let i = 0; i < data?.tags?.length; i += 2) {
+    groupedTags.push(data?.tags?.slice(i, i + 2));
   }
 
   const handleLineClick = useCallback(() => {
-    navigate(`/ferramenta/${dados?.name}`);
+    navigate(`/ferramenta/${data?.name}`);
     window.location.reload();
     window.scrollTo(0, 0);
-  }, [navigate, dados?.name]);
+  }, [navigate, data?.name]);
 
   return (
     <StyledCard>
       <Image>
-        <img src={dados?.imageURL} alt={dados?.name} />
+        <img src={data?.imageURL} alt={data?.name} />
       </Image>
       <Group>
-        <Line onClick={handleLineClick}>{dados?.name}:</Line>
+        <Line onClick={handleLineClick}>{data?.name}:</Line>
         <LineSVG>{favorite}</LineSVG>
       </Group>
       <Line>
@@ -105,15 +105,15 @@ export default function Card({ dados }) {
         <span>({starsValue})</span>
       </Line>
       <Line>
-        <p>{dados?.description}</p>
+        <p>{data?.description}</p>
       </Line>
 
       <Tags>
-        <Tag>{dados?.id_categoryfeature?.name} </Tag>
-        <Tag>{dados?.id_categoryprice?.name} </Tag>
+        <Tag>{data?.id_categoryfeature?.name} </Tag>
+        <Tag>{data?.id_categoryprice?.name} </Tag>
       </Tags>
       <Tags>
-        <Tag>{dados?.id_categoryprofession?.name} </Tag>
+        <Tag>{data?.id_categoryprofession?.name} </Tag>
       </Tags>
       <BlueButton type='primary'>BOTÃO</BlueButton>
     </StyledCard>
@@ -121,5 +121,5 @@ export default function Card({ dados }) {
 }
 
 Card.propTypes = {
-  dados: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
 };

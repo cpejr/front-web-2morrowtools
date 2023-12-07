@@ -95,7 +95,7 @@ export default function Home() {
         <Line key={index}>
           {group.map((content) => (
             <Card
-              dados={{
+              data={{
                 ...content,
                 favorite: favoriteAiTools.find(
                   (favoriteAiTool) => favoriteAiTool["_id"] === content._id
