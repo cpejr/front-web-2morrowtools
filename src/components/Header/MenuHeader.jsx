@@ -15,38 +15,42 @@ function getItem(label, key, icon, children, type) {
   };
 }
 
-
 export default function MenuHeader() {
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
   const { setToken, getToken, getUser, clearAuth } = useAuthStore();
 
   const menuItems = [
     getItem("", "hamburger", <MenuOutlined />, [
-      getItem(" Lorem Ipsum", "/", <ToolOutlined style={{ fontSize: "1.3rem" }} />),
+      getItem(" Página Inicial", "/", <ToolOutlined style={{ fontSize: "1.3rem" }} />),
       getItem(" Meus Favoritos", "/favoritos", <HeartOutlined style={{ fontSize: "1.3rem" }} />),
-      (getToken() == null)   ? getItem(" Fazer Login", "login", <UserOutlined style={{ fontSize: "1.3rem" }} />) 
-                             : getItem(" Fazer Logoff", "login", <img src={getUser().imageURL} style={{ width: "15px", borderRadius: "50%", alignItems: "center" }}/>),
+      getToken() == null
+        ? getItem(" Fazer Login", "login", <UserOutlined style={{ fontSize: "1.3rem" }} />)
+        : getItem(
+            " Fazer Logoff",
+            "login",
+            <img
+              src={getUser().imageURL}
+              style={{ width: "15px", borderRadius: "50%", alignItems: "center" }}
+            />
+          ),
     ]),
   ];
 
-  getGoogleRedirectResult()
-  .then((response) => {
-    if(getToken() === null && response !== null) {
+  getGoogleRedirectResult().then((response) => {
+    if (getToken() === null && response !== null) {
       usePostUser({
-      name: response.user.displayName,
-      email: response.user.email,
-      imageURL: response.user.photoURL,
-      type: "Admin"
-    }).
-      then((tokenObject) => {
+        name: response.user.displayName,
+        email: response.user.email,
+        imageURL: response.user.photoURL,
+        type: "Admin",
+      }).then((tokenObject) => {
         setToken(tokenObject.token);
-      })
+      });
     }
-  })
+  });
 
   function onClick(key) {
-    if(key && key == "/favoritos" && getToken() === null){
-      window.alert("Você deve estar logado para visualizar os favoritos.");
+    if (key && key == "/favoritos" && getToken() === null) {
       logGoogleUser();
     }
     if (key && key !== "login" && key !== "/favoritos") {
@@ -56,18 +60,16 @@ export default function MenuHeader() {
       logGoogleUser();
     }
   }
-  
+
   const logGoogleUser = () => {
-    
-    if(getToken() === null) {
+    if (getToken() === null) {
       signInWithGoogleRedirect();
-    
     } else {
       clearAuth();
       window.location.reload();
     }
-  }    
-      
+  };
+
   return (
     <HamburgerMenu
       onClick={(e) => onClick(e.key)}
