@@ -18,8 +18,8 @@ import {
 } from "@ant-design/icons";
 import { Link, redirect, useNavigate } from "react-router-dom";
 import MenuHeader from "./MenuHeader";
-import { signInWithGooglePopup } from "./../../services/firebase"
-import { useState } from 'react';
+import { signInWithGooglePopup } from "./../../services/firebase";
+import { useState } from "react";
 import { usePostUser } from "../../services/ManagerService";
 import useAuthStore from "../../stores/auth";
 
@@ -27,43 +27,41 @@ export default function Header() {
   const navigate = useNavigate();
 
   const { setToken, getToken, getUser, clearAuth } = useAuthStore();
-  const [loginLogoff, setLoginLogoff] =  useState(getToken() ? "Fazer Logoff" : "Fazer Login");
-  const [profilePicture, setProfilePicture] =  useState(loginLogoff == "Fazer Login" ? <UserOutlined /> : <img src={getUser().imageURL}/>);
+  const [loginLogoff, setLoginLogoff] = useState(getToken() ? "Fazer Logoff" : "Fazer Login");
+  const [profilePicture, setProfilePicture] = useState(
+    loginLogoff == "Fazer Login" ? <UserOutlined /> : <img src={getUser().imageURL} />
+  );
 
   const logGoogleUser = async () => {
-
-    if(getToken() === null) {
+    if (getToken() === null) {
       const response = await signInWithGooglePopup();
       const tokenObject = await usePostUser({
         name: response.user.displayName,
         email: response.user.email,
         imageURL: response.user.photoURL,
-        type: "Admin"
+        type: "Admin",
       });
 
       setToken(tokenObject.token);
-    
+
       setLoginLogoff("Fazer Logoff");
-      setProfilePicture(<img src={getUser().imageURL}/>);
+      setProfilePicture(<img src={getUser().imageURL} />);
       window.location.reload();
     } else {
-
       clearAuth();
       setLoginLogoff("Fazer Login");
       setProfilePicture(<UserOutlined />);
-
     }
-}
+  };
 
-const redirectToFavorites = async () => {
-  if(getToken() === null){
-    window.alert("Você deve estar logado para visualizar os favoritos.");
-    await logGoogleUser();
-  }
-  if(getToken() !== null){
-    window.location.href = "./favoritos"
-  }
-}
+  const redirectToFavorites = async () => {
+    if (getToken() === null) {
+      await logGoogleUser();
+    }
+    if (getToken() !== null) {
+      window.location.href = "./favoritos";
+    }
+  };
 
   return (
     <Container>
@@ -72,8 +70,10 @@ const redirectToFavorites = async () => {
         <img onClick={() => navigate("/")} src={logo} />
       </ContainerMenu>
       <Links>
-        <Link to={"/"}>Lorem Ipsur</Link>
-        <Link><span onClick={redirectToFavorites}>Meus Favoritos</span></Link>
+        <Link to={"/"}>Página Inicial</Link>
+        <Link>
+          <span onClick={redirectToFavorites}>Meus Favoritos</span>
+        </Link>
       </Links>
       <LoginSocial>
         <LoginButton onClick={logGoogleUser}>
