@@ -4,10 +4,12 @@ import { FaRegBookmark } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa6";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import PropTypes from "prop-types";
-import { usePostFavorite } from "../../services/ManagerService"
-import  useAuthStore  from "../../stores/auth";
+import { useNavigate } from "react-router-dom";
+import { useCallback } from "react";
+import { usePostFavorite } from "../../services/ManagerService";
 import { signInWithGooglePopup } from "./../../services/firebase"
 import { usePostUser } from "../../services/ManagerService";
+import useAuthStore from "../../stores/auth";
 
 export default function Card({ dados }) {
   const [starsValue, setStarsValue] = useState(dados.stars || 0);
@@ -64,13 +66,19 @@ export default function Card({ dados }) {
     groupedTags.push(dados?.tags?.slice(i, i + 2));
   }
 
+  const handleLineClick = useCallback(() => {
+    navigate(`/ferramenta/${dados?.name}`);
+    window.location.reload();
+    window.scrollTo(0, 0);
+  }, [navigate, dados?.name]);
+
   return (
     <StyledCard>
       <Image>
         <img src={dados?.imageURL} alt={dados?.name} />
       </Image>
       <Group>
-        <Line>{dados?.name}:</Line>
+        <Line onClick={handleLineClick}>{dados?.name}:</Line>
         <LineSVG>
           {favorite}
         </LineSVG>

@@ -7,11 +7,16 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+.env
+.env.development
+.env.production
+
 node_modules
 .env
 dist
 dist-ssr
 *.local
+.editorconfig
 
 # Editor directories and files
 .vscode/*
