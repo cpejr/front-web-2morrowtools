@@ -1,4 +1,4 @@
-import { getAuth, signInWithPopup, signInWithRedirect, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, signInWithPopup, signInWithRedirect, GoogleAuthProvider, getRedirectResult } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from './FirebaseConfig'
 
@@ -20,3 +20,4 @@ export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
 
 //for mobile it is better to use redirect
 export const signInWithGoogleRedirect = () => signInWithRedirect(auth, provider);
+export const getGoogleRedirectResult = () => getRedirectResult(auth);

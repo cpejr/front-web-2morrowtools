@@ -22,8 +22,10 @@ export default function Home() {
   async function GettingAIToolsDataByName() {
     const aiTools = await useGetAIToolsByName({ name: debouncedName });
     setAITools(aiTools);
-    const favorites = await useGetFavorites(getUser().userFound._id);
+    if(getUser() !== null){
+    const favorites = await useGetFavorites(getUser()._id);
     setFavoriteAITools(favorites);
+    }
   }
   async function GettingAIToolsNames() {
     const aiTools = await useGetAITools();
@@ -92,7 +94,7 @@ export default function Home() {
       {groupedData.map((group, index) => (
         <Line key={index}>
           {group.map((content) => (
-            <Card dados={content} key={content?._id} />
+          <Card dados={{...content, favorite: favoriteAiTools.find( favoriteAiTool => favoriteAiTool['_id'] === content._id)}} key={content?.name} />
           ))}
         </Line>
       ))}

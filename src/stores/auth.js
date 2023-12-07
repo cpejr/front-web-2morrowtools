@@ -9,8 +9,7 @@ const useAuthStore = create(
       user: null,
       setToken: (token) => {
 
-        const user = jwtDecode(token);    
-
+        const user = jwtDecode(token).userFound;    
         set({token, user});
       },
       getToken : () => {
@@ -22,7 +21,6 @@ const useAuthStore = create(
       clearAuth: () => {
         set({ token: null, user: null });
       },
-
     }),
     {
       name: "auth",
