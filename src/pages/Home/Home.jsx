@@ -18,6 +18,24 @@ export default function Home() {
   const [favoriteAiTools, setFavoriteAITools] = useState([]);
   const { getUser } = useAuthStore();
 
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 4;
+
+  const totalPages = Math.ceil(aiTools?.aiTools?.length / itemsPerPage);
+
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
+  };
+
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentGroup = aiTools?.aiTools?.slice(startIndex, endIndex);
+
   // Backend Calls
   async function GettingAIToolsDataByName() {
     const aiTools = await useGetAIToolsByName({ name: debouncedName });
@@ -92,7 +110,7 @@ export default function Home() {
 
       <FilterArea />
       {groupedData.map((group, index) => (
-        <Line key={index}>
+        <Line key={index} style={{ display: index === currentPage ? "flex" : "none" }}>
           {group.map((content) => (
             <Card
               data={{
@@ -106,6 +124,15 @@ export default function Home() {
           ))}
         </Line>
       ))}
+      <div>
+        <button onClick={handlePrevPage} disabled={currentPage === 0}>
+          Prev
+        </button>
+        <span>{`Page ${currentPage + 1} of ${totalPages}`}</span>
+        <button onClick={handleNextPage} disabled={currentPage === totalPages - 1}>
+          Next
+        </button>
+      </div>
     </Container>
   );
 }
