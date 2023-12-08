@@ -24,16 +24,16 @@ export default function Card({ dados }) {
     if(getToken() === null) {
       await logGoogleUser();
     }
-    const fav = await usePostFavorite({
+    await usePostFavorite({
       userId: getUser()._id || " ",
       toolId: dados._id
     })
-    console.log(dados.favorite);
     dados.favorite = !dados.favorite;
     setFavoriteIcon(dados.favorite ? <FaBookmark className="favoriteIcon"/> : <FaRegBookmark className="favoriteIcon"/>);
   }
-  let favorite = <span onClick={saveFavorite} style={{cursor:"pointer"}}>{favoriteIcon}</span>;
 
+  let favorite = <span onClick={saveFavorite} style={{cursor:"pointer"}}>{dados.favorite ? <FaBookmark className="favoriteIcon"/> : <FaRegBookmark className="favoriteIcon"/>}</span>;
+  
   const logGoogleUser = async () => {
 
     if(getToken() === null) {
@@ -44,9 +44,9 @@ export default function Card({ dados }) {
         imageURL: response.user.photoURL,
         type: "Admin"
       });
-
+      
       setToken(tokenObject.token);
-    
+
       window.location.reload();
     } 
 }

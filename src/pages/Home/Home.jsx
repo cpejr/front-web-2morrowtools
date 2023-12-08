@@ -53,7 +53,7 @@ export default function Home() {
       {groupedData.map((group, index) => (
         <Line key={index}>
           {group.map((content) => (
-          <Card dados={{...content, favorite: favoriteAiTools.find( favoriteAiTool => favoriteAiTool['_id'] === content._id)}} key={content?.name} />
+          <Card dados={{...content, favorite: favoriteAiTools.find(favoriteAiTool => favoriteAiTool._id === content._id)}} key={content?.name} />
           ))}
         </Line>
       ))}

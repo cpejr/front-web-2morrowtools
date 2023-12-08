@@ -10,45 +10,26 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 80px;
-  padding: 20px;
-
-  h1 {
-  margin-left:40px;
-  font-family: ${fonts.Exo2};
-  font-weight: 400;
-  }
-
-  @media (max-width: ${breakpoints.desktop}) {
-    h1 {
-      font-size: 3rem;
-    }
-  }
-  @media (max-width: ${breakpoints.smallTablet}) {
-    h1 {
-      font-size: 2rem;
-    }
-  }
-  @media (max-width: ${breakpoints.mobile}) {
-    h1 {
-      font-size: 1.6rem;
-    }
-  }
-  
+  padding: 20px;  
 `;
 
 export const CardsContainer =  styled.div`
-  width: 100%;
   display: flex;
-  gap: 30px;
+  width: 100%;
+  height: auto;
   flex-direction: row;
-  overflow-x: hidden;
-  margin-bottom: 30px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  gap: 3rem;
+  h1 {
+    margin-top: 50px; 
+  }
   @media (max-width: ${breakpoints.mobile}) {
     overflow-x: scroll;  
   }
 
 `
-
 export const SectionContainer = styled.div`
   display: flex;
   flex-direction: row;

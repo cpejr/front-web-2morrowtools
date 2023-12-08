@@ -45,19 +45,18 @@ export default function Header() {
     
       setLoginLogoff("Fazer Logoff");
       setProfilePicture(<img src={getUser().imageURL}/>);
-      window.location.reload();
     } else {
-
+      
       clearAuth();
       setLoginLogoff("Fazer Login");
       setProfilePicture(<UserOutlined />);
-
+      
     }
+    window.location.reload();
 }
 
 const redirectToFavorites = async () => {
   if(getToken() === null){
-    window.alert("Você deve estar logado para visualizar os favoritos.");
     await logGoogleUser();
   }
   if(getToken() !== null){

@@ -17,6 +17,8 @@ export default function Favorites() {
   }
 
   let cards = [];
+  const noFavorites = <h1>Você ainda não favoritou nenhuma ferramenta.</h1>;
+  
   async function getFavorites() {
     if(getUser() !== null){
     const favorites = await useGetFavorites(getUser()._id);
@@ -36,13 +38,10 @@ export default function Favorites() {
   }, []);
 
   return <Container>
-    <h1>FAVORITOS</h1>
     <SectionContainer>
-    <CaretLeftOutlined className="arrow" onClick={() =>scrollContainer("favorites", -250) }/>
-    <CardsContainer className="favorites">
-      {cards}
+    <CardsContainer>
+      {cards.length > 0 ? cards : noFavorites}
     </CardsContainer>
-    <CaretRightOutlined className="arrow" onClick={() =>scrollContainer("favorites", 250)}/>
     </SectionContainer>
 
     </Container>;
