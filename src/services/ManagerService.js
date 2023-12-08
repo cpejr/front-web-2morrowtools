@@ -100,30 +100,6 @@ export const useGetComments = async () => {
   return { comments };
 };
 
-export const useGetCommentsbyID = async (_id) => {
-  let comments = {};
-  await requesterService.getCommentsbyID(_id).then((res) => {
-    comments = res.data;
-  });
-  return { comments };
-};
-
-export const useGetCommentsbyUser = async (_id) => {
-  let comments = {};
-  await requesterService.getCommentsbyUser(_id).then((res) => {
-    comments = res.data;
-  });
-  return { comments };
-};
-
-export const useGetCommentsbyIA = async (_id) => {
-  let comments = {};
-  await requesterService.getCommentsbyIA(_id).then((res) => {
-    comments = res.data;
-  });
-  return { comments };
-};
-
 export const usePostComments = async (body) => {
   let comments = {};
   await requesterService.postComments(body).then((res) => {

@@ -29,9 +29,6 @@ export const getCategoriesProfession = () => api.get(`/categoriesprofession`);
 
 // Comments
 export const getComments = () => api.get("/comment")
-export const getCommentsbyID = (_id) => api.get(`/comment/${_id}`)
-export const getCommentsbyUser = (_id) => api.get(`/comment/user/${_id}`)
-export const getCommentsbyIA = (_id) => api.get(`/comment/IA/${_id}`)
 
 export const postComments = (body) => api.post(`/comment`, body)
 

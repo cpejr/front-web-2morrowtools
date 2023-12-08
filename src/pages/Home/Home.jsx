@@ -8,6 +8,7 @@ import { useGetAITools, useGetAIToolsByName, useGetFavorites } from "../../servi
 import { useEffect, useState } from "react";
 import useAuthStore from "../../stores/auth";
 import useDebounce from "../../services/useDebounce";
+import * as managerService from "../../services/ManagerService";
 
 export default function Home() {
   const [aiTools, setAITools] = useState({});
@@ -39,6 +40,27 @@ export default function Home() {
     GettingAIToolsNames();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  async function managerTest(){
+    const data  = {
+        comment: "Arthur",
+        id_user: "656f7ce5d0258e011a2cb56b",
+        id_ia: "656ccb5c2d3069936d590c72",
+    }
+    const dataAltered  = {
+      comment: "Not Arthur",
+      id_user: "656f7ce5d0258e011a2cb56b",
+      id_ia: "656ccb5c2d3069936d590c72",
+  }
+    await managerService.useGetComments()
+    const id = await managerService.usePostComments(data)
+    await managerService.useGetComments()
+    await managerService.useEditComments(id.comments._id, dataAltered)
+    await managerService.useGetComments()
+    await managerService.useDeleteComments(id.comments._id)
+    await managerService.useGetComments()
+  }
+
 
   // Auto Complete
   const search = () => {
@@ -96,6 +118,7 @@ export default function Home() {
           ))}
         </Line>
       ))}
+      <button onClick={managerTest}>click me for test</button>
     </Container>
   );
 }
