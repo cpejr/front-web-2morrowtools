@@ -1,3 +1,4 @@
+import { DatabaseFilled } from "@ant-design/icons";
 import * as requesterService from "./RequesterService";
 
 export const useGetAITools = async () => {
@@ -121,10 +122,10 @@ export const useEditComments = async (_id,body) => {
  }
 };
 
-export const useDeleteComments = async (_id) => {
+export const useDeleteComments = async (_id,userid) => {
   let comments = {};
   try{
-  await requesterService.deleteComments(_id).then((res) => {
+  await requesterService.deleteComments(_id,userid).then((res) => {
     comments = res.data;
   });
   return { comments };

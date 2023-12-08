@@ -34,4 +34,4 @@ export const postComments = (body) => api.post(`/comment`, body)
 
 export const editComments = (_id,body) => api.put(`/comment/${_id}`, body)
 
-export const deleteComments = (_id) => api.delete(`/comment/${_id}`)
+export const deleteComments = (_id,body) => api.delete(`/comment/${_id}`, {data: body})
