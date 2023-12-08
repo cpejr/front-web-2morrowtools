@@ -9,11 +9,12 @@ export const CardFavorite = styled(Card)`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 80px;
+  margin-top: 120px;
   padding: 20px;  
 `;
 
 export const CardsContainer =  styled.div`
+  margin-top: 40px;
   display: flex;
   width: 100%;
   height: auto;

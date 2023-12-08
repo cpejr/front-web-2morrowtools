@@ -41,6 +41,11 @@ export default function AppProvider() {
             lineType: "none",
             colorPrimary: colors.blue.background,
           },
+          Modal: {
+            activeBorderColor: colors.blue.accent,
+            activeShadow: `0 0 0 0.5px ${colors.blue.accentShadow}`,
+            colorTextPlaceholder: colors.white,
+          },
         },
       }}
     >
