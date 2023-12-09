@@ -118,3 +118,17 @@ export const AutoCompleteInput = styled(AutoComplete)`
     }
   }
 `;
+
+export const PageButton = styled.button`
+  padding: 5px 10px;
+  margin: 0 5px;
+  font-size: 1rem;
+  border: 1px solid ${colors.blue.background};
+  border-radius: 4px;
+  background-color: ${({ isActive }) => (isActive ? colors.blue.background : colors.white)};
+  color: ${({ isActive }) => (isActive ? colors.white : colors.blue.background)};
+  cursor: ${({ isActive }) => (isActive ? "default" : "pointer")};
+  &:hover {
+    background-color: ${({ isActive }) => (isActive ? colors.blue.background : colors.blue.hover)};
+  }
+`;

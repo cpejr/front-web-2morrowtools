@@ -1,4 +1,12 @@
-import { AutoCompleteInput, Container, HomeImage, IconWrapper, Line, SVGDiv } from "./Styles";
+import {
+  AutoCompleteInput,
+  Container,
+  HomeImage,
+  IconWrapper,
+  Line,
+  PageButton,
+  SVGDiv,
+} from "./Styles";
 import homeImage from "../../assets/home-image.svg";
 import { SearchOutlined } from "@ant-design/icons";
 import { Card } from "../../components";
@@ -32,9 +40,13 @@ export default function Home() {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
   };
 
-  const startIndex = currentPage * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentGroup = aiTools?.aiTools?.slice(startIndex, endIndex);
+  const generatePageNumbers = () => {
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+      pageNumbers.push(i);
+    }
+    return pageNumbers;
+  };
 
   // Backend Calls
   async function GettingAIToolsDataByName() {
@@ -124,13 +136,62 @@ export default function Home() {
           ))}
         </Line>
       ))}
+
       <div>
+        {/* Botão "Anterior" */}
         <button onClick={handlePrevPage} disabled={currentPage === 0}>
-          Prev
+          Anterior
         </button>
-        <span>{`Page ${currentPage + 1} of ${totalPages}`}</span>
+
+        {/* Botão da página 1 */}
+        {currentPage !== 0 && currentPage > 3 && (
+          <PageButton key={1} onClick={() => setCurrentPage(0)} isActive={0 === currentPage}>
+            1
+          </PageButton>
+        )}
+
+        {currentPage >= 5 && <span>...</span>}
+
+        {generatePageNumbers()
+          .slice(Math.max(0, currentPage - 3), currentPage)
+          .map((page) => (
+            <PageButton
+              key={page}
+              onClick={() => setCurrentPage(page - 1)}
+              isActive={page - 1 === currentPage}
+            >
+              {page}
+            </PageButton>
+          ))}
+
+        <PageButton isActive={true}>{currentPage + 1}</PageButton>
+
+        {generatePageNumbers()
+          .slice(currentPage + 1, currentPage + 4)
+          .map((page) => (
+            <PageButton
+              key={page}
+              onClick={() => setCurrentPage(page - 1)}
+              isActive={page - 1 === currentPage}
+            >
+              {page}
+            </PageButton>
+          ))}
+
+        {currentPage <= totalPages - 6 && <span>...</span>}
+
+        {currentPage !== totalPages - 1 && currentPage <= totalPages - 5 && (
+          <PageButton
+            key={totalPages}
+            onClick={() => setCurrentPage(totalPages - 1)}
+            isActive={totalPages - 1 === currentPage}
+          >
+            {totalPages}
+          </PageButton>
+        )}
+
         <button onClick={handleNextPage} disabled={currentPage === totalPages - 1}>
-          Next
+          Próximo
         </button>
       </div>
     </Container>
