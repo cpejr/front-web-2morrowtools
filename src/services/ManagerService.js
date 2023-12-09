@@ -1,5 +1,7 @@
 import * as requesterService from "./RequesterService";
 
+// AI
+
 export const useGetAITools = async () => {
   let aiTools = {};
   await requesterService.getAITools().then((res) => {
@@ -16,6 +18,8 @@ export const useGetAIToolsByName = async ({ name }) => {
   return { aiTools };
 };
 
+// User
+
 export const usePostUser = async (user) => {
   let token;
   await requesterService.postUser(user).then((res) => {
@@ -23,6 +27,8 @@ export const usePostUser = async (user) => {
   });
   return token;
 };
+
+// Favorite
 
 export const useGetFavorites = async (userId) => {
   let favorites = [];
@@ -39,6 +45,8 @@ export const usePostFavorite = async (data) => {
   });
   return favorite;
 };
+
+// AI
 
 export const useCreateAITools = async (body) => {
   const create = await requesterService.createAITools(body).then((res) => {
@@ -67,6 +75,15 @@ export const useDeleteAITools = async (_id) => {
   }
 };
 
+// Category Feature
+
+export const useCreateCategoriesFeature = async (body) => {
+  const create = await requesterService.createCategoriesFeature(body).then((res) => {
+    return res;
+  });
+  return create;
+};
+
 export const usegetCategoriesFeature = async () => {
   let categoriesFeature = {};
   await requesterService.getCategoriesFeature().then((res) => {
@@ -85,6 +102,15 @@ export const useDeleteCategoriesFeature = async (_id) => {
   }
 };
 
+// Category Price
+
+export const useCreateCategoriesPrices = async (body) => {
+  const create = await requesterService.createCategoriesPrices(body).then((res) => {
+    return res;
+  });
+  return create;
+};
+
 export const usegetCategoriesPrices = async () => {
   let categoriesPrices = {};
   await requesterService.getCategoriesPrice().then((res) => {
@@ -101,6 +127,15 @@ export const useDeleteCategoriesPrice = async (_id) => {
     console.error("Error deleting category price", error);
     throw error;
   }
+};
+
+// Category Profession
+
+export const useCreateCategoriesProfession = async (body) => {
+  const create = await requesterService.createCategoriesProfession(body).then((res) => {
+    return res;
+  });
+  return create;
 };
 
 export const usegetCategoriesProfession = async () => {

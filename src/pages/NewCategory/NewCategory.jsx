@@ -3,10 +3,14 @@ import { CategoryButtons, CategoryList, CategoryListItem, Container, Form, Title
 import { useState } from "react";
 
 import * as managerService from "../../services/ManagerService";
-import { buildNewCategoryErrorMessage } from "./utils";
-import { FormInput, ModalDelete, SubmitButton } from "../../components";
+import { buildNewCategoryErrorMessage, newCategoryValidationSchema } from "./utils";
+import { FormInput, FormSelect, ModalDelete, SubmitButton } from "../../components";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { StyledModal } from "../NewTool/Styles";
+import { toast } from "react-toastify";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { useForm } from "react-hook-form";
 
 export default function NewCategory() {
   // Set variables
@@ -18,6 +22,44 @@ export default function NewCategory() {
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [categoriesPrices, setCategoriesPrices] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
+  const [name, setName] = useState("");
+  const [selectedCategoryType, setSelectedCategoryType] = useState("");
+
+  // On submit
+  const onSubmit = async () => {
+    if (!selectedCategoryType) {
+      toast.error("Favor selecionar o tipo da categoria.");
+      return;
+    }
+    try {
+      switch (selectedCategoryType) {
+        case "feature":
+          await managerService.useCreateCategoriesFeature({ name });
+          toast.success("Categoria de característica criada com sucesso!");
+          break;
+        case "price":
+          await managerService.useCreateCategoriesPrices({ name });
+          toast.success("Categoria de preço criada com sucesso!");
+          break;
+        case "profession":
+          await managerService.useCreateCategoriesProfession({ name });
+          toast.success("Categoria de profissão criada com sucesso!");
+          break;
+        default:
+          break;
+      }
+
+      toast.clearWaitingQueue();
+    } catch (error) {
+      toast.error("Erro ao adiconar categoria. Favor tentar novamente!");
+      toast.clearWaitingQueue();
+      console.error("Erro ao adiconar categoria", error);
+    }
+  };
+
+  const handleCategoryTypeChange = (selectedValue) => {
+    setSelectedCategoryType(selectedValue);
+  };
 
   // Get functions
   useEffect(() => {
@@ -70,37 +112,36 @@ export default function NewCategory() {
   //   formState: { errors },
   // } = useForm();
 
+  const {
+    handleSubmit,
+    register,
+    control,
+    formState: { errors },
+  } = useForm();
+
   return (
     <Container>
       <Title>ADICIONAR CATEGORIAS</Title>
-      <Form>
+      <FormSelect
+        name='id_categoryfeature'
+        control={control}
+        data={[
+          { label: "Característica", value: "feature" },
+          { label: "Preço", value: "price" },
+          { label: "Profissão", value: "profession" },
+        ]}
+        placeholder='Selecione a Categoria'
+        onChange={(selectedValue) => handleCategoryTypeChange(selectedValue)}
+      />
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <FormInput
           name='name'
-          placeholder='Característica:'
-          // errors={errors}
-          // onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-        />
-        <SubmitButton type='submit'>
-          <p>Criar</p>
-        </SubmitButton>
-      </Form>
-      <Form>
-        <FormInput
-          name='name'
-          placeholder='Preço:'
-          // errors={errors}
-          // onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-        />
-        <SubmitButton type='submit'>
-          <p>Criar</p>
-        </SubmitButton>
-      </Form>
-      <Form>
-        <FormInput
-          name='name'
-          placeholder='Profissão:'
-          // errors={errors}
-          // onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          placeholder='Nome da Categoria:'
+          errors={errors}
+          register={register}
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
         />
         <SubmitButton type='submit'>
           <p>Criar</p>
@@ -109,7 +150,7 @@ export default function NewCategory() {
 
       <Title>CATEGORIAS CRIADAS</Title>
       <CategoryList>
-        <Title>CARACTERÍTICA</Title>
+        <Title>CARACTERÍSTICA</Title>
         {categoriesFeature.map((category) => (
           <CategoryListItem key={category._id}>
             {category.name}

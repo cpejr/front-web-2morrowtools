@@ -6,6 +6,7 @@ export default function FormInput({
   label,
   placeholder,
   errors,
+  register,
   defaultValue,
   icon: Icon,
   ...props
@@ -17,7 +18,13 @@ export default function FormInput({
       <Label htmlFor={name}>{label}</Label>
       <IconContainer>
         {Icon && <Icon />}
-        <StyledInput id={name} defaultValue={defaultValue} placeholder={placeholder} {...props} />
+        <StyledInput
+          id={name}
+          {...register(name)}
+          defaultValue={defaultValue}
+          placeholder={placeholder}
+          {...props}
+        />
       </IconContainer>
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </Container>
@@ -26,9 +33,10 @@ export default function FormInput({
 
 FormInput.propTypes = {
   name: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   placeholder: PropTypes.string.isRequired,
   icon: PropTypes.elementType,
   errors: PropTypes.object.isRequired,
+  register: PropTypes.func,
   defaultValue: PropTypes.string,
 };
