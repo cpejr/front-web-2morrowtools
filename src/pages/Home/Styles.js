@@ -143,8 +143,5 @@ export const DivLine = styled.div`
   width: fit-content;
   align-self: center;
   justify-content: center;
-
-  @media (max-width: ${breakpoints.mobile}) {
-    gap: 2rem;
-  }
+  gap: 2rem;
 `;
