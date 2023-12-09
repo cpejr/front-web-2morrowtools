@@ -11,6 +11,7 @@ export const Container = styled.div`
   margin-top: 85px;
   margin-bottom: 100px;
   gap: 2rem;
+
   .p-autocomplete-items-wrapper {
     background-color: green;
   }
@@ -63,10 +64,11 @@ export const InputStyled = styled(Input)`
 
 export const Line = styled.div`
   display: flex;
-  width: 95%;
   height: auto;
+  width: 95%;
   flex-direction: row;
   margin-bottom: 20px;
+  align-self: center;
   justify-content: space-around;
   gap: 3rem;
   @media (max-width: ${breakpoints.mobile}) {
@@ -123,6 +125,7 @@ export const PageButton = styled.button`
   padding: 5px 10px;
   margin: 0 5px;
   font-size: 1rem;
+  border-radius: 100px;
   border: 1px solid ${colors.blue.background};
   border-radius: 4px;
   background-color: ${({ isActive }) => (isActive ? colors.blue.background : colors.white)};
@@ -130,5 +133,18 @@ export const PageButton = styled.button`
   cursor: ${({ isActive }) => (isActive ? "default" : "pointer")};
   &:hover {
     background-color: ${({ isActive }) => (isActive ? colors.blue.background : colors.blue.hover)};
+  }
+`;
+
+export const DivLine = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 2rem;
+  width: fit-content;
+  align-self: center;
+  justify-content: center;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    gap: 2rem;
   }
 `;

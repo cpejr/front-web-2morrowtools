@@ -1,6 +1,7 @@
 import {
   AutoCompleteInput,
   Container,
+  DivLine,
   HomeImage,
   IconWrapper,
   Line,
@@ -10,12 +11,12 @@ import {
 import homeImage from "../../assets/home-image.svg";
 import { SearchOutlined } from "@ant-design/icons";
 import { Card } from "../../components";
-import { useMediaQuery } from "react-responsive";
 import FilterArea from "../../components/FilterArea/FilterArea";
 import { useGetAITools, useGetAIToolsByName, useGetFavorites } from "../../services/ManagerService";
 import { useEffect, useState } from "react";
 import useAuthStore from "../../stores/auth";
 import useDebounce from "../../services/useDebounce";
+import { useMediaQuery } from "react-responsive";
 
 export default function Home() {
   const [aiTools, setAITools] = useState({});
@@ -28,8 +29,7 @@ export default function Home() {
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 4;
-
+  const itemsPerPage = 28;
   const totalPages = Math.ceil(aiTools?.aiTools?.length / itemsPerPage);
 
   const handlePrevPage = () => {
@@ -47,6 +47,25 @@ export default function Home() {
     }
     return pageNumbers;
   };
+
+  // Rendering multiples Cards
+  const groupedData = [];
+  const isLargeDesktopScreen = useMediaQuery({ minWidth: 1371 });
+  const isDesktopScreen = useMediaQuery({ minWidth: 1130, maxWidth: 1370 });
+  const isMobileScreen = useMediaQuery({ maxWidth: 700 });
+
+  const itemsPerRow = isLargeDesktopScreen ? 4 : isDesktopScreen ? 3 : isMobileScreen ? 1 : 2;
+
+  for (let i = 0; i < aiTools?.aiTools?.length; i += itemsPerPage) {
+    const pageData = aiTools?.aiTools?.slice(i, i + itemsPerPage);
+    const rows = [];
+
+    for (let j = 0; j < itemsPerPage / itemsPerRow; j++) {
+      rows.push(pageData.slice(j * itemsPerRow, (j + 1) * itemsPerRow));
+    }
+
+    groupedData.push(rows);
+  }
 
   // Backend Calls
   async function GettingAIToolsDataByName() {
@@ -81,29 +100,6 @@ export default function Home() {
     setNamesArray(filteredSuggestions);
   };
 
-  // Rendering multiples Cards
-  const groupedData = [];
-  const isSmallDesktop = useMediaQuery({ maxWidth: 1370 });
-  const isTabletScreen = useMediaQuery({ maxWidth: 1130 });
-  const isMobileScreen = useMediaQuery({ maxWidth: 700 });
-  if (isMobileScreen) {
-    for (let i = 0; i < aiTools?.aiTools?.length; i += 1) {
-      groupedData.push(aiTools?.aiTools?.slice(i, i + 1));
-    }
-  } else if (isTabletScreen) {
-    for (let i = 0; i < aiTools?.aiTools?.length; i += 2) {
-      groupedData.push(aiTools?.aiTools?.slice(i, i + 2));
-    }
-  } else if (isSmallDesktop) {
-    for (let i = 0; i < aiTools?.aiTools?.length; i += 3) {
-      groupedData.push(aiTools?.aiTools?.slice(i, i + 3));
-    }
-  } else {
-    for (let i = 0; i < aiTools?.aiTools?.length; i += 4) {
-      groupedData.push(aiTools?.aiTools?.slice(i, i + 4));
-    }
-  }
-
   return (
     <Container>
       <HomeImage src={homeImage} />
@@ -121,29 +117,31 @@ export default function Home() {
       </IconWrapper>
 
       <FilterArea />
-      {groupedData.map((group, index) => (
-        <Line key={index} style={{ display: index === currentPage ? "flex" : "none" }}>
-          {group.map((content) => (
-            <Card
-              data={{
-                ...content,
-                favorite: favoriteAiTools.find(
-                  (favoriteAiTool) => favoriteAiTool["_id"] === content._id
-                ),
-              }}
-              key={content?.name}
-            />
+      {groupedData.map((page, pageIndex) => (
+        <DivLine key={pageIndex} style={{ display: pageIndex === currentPage ? "flex" : "none" }}>
+          {page.map((row, rowIndex) => (
+            <Line key={rowIndex}>
+              {row.map((content) => (
+                <Card
+                  data={{
+                    ...content,
+                    favorite: favoriteAiTools.find(
+                      (favoriteAiTool) => favoriteAiTool["_id"] === content._id
+                    ),
+                  }}
+                  key={content?.name}
+                />
+              ))}
+            </Line>
           ))}
-        </Line>
+        </DivLine>
       ))}
 
       <div>
-        {/* Botão "Anterior" */}
         <button onClick={handlePrevPage} disabled={currentPage === 0}>
           Anterior
         </button>
 
-        {/* Botão da página 1 */}
         {currentPage !== 0 && currentPage > 3 && (
           <PageButton key={1} onClick={() => setCurrentPage(0)} isActive={0 === currentPage}>
             1
