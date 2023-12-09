@@ -51,7 +51,7 @@ export default function Home() {
   // Rendering multiples Cards
   const groupedData = [];
   const isLargeDesktopScreen = useMediaQuery({ minWidth: 1371 });
-  const isDesktopScreen = useMediaQuery({ minWidth: 1130, maxWidth: 1370 });
+  const isDesktopScreen = useMediaQuery({ minWidth: 1130 });
   const isMobileScreen = useMediaQuery({ maxWidth: 700 });
 
   const itemsPerRow = isLargeDesktopScreen ? 4 : isDesktopScreen ? 3 : isMobileScreen ? 1 : 2;
