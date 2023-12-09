@@ -75,6 +75,16 @@ export const usegetCategoriesFeature = async () => {
   return { categoriesFeature };
 };
 
+export const useDeleteCategoriesFeature = async (_id) => {
+  try {
+    const response = await requesterService.deleteCategoriesFeature(_id);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting category feature", error);
+    throw error;
+  }
+};
+
 export const usegetCategoriesPrices = async () => {
   let categoriesPrices = {};
   await requesterService.getCategoriesPrice().then((res) => {
@@ -83,10 +93,30 @@ export const usegetCategoriesPrices = async () => {
   return { categoriesPrices };
 };
 
+export const useDeleteCategoriesPrice = async (_id) => {
+  try {
+    const response = await requesterService.deleteCategoriesPrice(_id);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting category price", error);
+    throw error;
+  }
+};
+
 export const usegetCategoriesProfession = async () => {
   let categoriesprofession = {};
   await requesterService.getCategoriesProfession().then((res) => {
     categoriesprofession = res.data;
   });
   return { categoriesprofession };
+};
+
+export const useDeleteCategoriesProfession = async (_id) => {
+  try {
+    const response = await requesterService.deleteCategoriesProfession(_id);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting category profession", error);
+    throw error;
+  }
 };

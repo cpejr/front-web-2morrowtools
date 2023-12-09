@@ -209,7 +209,11 @@ export default function NewTool() {
             centered
             destroyOnClose
           >
-            <ModalDelete _id={selectedToolId} close={handleCloseDeleteModal} />
+            <ModalDelete
+              _id={selectedToolId}
+              close={handleCloseDeleteModal}
+              deleteFunction={managerService.useDeleteAITools}
+            />
           </StyledModal>
         )}
         {isEditModalOpen && (

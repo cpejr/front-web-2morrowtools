@@ -21,8 +21,14 @@ export const editAITools = (_id, body) => api.put(`/IA/${_id}`, body);
 
 export const deleteAITools = (_id) => api.delete(`/IA/${_id}`);
 
+// Category Feature
 export const getCategoriesFeature = () => api.get(`/categoriesfeature`);
+export const deleteCategoriesFeature = (_id) => api.delete(`/categoriesfeature/${_id}`);
 
+// Category Price
 export const getCategoriesPrice = () => api.get(`/categoriesprices`);
+export const deleteCategoriesPrice = (_id) => api.delete(`/categoriesprices/${_id}`);
 
+// Category Profession
 export const getCategoriesProfession = () => api.get(`/categoriesprofession`);
+export const deleteCategoriesProfession = (_id) => api.delete(`/categoriesprofession/${_id}`);
