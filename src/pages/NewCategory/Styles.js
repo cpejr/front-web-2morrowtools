@@ -5,6 +5,7 @@ export const Container = styled.div`
   justify-content: center;
   flex-direction: column;
   width: 100%;
+  padding: 0rem 3rem 0rem 3rem;
   height: auto;
   padding-bottom: 15rem;
   padding-top: 8rem;
@@ -18,6 +19,7 @@ export const Title = styled.p`
   font-weight: 600;
   margin: 0;
   text-align: center;
+  padding-bottom: 2rem;
 
   @media (max-width: 700px) {
     font-weight: 600;
@@ -31,12 +33,20 @@ export const Title = styled.p`
   }
 `;
 
+export const DivNew = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 40rem;
+  align-self: center;
+`;
+
 export const Form = styled.form`
   display: flex;
-  align-items: center;
-  align-self: center;
   flex-direction: row;
-  width: 40%;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5rem;
+  gap: 1.5rem;
 `;
 
 export const CategoryList = styled.ul`

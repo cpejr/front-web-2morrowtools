@@ -84,6 +84,16 @@ export const useCreateCategoriesFeature = async (body) => {
   return create;
 };
 
+export const useEditCategoriesFeature = async (_id, body) => {
+  try {
+    const response = await requesterService.editCategoriesFeature(_id, body);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating category feature", error);
+    throw error;
+  }
+};
+
 export const usegetCategoriesFeature = async () => {
   let categoriesFeature = {};
   await requesterService.getCategoriesFeature().then((res) => {
@@ -111,6 +121,16 @@ export const useCreateCategoriesPrices = async (body) => {
   return create;
 };
 
+export const useEditCategoriesPrices = async (_id, body) => {
+  try {
+    const response = await requesterService.editCategoriesPrices(_id, body);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating category price", error);
+    throw error;
+  }
+};
+
 export const usegetCategoriesPrices = async () => {
   let categoriesPrices = {};
   await requesterService.getCategoriesPrice().then((res) => {
@@ -136,6 +156,16 @@ export const useCreateCategoriesProfession = async (body) => {
     return res;
   });
   return create;
+};
+
+export const useEditCategoriesProfession = async (_id, body) => {
+  try {
+    const response = await requesterService.editCategoriesProfession(_id, body);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating category price", error);
+    throw error;
+  }
 };
 
 export const usegetCategoriesProfession = async () => {

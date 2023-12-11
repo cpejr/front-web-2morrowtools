@@ -9,7 +9,10 @@ import { useForm } from "react-hook-form";
 import FormInput from "../../../common/FormInput/FormInput";
 import FormsTextArea from "../../../common/FormsTextArea/FormsTextArea";
 import { FaUpload } from "react-icons/fa";
-import { buildEditToolErrorMessage, editToolValidationSchema } from "./utils";
+import {
+  buildEditToolErrorMessage,
+  // editToolValidationSchema
+} from "./utils";
 import SubmitButton from "../../../common/SubmitButton/SubmitButton";
 
 export default function ModalEdit({ _id, tool, close }) {

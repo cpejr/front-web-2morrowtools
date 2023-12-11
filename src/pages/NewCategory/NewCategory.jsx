@@ -1,29 +1,47 @@
 import { useEffect } from "react";
-import { CategoryButtons, CategoryList, CategoryListItem, Container, Form, Title } from "./Styles";
+import {
+  CategoryButtons,
+  CategoryList,
+  CategoryListItem,
+  Container,
+  DivNew,
+  Form,
+  Title,
+} from "./Styles";
 import { useState } from "react";
 
 import * as managerService from "../../services/ManagerService";
-import { buildNewCategoryErrorMessage, newCategoryValidationSchema } from "./utils";
-import { FormInput, FormSelect, ModalDelete, SubmitButton } from "../../components";
+import {
+  buildNewCategoryErrorMessage,
+  // newCategoryValidationSchema
+} from "./utils";
+import {
+  FormInput,
+  FormSelect,
+  ModalDelete,
+  ModalEditCategory,
+  SubmitButton,
+} from "../../components";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { StyledModal } from "../NewTool/Styles";
 import { toast } from "react-toastify";
-import { zodResolver } from "@hookform/resolvers/zod";
+// import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useForm } from "react-hook-form";
 
 export default function NewCategory() {
   // Set variables
-  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
-  const [deleteFunction, setDeleteFunction] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [name, setName] = useState("");
+  const [selectedCategoryType, setSelectedCategoryType] = useState("");
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
-  const [selectedTool, setSelectedTool] = useState(null);
+  const [deleteFunction, setDeleteFunction] = useState(null);
+  const [editFunction, setEditFunction] = useState(null);
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [categoriesPrices, setCategoriesPrices] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
-  const [name, setName] = useState("");
-  const [selectedCategoryType, setSelectedCategoryType] = useState("");
 
   // On submit
   const onSubmit = async () => {
@@ -94,23 +112,18 @@ export default function NewCategory() {
     setDeleteModalOpen(false);
   };
 
-  // const handleOpenEditModal = (tool) => {
-  //   setSelectedCategoryId(tool._id);
-  //   setSelectedTool(tool);
-  //   setEditModalOpen(true);
-  // };
+  const handleOpenEditModal = (categoryId, category, editFunction) => {
+    setSelectedCategoryId(categoryId);
+    setSelectedCategory(category);
+    setEditFunction(() => editFunction);
+    setEditModalOpen(true);
+  };
 
-  // const handleCloseEditModal = async () => {
-  //   setSelectedTool(null);
-  //   setSelectedCategoryId(null);
-  //   setEditModalOpen(false);
-  // };
-
-  // const {
-  //   handleSubmit,
-  //   control,
-  //   formState: { errors },
-  // } = useForm();
+  const handleCloseEditModal = async () => {
+    setSelectedCategory(null);
+    setSelectedCategoryId(null);
+    setEditModalOpen(false);
+  };
 
   const {
     handleSubmit,
@@ -122,31 +135,33 @@ export default function NewCategory() {
   return (
     <Container>
       <Title>ADICIONAR CATEGORIAS</Title>
-      <FormSelect
-        name='id_categoryfeature'
-        control={control}
-        data={[
-          { label: "Característica", value: "feature" },
-          { label: "Preço", value: "price" },
-          { label: "Profissão", value: "profession" },
-        ]}
-        placeholder='Selecione a Categoria'
-        onChange={(selectedValue) => handleCategoryTypeChange(selectedValue)}
-      />
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <FormInput
-          name='name'
-          placeholder='Nome da Categoria:'
-          errors={errors}
-          register={register}
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
+      <DivNew>
+        <FormSelect
+          name='id_categoryfeature'
+          control={control}
+          data={[
+            { label: "Característica", value: "feature" },
+            { label: "Preço", value: "price" },
+            { label: "Profissão", value: "profession" },
+          ]}
+          placeholder='Selecione a Categoria'
+          onChange={(selectedValue) => handleCategoryTypeChange(selectedValue)}
         />
-        <SubmitButton type='submit'>
-          <p>Criar</p>
-        </SubmitButton>
-      </Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <FormInput
+            name='name'
+            placeholder='Nome da Categoria:'
+            errors={errors}
+            register={register}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
+          <SubmitButton type='submit'>
+            <p>Criar</p>
+          </SubmitButton>
+        </Form>
+      </DivNew>
 
       <Title>CATEGORIAS CRIADAS</Title>
       <CategoryList>
@@ -163,7 +178,13 @@ export default function NewCategory() {
                 }
               />
               <FaEdit
-              // onClick={() => handleOpenEditModal(category)}
+                onClick={() =>
+                  handleOpenEditModal(
+                    category._id,
+                    category,
+                    managerService.useEditCategoriesFeature
+                  )
+                }
               />
             </CategoryButtons>
           </CategoryListItem>
@@ -183,7 +204,13 @@ export default function NewCategory() {
                 }
               />
               <FaEdit
-              // onClick={() => handleOpenEditModal(category)}
+                onClick={() =>
+                  handleOpenEditModal(
+                    category._id,
+                    category,
+                    managerService.useEditCategoriesPrices
+                  )
+                }
               />
             </CategoryButtons>
           </CategoryListItem>
@@ -203,7 +230,13 @@ export default function NewCategory() {
                 }
               />
               <FaEdit
-              // onClick={() => handleOpenEditModal(category)}
+                onClick={() =>
+                  handleOpenEditModal(
+                    category._id,
+                    category,
+                    managerService.useEditCategoriesProfession
+                  )
+                }
               />
             </CategoryButtons>
           </CategoryListItem>
@@ -225,6 +258,32 @@ export default function NewCategory() {
             _id={selectedCategoryId}
             close={handleCloseDeleteModal}
             deleteFunction={deleteFunction}
+          />
+        </StyledModal>
+      )}
+      {isEditModalOpen && (
+        <StyledModal
+          open={isEditModalOpen}
+          onCancel={handleCloseEditModal}
+          width={500}
+          height={250}
+          padding={0}
+          footer={null}
+          closeIcon={true}
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: "100px",
+            marginBottom: "80%",
+          }}
+          centered
+          destroyOnClose
+        >
+          <ModalEditCategory
+            _id={selectedCategoryId}
+            category={selectedCategory}
+            close={handleCloseEditModal}
+            editFunction={editFunction}
           />
         </StyledModal>
       )}
