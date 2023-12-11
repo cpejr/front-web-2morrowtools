@@ -6,14 +6,12 @@ export const Container = styled.div`
   flex-direction: column;
   font-style: normal;
   font-weight: 500;
-  gap: 0.5rem;
 
   width: 100%;
 `;
 
 export const Label = styled.label`
   color: #ffffff;
-  font-size: 2.4rem;
 
   @media (max-width: 700px) {
     font-size: 2rem;
@@ -24,8 +22,7 @@ export const Label = styled.label`
 `;
 
 export const StyledInput = styled(Input)`
-  height: 6rem;
-  font-size: 2rem;
+  height: 3rem;
   padding: 0.8rem 1.6rem;
   border-radius: 0.4rem;
   color: white;
