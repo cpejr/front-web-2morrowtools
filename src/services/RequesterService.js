@@ -13,6 +13,8 @@ export const getAITools = () => api.get(`/IA`);
 
 export const getAIToolsByName = (name) => api.get(`IA/search-by-name`, { params: { name } });
 
+export const getAIToolsNames = () => api.get(`/IA/names`);
+
 export const createAITools = async (body) => {
   await api.post(`/IA`, { ...body });
 };

@@ -4,18 +4,22 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Card } from "../../components";
 import { useMediaQuery } from "react-responsive";
 import FilterArea from "../../components/FilterArea/FilterArea";
-import { useGetAITools, useGetAIToolsByName, useGetFavorites } from "../../services/ManagerService";
+import {
+  useGetAIToolsByName,
+  useGetAIToolsNames,
+  useGetFavorites,
+} from "../../services/ManagerService";
 import { useEffect, useState } from "react";
 import useAuthStore from "../../stores/auth";
 import useDebounce from "../../services/useDebounce";
 
 export default function Home() {
   const [aiTools, setAITools] = useState({});
-  const [aiToolsNames, setAIToolsNames] = useState({});
   const [names, setNames] = useState("");
   const debouncedName = useDebounce(names);
   const [namesArray, setNamesArray] = useState([]);
   const [favoriteAiTools, setFavoriteAITools] = useState([]);
+  const [namesAINames, setAINames] = useState([]);
   const { getUser } = useAuthStore();
 
   // Backend Calls
@@ -27,9 +31,10 @@ export default function Home() {
       setFavoriteAITools(favorites);
     }
   }
-  async function GettingAIToolsNames() {
-    const aiTools = await useGetAITools();
-    setAIToolsNames(aiTools);
+
+  async function GetNames() {
+    const { aiTools } = await useGetAIToolsNames();
+    setAINames(aiTools);
   }
 
   useEffect(() => {
@@ -38,14 +43,13 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedName]);
   useEffect(() => {
-    GettingAIToolsNames();
+    GetNames();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Auto Complete
   const search = () => {
-    const filteredNames = aiToolsNames?.aiTools?.map((tool) => tool.name) || [];
-    const filteredSuggestions = filteredNames.filter((name) =>
+    const filteredSuggestions = namesAINames.filter((name) =>
       name.toLowerCase().includes(names.toLowerCase())
     );
     setNamesArray(filteredSuggestions);

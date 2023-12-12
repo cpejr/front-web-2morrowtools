@@ -18,12 +18,19 @@ import {
   ToolButtons,
   StyledModal,
   DivRow,
+  AutoCompleteInput,
+  ShortDescription,
+  Collumn,
+  IconWrapper,
+  SVGDiv,
 } from "./Styles";
 import { FaUpload, FaTrash, FaEdit } from "react-icons/fa";
 import * as managerService from "../../services/ManagerService";
 import { buildNewToolErrorMessage } from "./utils";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import useDebounce from "../../services/useDebounce";
+import { SearchOutlined } from "@ant-design/icons";
 
 export default function NewTool() {
   // Set variables
@@ -35,6 +42,10 @@ export default function NewTool() {
   const [categoriesPrices, setCategoriesPrices] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
   const [aiTools, setAiTools] = useState([]);
+  const [names, setNames] = useState("");
+  const [ainames, setAINames] = useState("");
+  const [namesArray, setNamesArray] = useState([]);
+  const debouncedName = useDebounce(names);
 
   // Forms values
   const [formData, setFormData] = useState({
@@ -66,6 +77,22 @@ export default function NewTool() {
   };
 
   // Get functions
+
+  async function GettingAIToolsDataByName() {
+    const aiTools = await managerService.useGetAIToolsByName({ name: debouncedName });
+    setAINames(aiTools);
+  }
+  useEffect(() => {
+    GettingAIToolsDataByName();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedName]);
+  const search = () => {
+    const filteredSuggestions = aiTools?.filter((name) =>
+      name.toLowerCase().includes(names.toLowerCase())
+    );
+    setNamesArray(filteredSuggestions);
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -75,17 +102,21 @@ export default function NewTool() {
         const resultPrices = await managerService.usegetCategoriesPrices();
         setCategoriesPrices(resultPrices.categoriesPrices);
 
+        const resultAiTools = await managerService.useGetAIToolsNames();
+        setAiTools(resultAiTools.aiTools);
+
+        const resultNames = await managerService.useGetAIToolsByName({ name: debouncedName });
+        setAINames(resultNames);
+
         const resultProfession = await managerService.usegetCategoriesProfession();
         setCategoriesProfession(resultProfession.categoriesprofession);
-
-        const resultAiTools = await managerService.useGetAITools();
-        setAiTools(resultAiTools.aiTools);
       } catch (error) {
         const errorMessage = buildNewToolErrorMessage(error);
         console.error(errorMessage);
       }
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Modal Functions
@@ -234,11 +265,26 @@ export default function NewTool() {
           </StyledModal>
         )}
         <ToolList>
-          {aiTools.map((tool) => (
+          <IconWrapper>
+            <SVGDiv>
+              <SearchOutlined />
+            </SVGDiv>
+            <AutoCompleteInput
+              value={names}
+              suggestions={namesArray}
+              completeMethod={search}
+              onChange={(e) => setNames(e.value)}
+            ></AutoCompleteInput>
+          </IconWrapper>
+
+          {ainames?.aiTools?.map((tool) => (
             <ToolListItem key={tool._id}>
-              {tool.name}
+              <Collumn>
+                {tool?.name}
+                <ShortDescription> {tool?.shortDescription}</ShortDescription>
+              </Collumn>
               <ToolButtons>
-                <FaTrash onClick={() => handleOpenDeleteModal(tool._id)} />
+                <FaTrash onClick={() => handleOpenDeleteModal(tool?._id)} />
                 <FaEdit onClick={() => handleOpenEditModal(tool)} />
               </ToolButtons>
             </ToolListItem>

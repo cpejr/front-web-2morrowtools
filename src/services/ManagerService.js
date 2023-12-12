@@ -15,6 +15,13 @@ export const useGetAIToolsByName = async ({ name }) => {
   });
   return { aiTools };
 };
+export const useGetAIToolsNames = async () => {
+  let aiTools = {};
+  await requesterService.getAIToolsNames().then((res) => {
+    aiTools = res.data;
+  });
+  return { aiTools };
+};
 
 export const usePostUser = async (user) => {
   let token;
