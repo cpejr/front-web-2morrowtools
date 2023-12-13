@@ -47,5 +47,5 @@ export const getCategoriesProfession = () => api.get(`/categoriesprofession`);
 export const deleteCategoriesProfession = (_id) => api.delete(`/categoriesprofession/${_id}`);
 
 // Images
-export const updateImage = (id, base64) => api.put(`/usuariosimagem/${id}`, { file: base64 });
-export const takeImage = (id) => api.get(`/usuariosimagem/${id}`);
+export const updateIAImage = (id, base64) => api.put(`/IA/${id}`, { file: base64 });
+export const takeIAImage = (id) => api.get(`/IA/${id}`);
