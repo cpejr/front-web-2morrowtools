@@ -185,3 +185,21 @@ export const useDeleteCategoriesProfession = async (_id) => {
     throw error;
   }
 };
+export const useUpdateImage = async (id, file) => {
+  await requesterService.updateImage(id, file).catch(() => {
+    //requisicaoErro(error);
+    return;
+  });
+  return;
+};
+
+export const useTakeImage = async (id) => {
+  let image = {};
+  await requesterService
+    .takeImage(id)
+
+    .then((res) => (image = res.data.imagem))
+    .catch((error) => alert(error.message));
+
+  return image;
+};
