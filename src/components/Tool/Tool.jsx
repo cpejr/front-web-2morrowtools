@@ -49,22 +49,22 @@ export default function Tool({ data }) {
   };
   return (
     <>
-      {data?.aiTools?.map((dados, index) => (
+      {data?.aiTools?.map((toolData, index) => (
         <>
           <Row key={index}>
             <ImageCollumn>
               <Image>
-                <img src={dados?.imageURL} alt={`ToolImage ${index}`} />
+                <img src={toolData?.imageURL} alt={`ToolImage ${index}`} />
               </Image>
               <TagsLine key={`line-${index}`}>
-                <Tag>{dados?.id_categoryfeature?.name}</Tag>
-                <Tag>{dados?.id_categoryprice?.name}</Tag>
-                <Tag>{dados?.id_categoryprofession?.name}</Tag>
+                <Tag>{toolData?.id_categoryfeature?.name}</Tag>
+                <Tag>{toolData?.id_categoryprice?.name}</Tag>
+                <Tag>{toolData?.id_categoryprofession?.name}</Tag>
               </TagsLine>
             </ImageCollumn>
             <DataCollumn>
               <Group>
-                <Line>{dados.name}</Line>
+                <Line>{toolData.name}</Line>
                 <LineSVG>
                   <FaRegBookmark />
                   <IoShareSocial />
@@ -80,16 +80,16 @@ export default function Tool({ data }) {
                 />
                 <span>({starsValue})</span>
               </Line>
-              <p>{dados?.shortDescription}</p>
+              <p>{toolData?.shortDescription}</p>
               <TabletTagsLine key={`line-${index}`}>
-                <Tag>{dados?.id_categoryfeature?.name}</Tag>
-                <Tag>{dados?.id_categoryprice?.name}</Tag>
-                <Tag>{dados?.id_categoryprofession?.name}</Tag>
+                <Tag>{toolData?.id_categoryfeature?.name}</Tag>
+                <Tag>{toolData?.id_categoryprice?.name}</Tag>
+                <Tag>{toolData?.id_categoryprofession?.name}</Tag>
               </TabletTagsLine>
               <BlueButton
                 type='primary'
                 onClick={() => {
-                  window.open(dados?.link, "_blank");
+                  window.open(toolData?.link, "_blank");
                 }}
               >
                 ACESSE JÁ!
@@ -113,12 +113,12 @@ export default function Tool({ data }) {
           </Row>
           <KnowMore>
             <h1>PARA SABER MAIS</h1>
-            <p>{dados?.longDescription}</p>
+            <p>{toolData?.longDescription}</p>
             <VideoDiv>
               <iframe
                 width='100%'
                 height='100%'
-                src={dados.youtubeVideoLink}
+                src={toolData.youtubeVideoLink}
                 title={"Video"}
                 allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
                 allowFullScreen

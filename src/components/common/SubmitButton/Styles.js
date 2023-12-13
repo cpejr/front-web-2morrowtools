@@ -6,12 +6,11 @@ export const SubmitSpace = styled.div`
   flex-direction: column;
   gap: 1rem;
   align-items: center;
-  width: 100%;
 `;
 
 export const Button = styled.button`
   width: 15rem;
-  height: 4rem;
+  height: 3rem;
   background-color: ${colors.blue.accent};
   border: none;
   border-radius: 6px;
@@ -42,7 +41,6 @@ export const Button = styled.button`
     color: white;
     text-transform: uppercase;
     font-family: ${fonts.Exo2};
-    font-size: 2rem;
     margin: 0;
   }
 `;

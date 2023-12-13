@@ -138,7 +138,7 @@ export default function Tools() {
         {groupedData.map((group, groupIndex) => (
           <CardLine key={groupIndex}>
             {group.map((content, contentIndex) => (
-              <Card dados={content} key={contentIndex} />
+              <Card data={content} key={contentIndex} />
             ))}
           </CardLine>
         ))}

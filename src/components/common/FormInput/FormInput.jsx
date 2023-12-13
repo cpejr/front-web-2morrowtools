@@ -26,7 +26,7 @@ export default function FormInput({
 
 FormInput.propTypes = {
   name: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   placeholder: PropTypes.string.isRequired,
   icon: PropTypes.elementType,
   errors: PropTypes.object.isRequired,

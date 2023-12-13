@@ -7,29 +7,64 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { useCallback } from "react";
 import { usePostFavorite } from "../../services/ManagerService";
+import { signInWithGooglePopup } from "./../../services/firebase";
+import { usePostUser } from "../../services/ManagerService";
 import useAuthStore from "../../stores/auth";
 
-export default function Card({ dados }) {
-  const [starsValue, setStarsValue] = useState(dados.stars || 0);
+export default function Card({ data }) {
+  const [starsValue, setStarsValue] = useState(data.stars || 0);
   const [hoverValue, setHoverValue] = useState(0);
+  const [favoriteIcon, setFavoriteIcon] = useState(
+    data.favorite ? (
+      <FaBookmark className='favoriteIcon' />
+    ) : (
+      <FaRegBookmark className='favoriteIcon' />
+    )
+  );
   const navigate = useNavigate();
-
-  const { getUser } = useAuthStore();
+  const { setToken, getUser, getToken } = useAuthStore();
   const handleStarsChange = (value) => {
     setStarsValue(value);
   };
 
   async function saveFavorite() {
-    const fav = await usePostFavorite({
-      userId: getUser().userFound._id || " ",
-      toolId: dados._id,
+    if (getToken() === null) {
+      await logGoogleUser();
+    }
+    await usePostFavorite({
+      userId: getUser()._id || " ",
+      toolId: data._id,
     });
+    data.favorite = !data.favorite;
+    setFavoriteIcon(
+      data.favorite ? (
+        <FaBookmark className='favoriteIcon' />
+      ) : (
+        <FaRegBookmark className='favoriteIcon' />
+      )
+    );
   }
-  const favoriteIcon = dados.favorite ? (
-    <FaBookmark className='favoriteIcon' onClick={saveFavorite} />
-  ) : (
-    <FaRegBookmark className='favoriteIcon' onClick={saveFavorite} />
+  let favorite = (
+    <span onClick={saveFavorite} style={{ cursor: "pointer" }}>
+      {favoriteIcon}
+    </span>
   );
+
+  const logGoogleUser = async () => {
+    if (getToken() === null) {
+      const response = await signInWithGooglePopup();
+      const tokenObject = await usePostUser({
+        name: response.user.displayName,
+        email: response.user.email,
+        imageURL: response.user.photoURL,
+        type: "Admin",
+      });
+
+      setToken(tokenObject.token);
+
+      window.location.reload();
+    }
+  };
 
   const handleHoverChange = (value) => {
     setHoverValue(value);
@@ -40,24 +75,24 @@ export default function Card({ dados }) {
   };
 
   const groupedTags = [];
-  for (let i = 0; i < dados?.tags?.length; i += 2) {
-    groupedTags.push(dados?.tags?.slice(i, i + 2));
+  for (let i = 0; i < data?.tags?.length; i += 2) {
+    groupedTags.push(data?.tags?.slice(i, i + 2));
   }
 
   const handleLineClick = useCallback(() => {
-    navigate(`/ferramenta/${dados?.name}`);
+    navigate(`/ferramenta/${data?.name}`);
     window.location.reload();
     window.scrollTo(0, 0);
-  }, [navigate, dados?.name]);
+  }, [navigate, data?.name]);
 
   return (
     <StyledCard>
       <Image>
-        <img src={dados?.imageURL} alt={dados?.name} />
+        <img src={data?.imageURL} alt={data?.name} />
       </Image>
       <Group>
-        <Line onClick={handleLineClick}>{dados?.name}:</Line>
-        <LineSVG>{favoriteIcon}</LineSVG>
+        <Line onClick={handleLineClick}>{data?.name}:</Line>
+        <LineSVG>{favorite}</LineSVG>
       </Group>
       <Line>
         <Stars
@@ -70,15 +105,15 @@ export default function Card({ dados }) {
         <span>({starsValue})</span>
       </Line>
       <Line>
-        <p>{dados?.description}</p>
+        <p>{data?.description}</p>
       </Line>
 
       <Tags>
-        <Tag>{dados?.id_categoryfeature?.name} </Tag>
-        <Tag>{dados?.id_categoryprice?.name} </Tag>
+        <Tag>{data?.id_categoryfeature?.name} </Tag>
+        <Tag>{data?.id_categoryprice?.name} </Tag>
       </Tags>
       <Tags>
-        <Tag>{dados?.id_categoryprofession?.name} </Tag>
+        <Tag>{data?.id_categoryprofession?.name} </Tag>
       </Tags>
       <BlueButton type='primary'>BOTÃO</BlueButton>
     </StyledCard>
@@ -86,5 +121,5 @@ export default function Card({ dados }) {
 }
 
 Card.propTypes = {
-  dados: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
 };

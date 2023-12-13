@@ -5,8 +5,6 @@ import {
   FormsTextArea,
   ModalDelete,
   ModalEdit,
-  // SocialMediaInput,
-  // NewLink,
   FormSelect,
 } from "../../components";
 import { useForm } from "react-hook-form";
@@ -23,12 +21,9 @@ import {
 } from "./Styles";
 import { FaUpload, FaTrash, FaEdit } from "react-icons/fa";
 import * as managerService from "../../services/ManagerService";
-import { newToolValidationSchema, buildNewToolErrorMessage } from "./utils";
-// import { zodResolver } from "@hookform/resolvers/zod";
+import { buildNewToolErrorMessage } from "./utils";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-// import { BlueButton } from "../../components/Card/Styles";
 
 export default function NewTool() {
   // Set variables
@@ -121,9 +116,6 @@ export default function NewTool() {
     control,
     formState: { errors },
   } = useForm();
-  //   {
-  //   resolver: zodResolver(newToolValidationSchema),
-  // }
 
   return (
     <Container>
@@ -168,12 +160,6 @@ export default function NewTool() {
             errors={errors}
             onChange={(e) => setFormData({ ...formData, youtubeVideoLink: e.target.value })}
           />
-          {/* <SocialMediaInput
-            placeholder='Rede social:'
-            errors={errors}
-            onChange={(e) => setFormData({ ...formData, linkedIn: e.target.value })}
-          />
-          <NewLink /> */}
           <DivRow>
             <FormSelect
               name='id_categoryfeature'
@@ -208,7 +194,6 @@ export default function NewTool() {
         <SubmitButton type='submit'>
           <p>Enviar</p>
         </SubmitButton>
-        {/* <BlueButton type='submit'>ENVIAR</BlueButton> */}
       </Form>
       <div>
         <Title>GERENCIAR ITENS</Title>
@@ -224,7 +209,11 @@ export default function NewTool() {
             centered
             destroyOnClose
           >
-            <ModalDelete _id={selectedToolId} close={handleCloseDeleteModal} />
+            <ModalDelete
+              _id={selectedToolId}
+              close={handleCloseDeleteModal}
+              deleteFunction={managerService.useDeleteAITools}
+            />
           </StyledModal>
         )}
         {isEditModalOpen && (
@@ -237,7 +226,6 @@ export default function NewTool() {
             footer={null}
             closeIcon={true}
             style={{
-              //display: "flex",
               alignItems: "center",
               justifyContent: "center",
               marginTop: "100px",
