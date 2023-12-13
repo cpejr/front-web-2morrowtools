@@ -19,6 +19,7 @@ export default function ModalEdit({ _id, tool, close }) {
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [categoriesPrices, setCategoriesPrices] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
+  const [imageUrl, setImageUrl] = useState();
 
   // Forms values
   const [formData, setFormData] = useState({
@@ -29,6 +30,17 @@ export default function ModalEdit({ _id, tool, close }) {
     link: tool.link,
     youtubeVideoLink: tool.youtubeVideoLink,
   });
+
+  function getBase64(img, callback) {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => callback(reader.result));
+    reader.readAsDataURL(img);
+  }
+  async function afterChange(info) {
+    getBase64(info.file.originFileObj, (url) => {
+      setImageUrl(url);
+    });
+  }
 
   // On Submit
   const onSubmit = async (data) => {
@@ -48,6 +60,21 @@ export default function ModalEdit({ _id, tool, close }) {
       toast.error("Erro ao editar ferramenta. Favor tentar novamente!");
       toast.clearWaitingQueue();
       console.error("Erro ao editar a ferramenta", error);
+    }
+
+    if (imageUrl) {
+      const base64str = imageUrl.substring(imageUrl.indexOf(",") + 1);
+      const imagemDecodificada = atob(base64str);
+      if (imagemDecodificada.length < 2000000) {
+        await managerService.useUpdateIAImage(_id, imageUrl);
+        toast.success("Imagem atualizada com sucesso");
+
+        setImageUrl(null);
+      } else {
+        toast.error("Selecione uma imagem menor que 2Mb!");
+      }
+    } else {
+      toast.error("Selecione uma imagem para enviar!");
     }
   };
 
@@ -104,7 +131,7 @@ export default function ModalEdit({ _id, tool, close }) {
                 placeholder='URL da imagem:'
                 icon={FaUpload}
                 errors={errors}
-                onChange={(e) => setFormData({ ...formData, imageURL: e.target.value })}
+                onChange={afterChange}
               />
             </div>
 
