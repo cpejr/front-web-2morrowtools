@@ -77,6 +77,22 @@ export const useDeleteAITools = async (_id) => {
 
 // Category Feature
 
+export const useGetCategoryFeaturesByName = async ({ name }) => {
+  let categoryFeatures = {};
+  await requesterService.getCategoryFeatureByName(name).then((res) => {
+    categoryFeatures = res.data;
+  });
+  return { categoryFeatures };
+};
+
+export const useGetCategoryFeaturesNames = async () => {
+  let categoryFeatures = {};
+  await requesterService.getCategoryFeatureNames().then((res) => {
+    categoryFeatures = res.data;
+  });
+  return { categoryFeatures };
+};
+
 export const useCreateCategoriesFeature = async (body) => {
   const create = await requesterService.createCategoriesFeature(body).then((res) => {
     return res;
@@ -121,6 +137,22 @@ export const useCreateCategoriesPrices = async (body) => {
   return create;
 };
 
+export const useGetCategoryPricesByName = async ({ name }) => {
+  let categoryPrices = {};
+  await requesterService.getCategoryPricesByName(name).then((res) => {
+    categoryPrices = res.data;
+  });
+  return { categoryPrices };
+};
+
+export const useGetCategoryPricesNames = async () => {
+  let categoryPrices = {};
+  await requesterService.getCategoryPricesNames().then((res) => {
+    categoryPrices = res.data;
+  });
+  return { categoryPrices };
+};
+
 export const useEditCategoriesPrices = async (_id, body) => {
   try {
     const response = await requesterService.editCategoriesPrices(_id, body);
@@ -156,6 +188,22 @@ export const useCreateCategoriesProfession = async (body) => {
     return res;
   });
   return create;
+};
+
+export const useGetCategoryProfesssionByName = async ({ name }) => {
+  let categoryProfesssion = {};
+  await requesterService.getCategoryProfessionByName(name).then((res) => {
+    categoryProfesssion = res.data;
+  });
+  return { categoryProfesssion };
+};
+
+export const useGetCategoryProfesssionNames = async () => {
+  let categoryProfesssion = {};
+  await requesterService.getCategoryProfessionNames().then((res) => {
+    categoryProfesssion = res.data;
+  });
+  return { categoryProfesssion };
 };
 
 export const useEditCategoriesProfession = async (_id, body) => {
