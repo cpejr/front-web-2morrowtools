@@ -26,3 +26,12 @@ export const getCategoriesFeature = () => api.get(`/categoriesfeature`);
 export const getCategoriesPrice = () => api.get(`/categoriesprices`);
 
 export const getCategoriesProfession = () => api.get(`/categoriesprofession`);
+
+//Avaliation
+
+
+export const postAvaliation = async(body) => {
+  await api.post(`/avaliation`, { ...body });
+};
+export const updateAvaliation = (userId, rate, iaId) => api.put(`/avaliation/${iaId}`, { userId, rate, iaId });
+export const getByIaId = (iaId) => api.get(`/avaliation/${iaId}`);

@@ -17,26 +17,38 @@ import {
 } from "./Styles";
 import PropTypes from "prop-types";
 
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { FaRegBookmark } from "react-icons/fa";
 import { IoShareSocial } from "react-icons/io5";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
+import useDebounce from "../../services/useDebounce";
+import { usePostAvaliation } from "../../services/ManagerService";
+
+
+
 export default function Tool({ data }) {
   const [starsValue, setStarsValue] = useState(0);
   const [starsValue2, setStarsValue2] = useState(0);
   const [hoverValue, setHoverValue] = useState(0);
   const [hoverValue2, setHoverValue2] = useState(0);
+  const [names, setNames] = useState("");
 
-  const handleStarsChange = (value) => {
+  // Debounce logic here...
+
+  const handleStarsChange = async (value) => {
     setStarsValue(value);
+    await postAvaliationData({ userId: '656ccb602d3069936d590c74', rate: 1, iaId: '656ccb602d3069936d590c74' });
   };
-  const handleStarsChange2 = (value) => {
+  
+  const handleStarsChange2 = async (value) => {
     setStarsValue2(value);
+    await postAvaliationData({ userId: '656ccb602d3069936d590c74', rate: 1, iaId: '656ccb602d3069936d590c74' });
   };
 
   const handleHoverChange = (value) => {
     setHoverValue(value);
   };
+
   const handleHoverChange2 = (value) => {
     setHoverValue2(value);
   };
@@ -44,9 +56,21 @@ export default function Tool({ data }) {
   const renderStarIcon = (index) => {
     return index <= (hoverValue || starsValue) - 1 ? <RiStarSFill /> : <RiStarSLine />;
   };
+
   const renderStarIcon2 = (index) => {
     return index <= (hoverValue2 || starsValue2) - 1 ? <RiStarSFill /> : <RiStarSLine />;
   };
+
+  const postAvaliationData = async (body) => {
+    try {
+      console.log('Body:', body);
+      const result = await usePostAvaliation(body);
+      console.log('Dados da avaliação postada:', result);
+    } catch (error) {
+      console.error('Erro ao postar avaliação:', error);
+    }
+  };
+
   return (
     <>
       {data?.aiTools?.map((toolData, index) => (
