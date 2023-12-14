@@ -1,7 +1,8 @@
-import { Checkbox } from "antd";
+import { useEffect, useState } from "react";
+import { Checkbox, Button } from "antd";
+import * as managerService from "../../services/ManagerService";
 import {
   BlueCheckboxes,
-  Checkboxes,
   ContainerFilter,
   SearchBar,
   InputStyled,
@@ -9,40 +10,75 @@ import {
   CheckboxItem,
 } from "./Styles";
 
-const checkboxes = [
-  "categoria1",
-  "categoria2",
-  "categoria3",
-  "categoria4",
-  "categoria5",
-  "categoria6",
-  "categoria7",
-  "categoria8",
-  "categoria9",
-  "categoria10",
-  "categoria11",
-  "categoria12",
-  "categoria13",
-  "categoria14",
-  "categoria15",
-  "categoria16",
-];
-
 export default function FilterArea() {
+  // Set variables
+  const [categoriesFeature, setCategoriesFeature] = useState([]);
+  const [categoriesPrices, setCategoriesPrices] = useState([]);
+  const [categoriesProfession, setCategoriesProfession] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState({
+    feature: [],
+    prices: [],
+    profession: [],
+  });
+
+  // Get functions
+  useEffect(() => {
+    const fetchData = async () => {
+      const resultFeature = await managerService.usegetCategoriesFeature();
+      setCategoriesFeature(resultFeature.categoriesFeature);
+
+      const resultPrices = await managerService.usegetCategoriesPrices();
+      setCategoriesPrices(resultPrices.categoriesPrices);
+
+      const resultProfession = await managerService.usegetCategoriesProfession();
+      setCategoriesProfession(resultProfession.categoriesprofession);
+    };
+    fetchData();
+  }, []);
+
+  const handleCategoryChange = (categoryType, categoryId) => {
+    setSelectedCategories((prev) => ({
+      ...prev,
+      [categoryType]: prev[categoryType].includes(categoryId)
+        ? prev[categoryType].filter((id) => id !== categoryId)
+        : [...prev[categoryType], categoryId],
+    }));
+  };
+
+  const handleFilterClick = async () => {
+    // Call your backend filter function with selected categories
+    const filteredTools = await managerService.useFilterTools(selectedCategories);
+    // Handle the filtered tools as needed
+    console.log(filteredTools);
+  };
+
   return (
     <ContainerFilter>
-      <Checkboxes>
-        {checkboxes.map((checkbox) => (
-          <CheckboxItem key={checkbox}>
-            <Checkbox>{checkbox}</Checkbox>
+      <BlueCheckboxes>
+        Características:
+        {categoriesFeature.map(({ _id, name }) => (
+          <CheckboxItem key={_id}>
+            <Checkbox onChange={() => handleCategoryChange("feature", _id)}>{name}</Checkbox>
           </CheckboxItem>
         ))}
-      </Checkboxes>
-      <BlueCheckboxes>
-        <Checkbox>Lorem Ipsum</Checkbox>
-        <Checkbox>Minhas Ferramentas</Checkbox>
-        <Checkbox>Lorem Ipsum</Checkbox>
       </BlueCheckboxes>
+      <BlueCheckboxes>
+        Preços:
+        {categoriesPrices.map(({ _id, name }) => (
+          <CheckboxItem key={_id}>
+            <Checkbox onChange={() => handleCategoryChange("prices", _id)}>{name}</Checkbox>
+          </CheckboxItem>
+        ))}
+      </BlueCheckboxes>
+      <BlueCheckboxes>
+        Profissões:
+        {categoriesProfession.map(({ _id, name }) => (
+          <CheckboxItem key={_id}>
+            <Checkbox onChange={() => handleCategoryChange("profession", _id)}>{name}</Checkbox>
+          </CheckboxItem>
+        ))}
+      </BlueCheckboxes>
+      <Button onClick={handleFilterClick}>Filtrar</Button>
       <SearchBar>
         <SelectStyled
           showSearch
