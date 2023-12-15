@@ -21,7 +21,7 @@ import { useState,useEffect } from "react";
 import { FaRegBookmark } from "react-icons/fa";
 import { IoShareSocial } from "react-icons/io5";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
-import useDebounce from "../../services/useDebounce";
+import useAuthStore from "../../stores/auth";
 import { usePostAvaliation } from "../../services/ManagerService";
 
 
@@ -31,18 +31,19 @@ export default function Tool({ data }) {
   const [starsValue2, setStarsValue2] = useState(0);
   const [hoverValue, setHoverValue] = useState(0);
   const [hoverValue2, setHoverValue2] = useState(0);
-  const [names, setNames] = useState("");
+  const { setToken, getToken, getUser, clearAuth } = useAuthStore();
+  const  user = getUser()._id;
 
   // Debounce logic here...
 
   const handleStarsChange = async (value) => {
     setStarsValue(value);
-    await postAvaliationData({ userId: '656ccb602d3069936d590c74', rate: 1, iaId: '656ccb602d3069936d590c74' });
+    await postAvaliationData({ userId: user, rate: value, iaId: '656ccb602d3069936d590c74' });
   };
   
   const handleStarsChange2 = async (value) => {
     setStarsValue2(value);
-    await postAvaliationData({ userId: '656ccb602d3069936d590c74', rate: 1, iaId: '656ccb602d3069936d590c74' });
+    await postAvaliationData({ userId: user, rate: value, iaId: '656ccb602d3069936d590c74' });
   };
 
   const handleHoverChange = (value) => {
