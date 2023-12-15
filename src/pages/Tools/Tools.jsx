@@ -19,7 +19,7 @@ import { Card, Comments, Tool } from "../../components";
 import { useMediaQuery } from "react-responsive";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useGetAITools, useGetAIToolsByName } from "../../services/ManagerService";
+import { useGetAITools, useGetAIToolsByName, useGetComments } from "../../services/ManagerService";
 import { useParams } from "react-router-dom";
 
 const comments = [
@@ -71,17 +71,21 @@ const comments = [
 ];
 
 export default function Tools() {
-  // Backend Calls
   const [aiToolsByName, setAIToolsByName] = useState({});
+  const [commments, setComments] = useState([]);
 
+  //backend calls
   const { name } = useParams();
   async function GettingAIToolsDataByName() {
     const aiTools = await useGetAIToolsByName({ name });
     setAIToolsByName(aiTools);
   }
+
+  async function GettingComments() {}
   useEffect(() => {
     GettingAIToolsDataByName();
     GettingAIToolsData();
+    GettingComments();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

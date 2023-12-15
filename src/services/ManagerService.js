@@ -1,4 +1,3 @@
-import { DatabaseFilled } from "@ant-design/icons";
 import * as requesterService from "./RequesterService";
 
 export const useGetAITools = async () => {
@@ -93,9 +92,9 @@ export const usegetCategoriesProfession = async () => {
   return { categoriesprofession };
 };
 
-export const useGetComments = async () => {
+export const useGetComments = async (name) => {
   let comments = {};
-  await requesterService.getComments().then((res) => {
+  await requesterService.getComments(name).then((res) => {
     comments = res.data;
   });
   return { comments };
@@ -109,26 +108,26 @@ export const usePostComments = async (body) => {
   return { comments };
 };
 
-export const useEditComments = async (_id,body) => {
+export const useEditComments = async (_id, body) => {
   let comments = {};
-  try{
-  await requesterService.editComments(_id,body).then((res) => {
-    comments = res.data;
-  });
-  return { comments };
- } catch (error) {
-  console.error("Error editing comment", error);
-  throw error;
- }
+  try {
+    await requesterService.editComments(_id, body).then((res) => {
+      comments = res.data;
+    });
+    return { comments };
+  } catch (error) {
+    console.error("Error editing comment", error);
+    throw error;
+  }
 };
 
-export const useDeleteComments = async (_id,userid) => {
+export const useDeleteComments = async (_id, userid) => {
   let comments = {};
-  try{
-  await requesterService.deleteComments(_id,userid).then((res) => {
-    comments = res.data;
-  });
-  return { comments };
+  try {
+    await requesterService.deleteComments(_id, userid).then((res) => {
+      comments = res.data;
+    });
+    return { comments };
   } catch (error) {
     console.error("Error deleting comment", error);
     throw error;
