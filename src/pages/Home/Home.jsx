@@ -8,9 +8,14 @@ import { useGetAITools, useGetAIToolsByName, useGetFavorites } from "../../servi
 import { useEffect, useState } from "react";
 import useAuthStore from "../../stores/auth";
 import useDebounce from "../../services/useDebounce";
+import * as managerService from "../../services/ManagerService";
 
 export default function Home() {
   const [aiTools, setAITools] = useState({});
+  const [filteredAiTools, setFilteredAiTools] = useState([]);
+  const [selectedCategoryFeature, setSelectedCategoryFeature] = useState("");
+  const [selectedCategoryPrice, setSelectedCategoryPrice] = useState("");
+  const [selectedCategoryProfession, setSelectedCategoryProfession] = useState("");
   const [aiToolsNames, setAIToolsNames] = useState({});
   const [names, setNames] = useState("");
   const debouncedName = useDebounce(names);
@@ -50,7 +55,21 @@ export default function Home() {
     );
     setNamesArray(filteredSuggestions);
   };
-
+  //Category Filter
+  const handleFilterClick = async () => {
+    console.log("ID feature:", selectedCategoryFeature);
+    console.log("ID price:", selectedCategoryPrice);
+    console.log("ID profession:", selectedCategoryProfession);
+    try {
+      const filteredCategoryFeature = await managerService.useReadByIdCategoriesFeature(
+        selectedCategoryFeature
+      );
+      console.log(filteredCategoryFeature);
+      setFilteredAiTools(filteredCategoryFeature.filteredTools);
+    } catch (error) {
+      console.error("Error filtering tools:", error);
+    }
+  };
   // Rendering multiples Cards
   const groupedData = [];
   const isSmallDesktop = useMediaQuery({ maxWidth: 1370 });
@@ -90,10 +109,15 @@ export default function Home() {
         ></AutoCompleteInput>
       </IconWrapper>
 
-      <FilterArea />
-      {groupedData.map((group, index) => (
-        <Line key={index}>
-          {group.map((content) => (
+      <FilterArea
+        onFilterClick={handleFilterClick}
+        setSelectedCategoryFeature={setSelectedCategoryFeature}
+        setSelectedCategoryPrice={setSelectedCategoryPrice}
+        setSelectedCategoryProfession={setSelectedCategoryProfession}
+      />
+      {filteredAiTools.length > 0 ? (
+        <Line>
+          {filteredAiTools.map((content) => (
             <Card
               data={{
                 ...content,
@@ -105,7 +129,23 @@ export default function Home() {
             />
           ))}
         </Line>
-      ))}
+      ) : (
+        groupedData.map((group, index) => (
+          <Line key={index}>
+            {group.map((content) => (
+              <Card
+                data={{
+                  ...content,
+                  favorite: favoriteAiTools.find(
+                    (favoriteAiTool) => favoriteAiTool["_id"] === content._id
+                  ),
+                }}
+                key={content?.name}
+              />
+            ))}
+          </Line>
+        ))
+      )}
     </Container>
   );
 }
