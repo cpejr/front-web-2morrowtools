@@ -209,3 +209,13 @@ export const useReadByIdCategoriesProfession = async (_id) => {
   });
   return { categoriesProfession };
 };
+
+// Category Filter
+
+export const useGetAIToolsByCategoryId = async (id) => {
+  let aiTools = {};
+  await requesterService.getAIToolsByName(id).then((res) => {
+    aiTools = res.data;
+  });
+  return { aiTools };
+};

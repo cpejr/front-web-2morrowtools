@@ -21,6 +21,8 @@ export default function FilterArea({
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [categoriesPrices, setCategoriesPrices] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
+  const [allAis, setAllAis] = useState([]);
+  const [idsArray, setIdsArray] = useState([]);
   //  const [selectedCategories, setSelectedCategories] = useState({
   //     feature: [],
   //     prices: [],
@@ -46,17 +48,47 @@ export default function FilterArea({
   }, []);
 
   const handleCategoryFeatureChange = (_id) => {
-    setSelectedCategoryFeature((prev) => (prev === _id ? "" : _id));
+    setIdsArray((prevIdsArray) => {
+      if (prevIdsArray.includes(_id)) {
+        return prevIdsArray.filter((id) => id !== _id);
+      } else {
+        return [...prevIdsArray, _id];
+      }
+    });
+    GettingAIToolsDataByCategories();
   };
 
   const handleCategoryPriceChange = (_id) => {
-    setSelectedCategoryPrice((prev) => (prev === _id ? "" : _id));
+    setIdsArray((prevIdsArray) => {
+      if (prevIdsArray.includes(_id)) {
+        return prevIdsArray.filter((id) => id !== _id);
+      } else {
+        return [...prevIdsArray, _id];
+      }
+    });
+    GettingAIToolsDataByCategories();
   };
 
   const handleCategoryProfessionChange = (_id) => {
-    setSelectedCategoryProfession((prev) => (prev === _id ? "" : _id));
+    setIdsArray((prevIdsArray) => {
+      if (prevIdsArray.includes(_id)) {
+        return prevIdsArray.filter((id) => id !== _id);
+      } else {
+        return [...prevIdsArray, _id];
+      }
+    });
+    GettingAIToolsDataByCategories();
   };
 
+  async function GettingAIToolsDataByCategories() {
+    const idsString = idsArray.join(",");
+    const aiTools = await managerService.useGetAIToolsByCategoryId(idsString);
+    setAllAis(aiTools);
+  }
+
+  useEffect(() => {
+    GettingAIToolsDataByCategories();
+  }, [idsArray]);
   // const handleCategoryChange = (categoryType, categoryId) => {
   //   setSelectedCategories((prev) => ({
   //     ...prev,
