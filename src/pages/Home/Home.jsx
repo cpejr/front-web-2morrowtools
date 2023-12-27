@@ -56,19 +56,17 @@ export default function Home() {
     setNamesArray(filteredSuggestions);
   };
   //Category Filter
-  const handleFilterClick = async () => {
-    console.log("ID feature:", selectedCategoryFeature);
-    console.log("ID price:", selectedCategoryPrice);
-    console.log("ID profession:", selectedCategoryProfession);
-    try {
-      const filteredCategoryFeature = await managerService.useReadByIdCategoriesFeature(
-        selectedCategoryFeature
-      );
-      console.log(filteredCategoryFeature);
-      setFilteredAiTools(filteredCategoryFeature.filteredTools);
-    } catch (error) {
-      console.error("Error filtering tools:", error);
-    }
+  const handleFilterClick = async (idsArray) => {
+    console.log(idsArray);
+    // try {
+    //   const filteredCategoryFeature = await managerService.useGetAIToolsByCategoryId(
+    //     selectedCategoryFeature
+    //   );
+    //   console.log(filteredCategoryFeature);
+    //   setFilteredAiTools(filteredCategoryFeature.filteredTools);
+    // } catch (error) {
+    //   console.error("Error filtering tools:", error);
+    // }
   };
   // Rendering multiples Cards
   const groupedData = [];
@@ -109,12 +107,7 @@ export default function Home() {
         ></AutoCompleteInput>
       </IconWrapper>
 
-      <FilterArea
-        onFilterClick={handleFilterClick}
-        setSelectedCategoryFeature={setSelectedCategoryFeature}
-        setSelectedCategoryPrice={setSelectedCategoryPrice}
-        setSelectedCategoryProfession={setSelectedCategoryProfession}
-      />
+      <FilterArea onFilterClick={handleFilterClick} />
       {filteredAiTools.length > 0 ? (
         <Line>
           {filteredAiTools.map((content) => (

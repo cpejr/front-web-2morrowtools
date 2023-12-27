@@ -11,25 +11,13 @@ import {
   CheckboxItem,
 } from "./Styles";
 
-export default function FilterArea({
-  onFilterClick,
-  setSelectedCategoryFeature,
-  setSelectedCategoryPrice,
-  setSelectedCategoryProfession,
-}) {
+export default function FilterArea({ onFilterClick }) {
   // Set variables
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [categoriesPrices, setCategoriesPrices] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
   const [allAis, setAllAis] = useState([]);
   const [idsArray, setIdsArray] = useState([]);
-  //  const [selectedCategories, setSelectedCategories] = useState({
-  //     feature: [],
-  //     prices: [],
-  //     profession: [],
-  //   });
-
-  // Get functions
   useEffect(() => {
     const fetchData = async () => {
       const resultFeature = await managerService.usegetCategoriesFeature();
@@ -55,7 +43,6 @@ export default function FilterArea({
         return [...prevIdsArray, _id];
       }
     });
-    GettingAIToolsDataByCategories();
   };
 
   const handleCategoryPriceChange = (_id) => {
@@ -66,7 +53,6 @@ export default function FilterArea({
         return [...prevIdsArray, _id];
       }
     });
-    GettingAIToolsDataByCategories();
   };
 
   const handleCategoryProfessionChange = (_id) => {
@@ -77,52 +63,18 @@ export default function FilterArea({
         return [...prevIdsArray, _id];
       }
     });
-    GettingAIToolsDataByCategories();
   };
 
   async function GettingAIToolsDataByCategories() {
     const idsString = idsArray.join(",");
-    const aiTools = await managerService.useGetAIToolsByCategoryId(idsString);
-    setAllAis(aiTools);
+    const allAis = await managerService.useGetAIToolsByCategoryId(idsString);
+    setAllAis(allAis);
   }
-
+  console.log(idsArray);
   useEffect(() => {
     GettingAIToolsDataByCategories();
   }, [idsArray]);
-  // const handleCategoryChange = (categoryType, categoryId) => {
-  //   setSelectedCategories((prev) => ({
-  //     ...prev,
-  //     [categoryType]: prev[categoryType].includes(categoryId)
-  //       ? prev[categoryType].filter((_id) => _id !== categoryId)
-  //       : [...prev[categoryType], categoryId],
-  //   }));
-  // };
-
-  // try {
-  //   const filters = {
-  //     feature: selectedCategories.feature.map((category) => category._id),
-  //     prices: selectedCategories.prices.map((category) => category._id),
-  //     profession: selectedCategories.profession.map((category) => category._id),
-  //   };
-
-  //   const { filteredTools } = await managerService.useFilterTools(filters);
-  //   console.log(filteredTools);
-  // } catch (error) {
-  //   console.error("Error filtering tools:", error);
-  // }
-  // const handleFilterClick = async () => {
-  //   console.log("ID feature:", selectedCategoryFeature);
-  //   console.log("ID price:", selectedCategoryPrice);
-  //   console.log("ID profession:", selectedCategoryProfession);
-  //   try {
-  //     const filteredCategoryFeature = await managerService.useReadByIdCategoriesFeature(
-  //       selectedCategoryFeature
-  //     );
-  //     console.log(filteredCategoryFeature);
-  //   } catch (error) {
-  //     console.error("Error filtering tools:", error);
-  //   }
-  // };
+  console.log(idsArray);
 
   return (
     <ContainerFilter>
@@ -150,7 +102,7 @@ export default function FilterArea({
           </CheckboxItem>
         ))}
       </BlueCheckboxes>
-      <Button onClick={onFilterClick}>Filtrar</Button>
+      <Button onClick={() => onFilterClick(idsArray)}>Filtrar</Button>
       <SearchBar>
         <SelectStyled
           showSearch
@@ -179,7 +131,4 @@ export default function FilterArea({
 
 FilterArea.propTypes = {
   onFilterClick: PropTypes.func.isRequired,
-  setSelectedCategoryFeature: PropTypes.func.isRequired,
-  setSelectedCategoryPrice: PropTypes.func.isRequired,
-  setSelectedCategoryProfession: PropTypes.func.isRequired,
 };

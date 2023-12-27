@@ -112,14 +112,6 @@ export const useDeleteCategoriesFeature = async (_id) => {
   }
 };
 
-export const useReadByIdCategoriesFeature = async (_id) => {
-  let categoriesFeature = {};
-  await requesterService.readByIdCategoriesFeature(_id).then((res) => {
-    categoriesFeature = res.data;
-  });
-  return { categoriesFeature };
-};
-
 // Category Price
 
 export const useCreateCategoriesPrices = async (body) => {
@@ -157,14 +149,6 @@ export const useDeleteCategoriesPrice = async (_id) => {
   }
 };
 
-export const useReadByIdCategoriesPrice = async (_id) => {
-  let categoriesPrices = {};
-  await requesterService.readByIdCategoriesPrice(_id).then((res) => {
-    categoriesPrices = res.data;
-  });
-  return { categoriesPrices };
-};
-
 // Category Profession
 
 export const useCreateCategoriesProfession = async (body) => {
@@ -200,14 +184,6 @@ export const useDeleteCategoriesProfession = async (_id) => {
     console.error("Error deleting category profession", error);
     throw error;
   }
-};
-
-export const useReadByIdCategoriesProfession = async (_id) => {
-  let categoriesProfession = {};
-  await requesterService.readByIdCategoriesProfession(_id).then((res) => {
-    categoriesProfession = res.data;
-  });
-  return { categoriesProfession };
 };
 
 // Category Filter
