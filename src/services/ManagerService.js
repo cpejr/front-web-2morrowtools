@@ -214,7 +214,7 @@ export const useReadByIdCategoriesProfession = async (_id) => {
 
 export const useGetAIToolsByCategoryId = async (id) => {
   let aiTools = {};
-  await requesterService.getAIToolsByName(id).then((res) => {
+  await requesterService.getAIToolsByCategoryId(id).then((res) => {
     aiTools = res.data;
   });
   return { aiTools };

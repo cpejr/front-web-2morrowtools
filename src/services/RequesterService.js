@@ -50,4 +50,4 @@ export const readByIdCategoriesProfession = (_id) =>
   api.get(`/categoriesprofession/readById/${_id}`);
 
 // Category Filter
-export const getAIToolsByCategoryId = (id) => api.get(`IA/search-by-name`, { params: id });
+export const getAIToolsByCategoryId = (id) => api.get(`IA/search-by-category`, { params: id });
