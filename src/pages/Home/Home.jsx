@@ -60,11 +60,8 @@ export default function Home() {
   const handleFilterClick = async (idsArray) => {
     try {
       const idsString = convertArrayToString(idsArray);
-      console.log(idsString);
       const filteredCategory = await managerService.useGetAIToolsByCategoryId({ id: idsString });
       setFilteredAiTools(filteredCategory);
-      console.log(idsString);
-      console.log(filteredCategory);
     } catch (error) {
       console.error("Error filtering tools:", error);
     }
