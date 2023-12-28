@@ -13,9 +13,6 @@ import * as managerService from "../../services/ManagerService";
 export default function Home() {
   const [aiTools, setAITools] = useState({});
   const [filteredAiTools, setFilteredAiTools] = useState([]);
-  const [selectedCategoryFeature, setSelectedCategoryFeature] = useState("");
-  const [selectedCategoryPrice, setSelectedCategoryPrice] = useState("");
-  const [selectedCategoryProfession, setSelectedCategoryProfession] = useState("");
   const [aiToolsNames, setAIToolsNames] = useState({});
   const [names, setNames] = useState("");
   const debouncedName = useDebounce(names);
@@ -57,16 +54,16 @@ export default function Home() {
   };
   //Category Filter
   const handleFilterClick = async (idsArray) => {
-    console.log(idsArray);
-    // try {
-    //   const filteredCategoryFeature = await managerService.useGetAIToolsByCategoryId(
-    //     selectedCategoryFeature
-    //   );
-    //   console.log(filteredCategoryFeature);
-    //   setFilteredAiTools(filteredCategoryFeature.filteredTools);
-    // } catch (error) {
-    //   console.error("Error filtering tools:", error);
-    // }
+    //console.log(idsArray);
+    try {
+      const filteredCategory = await managerService.useGetAIToolsByCategoryId({
+        id: ["655be6fe637f2ca33eb16829", "6576ad9a77e819879dbd9c8e"],
+      });
+      setFilteredAiTools(filteredCategory);
+      console.log(filteredCategory);
+    } catch (error) {
+      console.error("Error filtering tools:", error);
+    }
   };
   // Rendering multiples Cards
   const groupedData = [];

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Checkbox, Button } from "antd";
@@ -28,9 +29,6 @@ export default function FilterArea({ onFilterClick }) {
 
       const resultProfession = await managerService.usegetCategoriesProfession();
       setCategoriesProfession(resultProfession.categoriesprofession);
-      console.log(resultFeature);
-      console.log(resultPrices);
-      console.log(resultProfession);
     };
     fetchData();
   }, []);
@@ -70,11 +68,9 @@ export default function FilterArea({ onFilterClick }) {
     const allAis = await managerService.useGetAIToolsByCategoryId(idsString);
     setAllAis(allAis);
   }
-  console.log(idsArray);
   useEffect(() => {
     GettingAIToolsDataByCategories();
   }, [idsArray]);
-  console.log(idsArray);
 
   return (
     <ContainerFilter>
