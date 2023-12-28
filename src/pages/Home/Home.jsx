@@ -53,13 +53,17 @@ export default function Home() {
     setNamesArray(filteredSuggestions);
   };
   //Category Filter
+  const convertArrayToString = (array) => {
+    return array.join(",");
+  };
+
   const handleFilterClick = async (idsArray) => {
-    //console.log(idsArray);
     try {
-      const filteredCategory = await managerService.useGetAIToolsByCategoryId({
-        id: ["655be6fe637f2ca33eb16829", "6576ad9a77e819879dbd9c8e"],
-      });
+      const idsString = convertArrayToString(idsArray);
+      console.log(idsString);
+      const filteredCategory = await managerService.useGetAIToolsByCategoryId({ id: idsString });
       setFilteredAiTools(filteredCategory);
+      console.log(idsString);
       console.log(filteredCategory);
     } catch (error) {
       console.error("Error filtering tools:", error);
