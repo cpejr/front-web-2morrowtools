@@ -12,7 +12,7 @@ import {
   CheckboxItem,
 } from "./Styles";
 
-export default function FilterArea({ onFilterClick }) {
+export default function FilterArea({ onFilterClick, filterReset }) {
   // Set variables
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [categoriesPrices, setCategoriesPrices] = useState([]);
@@ -71,7 +71,6 @@ export default function FilterArea({ onFilterClick }) {
   useEffect(() => {
     GettingAIToolsDataByCategories();
   }, [idsArray]);
-
   return (
     <ContainerFilter>
       <BlueCheckboxes>
@@ -99,6 +98,7 @@ export default function FilterArea({ onFilterClick }) {
         ))}
       </BlueCheckboxes>
       <Button onClick={() => onFilterClick(idsArray)}>Filtrar</Button>
+      <Button onClick={() => filterReset()}>Limpar Filtros</Button>
       <SearchBar>
         <SelectStyled
           showSearch
@@ -127,4 +127,5 @@ export default function FilterArea({ onFilterClick }) {
 
 FilterArea.propTypes = {
   onFilterClick: PropTypes.func.isRequired,
+  filterReset: PropTypes.func.isRequired,
 };

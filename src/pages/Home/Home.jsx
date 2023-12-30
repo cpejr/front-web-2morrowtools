@@ -62,10 +62,21 @@ export default function Home() {
       const idsString = convertArrayToString(idsArray);
       const filteredCategory = await managerService.useGetAIToolsByCategoryId({ id: idsString });
       setFilteredAiTools(filteredCategory);
+      setAITools(filteredCategory);
     } catch (error) {
       console.error("Error filtering tools:", error);
     }
   };
+  const filterReset = async () => {
+    try {
+      const filteredCategory = await managerService.useGetAIToolsByCategoryId();
+      setFilteredAiTools(filteredCategory);
+      setAITools(filteredCategory);
+    } catch (error) {
+      console.error("Error filtering tools:", error);
+    }
+  };
+
   // Rendering multiples Cards
   const groupedData = [];
   const isSmallDesktop = useMediaQuery({ maxWidth: 1370 });
@@ -105,7 +116,7 @@ export default function Home() {
         ></AutoCompleteInput>
       </IconWrapper>
 
-      <FilterArea onFilterClick={handleFilterClick} />
+      <FilterArea onFilterClick={handleFilterClick} filterReset={filterReset} />
       {filteredAiTools.length > 0 ? (
         <Line>
           {filteredAiTools.map((content) => (
