@@ -28,7 +28,6 @@ export const createCategoriesFeature = async (body) => {
 export const editCategoriesFeature = (_id, body) => api.put(`/categoriesfeature/${_id}`, body);
 export const getCategoriesFeature = () => api.get(`/categoriesfeature`);
 export const deleteCategoriesFeature = (_id) => api.delete(`/categoriesfeature/${_id}`);
-
 // Category Price
 export const createCategoriesPrices = async (body) => {
   await api.post(`/categoriesprices`, { ...body });
@@ -45,3 +44,5 @@ export const editCategoriesProfession = (_id, body) =>
   api.put(`/categoriesprofession/${_id}`, body);
 export const getCategoriesProfession = () => api.get(`/categoriesprofession`);
 export const deleteCategoriesProfession = (_id) => api.delete(`/categoriesprofession/${_id}`);
+// Category Filter
+export const getAIToolsByCategoryId = (id) => api.get(`IA/search-by-category`, { params: id });
