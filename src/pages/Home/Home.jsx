@@ -52,6 +52,7 @@ export default function Home() {
     );
     setNamesArray(filteredSuggestions);
   };
+
   //Category Filter
   const convertArrayToString = (array) => {
     return array.join(",");
@@ -69,9 +70,9 @@ export default function Home() {
   };
   const filterReset = async () => {
     try {
-      const filteredCategory = await managerService.useGetAIToolsByCategoryId();
-      setFilteredAiTools(filteredCategory);
-      setAITools(filteredCategory);
+      const allAis = await managerService.useGetAITools();
+      setFilteredAiTools(allAis);
+      setAITools(allAis);
     } catch (error) {
       console.error("Error filtering tools:", error);
     }
