@@ -64,6 +64,12 @@ export const SearchBar = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3rem;
+  @media (max-width: ${breakpoints.mobile}) {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
 `;
 
 export const InputStyled = styled(Input)`

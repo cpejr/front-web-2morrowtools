@@ -96,8 +96,8 @@ export default function Home() {
       groupedData.push(aiTools?.aiTools?.slice(i, i + 3));
     }
   } else {
-    for (let i = 0; i < aiTools?.aiTools?.length; i += 4) {
-      groupedData.push(aiTools?.aiTools?.slice(i, i + 4));
+    for (let i = 0; i < aiTools?.aiTools?.length; i += 3) {
+      groupedData.push(aiTools?.aiTools?.slice(i, i + 3));
     }
   }
 
