@@ -68,17 +68,9 @@ export default function Home() {
       console.error("Error filtering tools:", error);
     }
   };
-  const filterReset = async () => {
-    try {
-      const allAis = await managerService.useGetAITools();
-      setFilteredAiTools(allAis);
-      setAITools(allAis);
-    } catch (error) {
-      console.error("Error filtering tools:", error);
-    }
-  };
 
   // Rendering multiples Cards
+
   const groupedData = [];
   const isSmallDesktop = useMediaQuery({ maxWidth: 1370 });
   const isTabletScreen = useMediaQuery({ maxWidth: 1130 });
@@ -117,7 +109,7 @@ export default function Home() {
         ></AutoCompleteInput>
       </IconWrapper>
 
-      <FilterArea onFilterClick={handleFilterClick} filterReset={filterReset} />
+      <FilterArea onFilterClick={handleFilterClick} filterReset={GettingAIToolsDataByName} />
       {filteredAiTools.length > 0 ? (
         <Line>
           {filteredAiTools.map((content) => (
