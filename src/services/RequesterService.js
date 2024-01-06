@@ -56,4 +56,4 @@ export const editCategoriesProfession = (_id, body) =>
 export const getCategoriesProfession = () => api.get(`/categoriesprofession`);
 export const deleteCategoriesProfession = (_id) => api.delete(`/categoriesprofession/${_id}`);
 // Category Filter
-export const getAIToolsByCategoryId = (id) => api.get(`IA/search-by-category`, { params: id });
+export const getAIToolsByCategoryId = (info) => api.get("IA/search-by-category", { params: info });

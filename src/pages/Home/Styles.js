@@ -5,7 +5,7 @@ import { breakpoints, colors } from "../../styles/styleVariables";
 
 export const Container = styled.div`
   display: flex;
-  width:100%;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -76,7 +76,7 @@ export const Line = styled.div`
 `;
 export const IconWrapper = styled.div`
   width: 80%;
-  height: 4rem;
+  height: 3rem;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -117,7 +117,7 @@ export const SVGDiv = styled.div`
 
 export const AutoCompleteInput = styled(AutoComplete)`
   width: 95%;
-  align-self: flex-end;
+  align-self: center;
   > input {
     background-color: ${colors.blue.background};
     width: 100%;

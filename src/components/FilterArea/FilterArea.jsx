@@ -12,12 +12,11 @@ import {
   CheckboxItem,
 } from "./Styles";
 
-export default function FilterArea({ onFilterClick, filterReset }) {
+export default function FilterArea({ onFilterClick, filterReset, idsArray, setArray }) {
   // Set variables
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [categoriesPrices, setCategoriesPrices] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
-  const [idsArray, setIdsArray] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,7 +33,7 @@ export default function FilterArea({ onFilterClick, filterReset }) {
   }, []);
 
   const handleCategoryChange = (_id, stateUpdater) => {
-    setIdsArray((prevIdsArray) => {
+    setArray((prevIdsArray) => {
       if (prevIdsArray.includes(_id)) {
         return prevIdsArray.filter((id) => id !== _id);
       } else {
@@ -58,7 +57,7 @@ export default function FilterArea({ onFilterClick, filterReset }) {
     setCategoriesProfession((prevCategories) =>
       prevCategories.map((category) => ({ ...category, checked: false }))
     );
-    setIdsArray([]);
+    setArray([]);
     filterReset();
   };
 
@@ -134,4 +133,6 @@ export default function FilterArea({ onFilterClick, filterReset }) {
 FilterArea.propTypes = {
   onFilterClick: PropTypes.func.isRequired,
   filterReset: PropTypes.func.isRequired,
+  idsArray: PropTypes.array.isRequired,
+  setArray: PropTypes.func.isRequired,
 };

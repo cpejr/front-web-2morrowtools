@@ -241,9 +241,9 @@ export const useDeleteCategoriesProfession = async (_id) => {
 
 // Category Filter
 
-export const useGetAIToolsByCategoryId = async (id) => {
+export const useGetAIToolsByCategoryId = async (info) => {
   let aiTools = {};
-  await requesterService.getAIToolsByCategoryId(id).then((res) => {
+  await requesterService.getAIToolsByCategoryId(info).then((res) => {
     aiTools = res.data;
   });
   return { aiTools };
