@@ -5,7 +5,7 @@ import { breakpoints, colors } from "../../styles/styleVariables";
 
 export const Container = styled.div`
   display: flex;
-  width:100%;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -76,7 +76,7 @@ export const Line = styled.div`
 `;
 export const IconWrapper = styled.div`
   width: 80%;
-  height: 4rem;
+  height: 3rem;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -84,6 +84,12 @@ export const IconWrapper = styled.div`
   gap: 0.5rem;
   border: 2px solid ${colors.white};
   border-radius: 6px;
+  @media (max-width: ${breakpoints.smallMobile}) {
+    width: 60%;
+  }
+  @media (max-width: ${breakpoints.smallDevice}) {
+    width: 70%;
+  }
 `;
 export const SVGDiv = styled.div`
   display: flex;
@@ -91,18 +97,27 @@ export const SVGDiv = styled.div`
   padding-left: 0.7%;
   > span {
     > svg {
-      font-size: 2rem;
-      @media (max-width: ${breakpoints.mobile}) {
+      font-size: 1.7rem;
+      @media (max-width: ${breakpoints.desktop}) {
         font-size: 1.5rem;
       }
+
       @media (max-width: ${breakpoints.smallMobile}) {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
       }
     }
   }
+  @media (max-width: ${breakpoints.desktop}) {
+    width: 10%;
+  }
+  @media (max-width: ${breakpoints.smallMobile}) {
+    width: 13%;
+  }
 `;
+
 export const AutoCompleteInput = styled(AutoComplete)`
   width: 95%;
+  align-self: center;
   > input {
     background-color: ${colors.blue.background};
     width: 100%;
@@ -117,5 +132,11 @@ export const AutoCompleteInput = styled(AutoComplete)`
       outline: none;
       border: none;
     }
+  }
+  @media (max-width: ${breakpoints.desktop}) {
+    width: 90%;
+  }
+  @media (max-width: ${breakpoints.smallMobile}) {
+    width: 87%;
   }
 `;

@@ -32,7 +32,7 @@ export default function Card({ data }) {
       await logGoogleUser();
     }
     await usePostFavorite({
-      userId: getUser()._id || " ",
+      userId: getUser()?._id || " ",
       toolId: data._id,
     });
     data.favorite = !data.favorite;

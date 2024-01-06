@@ -13,6 +13,8 @@ export const getAITools = () => api.get(`/IA`);
 
 export const getAIToolsByName = (name) => api.get(`IA/search-by-name`, { params: { name } });
 
+export const getAIToolsNames = () => api.get(`/IA/names`);
+
 export const createAITools = async (body) => {
   await api.post(`/IA`, { ...body });
 };
@@ -54,4 +56,4 @@ export const editCategoriesProfession = (_id, body) =>
 export const getCategoriesProfession = () => api.get(`/categoriesprofession`);
 export const deleteCategoriesProfession = (_id) => api.delete(`/categoriesprofession/${_id}`);
 // Category Filter
-export const getAIToolsByCategoryId = (id) => api.get(`IA/search-by-category`, { params: id });
+export const getAIToolsByCategoryId = (info) => api.get("IA/search-by-category", { params: info });

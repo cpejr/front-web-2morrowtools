@@ -4,51 +4,52 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Card } from "../../components";
 import { useMediaQuery } from "react-responsive";
 import FilterArea from "../../components/FilterArea/FilterArea";
-import { useGetAITools, useGetAIToolsByName, useGetFavorites } from "../../services/ManagerService";
+import { useGetFavorites } from "../../services/ManagerService";
 import { useEffect, useState } from "react";
 import useAuthStore from "../../stores/auth";
 import useDebounce from "../../services/useDebounce";
 import * as managerService from "../../services/ManagerService";
 
 export default function Home() {
-  const [aiTools, setAITools] = useState({});
   const [filteredAiTools, setFilteredAiTools] = useState([]);
-  const [aiToolsNames, setAIToolsNames] = useState({});
   const [names, setNames] = useState("");
   const debouncedName = useDebounce(names);
   const [namesArray, setNamesArray] = useState([]);
   const [favoriteAiTools, setFavoriteAITools] = useState([]);
   const { getUser } = useAuthStore();
+  const [categoryIDsArrays, setCategoryIDsArrays] = useState([]);
 
   // Backend Calls
 
-  async function GettingAIToolsDataByName() {
-    const aiTools = await useGetAIToolsByName({ name: debouncedName });
-    setAITools(aiTools);
+  const convertArrayToString = (array) => {
+    return array.join(",");
+  };
+  async function FilteringAIsByCategoriesIds() {
+    const idsString = convertArrayToString(categoryIDsArrays);
+    const filteredCategory = await managerService.useGetAIToolsByCategoryId({
+      id: idsString,
+      name: debouncedName,
+    });
+    setFilteredAiTools(filteredCategory);
     if (!getUser()) {
       const favorites = await useGetFavorites(getUser()._id);
       setFavoriteAITools(favorites);
     }
   }
-  async function GettingAIToolsNames() {
-    const aiTools = await useGetAITools();
-    setAIToolsNames(aiTools);
-  }
 
   useEffect(() => {
-    GettingAIToolsDataByName();
-
+    FilteringAIsByCategoriesIds();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedName]);
   useEffect(() => {
-    GettingAIToolsNames();
+    FilteringAIsByCategoriesIds();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Auto Complete
 
   const search = () => {
-    const filteredNames = aiToolsNames?.aiTools?.map((tool) => tool.name) || [];
+    const filteredNames = filteredAiTools?.aiTools?.map((tool) => tool.name) || [];
     const filteredSuggestions = filteredNames.filter((name) =>
       name.toLowerCase().includes(names.toLowerCase())
     );
@@ -57,20 +58,18 @@ export default function Home() {
 
   //Category Filter
 
-  const convertArrayToString = (array) => {
-    return array.join(",");
+  const handleFilterClick = () => {
+    FilteringAIsByCategoriesIds();
   };
 
-  const handleFilterClick = async (idsArray) => {
-    try {
-      const idsString = convertArrayToString(idsArray);
-      const filteredCategory = await managerService.useGetAIToolsByCategoryId({ id: idsString });
-      setFilteredAiTools(filteredCategory);
-      setAITools(filteredCategory);
-    } catch (error) {
-      console.error("Error filtering tools:", error);
+  async function handleFilterReset() {
+    const filteredCategory = await managerService.useGetAIToolsByCategoryId({});
+    setFilteredAiTools(filteredCategory);
+    if (!getUser()) {
+      const favorites = await useGetFavorites(getUser()._id);
+      setFavoriteAITools(favorites);
     }
-  };
+  }
 
   // Rendering multiples Cards
 
@@ -79,20 +78,20 @@ export default function Home() {
   const isTabletScreen = useMediaQuery({ maxWidth: 1130 });
   const isMobileScreen = useMediaQuery({ maxWidth: 700 });
   if (isMobileScreen) {
-    for (let i = 0; i < aiTools?.aiTools?.length; i += 1) {
-      groupedData.push(aiTools?.aiTools?.slice(i, i + 1));
+    for (let i = 0; i < filteredAiTools?.aiTools?.length; i += 1) {
+      groupedData.push(filteredAiTools?.aiTools?.slice(i, i + 1));
     }
   } else if (isTabletScreen) {
-    for (let i = 0; i < aiTools?.aiTools?.length; i += 2) {
-      groupedData.push(aiTools?.aiTools?.slice(i, i + 2));
+    for (let i = 0; i < filteredAiTools?.aiTools?.length; i += 2) {
+      groupedData.push(filteredAiTools?.aiTools?.slice(i, i + 2));
     }
   } else if (isSmallDesktop) {
-    for (let i = 0; i < aiTools?.aiTools?.length; i += 3) {
-      groupedData.push(aiTools?.aiTools?.slice(i, i + 3));
+    for (let i = 0; i < filteredAiTools?.aiTools?.length; i += 3) {
+      groupedData.push(filteredAiTools?.aiTools?.slice(i, i + 3));
     }
   } else {
-    for (let i = 0; i < aiTools?.aiTools?.length; i += 3) {
-      groupedData.push(aiTools?.aiTools?.slice(i, i + 3));
+    for (let i = 0; i < filteredAiTools?.aiTools?.length; i += 3) {
+      groupedData.push(filteredAiTools?.aiTools?.slice(i, i + 3));
     }
   }
 
@@ -112,10 +111,15 @@ export default function Home() {
         ></AutoCompleteInput>
       </IconWrapper>
 
-      <FilterArea onFilterClick={handleFilterClick} filterReset={GettingAIToolsDataByName} />
-      {filteredAiTools.length > 0 ? (
-        <Line>
-          {filteredAiTools.map((content) => (
+      <FilterArea
+        onFilterClick={handleFilterClick}
+        idsArray={categoryIDsArrays}
+        setArray={setCategoryIDsArrays}
+        filterReset={handleFilterReset}
+      />
+      {groupedData?.map((group, index) => (
+        <Line key={index}>
+          {group?.map((content) => (
             <Card
               data={{
                 ...content,
@@ -123,27 +127,11 @@ export default function Home() {
                   (favoriteAiTool) => favoriteAiTool["_id"] === content._id
                 ),
               }}
-              key={content?.name}
+              key={content?._id}
             />
           ))}
         </Line>
-      ) : (
-        groupedData.map((group, index) => (
-          <Line key={index}>
-            {group.map((content) => (
-              <Card
-                data={{
-                  ...content,
-                  favorite: favoriteAiTools.find(
-                    (favoriteAiTool) => favoriteAiTool["_id"] === content._id
-                  ),
-                }}
-                key={content?.name}
-              />
-            ))}
-          </Line>
-        ))
-      )}
+      ))}
     </Container>
   );
 }
