@@ -46,7 +46,7 @@ export const DivNew = styled.div`
   width: 40rem;
   align-self: center;
   border-radius: 0.5rem;
-  box-shadow: 5px 5px 10px 0px #000, -5px -5px 10px 0px #1a212d;
+  box-shadow: 7px 7px 14px 0px #000, -7px -7px 14px 0px ${colors.boxShadow};
   text-align: center;
   font-size: 2rem;
   padding: 1rem;

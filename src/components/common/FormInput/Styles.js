@@ -26,11 +26,13 @@ export const StyledInput = styled(Input)`
   height: 3rem;
   padding: 0.8rem 1.6rem;
   border-radius: 0;
-  color: white;
-  border-color: white;
+  border-color: ${colors.white};
+  color: ${colors.white};
+
   width: 100%;
   border: none;
   border-bottom: 1px solid ${colors.white};
+  background-color: ${colors.blue.background};
 
   @media (max-width: 700px) {
     font-weight: 400;
@@ -43,6 +45,9 @@ export const StyledInput = styled(Input)`
   }
   &:focus {
     outline: none;
+  }
+  ::placeholder {
+    color: ${colors.white};
   }
 `;
 
