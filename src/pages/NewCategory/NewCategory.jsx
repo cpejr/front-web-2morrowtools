@@ -21,7 +21,7 @@ import {
 } from "./utils";
 import {
   FormInput,
-  FormSelect,
+  FormButton,
   ModalDelete,
   ModalEditCategory,
   SubmitButton,
@@ -204,7 +204,7 @@ export default function NewCategory() {
       <Title>ADICIONAR CATEGORIAS</Title>
       <DivNew>
         Tipos:
-        <FormSelect
+        <FormButton
           name='id_categoryfeature'
           control={control}
           data={[

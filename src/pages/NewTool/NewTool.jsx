@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {
-  FormInput,
+  FormInputBorder,
   SubmitButton,
   FormsTextArea,
   ModalDelete,
@@ -154,20 +154,20 @@ export default function NewTool() {
 
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Section>
-          <FormInput
+          <FormInputBorder
             name='name'
             placeholder='Título:'
             errors={errors}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />
-          <FormInput
+          <FormInputBorder
             name='imageURL'
             placeholder='URL da imagem:'
             icon={FaUpload}
             errors={errors}
             onChange={(e) => setFormData({ ...formData, imageURL: e.target.value })}
           />
-          <FormInput
+          <FormInputBorder
             name='shortDescription'
             placeholder='Descrição curta:'
             errors={errors}
@@ -179,13 +179,13 @@ export default function NewTool() {
             placeholder='Descrição longa:'
             onChange={(e) => setFormData({ ...formData, longDescription: e.target.value })}
           />
-          <FormInput
+          <FormInputBorder
             name='link'
             placeholder='Link do site:'
             errors={errors}
             onChange={(e) => setFormData({ ...formData, link: e.target.value })}
           />
-          <FormInput
+          <FormInputBorder
             name='youtubeVideoLink'
             placeholder='Link do vídeo no Youtube:'
             errors={errors}
