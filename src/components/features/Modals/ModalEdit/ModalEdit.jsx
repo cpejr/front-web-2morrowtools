@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { Container, Tittle, Label, ModalContent, Form, Section } from "./Styles";
-import FormSelect from "../../../common/FormSelect/FormSelect";
+import FormSelect from "../../../common/FormButton/FormButton";
 import { toast } from "react-toastify";
 import * as managerService from "../../../../services/ManagerService";
 import { useEffect } from "react";

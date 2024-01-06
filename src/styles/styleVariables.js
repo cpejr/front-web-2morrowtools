@@ -16,6 +16,7 @@ export const colors = {
   veryLightGrey: "#d9d9d9",
   transparent: "rgba(0, 0, 0, 0)",
   shadow: "rgba(0, 0, 0, 0.25)",
+  boxShadow: "#1A212D",
 };
 
 export const fonts = {

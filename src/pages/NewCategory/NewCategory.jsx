@@ -1,11 +1,15 @@
 import { useEffect } from "react";
 import {
+  AutoCompleteInput,
   CategoryButtons,
   CategoryList,
   CategoryListItem,
   Container,
   DivNew,
   Form,
+  FormWrapper,
+  IconWrapper,
+  SVGDiv,
   Title,
 } from "./Styles";
 import { useState } from "react";
@@ -28,6 +32,8 @@ import { toast } from "react-toastify";
 // import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useForm } from "react-hook-form";
+import useDebounce from "../../services/useDebounce";
+import { SearchOutlined } from "@ant-design/icons";
 
 export default function NewCategory() {
   // Set variables
@@ -42,6 +48,18 @@ export default function NewCategory() {
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [categoriesPrices, setCategoriesPrices] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
+  const [categoriesFeaturesData, setCategoriesFeaturesData] = useState([]);
+  const [categoriesPricesData, setCategoriesPricesData] = useState([]);
+  const [categoriesProfessionData, setCategoriesProfessionData] = useState([]);
+  const [categoriesFeatureNames, setCategoriesFeatureNames] = useState("");
+  const [categoriesPricesNames, setCategoriesPricesNames] = useState("");
+  const [categoriesProfessionNames, setCategoriesProfessionNames] = useState("");
+  const debouncedNameFeatures = useDebounce(categoriesFeatureNames);
+  const debouncedNamePrices = useDebounce(categoriesPricesNames);
+  const debouncedNameProfession = useDebounce(categoriesProfessionNames);
+  const [categoryFeaturesNamesArray, setCategoryFeaturesNamesArray] = useState([]);
+  const [categoryPricesNamesArray, setCategoryPricesNamesArray] = useState([]);
+  const [categoryProfessionNamesArray, setCategoryProfessionNamesArray] = useState([]);
 
   // On submit
   const onSubmit = async () => {
@@ -80,17 +98,45 @@ export default function NewCategory() {
   };
 
   // Get functions
+
+  async function GettingCategoryFeatureDataByName() {
+    const categoryFeature = await managerService.useGetCategoryFeaturesByName({
+      name: debouncedNameFeatures,
+    });
+    setCategoriesFeaturesData(categoryFeature);
+  }
+  async function GettingCategoryPricesDataByName() {
+    const categoryPrices = await managerService.useGetCategoryPricesByName({
+      name: debouncedNamePrices,
+    });
+    setCategoriesPricesData(categoryPrices);
+  }
+  async function GettingCategoryProfessionDataByName() {
+    const categoryProfession = await managerService.useGetCategoryProfesssionByName({
+      name: debouncedNameProfession,
+    });
+    setCategoriesProfessionData(categoryProfession);
+  }
+
+  useEffect(() => {
+    GettingCategoryFeatureDataByName();
+    GettingCategoryPricesDataByName();
+    GettingCategoryProfessionDataByName();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedNameFeatures, debouncedNamePrices, debouncedNameProfession]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resultFeature = await managerService.usegetCategoriesFeature();
-        setCategoriesFeature(resultFeature.categoriesFeature);
+        const resultFeature = await managerService.useGetCategoryFeaturesNames();
+        setCategoriesFeature(resultFeature.categoryFeatures);
 
-        const resultPrices = await managerService.usegetCategoriesPrices();
-        setCategoriesPrices(resultPrices.categoriesPrices);
+        const resultPrices = await managerService.useGetCategoryPricesNames();
+        setCategoriesPrices(resultPrices.categoryPrices);
 
-        const resultProfession = await managerService.usegetCategoriesProfession();
-        setCategoriesProfession(resultProfession.categoriesprofession);
+        const resultProfession = await managerService.useGetCategoryProfesssionNames();
+        setCategoriesProfession(resultProfession.categoryProfesssion);
       } catch (error) {
         const errorMessage = buildNewCategoryErrorMessage(error);
         console.error(errorMessage);
@@ -132,10 +178,32 @@ export default function NewCategory() {
     formState: { errors },
   } = useForm();
 
+  // AutoComplete
+
+  const searchCategoryFeatures = () => {
+    const filteredSuggestions = categoriesFeature.filter((name) =>
+      name.toLowerCase().includes(categoriesFeatureNames?.toLowerCase())
+    );
+    setCategoryFeaturesNamesArray(filteredSuggestions);
+  };
+  const searchCategoryPrices = () => {
+    const filteredSuggestions = categoriesPrices.filter((name) =>
+      name.toLowerCase().includes(categoriesPricesNames?.toLowerCase())
+    );
+    setCategoryPricesNamesArray(filteredSuggestions);
+  };
+  const searchCategoryProfession = () => {
+    const filteredSuggestions = categoriesProfession.filter((name) =>
+      name.toLowerCase().includes(categoriesProfessionNames?.toLowerCase())
+    );
+    setCategoryProfessionNamesArray(filteredSuggestions);
+  };
+
   return (
     <Container>
       <Title>ADICIONAR CATEGORIAS</Title>
       <DivNew>
+        Tipos:
         <FormSelect
           name='id_categoryfeature'
           control={control}
@@ -147,26 +215,39 @@ export default function NewCategory() {
           placeholder='Selecione a Categoria'
           onChange={(selectedValue) => handleCategoryTypeChange(selectedValue)}
         />
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <FormInput
-            name='name'
-            placeholder='Nome da Categoria:'
-            errors={errors}
-            register={register}
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-          />
-          <SubmitButton type='submit'>
-            <p>Criar</p>
-          </SubmitButton>
-        </Form>
+        <FormWrapper>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <FormInput
+              name='name'
+              placeholder='Nome da Categoria'
+              errors={errors}
+              register={register}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
+            <SubmitButton type='submit'>
+              <p>Criar</p>
+            </SubmitButton>
+          </Form>
+        </FormWrapper>
       </DivNew>
 
-      <Title>CATEGORIAS CRIADAS</Title>
+      <Title style={{ marginTop: "3rem" }}>CATEGORIAS CRIADAS</Title>
       <CategoryList>
         <Title>CARACTERÍSTICA</Title>
-        {categoriesFeature.map((category) => (
+        <IconWrapper>
+          <SVGDiv>
+            <SearchOutlined />
+          </SVGDiv>
+          <AutoCompleteInput
+            value={categoriesFeatureNames}
+            suggestions={categoryFeaturesNamesArray}
+            completeMethod={searchCategoryFeatures}
+            onChange={(e) => setCategoriesFeatureNames(e.value)}
+          ></AutoCompleteInput>
+        </IconWrapper>
+        {categoriesFeaturesData?.categoryFeatures?.map((category) => (
           <CategoryListItem key={category._id}>
             {category.name}
             <CategoryButtons>
@@ -192,7 +273,18 @@ export default function NewCategory() {
       </CategoryList>
       <CategoryList>
         <Title>PREÇO</Title>
-        {categoriesPrices.map((category) => (
+        <IconWrapper>
+          <SVGDiv>
+            <SearchOutlined />
+          </SVGDiv>
+          <AutoCompleteInput
+            value={categoriesPricesNames}
+            suggestions={categoryPricesNamesArray}
+            completeMethod={searchCategoryPrices}
+            onChange={(e) => setCategoriesPricesNames(e.value)}
+          ></AutoCompleteInput>
+        </IconWrapper>
+        {categoriesPricesData?.categoryPrices?.map((category) => (
           <CategoryListItem key={category._id}>
             {category.name}
             <CategoryButtons>
@@ -218,7 +310,18 @@ export default function NewCategory() {
       </CategoryList>
       <CategoryList>
         <Title>PROFISSÃO</Title>
-        {categoriesProfession.map((category) => (
+        <IconWrapper>
+          <SVGDiv>
+            <SearchOutlined />
+          </SVGDiv>
+          <AutoCompleteInput
+            value={categoriesProfessionNames}
+            suggestions={categoryProfessionNamesArray}
+            completeMethod={searchCategoryProfession}
+            onChange={(e) => setCategoriesProfessionNames(e.value)}
+          ></AutoCompleteInput>
+        </IconWrapper>
+        {categoriesProfessionData?.categoryProfesssion?.map((category) => (
           <CategoryListItem key={category._id}>
             {category.name}
             <CategoryButtons>

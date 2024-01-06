@@ -41,7 +41,6 @@ export const Label = styled.label`
   font-weight: 500;
   font-size: 1.6rem;
   align-self: baseline;
-
   color: white;
   padding-bottom: 1rem;
 `;

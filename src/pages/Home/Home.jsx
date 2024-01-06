@@ -21,6 +21,7 @@ export default function Home() {
   const { getUser } = useAuthStore();
 
   // Backend Calls
+
   async function GettingAIToolsDataByName() {
     const aiTools = await useGetAIToolsByName({ name: debouncedName });
     setAITools(aiTools);
@@ -45,6 +46,7 @@ export default function Home() {
   }, []);
 
   // Auto Complete
+
   const search = () => {
     const filteredNames = aiToolsNames?.aiTools?.map((tool) => tool.name) || [];
     const filteredSuggestions = filteredNames.filter((name) =>
@@ -54,6 +56,7 @@ export default function Home() {
   };
 
   //Category Filter
+
   const convertArrayToString = (array) => {
     return array.join(",");
   };
