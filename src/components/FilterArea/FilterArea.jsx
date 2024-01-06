@@ -1,7 +1,10 @@
-import { Checkbox } from "antd";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { Checkbox, Button } from "antd";
+import * as managerService from "../../services/ManagerService";
 import {
   BlueCheckboxes,
-  Checkboxes,
   ContainerFilter,
   SearchBar,
   InputStyled,
@@ -9,40 +12,99 @@ import {
   CheckboxItem,
 } from "./Styles";
 
-const checkboxes = [
-  "categoria1",
-  "categoria2",
-  "categoria3",
-  "categoria4",
-  "categoria5",
-  "categoria6",
-  "categoria7",
-  "categoria8",
-  "categoria9",
-  "categoria10",
-  "categoria11",
-  "categoria12",
-  "categoria13",
-  "categoria14",
-  "categoria15",
-  "categoria16",
-];
+export default function FilterArea({ onFilterClick, filterReset }) {
+  // Set variables
+  const [categoriesFeature, setCategoriesFeature] = useState([]);
+  const [categoriesPrices, setCategoriesPrices] = useState([]);
+  const [categoriesProfession, setCategoriesProfession] = useState([]);
+  const [idsArray, setIdsArray] = useState([]);
 
-export default function FilterArea() {
+  useEffect(() => {
+    const fetchData = async () => {
+      const resultFeature = await managerService.usegetCategoriesFeature();
+      setCategoriesFeature(resultFeature.categoriesFeature);
+
+      const resultPrices = await managerService.usegetCategoriesPrices();
+      setCategoriesPrices(resultPrices.categoriesPrices);
+
+      const resultProfession = await managerService.usegetCategoriesProfession();
+      setCategoriesProfession(resultProfession.categoriesprofession);
+    };
+    fetchData();
+  }, []);
+
+  const handleCategoryChange = (_id, stateUpdater) => {
+    setIdsArray((prevIdsArray) => {
+      if (prevIdsArray.includes(_id)) {
+        return prevIdsArray.filter((id) => id !== _id);
+      } else {
+        return [...prevIdsArray, _id];
+      }
+    });
+    stateUpdater((prevState) =>
+      prevState.map((category) =>
+        category._id === _id ? { ...category, checked: !category.checked } : category
+      )
+    );
+  };
+
+  const handleClearFilters = () => {
+    setCategoriesFeature((prevCategories) =>
+      prevCategories.map((category) => ({ ...category, checked: false }))
+    );
+    setCategoriesPrices((prevCategories) =>
+      prevCategories.map((category) => ({ ...category, checked: false }))
+    );
+    setCategoriesProfession((prevCategories) =>
+      prevCategories.map((category) => ({ ...category, checked: false }))
+    );
+    setIdsArray([]);
+    filterReset();
+  };
+
   return (
     <ContainerFilter>
-      <Checkboxes>
-        {checkboxes.map((checkbox) => (
-          <CheckboxItem key={checkbox}>
-            <Checkbox>{checkbox}</Checkbox>
+      <BlueCheckboxes>
+        Características:
+        {categoriesFeature.map(({ _id, name, checked }) => (
+          <CheckboxItem key={_id}>
+            <Checkbox
+              checked={checked}
+              onChange={() => handleCategoryChange(_id, setCategoriesFeature)}
+            >
+              {name}
+            </Checkbox>
           </CheckboxItem>
         ))}
-      </Checkboxes>
-      <BlueCheckboxes>
-        <Checkbox>Lorem Ipsum</Checkbox>
-        <Checkbox>Minhas Ferramentas</Checkbox>
-        <Checkbox>Lorem Ipsum</Checkbox>
       </BlueCheckboxes>
+      <BlueCheckboxes>
+        Preços:
+        {categoriesPrices.map(({ _id, name, checked }) => (
+          <CheckboxItem key={_id}>
+            <Checkbox
+              checked={checked}
+              onChange={() => handleCategoryChange(_id, setCategoriesPrices)}
+            >
+              {name}
+            </Checkbox>
+          </CheckboxItem>
+        ))}
+      </BlueCheckboxes>
+      <BlueCheckboxes>
+        Profissões:
+        {categoriesProfession.map(({ _id, name, checked }) => (
+          <CheckboxItem key={_id}>
+            <Checkbox
+              checked={checked}
+              onChange={() => handleCategoryChange(_id, setCategoriesProfession)}
+            >
+              {name}
+            </Checkbox>
+          </CheckboxItem>
+        ))}
+      </BlueCheckboxes>
+      <Button onClick={() => onFilterClick(idsArray)}>Filtrar</Button>
+      <Button onClick={handleClearFilters}>Limpar Filtros</Button>
       <SearchBar>
         <SelectStyled
           showSearch
@@ -68,3 +130,8 @@ export default function FilterArea() {
     </ContainerFilter>
   );
 }
+
+FilterArea.propTypes = {
+  onFilterClick: PropTypes.func.isRequired,
+  filterReset: PropTypes.func.isRequired,
+};

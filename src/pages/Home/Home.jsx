@@ -12,9 +12,12 @@ import {
 import { useEffect, useState } from "react";
 import useAuthStore from "../../stores/auth";
 import useDebounce from "../../services/useDebounce";
+import * as managerService from "../../services/ManagerService";
 
 export default function Home() {
   const [aiTools, setAITools] = useState({});
+  const [filteredAiTools, setFilteredAiTools] = useState([]);
+  const [aiToolsNames, setAIToolsNames] = useState({});
   const [names, setNames] = useState("");
   const debouncedName = useDebounce(names);
   const [namesArray, setNamesArray] = useState([]);
@@ -23,6 +26,7 @@ export default function Home() {
   const { getUser } = useAuthStore();
 
   // Backend Calls
+
   async function GettingAIToolsDataByName() {
     const aiTools = await useGetAIToolsByName({ name: debouncedName });
     setAITools(aiTools);
@@ -48,6 +52,7 @@ export default function Home() {
   }, []);
 
   // Auto Complete
+
   const search = () => {
     const filteredSuggestions = namesAINames.filter((name) =>
       name.toLowerCase().includes(names.toLowerCase())
@@ -55,7 +60,25 @@ export default function Home() {
     setNamesArray(filteredSuggestions);
   };
 
+  //Category Filter
+
+  const convertArrayToString = (array) => {
+    return array.join(",");
+  };
+
+  const handleFilterClick = async (idsArray) => {
+    try {
+      const idsString = convertArrayToString(idsArray);
+      const filteredCategory = await managerService.useGetAIToolsByCategoryId({ id: idsString });
+      setFilteredAiTools(filteredCategory);
+      setAITools(filteredCategory);
+    } catch (error) {
+      console.error("Error filtering tools:", error);
+    }
+  };
+
   // Rendering multiples Cards
+
   const groupedData = [];
   const isSmallDesktop = useMediaQuery({ maxWidth: 1370 });
   const isTabletScreen = useMediaQuery({ maxWidth: 1130 });
@@ -73,8 +96,8 @@ export default function Home() {
       groupedData.push(aiTools?.aiTools?.slice(i, i + 3));
     }
   } else {
-    for (let i = 0; i < aiTools?.aiTools?.length; i += 4) {
-      groupedData.push(aiTools?.aiTools?.slice(i, i + 4));
+    for (let i = 0; i < aiTools?.aiTools?.length; i += 3) {
+      groupedData.push(aiTools?.aiTools?.slice(i, i + 3));
     }
   }
 
@@ -94,10 +117,10 @@ export default function Home() {
         ></AutoCompleteInput>
       </IconWrapper>
 
-      <FilterArea />
-      {groupedData.map((group, index) => (
-        <Line key={index}>
-          {group.map((content) => (
+      <FilterArea onFilterClick={handleFilterClick} filterReset={GettingAIToolsDataByName} />
+      {filteredAiTools.length > 0 ? (
+        <Line>
+          {filteredAiTools.map((content) => (
             <Card
               data={{
                 ...content,
@@ -109,7 +132,23 @@ export default function Home() {
             />
           ))}
         </Line>
-      ))}
+      ) : (
+        groupedData.map((group, index) => (
+          <Line key={index}>
+            {group.map((content) => (
+              <Card
+                data={{
+                  ...content,
+                  favorite: favoriteAiTools.find(
+                    (favoriteAiTool) => favoriteAiTool["_id"] === content._id
+                  ),
+                }}
+                key={content?.name}
+              />
+            ))}
+          </Line>
+        ))
+      )}
     </Container>
   );
 }

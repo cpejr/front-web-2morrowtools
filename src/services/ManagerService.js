@@ -10,6 +10,33 @@ export const useGetAITools = async () => {
   return { aiTools };
 };
 
+export const useCreateAITools = async (body) => {
+  const create = await requesterService.createAITools(body).then((res) => {
+    return res;
+  });
+  return create;
+};
+
+export const useEditAITools = async (_id, body) => {
+  try {
+    const response = await requesterService.editAITools(_id, body);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating tool", error);
+    throw error;
+  }
+};
+
+export const useDeleteAITools = async (_id) => {
+  try {
+    const response = await requesterService.deleteAITools(_id);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting tool", error);
+    throw error;
+  }
+};
+
 export const useGetAIToolsByName = async ({ name }) => {
   let aiTools = {};
   await requesterService.getAIToolsByName(name).then((res) => {
@@ -53,36 +80,23 @@ export const usePostFavorite = async (data) => {
   return favorite;
 };
 
-// AI
-
-export const useCreateAITools = async (body) => {
-  const create = await requesterService.createAITools(body).then((res) => {
-    return res;
-  });
-  return create;
-};
-
-export const useEditAITools = async (_id, body) => {
-  try {
-    const response = await requesterService.editAITools(_id, body);
-    return response.data;
-  } catch (error) {
-    console.error("Error updating tool", error);
-    throw error;
-  }
-};
-
-export const useDeleteAITools = async (_id) => {
-  try {
-    const response = await requesterService.deleteAITools(_id);
-    return response.data;
-  } catch (error) {
-    console.error("Error deleting tool", error);
-    throw error;
-  }
-};
-
 // Category Feature
+
+export const useGetCategoryFeaturesByName = async ({ name }) => {
+  let categoryFeatures = {};
+  await requesterService.getCategoryFeatureByName(name).then((res) => {
+    categoryFeatures = res.data;
+  });
+  return { categoryFeatures };
+};
+
+export const useGetCategoryFeaturesNames = async () => {
+  let categoryFeatures = {};
+  await requesterService.getCategoryFeatureNames().then((res) => {
+    categoryFeatures = res.data;
+  });
+  return { categoryFeatures };
+};
 
 export const useCreateCategoriesFeature = async (body) => {
   const create = await requesterService.createCategoriesFeature(body).then((res) => {
@@ -128,6 +142,22 @@ export const useCreateCategoriesPrices = async (body) => {
   return create;
 };
 
+export const useGetCategoryPricesByName = async ({ name }) => {
+  let categoryPrices = {};
+  await requesterService.getCategoryPricesByName(name).then((res) => {
+    categoryPrices = res.data;
+  });
+  return { categoryPrices };
+};
+
+export const useGetCategoryPricesNames = async () => {
+  let categoryPrices = {};
+  await requesterService.getCategoryPricesNames().then((res) => {
+    categoryPrices = res.data;
+  });
+  return { categoryPrices };
+};
+
 export const useEditCategoriesPrices = async (_id, body) => {
   try {
     const response = await requesterService.editCategoriesPrices(_id, body);
@@ -165,6 +195,22 @@ export const useCreateCategoriesProfession = async (body) => {
   return create;
 };
 
+export const useGetCategoryProfesssionByName = async ({ name }) => {
+  let categoryProfesssion = {};
+  await requesterService.getCategoryProfessionByName(name).then((res) => {
+    categoryProfesssion = res.data;
+  });
+  return { categoryProfesssion };
+};
+
+export const useGetCategoryProfesssionNames = async () => {
+  let categoryProfesssion = {};
+  await requesterService.getCategoryProfessionNames().then((res) => {
+    categoryProfesssion = res.data;
+  });
+  return { categoryProfesssion };
+};
+
 export const useEditCategoriesProfession = async (_id, body) => {
   try {
     const response = await requesterService.editCategoriesProfession(_id, body);
@@ -191,4 +237,14 @@ export const useDeleteCategoriesProfession = async (_id) => {
     console.error("Error deleting category profession", error);
     throw error;
   }
+};
+
+// Category Filter
+
+export const useGetAIToolsByCategoryId = async (id) => {
+  let aiTools = {};
+  await requesterService.getAIToolsByCategoryId(id).then((res) => {
+    aiTools = res.data;
+  });
+  return { aiTools };
 };

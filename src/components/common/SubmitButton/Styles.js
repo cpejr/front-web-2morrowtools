@@ -11,11 +11,12 @@ export const SubmitSpace = styled.div`
 export const Button = styled.button`
   width: 15rem;
   height: 3rem;
-  background-color: ${colors.blue.accent};
-  border: none;
+  background-color: transparent;
+  border: solid 1px ${colors.white};
   border-radius: 6px;
-
   cursor: pointer;
+  font-weight: 500;
+  font-size: 1.5rem;
 
   @media (max-width: ${breakpoints.desktop}) {
     width: 128px;
@@ -35,7 +36,12 @@ export const Button = styled.button`
     height: 40px;
   }
   &:hover {
-    background-color: ${colors.blue.hover};
+    background-color: ${colors.white};
+    > p {
+      font-weight: 500;
+      font-size: 1.5rem;
+      color: ${colors.black};
+    }
   }
   p {
     color: white;
