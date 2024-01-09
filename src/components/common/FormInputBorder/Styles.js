@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import Input from "antd/es/input/Input";
-import { breakpoints } from "../../../styles/styleVariables";
+import { breakpoints, colors } from "../../../styles/styleVariables";
 
 export const Container = styled.div`
   display: flex;
@@ -22,7 +21,7 @@ export const Label = styled.label`
   }
 `;
 
-export const StyledInput = styled(Input)`
+export const StyledInput = styled.input`
   height: 3rem;
   padding: 0.8rem 1.6rem;
   border-radius: 0.4rem;
@@ -30,6 +29,11 @@ export const StyledInput = styled(Input)`
   border: solid 0.1rem;
   border-color: white;
   width: 100%;
+  background-color: ${colors.blue.background};
+  border: ${(props) => (props?.error ? "0.2rem red solid" : "0.1rem black solid")};
+  ::placeholder {
+    font-weight: 400;
+  }
 
   @media (max-width: ${breakpoints.mobile}) {
     font-weight: 400;
