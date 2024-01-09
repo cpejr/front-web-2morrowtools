@@ -99,24 +99,10 @@ export const usegetByIaId = async (iaId) => {
   return { averagerate };
 };
 
-
-// export const usePostAvaliation = async (body) => {
-//   try {
-//     const res = await requesterService.postAvaliation(body);
-//     console.log('Response:', res); 
-//     const avaliation = res.data;
-//     return avaliation;
-//   } catch (error) {
-//     console.error('Error posting avaliation', error);
-//     throw error;
-//   }
-// };
-
-
-
 export const usePostAvaliation = async (body) => {
   const create = await requesterService.postAvaliation(body).then((res) => {
     return res;
   });
   return create;
 };
+

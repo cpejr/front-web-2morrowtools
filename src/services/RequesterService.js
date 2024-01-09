@@ -35,3 +35,4 @@ export const postAvaliation = async(body) => {
 };
 export const updateAvaliation = (userId, rate, iaId) => api.put(`/avaliation/${iaId}`, { userId, rate, iaId });
 export const getByIaId = (iaId) => api.get(`/avaliation/${iaId}`);
+

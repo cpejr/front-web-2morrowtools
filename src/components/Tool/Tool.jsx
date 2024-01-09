@@ -22,7 +22,7 @@ import { FaRegBookmark } from "react-icons/fa";
 import { IoShareSocial } from "react-icons/io5";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import useAuthStore from "../../stores/auth";
-import { usePostAvaliation } from "../../services/ManagerService";
+import { usePostAvaliation} from "../../services/ManagerService";
 
 
 
@@ -36,14 +36,16 @@ export default function Tool({ data }) {
 
   // Debounce logic here...
 
-  const handleStarsChange = async (value) => {
+  const handleStarsChange = async (value,toolData) => {
     setStarsValue(value);
-    await postAvaliationData({ userId: user, rate: value, iaId: '656ccb602d3069936d590c74' });
+    const iaId = toolData._id;
+    await postAvaliationData({ userId: user, rate: value, iaId: iaId });
   };
   
-  const handleStarsChange2 = async (value) => {
-    setStarsValue2(value);
-    await postAvaliationData({ userId: user, rate: value, iaId: '656ccb602d3069936d590c74' });
+  const handleStarsChange2 = async (value, toolData) => {
+    setStarsValue2(2);
+    const iaId = toolData._id;
+    await postAvaliationData({ userId: user, rate: value, iaId: iaId});
   };
 
   const handleHoverChange = (value) => {
@@ -72,6 +74,18 @@ export default function Tool({ data }) {
     }
   };
 
+  //  const getIaId = async () => {
+  //   try {
+  //     const result = await usegetIaId();
+  //     console.log('Dados do IaId:', result);
+  //     return result;
+  //   } catch (error) {
+  //     console.error('Erro ao obter o IaId:', error);
+  //     throw error; 
+  //   }
+  // };
+  
+
   return (
     <>
       {data?.aiTools?.map((toolData, index) => (
@@ -96,13 +110,12 @@ export default function Tool({ data }) {
                 </LineSVG>
               </Group>
               <Line>
-                <Stars
-                  value={starsValue}
-                  // allowClear={false}
-                  onChange={handleStarsChange}
-                  onHoverChange={handleHoverChange}
-                  character={({ index }) => renderStarIcon(index)}
-                />
+              <Stars
+              value={starsValue2}
+              onChange={(value) => handleStarsChange(value, toolData)}
+              onHoverChange={(value) => handleHoverChange(value, toolData)}
+              character={({ index }) => renderStarIcon(index)}
+            />
                 <span>({starsValue})</span>
               </Line>
               <p>{toolData?.shortDescription}</p>
@@ -125,13 +138,12 @@ export default function Tool({ data }) {
             <RateDiv>
               <p>Você recomendaria essa ferramenta?</p>
               <Line>
-                <Stars
-                  value={starsValue2}
-                  // allowClear={false}
-                  onChange={handleStarsChange2}
-                  onHoverChange={handleHoverChange2}
-                  character={({ index }) => renderStarIcon2(index)}
-                />
+              <Stars
+              value={starsValue2}
+              onChange={(value) => handleStarsChange2(value, toolData)}
+              onHoverChange={(value) => handleHoverChange2(value, toolData)}
+              character={({ index }) => renderStarIcon2(index)}
+            />
                 <span>({starsValue2})</span>
               </Line>
             </RateDiv>
