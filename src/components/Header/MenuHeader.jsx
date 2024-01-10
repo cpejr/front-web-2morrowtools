@@ -4,6 +4,7 @@ import { HamburgerMenu } from "./Styles";
 import { signInWithGoogleRedirect, getGoogleRedirectResult } from "./../../services/firebase";
 import useAuthStore from "../../stores/auth";
 import { usePostUser } from "../../services/ManagerService";
+import isAdm from "../../utils/isAdm";
 
 function getItem(label, key, icon, children, type) {
   return {
@@ -23,13 +24,27 @@ export default function MenuHeader() {
     getItem("", "hamburger", <MenuOutlined />, [
       getItem(" Página Inicial", "/", <ToolOutlined style={{ fontSize: "1.3rem" }} />),
       getItem(" Meus Favoritos", "/favoritos", <HeartOutlined style={{ fontSize: "1.3rem" }} />),
+      ...(isAdm(getUser()?.email)
+        ? [
+            getItem(
+              "Gerenciar Ferramentas",
+              "/adicionar-ia",
+              <ToolOutlined style={{ fontSize: "1.3rem" }} />
+            ),
+            getItem(
+              "Gerenciar Categorias",
+              "/adicionar-categoria",
+              <ToolOutlined style={{ fontSize: "1.3rem" }} />
+            ),
+          ]
+        : []),
       getToken() == null
         ? getItem(" Fazer Login", "login", <UserOutlined style={{ fontSize: "1.3rem" }} />)
         : getItem(
             " Fazer Logoff",
             "login",
             <img
-              src={getUser().imageURL}
+              src={getUser()?.imageURL}
               style={{ width: "15px", borderRadius: "50%", alignItems: "center" }}
             />
           ),
@@ -39,9 +54,9 @@ export default function MenuHeader() {
   getGoogleRedirectResult().then((response) => {
     if (getToken() === null && response !== null) {
       usePostUser({
-        name: response.user.displayName,
-        email: response.user.email,
-        imageURL: response.user.photoURL,
+        name: response?.user?.displayName,
+        email: response?.user?.email,
+        imageURL: response?.user?.photoURL,
         type: "Admin",
       }).then((tokenObject) => {
         setToken(tokenObject.token);

@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Container,
   ContainerMenu,
@@ -23,18 +22,17 @@ import { signInWithGooglePopup } from "./../../services/firebase";
 import { usePostUser } from "../../services/ManagerService";
 import useAuthStore from "../../stores/auth";
 import isAdm from "../../utils/isAdm";
+import React from "react";
 
 export default function Header() {
   const navigate = useNavigate();
   const { setToken, getToken, getUser, clearAuth } = useAuthStore();
-  const [userEmail, setUserEmail] = React.useState("");
-
   const [loginLogoff, setLoginLogoff] = React.useState(getToken() ? "Fazer Logoff" : "Fazer Login");
   const [profilePicture, setProfilePicture] = React.useState(
     loginLogoff === "Fazer Login" ? (
       <UserOutlined />
     ) : (
-      <img src={getUser().imageURL} alt='Profile' />
+      <img src={getUser()?.imageURL} alt='Profile' />
     )
   );
 
@@ -42,22 +40,20 @@ export default function Header() {
     if (getToken() === null) {
       const response = await signInWithGooglePopup();
       const tokenObject = await usePostUser({
-        name: response.user.displayName,
-        email: response.user.email,
-        imageURL: response.user.photoURL,
+        name: response?.user?.displayName,
+        email: response?.user?.email,
+        imageURL: response?.user?.photoURL,
         type: "Admin",
       });
 
       setToken(tokenObject.token);
-      setUserEmail(getUser().email);
 
       window.location.reload();
 
       setLoginLogoff("Fazer Logoff");
-      setProfilePicture(<img src={getUser().imageURL} alt='Profile' />);
+      setProfilePicture(<img src={getUser()?.imageURL} alt='Profile' />);
     } else {
       clearAuth();
-      setUserEmail("");
       setLoginLogoff("Fazer Login");
       setProfilePicture(<UserOutlined />);
     }
@@ -101,7 +97,7 @@ export default function Header() {
         <Link>
           <span onClick={() => redirectToFavorites()}>Meus Favoritos</span>
         </Link>
-        {isAdm(userEmail) && (
+        {isAdm(getUser()?.email) ? (
           <React.Fragment>
             <Link>
               <span onClick={() => redirectToIa()}>Gerenciar Ferramentas</span>
@@ -110,7 +106,7 @@ export default function Header() {
               <span onClick={() => redirectToCategories()}>Gerenciar Categorias</span>
             </Link>
           </React.Fragment>
-        )}
+        ) : null}
       </Links>
       <LoginSocial>
         <LoginButton onClick={logGoogleUser}>
