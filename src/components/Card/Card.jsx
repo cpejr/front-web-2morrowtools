@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { StyledCard, BlueButton, Line, Tags, Tag, Image, Stars, LineSVG, Group } from "./Styles";
 import { FaRegBookmark } from "react-icons/fa";
-import { FaBookmark } from "react-icons/fa6";
+import { FaBookmark,FaStarHalfStroke } from "react-icons/fa6";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,6 @@ import useAuthStore from "../../stores/auth";
 
 export default function Card({ data }) {
   const [starsValue, setStarsValue] = useState(data.stars || 0);
-  const [hoverValue, setHoverValue] = useState(0);
   const [favoriteIcon, setFavoriteIcon] = useState(
     data.favorite ? (
       <FaBookmark className='favoriteIcon' />
@@ -27,7 +26,8 @@ export default function Card({ data }) {
     try {
       const result = await usegetByIaId(data._id);
       const averageRate = result?.averagerate || 0;
-      setStarsValue(averageRate.averageRating.toFixed(1));
+      const roundedRating = Math.ceil(averageRate.averageRating * 2) / 2; // Arredonda para cima com precisão de 0.5
+      setStarsValue(roundedRating.toFixed(1));
     } catch (error) {
       console.log("erro");
 
@@ -79,13 +79,20 @@ export default function Card({ data }) {
     }
   };
 
-  const handleHoverChange = (value) => {
-    setHoverValue(value);
-  };
+ 
 
   const renderStarIcon = (index) => {
-    return index <= (hoverValue || starsValue) - 1 ? <RiStarSFill /> : <RiStarSLine />;
+    const floatValue =  starsValue;
+  
+    // Se index for menor que o valor (e maior que o valor - 1 para representar uma estrela pela metade)
+    if (index < floatValue && index > floatValue - 1) {
+      return <FaStarHalfStroke />;
+    }
+  
+    // Se o índice for menor que o valor, renderiza uma estrela preenchida, caso contrário, estrela vazia
+    return index < floatValue ? <RiStarSFill /> : <RiStarSLine />;
   };
+  
 
   const groupedTags = [];
   for (let i = 0; i < data?.tags?.length; i += 2) {
@@ -109,11 +116,11 @@ export default function Card({ data }) {
       </Group>
       <Line>
       <Stars
-          value={starsValue}
-          onChange={() => getByIaId(data)}
-          onHoverChange={handleHoverChange}
-          character={({ index }) => renderStarIcon(index)}
-        />
+      count={5} // Número total de estrelas
+      value={starsValue} // Valor das estrelas
+      onChange={() => getByIaId(data)}
+      character={({ index }) => renderStarIcon(index)}
+    />
         <span>({starsValue})</span>
       </Line>
       <Line>
