@@ -1,7 +1,7 @@
 import { Input } from "antd";
 import { AutoComplete } from "primereact/autocomplete";
 import styled from "styled-components";
-import { breakpoints, colors } from "../../styles/styleVariables";
+import { breakpoints, colors, fonts } from "../../styles/styleVariables";
 
 export const Container = styled.div`
   display: flex;
@@ -139,4 +139,13 @@ export const AutoCompleteInput = styled(AutoComplete)`
   @media (max-width: ${breakpoints.smallMobile}) {
     width: 87%;
   }
+`;
+export const IANotFound = styled.div`
+  background-image: url("src/assets/imageIANotFound.png");
+  background-size: cover;
+  width: 500px;
+  height: 500px;
+  font-family: ${fonts.Exo2};
+  font-size: 1.5rem;
+  text-align: center;
 `;

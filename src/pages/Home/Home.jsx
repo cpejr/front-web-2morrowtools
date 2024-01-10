@@ -1,4 +1,12 @@
-import { AutoCompleteInput, Container, HomeImage, IconWrapper, Line, SVGDiv } from "./Styles";
+import {
+  AutoCompleteInput,
+  Container,
+  HomeImage,
+  IconWrapper,
+  Line,
+  SVGDiv,
+  IANotFound,
+} from "./Styles";
 import homeImage from "../../assets/home-image.svg";
 import { SearchOutlined } from "@ant-design/icons";
 import { Card } from "../../components";
@@ -117,6 +125,9 @@ export default function Home() {
         setArray={setCategoryIDsArrays}
         filterReset={handleFilterReset}
       />
+      {filteredAiTools?.aiTools && filteredAiTools?.aiTools.length === 0 && (
+        <IANotFound>IA não encontrada</IANotFound>
+      )}
       {groupedData?.map((group, index) => (
         <Line key={index}>
           {group?.map((content) => (

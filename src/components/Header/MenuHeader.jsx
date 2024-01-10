@@ -39,9 +39,9 @@ export default function MenuHeader() {
   getGoogleRedirectResult().then((response) => {
     if (getToken() === null && response !== null) {
       usePostUser({
-        name: response.user.displayName,
-        email: response.user.email,
-        imageURL: response.user.photoURL,
+        name: response?.user?.displayName,
+        email: response?.user?.email,
+        imageURL: response?.user?.photoURL,
         type: "Admin",
       }).then((tokenObject) => {
         setToken(tokenObject.token);

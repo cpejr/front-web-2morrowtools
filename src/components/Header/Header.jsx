@@ -36,9 +36,9 @@ export default function Header() {
     if (getToken() === null) {
       const response = await signInWithGooglePopup();
       const tokenObject = await usePostUser({
-        name: response.user.displayName,
-        email: response.user.email,
-        imageURL: response.user.photoURL,
+        name: response?.user?.displayName,
+        email: response?.user?.email,
+        imageURL: response?.user?.photoURL,
         type: "Admin",
       });
 
