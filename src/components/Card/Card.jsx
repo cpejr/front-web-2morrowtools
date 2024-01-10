@@ -1,14 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { StyledCard, BlueButton, Line, Tags, Tag, Image, Stars, LineSVG, Group } from "./Styles";
 import { FaRegBookmark } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa6";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import { useCallback } from "react";
 import { usePostFavorite } from "../../services/ManagerService";
 import { signInWithGooglePopup } from "./../../services/firebase";
-import { usePostUser } from "../../services/ManagerService";
+import { usePostUser, usegetByIaId } from "../../services/ManagerService";
 import useAuthStore from "../../stores/auth";
 
 export default function Card({ data }) {
@@ -23,11 +22,24 @@ export default function Card({ data }) {
   );
   const navigate = useNavigate();
   const { setToken, getUser, getToken } = useAuthStore();
-  const handleStarsChange = (value) => {
-    setStarsValue(value);
+
+  const getByIaId = async () => {
+    try {
+      const result = await usegetByIaId(data._id);
+      const averageRate = result?.averagerate || 0;
+      setStarsValue(averageRate.averageRating.toFixed(1));
+    } catch (error) {
+      console.log("erro");
+
+      console.error('Error fetching data:', error);
+    }
   };
 
-  async function saveFavorite() {
+  useEffect(() => {
+    getByIaId();
+  }, []);
+
+  const saveFavorite = async () => {
     if (getToken() === null) {
       await logGoogleUser();
     }
@@ -43,7 +55,8 @@ export default function Card({ data }) {
         <FaRegBookmark className='favoriteIcon' />
       )
     );
-  }
+  };
+
   let favorite = (
     <span onClick={saveFavorite} style={{ cursor: "pointer" }}>
       {favoriteIcon}
@@ -79,11 +92,11 @@ export default function Card({ data }) {
     groupedTags.push(data?.tags?.slice(i, i + 2));
   }
 
-  const handleLineClick = useCallback(() => {
+  const handleLineClick = () => {
     navigate(`/ferramenta/${data?.name}`);
     window.location.reload();
     window.scrollTo(0, 0);
-  }, [navigate, data?.name]);
+  };
 
   return (
     <StyledCard>
@@ -95,10 +108,9 @@ export default function Card({ data }) {
         <LineSVG>{favorite}</LineSVG>
       </Group>
       <Line>
-        <Stars
+      <Stars
           value={starsValue}
-          // allowClear={false}
-          onChange={handleStarsChange}
+          onChange={() => getByIaId(data)}
           onHoverChange={handleHoverChange}
           character={({ index }) => renderStarIcon(index)}
         />
