@@ -26,6 +26,8 @@ import {
   usePostComments,
 } from "../../services/ManagerService";
 import { useParams } from "react-router-dom";
+import useAuthStore from "../../stores/auth";
+
 const comments = [
   {
     name: "Arthur",
@@ -35,6 +37,7 @@ const comments = [
 ];
 
 export default function Tools() {
+  const getUser = useAuthStore();
   const [aiToolsByName, setAIToolsByName] = useState({});
   const [commments, setComments] = useState([]);
 
@@ -44,11 +47,17 @@ export default function Tools() {
     const aiTools = await useGetAIToolsByName({ name });
     setAIToolsByName(aiTools);
   }
+  console.log(getUser);
   async function PostComment() {
-    console.log(commments);
+    console.log(typeof commments);
     try {
-      const res = await usePostComments(commments);
+      const res = await usePostComments({
+        comment: commments,
+        id_user: "65a042725640012ef3c884a8",
+        id_ia: "teste",
+      });
       console.log(res);
+      g;
     } catch (error) {
       alert(error.message);
     }

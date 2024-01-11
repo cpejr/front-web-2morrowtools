@@ -29,9 +29,7 @@ const profilePictureStyle = { width: "40px", borderRadius: "50%" };
 
 export default function Header() {
   const navigate = useNavigate();
-  const { setToken, getToken, getUser, clearAuth } = useAuthStore();
-
-  
+  const { setToken, getToken, getUser, clearAuth, setUser } = useAuthStore();
 
   const [loginLogoff, setLoginLogoff] = getToken()
     ? useState("Fazer Logoff")
@@ -41,14 +39,14 @@ export default function Header() {
     if (getToken() === null) {
       const response = await signInWithGooglePopup();
 
-      const tokenObject = await usePostUser({
+      const result = await usePostUser({
         name: response.user.displayName,
         email: response.user.email,
         imageURL: response.user.photoURL,
         type: "Admin",
       });
-
-      setToken(tokenObject.token);
+      setToken(result.token);
+      setUser(result.userFound);
 
       setLoginLogoff("Fazer Logoff");
     } else {
