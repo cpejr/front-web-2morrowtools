@@ -118,7 +118,6 @@ export default function Card({ data }) {
       <Stars
       count={5} // Número total de estrelas
       value={starsValue} // Valor das estrelas
-      onChange={() => getByIaId(data)}
       character={({ index }) => renderStarIcon(index)}
     />
         <span>({starsValue})</span>

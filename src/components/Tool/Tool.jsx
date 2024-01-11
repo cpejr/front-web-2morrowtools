@@ -43,15 +43,12 @@ export default function Tool({ data }) {
     try {
       const resultado = await getAvaliation();
       const idAvaliation = await getIdAvaliation();
-      console.log('id avaliation', idAvaliation);
       const body =  { userId: user, rate: value, iaId: iaId };
   
       if (resultado) {
         updateAvaliation(idAvaliation, body);
-        console.log('Verdadeiro', resultado);
       } else {
         await postAvaliationData(body);
-        console.log('Avaliação postada com sucesso!');
       }
     } catch (error) {
       console.error('Erro ao verificar a avaliação:', error);
@@ -77,16 +74,12 @@ export default function Tool({ data }) {
   };
 
  
-  const getByIaId = async (toolData) => {
-    try {
+  async function getByIaId  (toolData)  {
       const result = await usegetByIaId(toolData._id);
       const averageRate = result?.averagerate || 0;
-      const roundedRating = Math.ceil(averageRate.averageRating * 2) / 2; // Arredonda para cima com precisão de 0.5
+      const roundedRating = Math.ceil(averageRate.averageRating * 2) / 2; 
       setStarsValue2(roundedRating.toFixed(1));
-    } catch (error) {
-      console.log("erro");
-      console.error('Error fetching data:', error);
-    }
+    
   };
 
   const getAvaliation = async () => {
@@ -94,19 +87,16 @@ export default function Tool({ data }) {
       const { avaliation } = await useGetAvaliation();
   
       if (avaliation && Array.isArray(avaliation)) {
-        // Verificar se há alguma avaliação com o mesmo userID
         const userAvaliation = avaliation.find((aval) => aval.userId === getUser()._id);
   
         if (userAvaliation) {
           // Aqui você tem a avaliação do usuário atual
-          console.log('Avaliação do usuário:', userAvaliation._id, userAvaliation );
           return true;
         } else {
           console.log('Nenhuma avaliação encontrada para o usuário atual.');
           return false;
         }
       } else {
-        console.log('Propriedade "avaliations" não é uma array ou está indefinida no objeto retornado.');
         return false;
       }
     } catch (error) {
@@ -145,9 +135,7 @@ export default function Tool({ data }) {
   };
 
   const updateAvaliation  = async (id, body) => {
-      console.log('_id atualizando:', id);
       const result = await useUpdateAvaliation(id, body);
-      console.log('Dados da avaliação update:', result);
    
   };
 
@@ -209,7 +197,6 @@ export default function Tool({ data }) {
                 <Stars
                   count={5} 
                   value={starsValue2} 
-                  onChange={() => getByIaId(toolData)}
                   character={({ index }) => renderStarIcon2(index)}
                 />
                 <span>({starsValue2})</span>
