@@ -148,4 +148,14 @@ export const IANotFound = styled.div`
   font-family: ${fonts.Exo2};
   font-size: 1.5rem;
   text-align: center;
+  @media (max-width: ${breakpoints.smallMobile}) {
+    width: 60%;
+  }
+  @media (max-width: ${breakpoints.smallDevice}) {
+    width: 70%;
+  }
+  @media (max-width: 520px) {
+    width: 300px;
+    height: 300px;
+  }
 `;
