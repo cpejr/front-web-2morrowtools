@@ -33,7 +33,7 @@ export const getCategoriesProfession = () => api.get(`/categoriesprofession`);
 export const postAvaliation = async(body) => {
   await api.post(`/avaliation`, { ...body });
 };
-export const putUpdateAvaliation = async (id) => {await api.put(`/avaliation/${id}`);
+export const putUpdateAvaliation = async (id, body) => {await api.put(`/avaliation/${id}`, body);
 };
 export const getByIaId = (iaId) => api.get(`/avaliation/${iaId}`);
 

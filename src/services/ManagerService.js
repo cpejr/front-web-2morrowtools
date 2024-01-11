@@ -117,10 +117,12 @@ export const useGetAvaliation = async () => {
 
 
 
-export const useUpdateAvaliation = async (id) => {
-  let update = {};
-  await requesterService.putUpdateAvaliation(id).then((res) => {
-    update = res.data;
-  });
-  return { update };
+export const useUpdateAvaliation = async (_id, body) => {
+  try {
+    const response = await requesterService.putUpdateAvaliation(_id, body);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating avaliation", error);
+    throw error;
+  }
 };

@@ -44,12 +44,13 @@ export default function Tool({ data }) {
       const resultado = await getAvaliation();
       const idAvaliation = await getIdAvaliation();
       console.log('id avaliation', idAvaliation);
+      const body =  { userId: user, rate: value, iaId: iaId };
   
       if (resultado) {
-        updateAvaliation(idAvaliation);
+        updateAvaliation(idAvaliation, body);
         console.log('Verdadeiro', resultado);
       } else {
-        await postAvaliationData({ userId: user, rate: value, iaId: iaId });
+        await postAvaliationData(body);
         console.log('Avaliação postada com sucesso!');
       }
     } catch (error) {
@@ -143,14 +144,11 @@ export default function Tool({ data }) {
     }
   };
 
-  const updateAvaliation  = async (_Id) => {
-    try {
-      console.log('_id atualizando:', _Id);
-      const result = await useUpdateAvaliation(_Id);
-      console.log('Dados da avaliação postada:', result);
-    } catch (error) {
-      console.error('Erro ao postar avaliação:', error);
-    }
+  const updateAvaliation  = async (id, body) => {
+      console.log('_id atualizando:', id);
+      const result = await useUpdateAvaliation(id, body);
+      console.log('Dados da avaliação update:', result);
+   
   };
 
  
