@@ -106,3 +106,21 @@ export const usePostAvaliation = async (body) => {
   return create;
 };
 
+
+export const useGetAvaliation = async () => {
+  let avaliation = {};
+  await requesterService.getAvaliation().then((res) => {
+    avaliation = res.data;
+  });
+  return { avaliation };
+};
+
+
+
+export const useUpdateAvaliation = async (id) => {
+  let update = {};
+  await requesterService.putUpdateAvaliation(id).then((res) => {
+    update = res.data;
+  });
+  return { update };
+};

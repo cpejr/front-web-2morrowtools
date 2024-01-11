@@ -23,7 +23,7 @@ import { FaStarHalfStroke} from "react-icons/fa6";
 import { IoShareSocial } from "react-icons/io5";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import useAuthStore from "../../stores/auth";
-import { usePostAvaliation, usegetByIaId} from "../../services/ManagerService";
+import { usePostAvaliation, usegetByIaId, useGetAvaliation, useUpdateAvaliation} from "../../services/ManagerService";
 
 
 
@@ -36,17 +36,26 @@ export default function Tool({ data }) {
   const { setToken, getToken, getUser, clearAuth } = useAuthStore();
   const  user = getUser()._id;
 
-  // Debounce logic here...
-
-  const handleStarsChange = async (value,toolData) => {
+  const handleStarsChange = async (value, toolData) => {
     setStarsValue(value);
     const iaId = toolData._id;
-    await postAvaliationData({ userId: user, rate: value, iaId: iaId });
+  
+    try {
+      const resultado = await getAvaliation();
+      const idAvaliation = await getIdAvaliation();
+      console.log('id avaliation', idAvaliation);
+  
+      if (resultado) {
+        updateAvaliation(idAvaliation);
+        console.log('Verdadeiro', resultado);
+      } else {
+        await postAvaliationData({ userId: user, rate: value, iaId: iaId });
+        console.log('Avaliação postada com sucesso!');
+      }
+    } catch (error) {
+      console.error('Erro ao verificar a avaliação:', error);
+    }
   };
-  
-  
-
- 
 
   const handleHoverChange = (value) => {
     setHoverValue(value);
@@ -55,13 +64,10 @@ export default function Tool({ data }) {
   
   const renderStarIcon2 = (index) => {
     const floatValue =   starsValue2;
-    // Se index for menor que o valor (e maior que o valor - 1 para representar uma estrela pela metade)
     if (index < floatValue && index > floatValue - 1) {
       return <FaStarHalfStroke />;
     }
-  
-    // Se o índice for menor que o valor, renderiza uma estrela preenchida, caso contrário, estrela vazia
-    return index < floatValue ? <RiStarSFill /> : <RiStarSLine />;
+      return index < floatValue ? <RiStarSFill /> : <RiStarSLine />;
   };
 
 
@@ -82,9 +88,48 @@ export default function Tool({ data }) {
     }
   };
 
- 
+  const getAvaliation = async () => {
+    try {
+      const { avaliation } = await useGetAvaliation();
+  
+      if (avaliation && Array.isArray(avaliation)) {
+        // Verificar se há alguma avaliação com o mesmo userID
+        const userAvaliation = avaliation.find((aval) => aval.userId === getUser()._id);
+  
+        if (userAvaliation) {
+          // Aqui você tem a avaliação do usuário atual
+          console.log('Avaliação do usuário:', userAvaliation._id, userAvaliation );
+          return true;
+        } else {
+          console.log('Nenhuma avaliação encontrada para o usuário atual.');
+          return false;
+        }
+      } else {
+        console.log('Propriedade "avaliations" não é uma array ou está indefinida no objeto retornado.');
+        return false;
+      }
+    } catch (error) {
+      console.error('Erro ao buscar dados de avaliação:', error);
+      return false;
+    }
+  };
+
+  const getIdAvaliation  = async () => {
+      const { avaliation } = await useGetAvaliation();
+  
+      if (avaliation && Array.isArray(avaliation)) {
+        // Verificar se há alguma avaliação com o mesmo userID
+        const userAvaliation = avaliation.find((aval) => aval.userId === getUser()._id);
+  
+        if (userAvaliation) {
+          return userAvaliation._id;
+        } 
+      } 
+    
+  };
+
   useEffect(() => {
-    getByIaId(data.toolData);
+    getByIaId();
   }, []);
   
 
@@ -92,6 +137,16 @@ export default function Tool({ data }) {
     try {
       console.log('Body:', body);
       const result = await usePostAvaliation(body);
+      console.log('Dados da avaliação postada:', result);
+    } catch (error) {
+      console.error('Erro ao postar avaliação:', error);
+    }
+  };
+
+  const updateAvaliation  = async (_Id) => {
+    try {
+      console.log('_id atualizando:', _Id);
+      const result = await useUpdateAvaliation(_Id);
       console.log('Dados da avaliação postada:', result);
     } catch (error) {
       console.error('Erro ao postar avaliação:', error);
