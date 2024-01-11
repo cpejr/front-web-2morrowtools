@@ -19,52 +19,16 @@ import { Card, Comments, Tool } from "../../components";
 import { useMediaQuery } from "react-responsive";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useGetAITools, useGetAIToolsByName, useGetComments } from "../../services/ManagerService";
+import {
+  useGetAITools,
+  useGetAIToolsByName,
+  useGetComments,
+  usePostComments,
+} from "../../services/ManagerService";
 import { useParams } from "react-router-dom";
-
 const comments = [
   {
     name: "Arthur",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Lucas",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Breno",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Arthur",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Lucas",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Breno",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Arthur",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Lucas",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Breno",
     comment:
       "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
   },
@@ -80,8 +44,17 @@ export default function Tools() {
     const aiTools = await useGetAIToolsByName({ name });
     setAIToolsByName(aiTools);
   }
-
+  async function PostComment() {
+    console.log(commments);
+    try {
+      const res = await usePostComments(commments);
+      console.log(res);
+    } catch (error) {
+      alert(error.message);
+    }
+  }
   async function GettingComments() {}
+
   useEffect(() => {
     GettingAIToolsDataByName();
     GettingAIToolsData();
@@ -126,8 +99,13 @@ export default function Tools() {
 
       <LetComment>
         <h2>Deixe seu comentário</h2>
-        <CommentInput placeholder='Escreva seu Comentário:' />
-        <BlueButton type='primary'>ENVIAR</BlueButton>
+        <CommentInput
+          onChange={(e) => setComments(e.target.value)}
+          placeholder='Escreva seu Comentário:'
+        />
+        <BlueButton onClick={PostComment} type='primary'>
+          ENVIAR
+        </BlueButton>
       </LetComment>
       <CommentDiv>
         <h1>COMENTÁRIOS</h1>
