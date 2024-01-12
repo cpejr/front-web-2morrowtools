@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { Container, Tittle, Label, ModalContent, Form, Section } from "./Styles";
-import FormSelect from "../../../common/FormSelect/FormSelect";
+import FormSelect from "../../../common/FormButton/FormButton";
 import { toast } from "react-toastify";
 import * as managerService from "../../../../services/ManagerService";
 import { useEffect } from "react";
@@ -9,7 +9,10 @@ import { useForm } from "react-hook-form";
 import FormInput from "../../../common/FormInput/FormInput";
 import FormsTextArea from "../../../common/FormsTextArea/FormsTextArea";
 import { FaUpload } from "react-icons/fa";
-import { buildEditToolErrorMessage, editToolValidationSchema } from "./utils";
+import {
+  buildEditToolErrorMessage,
+  // editToolValidationSchema
+} from "./utils";
 import SubmitButton from "../../../common/SubmitButton/SubmitButton";
 
 export default function ModalEdit({ _id, tool, close }) {
