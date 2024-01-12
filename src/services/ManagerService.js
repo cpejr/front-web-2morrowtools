@@ -92,7 +92,7 @@ export const usegetCategoriesProfession = async () => {
 };
 
 export const usegetByIaId = async (iaId) => {
-  let averagerate = {};
+  let { averagerate } = {};
   await requesterService.getByIaId(iaId).then((res) => {
     averagerate = res.data;
   });
@@ -106,7 +106,6 @@ export const usePostAvaliation = async (body) => {
   return create;
 };
 
-
 export const useGetAvaliation = async () => {
   let avaliation = {};
   await requesterService.getAvaliation().then((res) => {
@@ -114,8 +113,6 @@ export const useGetAvaliation = async () => {
   });
   return { avaliation };
 };
-
-
 
 export const useUpdateAvaliation = async (_id, body) => {
   try {

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {
   BlueButton,
   DataCollumn,
@@ -17,41 +18,43 @@ import {
 } from "./Styles";
 import PropTypes from "prop-types";
 
-import { useState,useEffect } from "react";
-import { FaRegBookmark} from "react-icons/fa";
-import { FaStarHalfStroke} from "react-icons/fa6";
+import { useState, useEffect } from "react";
+import { FaRegBookmark } from "react-icons/fa";
+import { FaStarHalfStroke } from "react-icons/fa6";
 import { IoShareSocial } from "react-icons/io5";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import useAuthStore from "../../stores/auth";
-import { usePostAvaliation, usegetByIaId, useGetAvaliation, useUpdateAvaliation} from "../../services/ManagerService";
-
-
+import {
+  usePostAvaliation,
+  usegetByIaId,
+  useGetAvaliation,
+  useUpdateAvaliation,
+} from "../../services/ManagerService";
+import { toast } from "react-toastify";
 
 export default function Tool({ data }) {
   const [starsValue, setStarsValue] = useState(0);
   const [starsValue2, setStarsValue2] = useState(data.stars || 0);
   const [hoverValue, setHoverValue] = useState(0);
-  const [hoverValue2, setHoverValue2] = useState(0);
-  
-  const { setToken, getToken, getUser, clearAuth } = useAuthStore();
-  const  user = getUser()._id;
 
+  const { getUser } = useAuthStore();
+  const user = getUser()?._id;
   const handleStarsChange = async (value, toolData) => {
     setStarsValue(value);
     const iaId = toolData._id;
-  
+
     try {
       const resultado = await getAvaliation();
       const idAvaliation = await getIdAvaliation();
-      const body =  { userId: user, rate: value, iaId: iaId };
-  
+      const body = { userId: user, rate: value, iaId: iaId };
+
       if (resultado) {
         updateAvaliation(idAvaliation, body);
       } else {
         await postAvaliationData(body);
       }
     } catch (error) {
-      console.error('Erro ao verificar a avaliação:', error);
+      console.error("Erro ao verificar a avaliação:", error);
     }
   };
 
@@ -59,88 +62,74 @@ export default function Tool({ data }) {
     setHoverValue(value);
   };
 
-  
   const renderStarIcon2 = (index) => {
-    const floatValue =   starsValue2;
+    const floatValue = starsValue2;
     if (index < floatValue && index > floatValue - 1) {
       return <FaStarHalfStroke />;
     }
-      return index < floatValue ? <RiStarSFill /> : <RiStarSLine />;
+    return index < floatValue ? <RiStarSFill /> : <RiStarSLine />;
   };
-
 
   const renderStarIcon = (index) => {
     return index <= (hoverValue || starsValue) - 1 ? <RiStarSFill /> : <RiStarSLine />;
   };
 
- 
-  async function getByIaId  (toolData)  {
-      const result = await usegetByIaId(toolData._id);
-      const averageRate = result?.averagerate || 0;
-      const roundedRating = Math.ceil(averageRate.averageRating * 2) / 2; 
-      setStarsValue2(roundedRating.toFixed(1));
-    
+  const getByIaId = async (toolData) => {
+    const result = await usegetByIaId(toolData?._id);
+    const averageRate = result?.averagerate || 0;
+    const roundedRating = Math.ceil(averageRate.averageRating * 2) / 2;
+    setStarsValue2(roundedRating.toFixed(1));
   };
+  useEffect(() => {
+    if (data?.aiTools) {
+      data.aiTools.forEach((toolData) => {
+        getByIaId(toolData);
+      });
+    }
+  }, [data]);
 
   const getAvaliation = async () => {
     try {
       const { avaliation } = await useGetAvaliation();
-  
       if (avaliation && Array.isArray(avaliation)) {
-        const userAvaliation = avaliation.find((aval) => aval.userId === getUser()._id);
-  
-        if (userAvaliation) {
-          // Aqui você tem a avaliação do usuário atual
-          return true;
-        } else {
-          console.log('Nenhuma avaliação encontrada para o usuário atual.');
+        const userAvaliation = avaliation.find((aval) => aval.userId === getUser()?._id);
+
+        if (userAvaliation) return true;
+        else {
+          toast.message("Nenhuma avaliação encontrada para o usuário atual.");
           return false;
         }
-      } else {
-        return false;
-      }
+      } else return false;
     } catch (error) {
-      console.error('Erro ao buscar dados de avaliação:', error);
+      console.error("Erro ao buscar dados de avaliação:", error);
       return false;
     }
   };
 
-  const getIdAvaliation  = async () => {
-      const { avaliation } = await useGetAvaliation();
-  
-      if (avaliation && Array.isArray(avaliation)) {
-        // Verificar se há alguma avaliação com o mesmo userID
-        const userAvaliation = avaliation.find((aval) => aval.userId === getUser()._id);
-  
-        if (userAvaliation) {
-          return userAvaliation._id;
-        } 
-      } 
-    
-  };
+  const getIdAvaliation = async () => {
+    const { avaliation } = await useGetAvaliation();
 
-  useEffect(() => {
-    getByIaId();
-  }, []);
-  
-
-  const postAvaliationData = async (body) => {
-    try {
-      console.log('Body:', body);
-      const result = await usePostAvaliation(body);
-      console.log('Dados da avaliação postada:', result);
-    } catch (error) {
-      console.error('Erro ao postar avaliação:', error);
+    if (avaliation && Array.isArray(avaliation)) {
+      const userAvaliation = avaliation.find((aval) => aval.userId === getUser()?._id);
+      if (userAvaliation) {
+        return userAvaliation._id;
+      }
     }
   };
 
-  const updateAvaliation  = async (id, body) => {
-      const result = await useUpdateAvaliation(id, body);
-   
+  const postAvaliationData = async (body) => {
+    try {
+      const result = await usePostAvaliation(body);
+      toast.success("Dados da avaliação postados", result);
+    } catch (error) {
+      toast.error("Erro ao postar avaliação:", error);
+    }
   };
 
- 
-  
+  const updateAvaliation = async (id, body) => {
+    const result = await useUpdateAvaliation(id, body);
+    return result;
+  };
 
   return (
     <>
@@ -166,12 +155,12 @@ export default function Tool({ data }) {
                 </LineSVG>
               </Group>
               <Line>
-              <Stars
-              value={starsValue2}
-              onChange={(value) => handleStarsChange(value, toolData)}
-              onHoverChange={(value) => handleHoverChange(value, toolData)}
-              character={({ index }) => renderStarIcon(index)}
-            />
+                <Stars
+                  value={starsValue2}
+                  onChange={(value) => handleStarsChange(value, toolData)}
+                  onHoverChange={(value) => handleHoverChange(value, toolData)}
+                  character={({ index }) => renderStarIcon(index)}
+                />
                 <span>({starsValue})</span>
               </Line>
               <p>{toolData?.shortDescription}</p>
@@ -195,9 +184,10 @@ export default function Tool({ data }) {
               <p>Você recomendaria essa ferramenta?</p>
               <Line>
                 <Stars
-                  count={5} 
-                  value={starsValue2} 
+                  count={5}
+                  value={starsValue2}
                   character={({ index }) => renderStarIcon2(index)}
+                  onChange={() => getByIaId()}
                 />
                 <span>({starsValue2})</span>
               </Line>
@@ -223,7 +213,7 @@ export default function Tool({ data }) {
   );
 }
 Tool.propTypes = {
-  data: PropTypes.object.isRequired,
-  comments: PropTypes.object.isRequired,
-  cards: PropTypes.object.isRequired,
+  data: PropTypes.object,
+  comments: PropTypes.object,
+  cards: PropTypes.object,
 };

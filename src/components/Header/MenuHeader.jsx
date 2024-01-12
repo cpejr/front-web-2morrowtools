@@ -29,7 +29,7 @@ export default function MenuHeader() {
             " Fazer Logoff",
             "login",
             <img
-              src={getUser().imageURL}
+              src={getUser()?.imageURL}
               style={{ width: "15px", borderRadius: "50%", alignItems: "center" }}
             />
           ),

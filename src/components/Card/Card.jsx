@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { StyledCard, BlueButton, Line, Tags, Tag, Image, Stars, LineSVG, Group } from "./Styles";
 import { FaRegBookmark } from "react-icons/fa";
-import { FaBookmark,FaStarHalfStroke } from "react-icons/fa6";
+import { FaBookmark, FaStarHalfStroke } from "react-icons/fa6";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
@@ -23,16 +24,10 @@ export default function Card({ data }) {
   const { setToken, getUser, getToken } = useAuthStore();
 
   const getByIaId = async () => {
-    try {
-      const result = await usegetByIaId(data._id);
-      const averageRate = result?.averagerate || 0;
-      const roundedRating = Math.ceil(averageRate.averageRating * 2) / 2; // Arredonda para cima com precisão de 0.5
-      setStarsValue(roundedRating.toFixed(1));
-    } catch (error) {
-      console.log("erro");
-
-      console.error('Error fetching data:', error);
-    }
+    const result = await usegetByIaId(data._id);
+    const averageRate = result?.averagerate || 0;
+    const roundedRating = Math.ceil(averageRate.averageRating * 2) / 2;
+    setStarsValue(roundedRating.toFixed(1));
   };
 
   useEffect(() => {
@@ -44,8 +39,8 @@ export default function Card({ data }) {
       await logGoogleUser();
     }
     await usePostFavorite({
-      userId: getUser()._id || " ",
-      toolId: data._id,
+      userId: getUser()?._id || " ",
+      toolId: data?._id,
     });
     data.favorite = !data.favorite;
     setFavoriteIcon(
@@ -79,20 +74,13 @@ export default function Card({ data }) {
     }
   };
 
- 
-
   const renderStarIcon = (index) => {
-    const floatValue =  starsValue;
-  
-    // Se index for menor que o valor (e maior que o valor - 1 para representar uma estrela pela metade)
+    const floatValue = starsValue;
     if (index < floatValue && index > floatValue - 1) {
       return <FaStarHalfStroke />;
     }
-  
-    // Se o índice for menor que o valor, renderiza uma estrela preenchida, caso contrário, estrela vazia
     return index < floatValue ? <RiStarSFill /> : <RiStarSLine />;
   };
-  
 
   const groupedTags = [];
   for (let i = 0; i < data?.tags?.length; i += 2) {
@@ -115,11 +103,7 @@ export default function Card({ data }) {
         <LineSVG>{favorite}</LineSVG>
       </Group>
       <Line>
-      <Stars
-      count={5} // Número total de estrelas
-      value={starsValue} // Valor das estrelas
-      character={({ index }) => renderStarIcon(index)}
-    />
+        <Stars count={5} value={starsValue} character={({ index }) => renderStarIcon(index)} />
         <span>({starsValue})</span>
       </Line>
       <Line>

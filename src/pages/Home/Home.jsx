@@ -23,7 +23,7 @@ export default function Home() {
     const aiTools = await useGetAIToolsByName({ name: debouncedName });
     setAITools(aiTools);
     if (!getUser()) {
-      const favorites = await useGetFavorites(getUser()._id);
+      const favorites = await useGetFavorites(getUser()?._id);
       setFavoriteAITools(favorites);
     }
   }

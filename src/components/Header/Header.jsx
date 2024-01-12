@@ -29,7 +29,7 @@ export default function Header() {
   const { setToken, getToken, getUser, clearAuth } = useAuthStore();
   const [loginLogoff, setLoginLogoff] = useState(getToken() ? "Fazer Logoff" : "Fazer Login");
   const [profilePicture, setProfilePicture] = useState(
-    loginLogoff == "Fazer Login" ? <UserOutlined /> : <img src={getUser().imageURL} />
+    loginLogoff == "Fazer Login" ? <UserOutlined /> : <img src={getUser()?.imageURL} />
   );
 
   const logGoogleUser = async () => {
@@ -45,7 +45,7 @@ export default function Header() {
       setToken(tokenObject.token);
 
       setLoginLogoff("Fazer Logoff");
-      setProfilePicture(<img src={getUser().imageURL} />);
+      setProfilePicture(<img src={getUser()?.imageURL} />);
       window.location.reload();
     } else {
       clearAuth();
