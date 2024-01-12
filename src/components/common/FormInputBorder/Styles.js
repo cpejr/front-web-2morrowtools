@@ -30,7 +30,7 @@ export const StyledInput = styled.input`
   border-color: white;
   width: 100%;
   background-color: ${colors.blue.background};
-  border: ${(props) => (props?.error ? "0.2rem red solid" : "0.1rem black solid")};
+  border: ${(props) => (props?.error ? "0.1rem red solid" : "0.1rem black solid")};
   ::placeholder {
     font-weight: 400;
   }
@@ -58,7 +58,7 @@ export const IconContainer = styled.div`
 `;
 
 export const ErrorMessage = styled.p`
-  font-size: 1.76rem;
+  font-size: 1.3rem;
   color: red;
-  font-weight: 700;
+  font-weight: 400;
 `;

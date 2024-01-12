@@ -31,6 +31,9 @@ export const StyledSelect = styled(Select)`
   flex-grow: 1;
   width: 100%;
   height: 3rem;
+  
+
+  
 
   @media (max-width: 700px) {
     height: 3rem;
@@ -38,8 +41,8 @@ export const StyledSelect = styled(Select)`
 `;
 
 export const ErrorMessage = styled.p`
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.3rem;
+  font-weight: 400;
   color: red;
 
   margin-top: ${(props) => (props.error ? "0.5rem" : "0")};

@@ -25,12 +25,12 @@ export const Label = styled.label`
 
 export const StyledTextArea = styled.textarea`
   height: 6rem;
-  font-size: 2rem;
+  font-size: 1rem;
   padding: 0.8rem 1.6rem;
   border-radius: 0.4rem;
   color: white;
   background-color: ${colors.blue.background};
-  border: ${(props) => (props?.error ? "0.2rem red solid" : "0.1rem black solid")};
+  border: ${(props) => (props?.error ? "0.1rem red solid" : "0.1rem black solid")};
   ::placeholder {
     font-weight: 400;
   }
@@ -46,9 +46,9 @@ export const StyledTextArea = styled.textarea`
 `;
 
 export const ErrorMessage = styled.p`
-  font-weight: 600;
-  font-size: 1.6rem;
-  line-height: 2rem;
+  font-weight: 400;
+  font-size: 1.3rem;
+  line-height: 1rem;
   color: red;
 
   @media (max-width: 700px) {

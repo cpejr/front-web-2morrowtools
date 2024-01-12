@@ -166,10 +166,10 @@ export default function NewTool() {
             register={register}
           />
           <FormsTextArea
-            register={register}
             name='longDescription'
             rows={4}
             errors={errors}
+            register={register}
             placeholder='Descrição longa:'
           />
           <FormInputBorder

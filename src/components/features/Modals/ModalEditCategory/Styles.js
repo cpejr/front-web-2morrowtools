@@ -52,6 +52,7 @@ export const StyledInput = styled(Input)`
   border-radius: 0.4rem;
   color: white;
   width: 100%;
+  
 
   @media (max-width: 700px) {
     font-weight: 400;

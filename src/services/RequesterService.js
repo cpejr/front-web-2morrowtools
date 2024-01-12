@@ -35,6 +35,7 @@ export const getCategoriesFeature = () => api.get(`/categoriesfeature`);
 export const deleteCategoriesFeature = (_id) => api.delete(`/categoriesfeature/${_id}`);
 // Category Price
 export const createCategoriesPrices = async (body) => {
+  console.log(body)
   await api.post(`/categoriesprices`, { ...body });
 };
 export const getCategoryPricesByName = (name) =>

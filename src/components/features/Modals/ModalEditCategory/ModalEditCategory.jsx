@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import { ModalContent, Tittle, Container, Form } from "./Styles";
+import {  editCategoryValidationSchema } from "./utils";
+import { zodResolver } from "@hookform/resolvers/zod";
 import FormInput from "../../../common/FormInput/FormInput";
 import { useState } from "react";
 
@@ -11,9 +13,9 @@ export default function ModalEditCategory({ _id, category, close, editFunction }
   const [name, setName] = useState("");
 
   // On Submit
-  const onSubmit = async () => {
+  const onSubmit = async (data) => {
     try {
-      await editFunction(_id, { name });
+      await editFunction(_id, { data });
       toast.success("Ferramenta editada com sucesso!");
       toast.clearWaitingQueue();
       close();
@@ -26,9 +28,10 @@ export default function ModalEditCategory({ _id, category, close, editFunction }
 
   const {
     handleSubmit,
+    register,
     formState: { errors },
   } = useForm({
-    // resolver: zodResolver(editToolValidationSchema),
+     resolver: zodResolver(editCategoryValidationSchema),
   });
 
   return (
@@ -40,6 +43,7 @@ export default function ModalEditCategory({ _id, category, close, editFunction }
             name='name'
             label='Nome:'
             defaultValue={category.name}
+            register={register}
             placeholder='Nome da ferramenta:'
             errors={errors}
             onChange={(e) => {

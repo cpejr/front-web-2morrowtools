@@ -23,6 +23,5 @@ FormsTextArea.propTypes = {
   name: PropTypes.string,
   label: PropTypes.string,
   placeholder: PropTypes.string,
-  register: PropTypes.func,
   errors: PropTypes.object,
 };

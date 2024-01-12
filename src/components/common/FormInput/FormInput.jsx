@@ -5,6 +5,7 @@ export default function FormInput({
   name,
   label,
   placeholder,
+  register,
   errors,
   defaultValue,
   icon: Icon,
@@ -17,7 +18,7 @@ export default function FormInput({
       <Label htmlFor={name}>{label}</Label>
       <IconContainer>
         {Icon && <Icon />}
-        <StyledInput id={name} defaultValue={defaultValue} placeholder={placeholder} {...props} />
+        <StyledInput id={name} {...register(name)} defaultValue={defaultValue} placeholder={placeholder} {...props} error={!!errorMessage} />
       </IconContainer>
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </Container>
