@@ -5,10 +5,12 @@ import {
   IconWrapper,
   Line,
   PageButton,
+  ArrowButton,
+  ButtonDiv,
   SVGDiv,
 } from "./Styles";
 import homeImage from "../../assets/home-image.svg";
-import { SearchOutlined } from "@ant-design/icons";
+import { ArrowLeftOutlined, ArrowRightOutlined, SearchOutlined } from "@ant-design/icons";
 import { Card } from "../../components";
 import FilterArea from "../../components/FilterArea/FilterArea";
 import { useGetFavorites } from "../../services/ManagerService";
@@ -29,7 +31,7 @@ export default function Home() {
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 28;
+  const itemsPerPage = 1;
   const totalPages = Math.ceil(filteredAiTools?.aiTools?.length / itemsPerPage);
 
   const handlePrevPage = () => {
@@ -157,10 +159,10 @@ export default function Home() {
         </Line>
       ))}
 
-      <div>
-        <button onClick={handlePrevPage} disabled={currentPage === 0}>
-          Anterior
-        </button>
+      <ButtonDiv>
+        <ArrowButton onClick={handlePrevPage} disabled={currentPage === 0}>
+          <ArrowLeftOutlined />
+        </ArrowButton>
 
         {currentPage !== 0 && currentPage > 3 && (
           <PageButton key={1} onClick={() => setCurrentPage(0)} isActive={0 === currentPage}>
@@ -208,10 +210,10 @@ export default function Home() {
           </PageButton>
         )}
 
-        <button onClick={handleNextPage} disabled={currentPage === totalPages - 1}>
-          Próximo
-        </button>
-      </div>
+        <ArrowButton onClick={handleNextPage} disabled={currentPage === totalPages - 1}>
+          <ArrowRightOutlined />
+        </ArrowButton>
+      </ButtonDiv>
     </Container>
   );
 }

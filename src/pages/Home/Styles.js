@@ -149,12 +149,23 @@ export const PageButton = styled.button`
   border-radius: 100px;
   border: 1px solid ${colors.blue.background};
   border-radius: 4px;
-  background-color: ${({ isActive }) => (isActive ? colors.blue.background : colors.white)};
-  color: ${({ isActive }) => (isActive ? colors.white : colors.blue.background)};
+  background-color: ${({ isActive }) => (isActive ? colors.blue.hover : "transparent")};
+  color: ${colors.white};
   cursor: ${({ isActive }) => (isActive ? "default" : "pointer")};
-  &:hover {
-    background-color: ${({ isActive }) => (isActive ? colors.blue.background : colors.blue.hover)};
-  }
+`;
+
+export const ArrowButton = styled.button`
+  display: flex;
+  align-self: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: ${colors.white};
+`;
+
+export const ButtonDiv = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 export const DivLine = styled.div`
