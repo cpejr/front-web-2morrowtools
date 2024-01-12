@@ -9,7 +9,8 @@ import {
   SearchBar,
   InputStyled,
   SelectStyled,
-  CheckboxItem,
+  MultipleSelect,
+  DivSelect,
 } from "./Styles";
 
 export default function FilterArea({ onFilterClick, filterReset, idsArray, setArray }) {
@@ -32,21 +33,6 @@ export default function FilterArea({ onFilterClick, filterReset, idsArray, setAr
     fetchData();
   }, []);
 
-  const handleCategoryChange = (_id, stateUpdater) => {
-    setArray((prevIdsArray) => {
-      if (prevIdsArray.includes(_id)) {
-        return prevIdsArray.filter((id) => id !== _id);
-      } else {
-        return [...prevIdsArray, _id];
-      }
-    });
-    stateUpdater((prevState) =>
-      prevState.map((category) =>
-        category._id === _id ? { ...category, checked: !category.checked } : category
-      )
-    );
-  };
-
   const handleClearFilters = () => {
     setCategoriesFeature((prevCategories) =>
       prevCategories.map((category) => ({ ...category, checked: false }))
@@ -61,51 +47,56 @@ export default function FilterArea({ onFilterClick, filterReset, idsArray, setAr
     filterReset();
   };
 
+  const transformArrayItems = (OriginalArray) => {
+    const newArray = OriginalArray.map((item) => ({
+      value: item._id,
+      label: item.name,
+    }));
+    return newArray;
+  };
+
+  const GroupArray = (Array1, Array2, Array3) => {
+    const GroupedArray = [
+      {
+        label: "Características",
+        code: "Caracteristicas",
+        items: transformArrayItems(Array1),
+      },
+      {
+        label: "Preços",
+        code: "Precos",
+        items: transformArrayItems(Array2),
+      },
+      {
+        label: "Profissões",
+        code: "Profissoes",
+        items: transformArrayItems(Array3),
+      },
+    ];
+    return GroupedArray;
+  };
+
+  const GroupedCategories = GroupArray(categoriesFeature, categoriesPrices, categoriesProfession);
   return (
     <ContainerFilter>
-      <BlueCheckboxes>
-        Características:
-        {categoriesFeature.map(({ _id, name, checked }) => (
-          <CheckboxItem key={_id}>
-            <Checkbox
-              checked={checked}
-              onChange={() => handleCategoryChange(_id, setCategoriesFeature)}
-            >
-              {name}
-            </Checkbox>
-          </CheckboxItem>
-        ))}
-      </BlueCheckboxes>
-      <BlueCheckboxes>
-        Preços:
-        {categoriesPrices.map(({ _id, name, checked }) => (
-          <CheckboxItem key={_id}>
-            <Checkbox
-              checked={checked}
-              onChange={() => handleCategoryChange(_id, setCategoriesPrices)}
-            >
-              {name}
-            </Checkbox>
-          </CheckboxItem>
-        ))}
-      </BlueCheckboxes>
-      <BlueCheckboxes>
-        Profissões:
-        {categoriesProfession.map(({ _id, name, checked }) => (
-          <CheckboxItem key={_id}>
-            <Checkbox
-              checked={checked}
-              onChange={() => handleCategoryChange(_id, setCategoriesProfession)}
-            >
-              {name}
-            </Checkbox>
-          </CheckboxItem>
-        ))}
-      </BlueCheckboxes>
+      <DivSelect>
+        <MultipleSelect
+          value={idsArray}
+          onChange={(e) => setArray(e.value)}
+          options={GroupedCategories}
+          optionLabel='label'
+          optionGroupLabel='label'
+          optionGroupChildren='items'
+          placeholder='Escolha as categorias'
+          display='chip'
+          className='w-full md:w-20rem'
+        ></MultipleSelect>
+      </DivSelect>
       <Button onClick={() => onFilterClick(idsArray)}>Filtrar</Button>
       <Button onClick={handleClearFilters}>Limpar Filtros</Button>
       <SearchBar>
         <SelectStyled
+          mode='multiple'
           showSearch
           placeholder='Ordernar Por'
           optionFilterProp='children'
