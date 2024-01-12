@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors } from "../../styles/styleVariables";
+import { colors } from "../../../styles/styleVariables";
 
 export const PageButton = styled.button`
   padding: 5px 10px;

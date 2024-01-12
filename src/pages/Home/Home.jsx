@@ -18,7 +18,7 @@ import useAuthStore from "../../stores/auth";
 import useDebounce from "../../services/useDebounce";
 import { useMediaQuery } from "react-responsive";
 import * as managerService from "../../services/ManagerService";
-import { Pagination } from "antd";
+import Pagination from "../../components/features/Pagination/Pagination";
 
 export default function Home() {
   const [filteredAiTools, setFilteredAiTools] = useState([]);
@@ -31,9 +31,8 @@ export default function Home() {
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 3;
+  const itemsPerPage = 8;
   const totalPages = Math.ceil(filteredAiTools?.aiTools?.length / itemsPerPage);
-  console.log(totalPages);
 
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
