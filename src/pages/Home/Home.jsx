@@ -30,7 +30,7 @@ export default function Home() {
   // Pagination
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 28;
-  const totalPages = Math.ceil(aiTools?.aiTools?.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredAiTools?.aiTools?.length / itemsPerPage);
 
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
@@ -56,8 +56,8 @@ export default function Home() {
 
   const itemsPerRow = isLargeDesktopScreen ? 4 : isDesktopScreen ? 3 : isMobileScreen ? 1 : 2;
 
-  for (let i = 0; i < aiTools?.aiTools?.length; i += itemsPerPage) {
-    const pageData = aiTools?.aiTools?.slice(i, i + itemsPerPage);
+  for (let i = 0; i < filteredAiTools?.aiTools?.length; i += itemsPerPage) {
+    const pageData = filteredAiTools?.aiTools?.slice(i, i + itemsPerPage);
     const rows = [];
 
     for (let j = 0; j < itemsPerPage / itemsPerRow; j++) {
