@@ -18,7 +18,7 @@ export default function Favorites() {
   let cards = [];
   async function getFavorites() {
     if (getUser() !== null) {
-      const favorites = await useGetFavorites(getUser()._id);
+      const favorites = await useGetFavorites(getUser()?._id);
       setAITools(favorites);
     }
   }
