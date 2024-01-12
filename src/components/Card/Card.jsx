@@ -32,7 +32,7 @@ export default function Card({ data }) {
       await logGoogleUser();
     }
     await usePostFavorite({
-      userId: getUser()._id || " ",
+      userId: getUser()?._id || " ",
       toolId: data._id,
     });
     data.favorite = !data.favorite;
@@ -54,9 +54,9 @@ export default function Card({ data }) {
     if (getToken() === null) {
       const response = await signInWithGooglePopup();
       const tokenObject = await usePostUser({
-        name: response.user.displayName,
-        email: response.user.email,
-        imageURL: response.user.photoURL,
+        name: response?.user?.displayName,
+        email: response?.user?.email,
+        imageURL: response?.user?.photoURL,
         type: "Admin",
       });
 

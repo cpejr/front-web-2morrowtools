@@ -6,17 +6,17 @@ export const SubmitSpace = styled.div`
   flex-direction: column;
   gap: 1rem;
   align-items: center;
-  width: 100%;
 `;
 
 export const Button = styled.button`
   width: 15rem;
-  height: 4rem;
-  background-color: ${colors.blue.accent};
-  border: none;
+  height: 3rem;
+  background-color: transparent;
+  border: solid 1px ${colors.white};
   border-radius: 6px;
-
   cursor: pointer;
+  font-weight: 500;
+  font-size: 1.5rem;
 
   @media (max-width: ${breakpoints.desktop}) {
     width: 128px;
@@ -36,13 +36,17 @@ export const Button = styled.button`
     height: 40px;
   }
   &:hover {
-    background-color: ${colors.blue.hover};
+    background-color: ${colors.white};
+    > p {
+      font-weight: 500;
+      font-size: 1.5rem;
+      color: ${colors.black};
+    }
   }
   p {
     color: white;
     text-transform: uppercase;
     font-family: ${fonts.Exo2};
-    font-size: 2rem;
     margin: 0;
   }
 `;
