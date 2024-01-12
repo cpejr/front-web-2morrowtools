@@ -8,6 +8,7 @@ import {
   ArrowButton,
   ButtonDiv,
   SVGDiv,
+  DivLine,
 } from "./Styles";
 import homeImage from "../../assets/home-image.svg";
 import { ArrowLeftOutlined, ArrowRightOutlined, SearchOutlined } from "@ant-design/icons";
@@ -31,7 +32,7 @@ export default function Home() {
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 1;
+  const itemsPerPage = 28;
   const totalPages = Math.ceil(filteredAiTools?.aiTools?.length / itemsPerPage);
 
   const handlePrevPage = () => {
@@ -143,20 +144,24 @@ export default function Home() {
         setArray={setCategoryIDsArrays}
         filterReset={handleFilterReset}
       />
-      {groupedData?.map((group, index) => (
-        <Line key={index}>
-          {group?.map((content) => (
-            <Card
-              data={{
-                ...content,
-                favorite: favoriteAiTools.find(
-                  (favoriteAiTool) => favoriteAiTool["_id"] === content._id
-                ),
-              }}
-              key={content?._id}
-            />
+      {groupedData.map((page, pageIndex) => (
+        <DivLine key={pageIndex} style={{ display: pageIndex === currentPage ? "flex" : "none" }}>
+          {page.map((row, rowIndex) => (
+            <Line key={rowIndex}>
+              {row.map((content) => (
+                <Card
+                  data={{
+                    ...content,
+                    favorite: favoriteAiTools.find(
+                      (favoriteAiTool) => favoriteAiTool["_id"] === content._id
+                    ),
+                  }}
+                  key={content?.name}
+                />
+              ))}
+            </Line>
           ))}
-        </Line>
+        </DivLine>
       ))}
 
       <ButtonDiv>
