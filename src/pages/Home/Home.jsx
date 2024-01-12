@@ -32,7 +32,7 @@ export default function Home() {
     });
     setFilteredAiTools(filteredCategory);
     if (!getUser()) {
-      const favorites = await useGetFavorites(getUser()._id);
+      const favorites = await useGetFavorites(getUser()?._id);
       setFavoriteAITools(favorites);
     }
   }
