@@ -44,7 +44,6 @@ export default function Tools() {
 
   //backend calls
   const { name } = useParams();
-
   async function GettingAIToolsDataByName() {
     const aiTools = await useGetAIToolsByName({ name });
     setAIToolsByName(aiTools);
@@ -53,18 +52,15 @@ export default function Tools() {
   async function PostComment() {
     usePostComments({
       comment: text,
-      id_user: getUser(),
+      id_user: getUser()?._id,
       id_ia: aiToolsByName.aiTools[0]._id,
     });
-    GettingComments();
   }
-
   async function GettingComments() {
-    const res = useGetComments({ name });
+    const res = await useGetComments({ name });
     setComments(res);
-    console.log(typeof commments);
   }
-
+  console.log("isso é um", commments);
   useEffect(() => {
     GettingAIToolsDataByName();
     GettingAIToolsData();
