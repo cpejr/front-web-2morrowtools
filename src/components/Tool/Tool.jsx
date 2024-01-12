@@ -44,17 +44,18 @@ export default function Tool({ data }) {
     const iaId = toolData._id;
 
     try {
-      const resultado = await getAvaliation();
+      const result = await getAvaliation();
       const idAvaliation = await getIdAvaliation();
       const body = { userId: user, rate: value, iaId: iaId };
-
-      if (resultado) {
+      if (result) {
         updateAvaliation(idAvaliation, body);
+        toast.success("Avaliação alterada com sucesso!");
       } else {
         await postAvaliationData(body);
+        toast.success("Avaliação realizada com sucesso!");
       }
     } catch (error) {
-      console.error("Erro ao verificar a avaliação:", error);
+      toast.error("Erro ao fazer a avaliação", error);
     }
   };
 
