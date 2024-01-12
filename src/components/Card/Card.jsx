@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { usePostFavorite } from "../../services/ManagerService";
 import { signInWithGooglePopup } from "./../../services/firebase";
-import { usePostUser, usegetByIaId } from "../../services/ManagerService";
+import { usePostUser, useGetAvaliationByAIId } from "../../services/ManagerService";
 import useAuthStore from "../../stores/auth";
 
 export default function Card({ data }) {
@@ -24,10 +24,11 @@ export default function Card({ data }) {
   const { setToken, getUser, getToken } = useAuthStore();
 
   const getByIaId = async () => {
-    const result = await usegetByIaId(data._id);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const result = await useGetAvaliationByAIId(data?._id);
     const averageRate = result?.averagerate || 0;
-    const roundedRating = Math.ceil(averageRate.averageRating * 2) / 2;
-    setStarsValue(roundedRating.toFixed(1));
+    const roundedRating = Math?.ceil(averageRate.averageRating * 2) / 2;
+    setStarsValue(roundedRating?.toFixed(1));
   };
 
   useEffect(() => {
@@ -42,7 +43,7 @@ export default function Card({ data }) {
       userId: getUser()?._id || " ",
       toolId: data?._id,
     });
-    data.favorite = !data.favorite;
+    data.favorite = !data?.favorite;
     setFavoriteIcon(
       data.favorite ? (
         <FaBookmark className='favoriteIcon' />

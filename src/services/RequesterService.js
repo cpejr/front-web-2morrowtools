@@ -1,14 +1,16 @@
 import api from "./api";
 
-//user
+// User
 export const postUser = (user) => api.post(`/User`, user);
 
-//favorite
+// Favorite
+
 export const getFavorites = (userId) => api.get(`/Favorite/${userId}`);
 
 export const postFavorite = (data) => api.post(`/Favorite`, data);
 
 // AI
+
 export const getAITools = () => api.get(`/IA`);
 
 export const getAIToolsByName = (name) => api.get(`IA/search-by-name`, { params: { name } });
@@ -24,6 +26,7 @@ export const editAITools = (_id, body) => api.put(`/IA/${_id}`, body);
 export const deleteAITools = (_id) => api.delete(`/IA/${_id}`);
 
 // Category Feature
+
 export const createCategoriesFeature = async (body) => {
   await api.post(`/categoriesfeature`, { ...body });
 };
@@ -45,6 +48,7 @@ export const getCategoriesPrice = () => api.get(`/categoriesprices`);
 export const deleteCategoriesPrice = (_id) => api.delete(`/categoriesprices/${_id}`);
 
 // Category Profession
+
 export const createCategoriesProfession = async (body) => {
   await api.post(`/categoriesprofession`, { ...body });
 };
@@ -55,19 +59,19 @@ export const editCategoriesProfession = (_id, body) =>
   api.put(`/categoriesprofession/${_id}`, body);
 export const getCategoriesProfession = () => api.get(`/categoriesprofession`);
 export const deleteCategoriesProfession = (_id) => api.delete(`/categoriesprofession/${_id}`);
+
 // Category Filter
+
 export const getAIToolsByCategoryId = (info) => api.get("IA/search-by-category", { params: info });
 
 //Avaliation
 
-
-export const postAvaliation = async(body) => {
+export const postAvaliation = async (body) => {
   await api.post(`/avaliation`, { ...body });
 };
-export const putUpdateAvaliation = async (id, body) => {await api.put(`/avaliation/${id}`, body);
+export const putUpdateAvaliation = async (id, body) => {
+  await api.put(`/avaliation/${id}`, body);
 };
-export const getByIaId = (iaId) => api.get(`/avaliation/${iaId}`);
+export const getByIaId = (aiId) => api.get(`/avaliation/${aiId}`);
 
 export const getAvaliation = () => api.get(`/avaliation`);
-
-

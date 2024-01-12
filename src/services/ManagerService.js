@@ -44,6 +44,7 @@ export const useGetAIToolsByName = async ({ name }) => {
   });
   return { aiTools };
 };
+
 export const useGetAIToolsNames = async () => {
   let aiTools = {};
   await requesterService.getAIToolsNames().then((res) => {
@@ -249,9 +250,11 @@ export const useGetAIToolsByCategoryId = async (info) => {
   return { aiTools };
 };
 
-export const usegetByIaId = async (iaId) => {
+// Avaliation
+
+export const useGetAvaliationByAIId = async (aiId) => {
   let { averagerate } = {};
-  await requesterService.getByIaId(iaId).then((res) => {
+  await requesterService.getByIaId(aiId).then((res) => {
     averagerate = res.data;
   });
   return { averagerate };

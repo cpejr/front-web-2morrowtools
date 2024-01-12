@@ -26,7 +26,7 @@ import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import useAuthStore from "../../stores/auth";
 import {
   usePostAvaliation,
-  usegetByIaId,
+  useGetAvaliationByAIId,
   useGetAvaliation,
   useUpdateAvaliation,
 } from "../../services/ManagerService";
@@ -75,10 +75,10 @@ export default function Tool({ data }) {
   };
 
   const getByIaId = async (toolData) => {
-    const result = await usegetByIaId(toolData?._id);
+    const result = await useGetAvaliationByAIId(toolData?._id);
     const averageRate = result?.averagerate || 0;
-    const roundedRating = Math.ceil(averageRate.averageRating * 2) / 2;
-    setStarsValue2(roundedRating.toFixed(1));
+    const roundedRating = Math?.ceil(averageRate.averageRating * 2) / 2;
+    setStarsValue2(roundedRating?.toFixed(1));
   };
   useEffect(() => {
     if (data?.aiTools) {
