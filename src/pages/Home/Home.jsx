@@ -1,7 +1,6 @@
 import {
   AutoCompleteInput,
   Container,
-  DivLine,
   HomeImage,
   IconWrapper,
   Line,
@@ -120,30 +119,6 @@ export default function Home() {
     }
   }
 
-  // Rendering multiples Cards
-
-  const groupedData = [];
-  const isSmallDesktop = useMediaQuery({ maxWidth: 1370 });
-  const isTabletScreen = useMediaQuery({ maxWidth: 1130 });
-  const isMobileScreen = useMediaQuery({ maxWidth: 700 });
-  if (isMobileScreen) {
-    for (let i = 0; i < filteredAiTools?.aiTools?.length; i += 1) {
-      groupedData.push(filteredAiTools?.aiTools?.slice(i, i + 1));
-    }
-  } else if (isTabletScreen) {
-    for (let i = 0; i < filteredAiTools?.aiTools?.length; i += 2) {
-      groupedData.push(filteredAiTools?.aiTools?.slice(i, i + 2));
-    }
-  } else if (isSmallDesktop) {
-    for (let i = 0; i < filteredAiTools?.aiTools?.length; i += 3) {
-      groupedData.push(filteredAiTools?.aiTools?.slice(i, i + 3));
-    }
-  } else {
-    for (let i = 0; i < filteredAiTools?.aiTools?.length; i += 3) {
-      groupedData.push(filteredAiTools?.aiTools?.slice(i, i + 3));
-    }
-  }
-
   return (
     <Container>
       <HomeImage src={homeImage} />
@@ -179,7 +154,7 @@ export default function Home() {
               key={content?._id}
             />
           ))}
-        </DivLine>
+        </Line>
       ))}
 
       <div>
