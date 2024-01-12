@@ -92,9 +92,9 @@ export const usegetCategoriesProfession = async () => {
   return { categoriesprofession };
 };
 
-export const useGetComments = async (name) => {
+export const useGetComments = async (id_ia) => {
   let comments = {};
-  await requesterService.getComments(name).then((res) => {
+  await requesterService.getComments(id_ia).then((res) => {
     comments = res.data;
   });
   return { comments };

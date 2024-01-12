@@ -24,23 +24,24 @@ import {
   useGetAIToolsByName,
   useGetComments,
   usePostComments,
+  useDeleteComments,
 } from "../../services/ManagerService";
 import { useParams } from "react-router-dom";
 import useAuthStore from "../../stores/auth";
 import { Affix } from "antd";
 
-const comments = [
-  {
-    name: "Arthur",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-];
+// const comments = [
+//   {
+//     name: "Arthur",
+//     comment:
+//       "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
+//   },
+// ];
 var text;
 export default function Tools() {
   const { getUser } = useAuthStore();
   const [aiToolsByName, setAIToolsByName] = useState({});
-  const [commments, setComments] = useState([]);
+  const [comments, setComments] = useState([]);
 
   //backend calls
   const { name } = useParams();
@@ -55,12 +56,17 @@ export default function Tools() {
       id_user: getUser()?._id,
       id_ia: aiToolsByName.aiTools[0]._id,
     });
+    GettingComments();
   }
+
   async function GettingComments() {
-    const res = await useGetComments({ name });
+    console.log(aiToolsByName.aiTools[0]._id);
+    const res = await useGetComments(aiToolsByName.aiTools[0]._id);
+    console.log(res);
     setComments(res);
+    console.log("comentarios: ", comments);
   }
-  console.log("isso é um", commments);
+
   useEffect(() => {
     GettingAIToolsDataByName();
     GettingAIToolsData();
@@ -115,11 +121,11 @@ export default function Tools() {
       </LetComment>
       <CommentDiv>
         <h1>COMENTÁRIOS</h1>
-        <Comment>
-          {comments.map((data) => (
-            <Comments key={data?.name} data={data} />
+        {/* <Comment>
+          {comments.comment.map((Comment) => (
+            <Comments key={Comment?._id} data={Comment} />
           ))}
-        </Comment>
+        </Comment> */}
       </CommentDiv>
       <OtherTools>
         <h1>OUTRAS FERRAMENTAS SIMILARES:</h1>
