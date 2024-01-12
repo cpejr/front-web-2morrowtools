@@ -27,6 +27,7 @@ import {
 } from "../../services/ManagerService";
 import { useParams } from "react-router-dom";
 import useAuthStore from "../../stores/auth";
+import { Affix } from "antd";
 
 const comments = [
   {
@@ -35,34 +36,34 @@ const comments = [
       "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
   },
 ];
-
+var text;
 export default function Tools() {
-  const getUser = useAuthStore();
+  const { getUser } = useAuthStore();
   const [aiToolsByName, setAIToolsByName] = useState({});
   const [commments, setComments] = useState([]);
 
   //backend calls
   const { name } = useParams();
+
   async function GettingAIToolsDataByName() {
     const aiTools = await useGetAIToolsByName({ name });
     setAIToolsByName(aiTools);
   }
-  console.log(getUser);
+
   async function PostComment() {
-    console.log(typeof commments);
-    try {
-      const res = await usePostComments({
-        comment: commments,
-        id_user: "65a042725640012ef3c884a8",
-        id_ia: "teste",
-      });
-      console.log(res);
-      g;
-    } catch (error) {
-      alert(error.message);
-    }
+    usePostComments({
+      comment: text,
+      id_user: getUser(),
+      id_ia: aiToolsByName.aiTools[0]._id,
+    });
+    GettingComments();
   }
-  async function GettingComments() {}
+
+  async function GettingComments() {
+    const res = useGetComments({ name });
+    setComments(res);
+    console.log(typeof commments);
+  }
 
   useEffect(() => {
     GettingAIToolsDataByName();
@@ -109,7 +110,7 @@ export default function Tools() {
       <LetComment>
         <h2>Deixe seu comentário</h2>
         <CommentInput
-          onChange={(e) => setComments(e.target.value)}
+          onChange={(e) => (text = e.target.value)}
           placeholder='Escreva seu Comentário:'
         />
         <BlueButton onClick={PostComment} type='primary'>
