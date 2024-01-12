@@ -1,19 +1,18 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useEffect } from "react";
 import { StyledCard, BlueButton, Line, Tags, Tag, Image, Stars, LineSVG, Group } from "./Styles";
 import { FaRegBookmark } from "react-icons/fa";
-import { FaBookmark } from "react-icons/fa6";
+import { FaBookmark, FaStarHalfStroke } from "react-icons/fa6";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import { useCallback } from "react";
 import { usePostFavorite } from "../../services/ManagerService";
 import { signInWithGooglePopup } from "./../../services/firebase";
-import { usePostUser } from "../../services/ManagerService";
+import { usePostUser, useGetAvaliationByAIId } from "../../services/ManagerService";
 import useAuthStore from "../../stores/auth";
 
 export default function Card({ data }) {
   const [starsValue, setStarsValue] = useState(data.stars || 0);
-  const [hoverValue, setHoverValue] = useState(0);
   const [favoriteIcon, setFavoriteIcon] = useState(
     data.favorite ? (
       <FaBookmark className='favoriteIcon' />
@@ -23,19 +22,28 @@ export default function Card({ data }) {
   );
   const navigate = useNavigate();
   const { setToken, getUser, getToken } = useAuthStore();
-  const handleStarsChange = (value) => {
-    setStarsValue(value);
+
+  const getByIaId = async () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const result = await useGetAvaliationByAIId(data?._id);
+    const averageRate = result?.averagerate || 0;
+    const roundedRating = Math?.ceil(averageRate.averageRating * 2) / 2;
+    setStarsValue(roundedRating?.toFixed(1));
   };
 
-  async function saveFavorite() {
+  useEffect(() => {
+    getByIaId();
+  }, []);
+
+  const saveFavorite = async () => {
     if (getToken() === null) {
       await logGoogleUser();
     }
     await usePostFavorite({
       userId: getUser()?._id || " ",
-      toolId: data._id,
+      toolId: data?._id,
     });
-    data.favorite = !data.favorite;
+    data.favorite = !data?.favorite;
     setFavoriteIcon(
       data.favorite ? (
         <FaBookmark className='favoriteIcon' />
@@ -43,7 +51,8 @@ export default function Card({ data }) {
         <FaRegBookmark className='favoriteIcon' />
       )
     );
-  }
+  };
+
   let favorite = (
     <span onClick={saveFavorite} style={{ cursor: "pointer" }}>
       {favoriteIcon}
@@ -54,9 +63,9 @@ export default function Card({ data }) {
     if (getToken() === null) {
       const response = await signInWithGooglePopup();
       const tokenObject = await usePostUser({
-        name: response.user.displayName,
-        email: response.user.email,
-        imageURL: response.user.photoURL,
+        name: response?.user?.displayName,
+        email: response?.user?.email,
+        imageURL: response?.user?.photoURL,
         type: "Admin",
       });
 
@@ -66,12 +75,12 @@ export default function Card({ data }) {
     }
   };
 
-  const handleHoverChange = (value) => {
-    setHoverValue(value);
-  };
-
   const renderStarIcon = (index) => {
-    return index <= (hoverValue || starsValue) - 1 ? <RiStarSFill /> : <RiStarSLine />;
+    const floatValue = starsValue;
+    if (index < floatValue && index > floatValue - 1) {
+      return <FaStarHalfStroke />;
+    }
+    return index < floatValue ? <RiStarSFill /> : <RiStarSLine />;
   };
 
   const groupedTags = [];
@@ -79,11 +88,11 @@ export default function Card({ data }) {
     groupedTags.push(data?.tags?.slice(i, i + 2));
   }
 
-  const handleLineClick = useCallback(() => {
+  const handleLineClick = () => {
     navigate(`/ferramenta/${data?.name}`);
     window.location.reload();
     window.scrollTo(0, 0);
-  }, [navigate, data?.name]);
+  };
 
   return (
     <StyledCard>
@@ -95,13 +104,7 @@ export default function Card({ data }) {
         <LineSVG>{favorite}</LineSVG>
       </Group>
       <Line>
-        <Stars
-          value={starsValue}
-          // allowClear={false}
-          onChange={handleStarsChange}
-          onHoverChange={handleHoverChange}
-          character={({ index }) => renderStarIcon(index)}
-        />
+        <Stars count={5} value={starsValue} character={({ index }) => renderStarIcon(index)} />
         <span>({starsValue})</span>
       </Line>
       <Line>
