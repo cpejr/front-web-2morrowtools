@@ -4,14 +4,12 @@ import {
   HomeImage,
   IconWrapper,
   Line,
-  PageButton,
-  ArrowButton,
   ButtonDiv,
   SVGDiv,
   DivLine,
 } from "./Styles";
 import homeImage from "../../assets/home-image.svg";
-import { ArrowLeftOutlined, ArrowRightOutlined, SearchOutlined } from "@ant-design/icons";
+import { SearchOutlined } from "@ant-design/icons";
 import { Card } from "../../components";
 import FilterArea from "../../components/FilterArea/FilterArea";
 import { useGetFavorites } from "../../services/ManagerService";
@@ -20,6 +18,7 @@ import useAuthStore from "../../stores/auth";
 import useDebounce from "../../services/useDebounce";
 import { useMediaQuery } from "react-responsive";
 import * as managerService from "../../services/ManagerService";
+import { Pagination } from "antd";
 
 export default function Home() {
   const [filteredAiTools, setFilteredAiTools] = useState([]);
@@ -32,8 +31,9 @@ export default function Home() {
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 28;
+  const itemsPerPage = 3;
   const totalPages = Math.ceil(filteredAiTools?.aiTools?.length / itemsPerPage);
+  console.log(totalPages);
 
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
@@ -41,14 +41,6 @@ export default function Home() {
 
   const handleNextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
-  };
-
-  const generatePageNumbers = () => {
-    const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
-      pageNumbers.push(i);
-    }
-    return pageNumbers;
   };
 
   // Rendering multiples Cards
@@ -163,61 +155,14 @@ export default function Home() {
           ))}
         </DivLine>
       ))}
-
       <ButtonDiv>
-        <ArrowButton onClick={handlePrevPage} disabled={currentPage === 0}>
-          <ArrowLeftOutlined />
-        </ArrowButton>
-
-        {currentPage !== 0 && currentPage > 3 && (
-          <PageButton key={1} onClick={() => setCurrentPage(0)} isActive={0 === currentPage}>
-            1
-          </PageButton>
-        )}
-
-        {currentPage >= 5 && <span>...</span>}
-
-        {generatePageNumbers()
-          .slice(Math.max(0, currentPage - 3), currentPage)
-          .map((page) => (
-            <PageButton
-              key={page}
-              onClick={() => setCurrentPage(page - 1)}
-              isActive={page - 1 === currentPage}
-            >
-              {page}
-            </PageButton>
-          ))}
-
-        <PageButton isActive={true}>{currentPage + 1}</PageButton>
-
-        {generatePageNumbers()
-          .slice(currentPage + 1, currentPage + 4)
-          .map((page) => (
-            <PageButton
-              key={page}
-              onClick={() => setCurrentPage(page - 1)}
-              isActive={page - 1 === currentPage}
-            >
-              {page}
-            </PageButton>
-          ))}
-
-        {currentPage <= totalPages - 6 && <span>...</span>}
-
-        {currentPage !== totalPages - 1 && currentPage <= totalPages - 5 && (
-          <PageButton
-            key={totalPages}
-            onClick={() => setCurrentPage(totalPages - 1)}
-            isActive={totalPages - 1 === currentPage}
-          >
-            {totalPages}
-          </PageButton>
-        )}
-
-        <ArrowButton onClick={handleNextPage} disabled={currentPage === totalPages - 1}>
-          <ArrowRightOutlined />
-        </ArrowButton>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePrevPage={handlePrevPage}
+          handleNextPage={handleNextPage}
+          setCurrentPage={setCurrentPage}
+        />
       </ButtonDiv>
     </Container>
   );
