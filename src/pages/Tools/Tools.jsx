@@ -60,17 +60,15 @@ export default function Tools() {
   }
 
   async function GettingComments() {
-    console.log(aiToolsByName.aiTools[0]._id);
     const res = await useGetComments(aiToolsByName.aiTools[0]._id);
-    console.log(res);
     setComments(res);
-    console.log("comentarios: ", comments);
   }
 
   useEffect(() => {
     GettingAIToolsDataByName();
     GettingAIToolsData();
     GettingComments();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -121,11 +119,13 @@ export default function Tools() {
       </LetComment>
       <CommentDiv>
         <h1>COMENTÁRIOS</h1>
-        {/* <Comment>
-          {comments.comment.map((Comment) => (
-            <Comments key={Comment?._id} data={Comment} />
-          ))}
-        </Comment> */}
+        {
+          <Comment>
+            {comments?.comments?.map((Comment) => (
+              <Comments key={Comment?._id} data={Comment} />
+            ))}
+          </Comment>
+        }
       </CommentDiv>
       <OtherTools>
         <h1>OUTRAS FERRAMENTAS SIMILARES:</h1>

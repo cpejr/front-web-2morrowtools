@@ -28,7 +28,7 @@ export const getCategoriesPrice = () => api.get(`/categoriesprices`);
 export const getCategoriesProfession = () => api.get(`/categoriesprofession`);
 
 // Comments
-export const getComments = (id_ia) => api.get("/comment", { id_ia });
+export const getComments = (id_ia) => api.get(`/comment/${id_ia}`);
 
 export const postComments = (body) => api.post(`/comment`, body);
 
