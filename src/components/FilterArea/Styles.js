@@ -81,6 +81,7 @@ export const InputStyled = styled(Input)`
 export const SelectStyled = styled(Select)`
   width: 15rem;
   height: 35px;
+  color: ${colors.blue.light};
   .ant-select-arrow {
     color: white;
     transform: translate(-50%, -50%);

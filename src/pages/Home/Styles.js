@@ -18,6 +18,7 @@ export const Container = styled.div`
   h1 {
     font-size: 4rem;
     margin-bottom: 1rem;
+    color: ${colors.blue.whiteBlue};
   }
   h2 {
     font-size: 1.5rem;

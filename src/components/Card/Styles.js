@@ -4,6 +4,7 @@ import { breakpoints, colors } from "../../styles/styleVariables";
 
 export const StyledCard = styled(Card)`
   display: flex;
+  background-color: #FFFFFF;
   flex-direction: column;
   width: 24rem;
   height: auto;
@@ -12,7 +13,6 @@ export const StyledCard = styled(Card)`
   gap: 3.33rem;
   box-shadow: 0px 4px 4px 0px ${colors.shadow};
   &:hover {
-    background-color: #1c2431;
   }
   @media (max-width: ${breakpoints.desktop}) {
     width: 24rem;
