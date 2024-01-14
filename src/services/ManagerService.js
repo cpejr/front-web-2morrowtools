@@ -127,10 +127,10 @@ export const useEditComments = async (_id, body) => {
   }
 };
 
-export const useDeleteComments = async (_id, userid) => {
+export const useDeleteComments = async (_id, user) => {
   let comments = {};
   try {
-    await requesterService.deleteComments(_id, userid).then((res) => {
+    await requesterService.deleteComments(_id, user).then((res) => {
       comments = res.data;
     });
     return { comments };

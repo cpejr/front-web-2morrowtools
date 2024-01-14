@@ -45,6 +45,7 @@ export default function Tools() {
 
   //backend calls
   const { name } = useParams();
+
   async function GettingAIToolsDataByName() {
     const aiTools = await useGetAIToolsByName({ name });
     setAIToolsByName(aiTools);
