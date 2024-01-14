@@ -23,7 +23,13 @@ export const usePostUser = async (user) => {
   });
   return token;
 };
-
+export const useGetuser = async (id) => {
+  let user;
+  await requesterService.getUser(id).then((res) => {
+    user = res.data;
+  });
+  return user;
+};
 export const useGetFavorites = async (userId) => {
   let favorites = [];
   await requesterService.getFavorites(userId).then((res) => {

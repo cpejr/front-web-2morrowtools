@@ -1,6 +1,7 @@
 import api from "./api";
 
 //user
+export const getUser = (id) => api.get(`/User/${id}`);
 export const postUser = (user) => api.post(`/User`, user);
 
 //favorite
