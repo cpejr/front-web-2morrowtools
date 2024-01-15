@@ -57,19 +57,19 @@ export default function Tools() {
       id_user: getUser()?._id,
       id_ia: aiToolsByName.aiTools[0]._id,
     });
-    GettingComments();
   }
 
   async function GettingComments() {
     const res = await useGetComments(aiToolsByName.aiTools[0]._id);
+    console.log(res);
     setComments(res);
+    console.log(comments);
   }
 
   useEffect(() => {
     GettingAIToolsDataByName();
     GettingAIToolsData();
     GettingComments();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -123,7 +123,7 @@ export default function Tools() {
         {
           <Comment>
             {comments?.comments?.map((Comment) => (
-              <Comments key={Comment?._id} data={Comment} />
+              <Comments key={Comment?._id} data={Comment} onDelete={GettingComments} />
             ))}
           </Comment>
         }

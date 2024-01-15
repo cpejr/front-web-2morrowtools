@@ -4,14 +4,12 @@ import { useDeleteComments, useGetuser } from "../../services/ManagerService";
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 
-export default function Comments({ data }) {
+export default function Comments({ data, onDelete }) {
   const [user, setUser] = useState("");
 
   async function deleteComment() {
-    console.log("veio ate aqui2");
-    console.log("id:", data._id, "user:", "usuario:", user);
     const res = await useDeleteComments(data._id, user);
-    console.log(res);
+    onDelete();
   }
 
   async function GettingUser() {
