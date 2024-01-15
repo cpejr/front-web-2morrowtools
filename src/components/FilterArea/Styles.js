@@ -54,9 +54,9 @@ export const BlueCheckboxes = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1rem;
+  //gap: 1rem;
   label {
-    color: ${colors.blue.light};
+    //color: ${colors.blue.light};
   }
 `;
 
@@ -64,6 +64,12 @@ export const SearchBar = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3rem;
+  @media (max-width: ${breakpoints.mobile}) {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
 `;
 
 export const InputStyled = styled(Input)`

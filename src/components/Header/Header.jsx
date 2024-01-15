@@ -19,39 +19,73 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import MenuHeader from "./MenuHeader";
 import { signInWithGooglePopup } from "./../../services/firebase";
-
-import { useState, useEffect } from "react";
 import { usePostUser } from "../../services/ManagerService";
-
 import useAuthStore from "../../stores/auth";
-
-const profilePictureStyle = { width: "40px", borderRadius: "50%" };
+import isAdm from "../../utils/isAdm";
+import React from "react";
 
 export default function Header() {
   const navigate = useNavigate();
   const { setToken, getToken, getUser, clearAuth, setUser } = useAuthStore();
+  const [loginLogoff, setLoginLogoff] = React.useState(getToken() ? "Fazer Logoff" : "Fazer Login");
+  const [profilePicture, setProfilePicture] = React.useState(
+    loginLogoff === "Fazer Login" ? (
+      <UserOutlined />
+    ) : (
+      <img src={getUser()?.imageURL} alt='Profile' />
+    )
+  );
 
-  const [loginLogoff, setLoginLogoff] = getToken()
-    ? useState("Fazer Logoff")
-    : useState("Fazer Login");
 
   const logGoogleUser = async () => {
     if (getToken() === null) {
       const response = await signInWithGooglePopup();
-
-      const result = await usePostUser({
-        name: response.user.displayName,
-        email: response.user.email,
-        imageURL: response.user.photoURL,
+      const tokenObject = await usePostUser({
+        name: response?.user?.displayName,
+        email: response?.user?.email,
+        imageURL: response?.user?.photoURL,
         type: "Admin",
       });
       setToken(result.token);
       setUser(result.userFound);
 
+      setToken(tokenObject.token);
+
+      window.location.reload();
+
       setLoginLogoff("Fazer Logoff");
+      setProfilePicture(<img src={getUser()?.imageURL} alt='Profile' />);
     } else {
       clearAuth();
       setLoginLogoff("Fazer Login");
+      setProfilePicture(<UserOutlined />);
+    }
+  };
+
+  const redirectToFavorites = async () => {
+    if (getToken() === null) {
+      await logGoogleUser();
+    }
+    if (getToken() !== null) {
+      window.location.href = "./favoritos";
+    }
+  };
+
+  const redirectToIa = async () => {
+    if (getToken() === null) {
+      await logGoogleUser();
+    }
+    if (getToken() !== null) {
+      window.location.href = "./adicionar-ia";
+    }
+  };
+
+  const redirectToCategories = async () => {
+    if (getToken() === null) {
+      await logGoogleUser();
+    }
+    if (getToken() !== null) {
+      window.location.href = "./adicionar-categoria";
     }
   };
 
@@ -59,21 +93,28 @@ export default function Header() {
     <Container>
       <ContainerMenu>
         <MenuHeader />
-        <img onClick={() => navigate("/")} src={logo} />
+        <img onClick={() => navigate("/")} src={logo} alt='Logo' />
       </ContainerMenu>
       <Links>
-        <Link to={"/"}>Página Inicial</Link>
-        <Link to={"/favoritos"}>Meus Favoritos</Link>
+        <Link to='/'>Página Inicial</Link>
+        <Link>
+          <span onClick={() => redirectToFavorites()}>Meus Favoritos</span>
+        </Link>
+        {isAdm(getUser()?.email) ? (
+          <React.Fragment>
+            <Link>
+              <span onClick={() => redirectToIa()}>Gerenciar Ferramentas</span>
+            </Link>
+            <Link>
+              <span onClick={() => redirectToCategories()}>Gerenciar Categorias</span>
+            </Link>
+          </React.Fragment>
+        ) : null}
       </Links>
       <LoginSocial>
         <LoginButton onClick={logGoogleUser}>
           {loginLogoff}
-          {/* {getUser() === null ? (
-            <UserOutlined />
-          ) : (
-            <img style={profilePictureStyle} src={getUser().userFound.imageURL} />
-          )} */}
-          <UserOutlined />
+          {profilePicture}
         </LoginButton>
         <Line />
         <SocialMedias>

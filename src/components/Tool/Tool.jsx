@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {
   BlueButton,
   DataCollumn,
@@ -17,54 +18,138 @@ import {
 } from "./Styles";
 import PropTypes from "prop-types";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaRegBookmark } from "react-icons/fa";
+import { FaStarHalfStroke } from "react-icons/fa6";
 import { IoShareSocial } from "react-icons/io5";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
+import useAuthStore from "../../stores/auth";
+import {
+  usePostAvaliation,
+  useGetAvaliationByAIId,
+  useGetAvaliation,
+  useUpdateAvaliation,
+} from "../../services/ManagerService";
+import { toast } from "react-toastify";
+
 export default function Tool({ data }) {
   const [starsValue, setStarsValue] = useState(0);
-  const [starsValue2, setStarsValue2] = useState(0);
+  const [starsValue2, setStarsValue2] = useState(data.stars || 0);
   const [hoverValue, setHoverValue] = useState(0);
-  const [hoverValue2, setHoverValue2] = useState(0);
 
-  const handleStarsChange = (value) => {
+  const { getUser } = useAuthStore();
+  const user = getUser()?._id;
+  const handleStarsChange = async (value, toolData) => {
     setStarsValue(value);
-  };
-  const handleStarsChange2 = (value) => {
-    setStarsValue2(value);
+    const iaId = toolData._id;
+
+    try {
+      const result = await getAvaliation();
+      const idAvaliation = await getIdAvaliation();
+      const body = { userId: user, rate: value, iaId: iaId };
+      if (result) {
+        updateAvaliation(idAvaliation, body);
+        toast.success("Avaliação alterada com sucesso!");
+      } else {
+        await postAvaliationData(body);
+        toast.success("Avaliação realizada com sucesso!");
+      }
+    } catch (error) {
+      toast.error("Erro ao fazer a avaliação", error);
+    }
   };
 
   const handleHoverChange = (value) => {
     setHoverValue(value);
   };
-  const handleHoverChange2 = (value) => {
-    setHoverValue2(value);
+
+  const renderStarIcon2 = (index) => {
+    const floatValue = starsValue2;
+    if (index < floatValue && index > floatValue - 1) {
+      return <FaStarHalfStroke />;
+    }
+    return index < floatValue ? <RiStarSFill /> : <RiStarSLine />;
   };
 
   const renderStarIcon = (index) => {
     return index <= (hoverValue || starsValue) - 1 ? <RiStarSFill /> : <RiStarSLine />;
   };
-  const renderStarIcon2 = (index) => {
-    return index <= (hoverValue2 || starsValue2) - 1 ? <RiStarSFill /> : <RiStarSLine />;
+
+  const getByIaId = async (toolData) => {
+    const result = await useGetAvaliationByAIId(toolData?._id);
+    const averageRate = result?.averagerate || 0;
+    const roundedRating = Math?.ceil(averageRate.averageRating * 2) / 2;
+    setStarsValue2(roundedRating?.toFixed(1));
   };
+  useEffect(() => {
+    if (data?.aiTools) {
+      data.aiTools.forEach((toolData) => {
+        getByIaId(toolData);
+      });
+    }
+  }, [data]);
+
+  const getAvaliation = async () => {
+    try {
+      const { avaliation } = await useGetAvaliation();
+      if (avaliation && Array.isArray(avaliation)) {
+        const userAvaliation = avaliation.find((aval) => aval.userId === getUser()?._id);
+
+        if (userAvaliation) return true;
+        else {
+          toast.message("Nenhuma avaliação encontrada para o usuário atual.");
+          return false;
+        }
+      } else return false;
+    } catch (error) {
+      console.error("Erro ao buscar dados de avaliação:", error);
+      return false;
+    }
+  };
+
+  const getIdAvaliation = async () => {
+    const { avaliation } = await useGetAvaliation();
+
+    if (avaliation && Array.isArray(avaliation)) {
+      const userAvaliation = avaliation.find((aval) => aval.userId === getUser()?._id);
+      if (userAvaliation) {
+        return userAvaliation._id;
+      }
+    }
+  };
+
+  const postAvaliationData = async (body) => {
+    try {
+      const result = await usePostAvaliation(body);
+      toast.success("Dados da avaliação postados", result);
+    } catch (error) {
+      toast.error("Erro ao postar avaliação:", error);
+    }
+  };
+
+  const updateAvaliation = async (id, body) => {
+    const result = await useUpdateAvaliation(id, body);
+    return result;
+  };
+
   return (
     <>
-      {data?.aiTools?.map((dados, index) => (
+      {data?.aiTools?.map((toolData, index) => (
         <>
           <Row key={index}>
             <ImageCollumn>
               <Image>
-                <img src={dados?.imageURL} alt={`ToolImage ${index}`} />
+                <img src={toolData?.imageURL} alt={`ToolImage ${index}`} />
               </Image>
               <TagsLine key={`line-${index}`}>
-                <Tag>{dados?.id_categoryfeature?.name}</Tag>
-                <Tag>{dados?.id_categoryprice?.name}</Tag>
-                <Tag>{dados?.id_categoryprofession?.name}</Tag>
+                <Tag>{toolData?.id_categoryfeature?.name}</Tag>
+                <Tag>{toolData?.id_categoryprice?.name}</Tag>
+                <Tag>{toolData?.id_categoryprofession?.name}</Tag>
               </TagsLine>
             </ImageCollumn>
             <DataCollumn>
               <Group>
-                <Line>{dados.name}</Line>
+                <Line>{toolData.name}</Line>
                 <LineSVG>
                   <FaRegBookmark />
                   <IoShareSocial />
@@ -72,24 +157,23 @@ export default function Tool({ data }) {
               </Group>
               <Line>
                 <Stars
-                  value={starsValue}
-                  // allowClear={false}
-                  onChange={handleStarsChange}
-                  onHoverChange={handleHoverChange}
+                  value={starsValue2}
+                  onChange={(value) => handleStarsChange(value, toolData)}
+                  onHoverChange={(value) => handleHoverChange(value, toolData)}
                   character={({ index }) => renderStarIcon(index)}
                 />
                 <span>({starsValue})</span>
               </Line>
-              <p>{dados?.shortDescription}</p>
+              <p>{toolData?.shortDescription}</p>
               <TabletTagsLine key={`line-${index}`}>
-                <Tag>{dados?.id_categoryfeature?.name}</Tag>
-                <Tag>{dados?.id_categoryprice?.name}</Tag>
-                <Tag>{dados?.id_categoryprofession?.name}</Tag>
+                <Tag>{toolData?.id_categoryfeature?.name}</Tag>
+                <Tag>{toolData?.id_categoryprice?.name}</Tag>
+                <Tag>{toolData?.id_categoryprofession?.name}</Tag>
               </TabletTagsLine>
               <BlueButton
                 type='primary'
                 onClick={() => {
-                  window.open(dados?.link, "_blank");
+                  window.open(toolData?.link, "_blank");
                 }}
               >
                 ACESSE JÁ!
@@ -101,11 +185,10 @@ export default function Tool({ data }) {
               <p>Você recomendaria essa ferramenta?</p>
               <Line>
                 <Stars
+                  count={5}
                   value={starsValue2}
-                  // allowClear={false}
-                  onChange={handleStarsChange2}
-                  onHoverChange={handleHoverChange2}
                   character={({ index }) => renderStarIcon2(index)}
+                  onChange={() => getByIaId()}
                 />
                 <span>({starsValue2})</span>
               </Line>
@@ -113,12 +196,12 @@ export default function Tool({ data }) {
           </Row>
           <KnowMore>
             <h1>PARA SABER MAIS</h1>
-            <p>{dados?.longDescription}</p>
+            <p>{toolData?.longDescription}</p>
             <VideoDiv>
               <iframe
                 width='100%'
                 height='100%'
-                src={dados.youtubeVideoLink}
+                src={toolData.youtubeVideoLink}
                 title={"Video"}
                 allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
                 allowFullScreen
@@ -131,7 +214,7 @@ export default function Tool({ data }) {
   );
 }
 Tool.propTypes = {
-  data: PropTypes.object.isRequired,
-  comments: PropTypes.object.isRequired,
-  cards: PropTypes.object.isRequired,
+  data: PropTypes.object,
+  comments: PropTypes.object,
+  cards: PropTypes.object,
 };

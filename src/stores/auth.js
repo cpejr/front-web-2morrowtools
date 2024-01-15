@@ -10,7 +10,8 @@ const useAuthStore = create(
       setToken: (token) => {
         const user = jwtDecode(token);
 
-        set({ token, user });
+        const user = jwtDecode(token).userFound;    
+        set({token, user});
       },
       setUser: (user) => {
         set({ user });

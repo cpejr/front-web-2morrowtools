@@ -30,13 +30,6 @@ import { useParams } from "react-router-dom";
 import useAuthStore from "../../stores/auth";
 import { Affix } from "antd";
 
-// const comments = [
-//   {
-//     name: "Arthur",
-//     comment:
-//       "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-//   },
-// ];
 var text;
 export default function Tools() {
   const { getUser } = useAuthStore();
@@ -133,7 +126,7 @@ export default function Tools() {
         {groupedData.map((group, groupIndex) => (
           <CardLine key={groupIndex}>
             {group.map((content, contentIndex) => (
-              <Card dados={content} key={contentIndex} />
+              <Card data={content} key={contentIndex} />
             ))}
           </CardLine>
         ))}

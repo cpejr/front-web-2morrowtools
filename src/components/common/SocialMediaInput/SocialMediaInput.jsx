@@ -18,7 +18,6 @@ export default function SocialMediaInput({ placeholder, icon: Icon }) {
 
   const handleChange = (value) => {
     setSelectedSocialMedia(value);
-    console.log(`selected ${value}`);
   };
 
   const socialMediaOptions = [

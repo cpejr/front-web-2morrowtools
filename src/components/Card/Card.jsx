@@ -1,84 +1,122 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useEffect } from "react";
 import { StyledCard, BlueButton, Line, Tags, Tag, Image, Stars, LineSVG, Group } from "./Styles";
 import { FaRegBookmark } from "react-icons/fa";
-import { FaBookmark } from "react-icons/fa6";
+import { FaBookmark, FaStarHalfStroke } from "react-icons/fa6";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import { useCallback } from "react";
 import { usePostFavorite } from "../../services/ManagerService";
+import { signInWithGooglePopup } from "./../../services/firebase";
+import { usePostUser, useGetAvaliationByAIId } from "../../services/ManagerService";
 import useAuthStore from "../../stores/auth";
 
-export default function Card({ dados }) {
-  const [starsValue, setStarsValue] = useState(dados.stars || 0);
-  const [hoverValue, setHoverValue] = useState(0);
+export default function Card({ data }) {
+  const [starsValue, setStarsValue] = useState(data.stars || 0);
+  const [favoriteIcon, setFavoriteIcon] = useState(
+    data.favorite ? (
+      <FaBookmark className='favoriteIcon' />
+    ) : (
+      <FaRegBookmark className='favoriteIcon' />
+    )
+  );
   const navigate = useNavigate();
+  const { setToken, getUser, getToken } = useAuthStore();
 
-  const { getUser } = useAuthStore();
-  const handleStarsChange = (value) => {
-    setStarsValue(value);
+  const getByIaId = async () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const result = await useGetAvaliationByAIId(data?._id);
+    const averageRate = result?.averagerate || 0;
+    const roundedRating = Math?.ceil(averageRate.averageRating * 2) / 2;
+    setStarsValue(roundedRating?.toFixed(1));
   };
 
-  async function saveFavorite() {
-    const fav = await usePostFavorite({
-      userId: getUser().userFound._id || " ",
-      toolId: dados._id,
+  useEffect(() => {
+    getByIaId();
+  }, []);
+
+  const saveFavorite = async () => {
+    if (getToken() === null) {
+      await logGoogleUser();
+    }
+    await usePostFavorite({
+      userId: getUser()?._id || " ",
+      toolId: data?._id,
     });
-  }
-  const favoriteIcon = dados.favorite ? (
-    <FaBookmark className='favoriteIcon' onClick={saveFavorite} />
-  ) : (
-    <FaRegBookmark className='favoriteIcon' onClick={saveFavorite} />
+    data.favorite = !data?.favorite;
+    setFavoriteIcon(
+      data.favorite ? (
+        <FaBookmark className='favoriteIcon' />
+      ) : (
+        <FaRegBookmark className='favoriteIcon' />
+      )
+    );
+  };
+
+  let favorite = (
+    <span onClick={saveFavorite} style={{ cursor: "pointer" }}>
+      {favoriteIcon}
+    </span>
   );
 
-  const handleHoverChange = (value) => {
-    setHoverValue(value);
+  const logGoogleUser = async () => {
+    if (getToken() === null) {
+      const response = await signInWithGooglePopup();
+      const tokenObject = await usePostUser({
+        name: response?.user?.displayName,
+        email: response?.user?.email,
+        imageURL: response?.user?.photoURL,
+        type: "Admin",
+      });
+
+      setToken(tokenObject.token);
+
+      window.location.reload();
+    }
   };
 
   const renderStarIcon = (index) => {
-    return index <= (hoverValue || starsValue) - 1 ? <RiStarSFill /> : <RiStarSLine />;
+    const floatValue = starsValue;
+    if (index < floatValue && index > floatValue - 1) {
+      return <FaStarHalfStroke />;
+    }
+    return index < floatValue ? <RiStarSFill /> : <RiStarSLine />;
   };
 
   const groupedTags = [];
-  for (let i = 0; i < dados?.tags?.length; i += 2) {
-    groupedTags.push(dados?.tags?.slice(i, i + 2));
+  for (let i = 0; i < data?.tags?.length; i += 2) {
+    groupedTags.push(data?.tags?.slice(i, i + 2));
   }
 
-  const handleLineClick = useCallback(() => {
-    navigate(`/ferramenta/${dados?.name}`);
+  const handleLineClick = () => {
+    navigate(`/ferramenta/${data?.name}`);
     window.location.reload();
     window.scrollTo(0, 0);
-  }, [navigate, dados?.name]);
+  };
 
   return (
     <StyledCard>
       <Image>
-        <img src={dados?.imageURL} alt={dados?.name} />
+        <img src={data?.imageURL} alt={data?.name} />
       </Image>
       <Group>
-        <Line onClick={handleLineClick}>{dados?.name}:</Line>
-        <LineSVG>{favoriteIcon}</LineSVG>
+        <Line onClick={handleLineClick}>{data?.name}:</Line>
+        <LineSVG>{favorite}</LineSVG>
       </Group>
       <Line>
-        <Stars
-          value={starsValue}
-          // allowClear={false}
-          onChange={handleStarsChange}
-          onHoverChange={handleHoverChange}
-          character={({ index }) => renderStarIcon(index)}
-        />
+        <Stars count={5} value={starsValue} character={({ index }) => renderStarIcon(index)} />
         <span>({starsValue})</span>
       </Line>
       <Line>
-        <p>{dados?.description}</p>
+        <p>{data?.description}</p>
       </Line>
 
       <Tags>
-        <Tag>{dados?.id_categoryfeature?.name} </Tag>
-        <Tag>{dados?.id_categoryprice?.name} </Tag>
+        <Tag>{data?.id_categoryfeature?.name} </Tag>
+        <Tag>{data?.id_categoryprice?.name} </Tag>
       </Tags>
       <Tags>
-        <Tag>{dados?.id_categoryprofession?.name} </Tag>
+        <Tag>{data?.id_categoryprofession?.name} </Tag>
       </Tags>
       <BlueButton type='primary'>BOTÃO</BlueButton>
     </StyledCard>
@@ -86,5 +124,5 @@ export default function Card({ dados }) {
 }
 
 Card.propTypes = {
-  dados: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
 };
