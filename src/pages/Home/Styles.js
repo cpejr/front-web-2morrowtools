@@ -12,6 +12,7 @@ export const Container = styled.div`
   margin-top: 85px;
   margin-bottom: 100px;
   gap: 2rem;
+
   .p-autocomplete-items-wrapper {
     background-color: green;
   }
@@ -139,4 +140,19 @@ export const AutoCompleteInput = styled(AutoComplete)`
   @media (max-width: ${breakpoints.smallMobile}) {
     width: 87%;
   }
+`;
+
+export const ButtonDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const DivLine = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 2rem;
+  width: fit-content;
+  align-self: center;
+  justify-content: center;
+  gap: 2rem;
 `;
