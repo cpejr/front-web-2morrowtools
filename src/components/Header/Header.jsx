@@ -26,7 +26,7 @@ import React from "react";
 
 export default function Header() {
   const navigate = useNavigate();
-  const { setToken, getToken, getUser, clearAuth, setUser } = useAuthStore();
+  const { setToken, getToken, getUser, clearAuth /*setUser*/ } = useAuthStore();
   const [loginLogoff, setLoginLogoff] = React.useState(getToken() ? "Fazer Logoff" : "Fazer Login");
   const [profilePicture, setProfilePicture] = React.useState(
     loginLogoff === "Fazer Login" ? (
@@ -35,7 +35,6 @@ export default function Header() {
       <img src={getUser()?.imageURL} alt='Profile' />
     )
   );
-
 
   const logGoogleUser = async () => {
     if (getToken() === null) {
@@ -46,10 +45,8 @@ export default function Header() {
         imageURL: response?.user?.photoURL,
         type: "Admin",
       });
-      setToken(result.token);
-      setUser(result.userFound);
-
       setToken(tokenObject.token);
+      //setUser(tokenObject.userFound);
 
       window.location.reload();
 

@@ -24,7 +24,6 @@ import {
   useGetAIToolsByName,
   useGetComments,
   usePostComments,
-  useDeleteComments,
 } from "../../services/ManagerService";
 import { useParams } from "react-router-dom";
 import useAuthStore from "../../stores/auth";
@@ -38,25 +37,21 @@ export default function Tools() {
 
   //backend calls
   const { name } = useParams();
-
   async function GettingAIToolsDataByName() {
     const aiTools = await useGetAIToolsByName({ name });
     setAIToolsByName(aiTools);
   }
-
   async function PostComment() {
     usePostComments({
       comment: text,
-      id_user: getUser()?._id,
+      id_user: getUser()?.userFound?._id,
       id_ia: aiToolsByName.aiTools[0]._id,
     });
   }
 
   async function GettingComments() {
     const res = await useGetComments(aiToolsByName.aiTools[0]._id);
-    console.log(res);
     setComments(res);
-    console.log(comments);
   }
 
   useEffect(() => {
