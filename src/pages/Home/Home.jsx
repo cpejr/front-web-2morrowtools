@@ -26,6 +26,7 @@ export default function Home() {
   };
   async function FilteringAIsByCategoriesIds() {
     const idsString = convertArrayToString(categoryIDsArrays);
+
     const filteredCategory = await managerService.useGetAIToolsByCategoryId({
       id: idsString,
       name: debouncedName,
