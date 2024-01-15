@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Checkbox, Button } from "antd";
+import { Button } from "antd";
 import * as managerService from "../../services/ManagerService";
 import {
-  BlueCheckboxes,
   ContainerFilter,
   SearchBar,
   InputStyled,
@@ -15,6 +14,7 @@ import {
 
 export default function FilterArea({ onFilterClick, filterReset, idsArray, setArray }) {
   // Set variables
+
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [categoriesPrices, setCategoriesPrices] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
@@ -55,28 +55,30 @@ export default function FilterArea({ onFilterClick, filterReset, idsArray, setAr
     return newArray;
   };
 
-  const GroupArray = (Array1, Array2, Array3) => {
+  const GroupArray = (categoryFeature, categoryPrices, categoryProfession) => {
     const GroupedArray = [
       {
         label: "Características",
         code: "Caracteristicas",
-        items: transformArrayItems(Array1),
+        items: transformArrayItems(categoryFeature),
       },
       {
         label: "Preços",
         code: "Precos",
-        items: transformArrayItems(Array2),
+        items: transformArrayItems(categoryPrices),
       },
       {
         label: "Profissões",
         code: "Profissoes",
-        items: transformArrayItems(Array3),
+        items: transformArrayItems(categoryProfession),
       },
     ];
     return GroupedArray;
   };
 
-  const GroupedCategories = GroupArray(categoriesFeature, categoriesPrices, categoriesProfession);
+  const GroupedCategories =
+    GroupArray(categoriesFeature, categoriesPrices, categoriesProfession) || [];
+
   return (
     <ContainerFilter>
       <DivSelect>
