@@ -49,5 +49,32 @@ export const GlobalStyles = createGlobalStyle`
         color: ${colors.black};
       }
     }
+
+  .p-multiselect-items-wrapper {
+    background-color: ${colors.blue.background};
+    color: ${colors.white};
+  }
+
+  .p-multiselect-item-group{
+    background-color: ${colors.blue.background};
+    color: ${colors.white};
+  }
+
+  .p-multiselect-item {
+    color: ${colors.white};
+    &:hover{
+      background-color: ${colors.blue.dark};
+    }
+  }
+
+  .p-highlight{
+    background-color: ${colors.blue.dark};
+    } 
+  
+
+  .p-multiselect-header{
+    background-color: ${colors.blue.background};
+    color: ${colors.white};
+  }
    
 `;

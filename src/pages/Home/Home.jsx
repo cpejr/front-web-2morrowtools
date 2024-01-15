@@ -68,13 +68,14 @@ export default function Home() {
   };
   async function FilteringAIsByCategoriesIds() {
     const idsString = convertArrayToString(categoryIDsArrays);
+
     const filteredCategory = await managerService.useGetAIToolsByCategoryId({
       id: idsString,
       name: debouncedName,
     });
     setFilteredAiTools(filteredCategory);
     if (!getUser()) {
-      const favorites = await useGetFavorites(getUser()._id);
+      const favorites = await useGetFavorites(getUser()?._id);
       setFavoriteAITools(favorites);
     }
   }

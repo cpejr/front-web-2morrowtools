@@ -44,6 +44,7 @@ export const useGetAIToolsByName = async ({ name }) => {
   });
   return { aiTools };
 };
+
 export const useGetAIToolsNames = async () => {
   let aiTools = {};
   await requesterService.getAIToolsNames().then((res) => {
@@ -247,4 +248,39 @@ export const useGetAIToolsByCategoryId = async (info) => {
     aiTools = res.data;
   });
   return { aiTools };
+};
+
+// Avaliation
+
+export const useGetAvaliationByAIId = async (aiId) => {
+  let { averagerate } = {};
+  await requesterService.getByIaId(aiId).then((res) => {
+    averagerate = res.data;
+  });
+  return { averagerate };
+};
+
+export const usePostAvaliation = async (body) => {
+  const create = await requesterService.postAvaliation(body).then((res) => {
+    return res;
+  });
+  return create;
+};
+
+export const useGetAvaliation = async () => {
+  let avaliation = {};
+  await requesterService.getAvaliation().then((res) => {
+    avaliation = res.data;
+  });
+  return { avaliation };
+};
+
+export const useUpdateAvaliation = async (_id, body) => {
+  try {
+    const response = await requesterService.putUpdateAvaliation(_id, body);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating avaliation", error);
+    throw error;
+  }
 };
