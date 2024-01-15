@@ -66,7 +66,7 @@ export default function Tools() {
   }, []);
   useEffect(() => {
     GettingComments();
-  }, [aiToolsByName]);
+  }, [aiToolsByName, comments]);
 
   const [aiTools, setAITools] = useState({});
 
