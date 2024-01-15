@@ -9,7 +9,6 @@ export const Container = styled.div`
   flex-direction: column;
   width: 100%;
   height: auto;
-  padding-bottom: 15rem;
   padding-top: 8rem;
   gap: 3rem;
 
@@ -112,6 +111,7 @@ export const ToolList = styled.ul`
   height: 6rem;
   font-size: 2rem;
   margin-left: 4rem;
+  margin-bottom: 50rem;
   color: white;
   @media (max-width: ${breakpoints.smallMobile}) {
     width: 80%;
