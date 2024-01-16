@@ -27,7 +27,6 @@ import {
 } from "../../services/ManagerService";
 import { useParams } from "react-router-dom";
 import useAuthStore from "../../stores/auth";
-import { FaTrashCan } from "react-icons/fa6";
 
 export default function Tools() {
   const { getUser } = useAuthStore();
@@ -47,12 +46,10 @@ export default function Tools() {
       id_user: getUser()?._id,
       id_ia: aiToolsByName.aiTools[0]._id,
     });
-    gettingComments();
   }
 
   async function gettingComments() {
     const res = await useGetComments(aiToolsByName.aiTools[0]._id);
-    console.log(res);
     setComments(res);
   }
 
@@ -69,7 +66,7 @@ export default function Tools() {
   }, []);
   useEffect(() => {
     gettingComments();
-  }, [aiToolsByName]);
+  }, [aiToolsByName, postComment]);
 
   // Grouping Data
   const groupedData = [];
