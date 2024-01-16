@@ -99,8 +99,8 @@ export const LoginButton = styled.button`
   height: 60px;
   border: 1px solid;
   border-radius: 3px;
-  color: white;
-  color: ${colors.blue.whiteBlue};
+  color: ${colors.white};
+  background-color: ${colors.transparent};
   font-family: ${fonts.Exo2};
   font-size: 1.2rem;
   font-weight: 400;
@@ -112,8 +112,8 @@ export const LoginButton = styled.button`
   }
 
   &:hover {
-    background-color: ${colors.blue.accent};
-    color: white;
+    background-color: ${colors.white};
+    color: ${colors.black};
     cursor: pointer;
   }
   @media (max-width: ${breakpoints.tablet}) {
@@ -186,7 +186,7 @@ export const Select = styled.div`
     }
   }
   p {
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
 `;
 
@@ -201,6 +201,9 @@ export const Selected = styled.div`
       text-align: center;
     }
   }
+  @media (max-width: ${breakpoints.smallDevice}) {
+    display: none;
+  }
 `;
 
 export const ThemeSelector = styled.div`
@@ -212,10 +215,8 @@ export const ThemeSelector = styled.div`
   transition: height 1s ease-in-out;
   height: ${(props) => (props.collapse ? "auto" : "0rem")};
   overflow-y: hidden;
-  background-color: white;
- 
   border-radius: 0.5rem;
-  /* gap: 0.3rem; */
+
   button {
     border: none;
     background-color: ${colors.blue.background};
@@ -227,6 +228,7 @@ export const ThemeSelector = styled.div`
       cursor: pointer;
     }
     p {
+      color: ${colors.white};
       :hover {
         cursor: pointer;
         text-decoration: underline;
@@ -253,6 +255,7 @@ export const ThemeSelector = styled.div`
       background-color: ${colors.blue.background};
       color: black;
       font-weight: 600;
+
       p {
         font-weight: 700;
         :hover {

@@ -6,7 +6,7 @@ const ColorContext = createContext();
 
 export function ColorProvider({ children }) {
   const storedColor = localStorage.getItem("GlobalColor");
-  const [globalColor, setGlobalColor] = useState(storedColor || "light");
+  const [globalColor, setGlobalColor] = useState(storedColor || "Light");
 
   useEffect(() => {
     localStorage.setItem("globalColor", globalColor);

@@ -4,18 +4,17 @@ import { jwtDecode } from "jwt-decode";
 
 const useAuthStore = create(
   persist(
-    (set,get) => ({
+    (set, get) => ({
       token: null,
       user: null,
       setToken: (token) => {
-
-        const user = jwtDecode(token).userFound;    
-        set({token, user});
+        const user = jwtDecode(token).userFound;
+        set({ token, user });
       },
-      getToken : () => {
+      getToken: () => {
         return get().token;
       },
-      getUser : () => {
+      getUser: () => {
         return get().user;
       },
       clearAuth: () => {
@@ -29,4 +28,3 @@ const useAuthStore = create(
 );
 
 export default useAuthStore;
-

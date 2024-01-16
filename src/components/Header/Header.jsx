@@ -34,8 +34,7 @@ export default function Header() {
   const navigate = useNavigate();
   const [collapse, setCollapse] = useState(false);
   const { globalColor, setGlobalColor } = useGlobalColor();
-  const availableTheme = ["dark", "light"];
-  const [bar, setBar] = useState(false);
+  const availableTheme = ["Dark", "Light"];
   const { setToken, getToken, getUser, clearAuth } = useAuthStore();
   const [loginLogoff, setLoginLogoff] = React.useState(getToken() ? "Fazer Logoff" : "Fazer Login");
   const [profilePicture, setProfilePicture] = React.useState(
@@ -98,8 +97,12 @@ export default function Header() {
   return (
     <Container>
       <ContainerMenu>
-        <MenuHeader />
-        <img onClick={() => navigate("/")} src={BlueLogo} alt='Logo' />
+        <MenuHeader globalColor={globalColor} setGlobalColor={setGlobalColor} />
+        {globalColor === "Dark" ? (
+          <img onClick={() => navigate("/")} src={logo} alt='Logo' />
+        ) : (
+          <img onClick={() => navigate("/")} src={BlueLogo} alt='Logo' />
+        )}
       </ContainerMenu>
       <Links>
         <Link to='/'>Página Inicial</Link>
@@ -117,7 +120,7 @@ export default function Header() {
           </React.Fragment>
         ) : null}
       </Links>
-      <Select bar={bar}>
+      <Select>
         <Selected onClick={() => setCollapse((prev) => !prev)}>
           <p>{globalColor}</p>
           <IoIosArrowDown />
