@@ -63,8 +63,14 @@ export const usePostUser = async (user) => {
   return token;
 };
 
-// Favorite
-
+export const useGetuser = async (id) => {
+  let user;
+  await requesterService.getUser(id).then((res) => {
+    user = res.data;
+  });
+  return user;
+};
+//favorites
 export const useGetFavorites = async (userId) => {
   let favorites = [];
   await requesterService.getFavorites(userId).then((res) => {
@@ -229,6 +235,53 @@ export const usegetCategoriesProfession = async () => {
     categoriesprofession = res.data;
   });
   return { categoriesprofession };
+};
+
+export const useGetComments = async (id_ia) => {
+  let comments = {};
+  await requesterService.getComments(id_ia).then((res) => {
+    comments = res.data;
+  });
+  return { comments };
+};
+
+export const usePostComments = async (body) => {
+  try {
+    let comments = {};
+    await requesterService.postComments(body).then((res) => {
+      comments = res.data;
+    });
+    return { comments };
+  } catch (error) {
+    console.error("Error editing comment", error);
+    throw error;
+  }
+};
+
+export const useEditComments = async (_id, body) => {
+  let comments = {};
+  try {
+    await requesterService.editComments(_id, body).then((res) => {
+      comments = res.data;
+    });
+    return { comments };
+  } catch (error) {
+    console.error("Error editing comment", error);
+    throw error;
+  }
+};
+
+export const useDeleteComments = async (_id, user) => {
+  try {
+    let comments = {};
+    await requesterService.deleteComments(_id, user).then((res) => {
+      comments = res.data;
+    });
+    return { comments };
+  } catch (error) {
+    console.error("Error deleting comment", error);
+    throw error;
+  }
 };
 
 export const useDeleteCategoriesProfession = async (_id) => {

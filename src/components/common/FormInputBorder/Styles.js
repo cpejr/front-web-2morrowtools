@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Input from "antd/es/input/Input";
 import { breakpoints, colors } from "../../../styles/styleVariables";
 
 export const Container = styled.div`
@@ -11,7 +12,7 @@ export const Container = styled.div`
 `;
 
 export const Label = styled.label`
-  color: #ffffff;
+  color: ${colors.white};
 
   @media (max-width: 700px) {
     font-size: 2rem;
@@ -25,9 +26,9 @@ export const StyledInput = styled.input`
   height: 3rem;
   padding: 0.8rem 1.6rem;
   border-radius: 0.4rem;
-  color: white;
+  color: ${colors.white};
   border: solid 0.1rem;
-  border-color: white;
+  border-color: ${colors.white};
   width: 100%;
   background-color: ${colors.blue.background};
   border: ${(props) => (props?.error ? "0.1rem red solid" : "0.1rem black solid")};

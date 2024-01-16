@@ -7,8 +7,12 @@ import {
   LoginButton,
   LoginSocial,
   SocialMedias,
+  Select,
+  Selected,
+  ThemeSelector,
 } from "./Styles";
 import logo from "../../assets/logo.svg";
+import BlueLogo from "../../assets/blue-logo.svg";
 import {
   FacebookOutlined,
   InstagramOutlined,
@@ -16,16 +20,21 @@ import {
   TwitterOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import { IoIosArrowDown } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import MenuHeader from "./MenuHeader";
 import { signInWithGooglePopup } from "./../../services/firebase";
 import { usePostUser } from "../../services/ManagerService";
 import useAuthStore from "../../stores/auth";
 import isAdm from "../../utils/isAdm";
-import React from "react";
+import React, { useState } from "react";
+import { useGlobalColor } from "../../stores/GlobalColor";
 
 export default function Header() {
   const navigate = useNavigate();
+  const [collapse, setCollapse] = useState(false);
+  const { globalColor, setGlobalColor } = useGlobalColor();
+  const availableTheme = ["Dark", "Light"];
   const { setToken, getToken, getUser, clearAuth } = useAuthStore();
   const [loginLogoff, setLoginLogoff] = React.useState(getToken() ? "Fazer Logoff" : "Fazer Login");
   const [profilePicture, setProfilePicture] = React.useState(
@@ -45,8 +54,8 @@ export default function Header() {
         imageURL: response?.user?.photoURL,
         type: "Admin",
       });
-
       setToken(tokenObject.token);
+      //setUser(tokenObject.userFound);
 
       window.location.reload();
 
@@ -84,12 +93,15 @@ export default function Header() {
       window.location.href = "./adicionar-categoria";
     }
   };
-
   return (
     <Container>
       <ContainerMenu>
-        <MenuHeader />
-        <img onClick={() => navigate("/")} src={logo} alt='Logo' />
+        <MenuHeader globalColor={globalColor} setGlobalColor={setGlobalColor} />
+        {globalColor === "Dark" ? (
+          <img onClick={() => navigate("/")} src={logo} alt='Logo' />
+        ) : (
+          <img onClick={() => navigate("/")} src={BlueLogo} alt='Logo' />
+        )}
       </ContainerMenu>
       <Links>
         <Link to='/'>Página Inicial</Link>
@@ -107,6 +119,27 @@ export default function Header() {
           </React.Fragment>
         ) : null}
       </Links>
+      <Select>
+        <Selected onClick={() => setCollapse((prev) => !prev)}>
+          <p>{globalColor}</p>
+          <IoIosArrowDown />
+        </Selected>
+        <ThemeSelector collapse={+collapse}>
+          {availableTheme.map((theme) => (
+            <button
+              type='button'
+              key={theme}
+              onClick={() => {
+                setGlobalColor(theme);
+                setCollapse((prev) => !prev);
+              }}
+              style={{ display: collapse ? "flex" : "none" }}
+            >
+              <p>{theme}</p>
+            </button>
+          ))}
+        </ThemeSelector>
+      </Select>
       <LoginSocial>
         <LoginButton onClick={logGoogleUser}>
           {loginLogoff}

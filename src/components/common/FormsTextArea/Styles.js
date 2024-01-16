@@ -1,5 +1,7 @@
 import styled from "styled-components";
+import { Input } from "antd";
 import { colors } from "../../../styles/styleVariables";
+const { TextArea } = Input;
 
 export const Container = styled.div`
   display: flex;
@@ -12,7 +14,7 @@ export const Container = styled.div`
 `;
 
 export const Label = styled.label`
-  color: #ffffff;
+  color: ${colors.white};
   font-size: 2.4rem;
 
   @media (max-width: 700px) {

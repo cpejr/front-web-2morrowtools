@@ -31,6 +31,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useDebounce from "../../services/useDebounce";
 import { SearchOutlined } from "@ant-design/icons";
+import Pagination from "../../components/features/Pagination/Pagination";
+import { ButtonDiv } from "../Home/Styles";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function NewTool() {
@@ -134,6 +136,22 @@ export default function NewTool() {
     control,
     formState: { errors },
   } = useForm({ resolver: zodResolver(newToolValidationSchema) });
+
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 8;
+  const totalPages = Math.ceil(ainames?.aiTools?.length / itemsPerPage);
+
+  const startIndex = currentPage * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
+  };
 
   const onSubmit = (data) => {
     const combinedData = {
@@ -277,7 +295,7 @@ export default function NewTool() {
             ></AutoCompleteInput>
           </IconWrapper>
 
-          {ainames?.aiTools?.map((tool) => (
+          {ainames?.aiTools?.slice(startIndex, endIndex).map((tool) => (
             <ToolListItem key={tool._id}>
               <Collumn>
                 {tool?.name}
@@ -289,6 +307,15 @@ export default function NewTool() {
               </ToolButtons>
             </ToolListItem>
           ))}
+          <ButtonDiv>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              handlePrevPage={handlePrevPage}
+              handleNextPage={handleNextPage}
+              setCurrentPage={setCurrentPage}
+            />
+          </ButtonDiv>
         </ToolList>
       </div>
     </Container>
