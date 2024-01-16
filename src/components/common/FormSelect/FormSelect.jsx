@@ -20,6 +20,7 @@ export default function FormSelect({ data, name, control, defaultValue, errors, 
             onChange={onChange}
             ref={ref}
             value={currValue}
+            error={!!errorMessage}
             notFoundContent={<Empty description={false} />}
             {...props}
           >

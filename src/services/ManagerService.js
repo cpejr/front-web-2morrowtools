@@ -143,6 +143,7 @@ export const useDeleteCategoriesFeature = async (_id) => {
 // Category Price
 
 export const useCreateCategoriesPrices = async (body) => {
+
   const create = await requesterService.createCategoriesPrices(body).then((res) => {
     return res;
   });

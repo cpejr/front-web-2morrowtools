@@ -67,7 +67,6 @@ export default function Header() {
       setProfilePicture(<UserOutlined />);
     }
   };
-
   const redirectToFavorites = async () => {
     if (getToken() === null) {
       await logGoogleUser();

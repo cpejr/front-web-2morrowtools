@@ -22,7 +22,7 @@ export const Label = styled.label`
   }
 `;
 
-export const StyledInput = styled(Input)`
+export const StyledInput = styled.input`
   height: 3rem;
   padding: 0.8rem 1.6rem;
   border-radius: 0.4rem;
@@ -30,6 +30,11 @@ export const StyledInput = styled(Input)`
   border: solid 0.1rem;
   border-color: ${colors.white};
   width: 100%;
+  background-color: ${colors.blue.background};
+  border: ${(props) => (props?.error ? "0.1rem red solid" : "0.1rem black solid")};
+  ::placeholder {
+    font-weight: 400;
+  }
 
   @media (max-width: ${breakpoints.mobile}) {
     font-weight: 400;
@@ -54,7 +59,7 @@ export const IconContainer = styled.div`
 `;
 
 export const ErrorMessage = styled.p`
-  font-size: 1.76rem;
+  font-size: 1.3rem;
   color: red;
-  font-weight: 700;
+  font-weight: 400;
 `;

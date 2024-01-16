@@ -17,6 +17,7 @@ import { useState } from "react";
 import * as managerService from "../../services/ManagerService";
 import {
   buildNewCategoryErrorMessage,
+  newCategoryValidationSchema,
   // newCategoryValidationSchema
 } from "./utils";
 import {
@@ -29,7 +30,7 @@ import {
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { StyledModal } from "../NewTool/Styles";
 import { toast } from "react-toastify";
-// import { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useForm } from "react-hook-form";
 import useDebounce from "../../services/useDebounce";
@@ -62,7 +63,7 @@ export default function NewCategory() {
   const [categoryProfessionNamesArray, setCategoryProfessionNamesArray] = useState([]);
 
   // On submit
-  const onSubmit = async () => {
+  const onSubmit = async (data) => {
     if (!selectedCategoryType) {
       toast.error("Favor selecionar o tipo da categoria.");
       return;
@@ -70,15 +71,15 @@ export default function NewCategory() {
     try {
       switch (selectedCategoryType) {
         case "feature":
-          await managerService.useCreateCategoriesFeature({ name });
+          await managerService.useCreateCategoriesFeature(data);
           toast.success("Categoria de característica criada com sucesso!");
           break;
         case "price":
-          await managerService.useCreateCategoriesPrices({ name });
+          await managerService.useCreateCategoriesPrices(data);
           toast.success("Categoria de preço criada com sucesso!");
           break;
         case "profession":
-          await managerService.useCreateCategoriesProfession({ name });
+          await managerService.useCreateCategoriesProfession(data);
           toast.success("Categoria de profissão criada com sucesso!");
           break;
         default:
@@ -176,7 +177,7 @@ export default function NewCategory() {
     register,
     control,
     formState: { errors },
-  } = useForm();
+  } = useForm({ resolver: zodResolver(newCategoryValidationSchema) });
 
   // AutoComplete
 
