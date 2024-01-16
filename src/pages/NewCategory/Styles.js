@@ -17,7 +17,7 @@ export const Title = styled.p`
   display: flex;
   align-items: center;
   font-size: 3rem;
-  color: white;
+  color: ${colors.white};
   font-weight: 600;
   margin: 0;
   text-align: center;
@@ -72,7 +72,7 @@ export const Form = styled.form`
   justify-content: center;
   margin-bottom: 5rem;
   gap: 1.5rem;
-  background: #080b10;
+  background-color: ${colors.blue.background};
   width: 100%;
 `;
 
@@ -83,7 +83,7 @@ export const CategoryList = styled.ul`
   height: fit-content;
   font-size: 2rem;
   margin-left: 4rem;
-  color: white;
+  color: ${colors.white};
   @media (max-width: ${breakpoints.mobile}) {
     width: 80%;
     margin-left: 1rem;
@@ -95,6 +95,7 @@ export const CategoryListItem = styled.li`
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+  color: ${colors.white};
   @media (max-width: ${breakpoints.mobile}) {
     font-size: 1.5rem;
   }
@@ -128,6 +129,7 @@ export const SVGDiv = styled.div`
   padding-left: 1rem;
   > span {
     > svg {
+      color: ${colors.white};
       font-size: 1.7rem;
       @media (max-width: ${breakpoints.desktop}) {
         font-size: 1.5rem;

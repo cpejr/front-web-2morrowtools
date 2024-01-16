@@ -44,7 +44,7 @@ export const Button = styled.button`
     }
   }
   p {
-    color: white;
+    color: ${colors.white};
     text-transform: uppercase;
     font-family: ${fonts.Exo2};
     margin: 0;

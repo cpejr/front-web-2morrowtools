@@ -1,18 +1,21 @@
+const theme = "Light";
 export const colors = {
   blue: {
-    background: "#080B10",
+    background: theme === "Dark" ? "#080B10" : "#F4EFF9",
     accent: "#013C9D",
     light: "#639dff",
     accentShadow: "rgba(1, 60, 157, 0.25)",
     dark: "#232A36",
     hover: "#1655BC",
+    whiteBlue: theme === "Dark" ? "#FFF" : "#240079",
   },
   grey: {
-    cardBackground: "#111720",
+    cardBackground: theme === "Dark" ? "#111720" : "#FFF",
     veryLight: "#d9d9d9",
+    cardHover: theme === "Dark" ? "#1c2431" : "#FFF",
   },
-  white: "#FFF",
-  black: "#000",
+  white: theme === "Dark" ? "#FFF" : "#000",
+  black: theme === "Dark" ? "#000" : "#FFF",
   veryLightGrey: "#d9d9d9",
   transparent: "rgba(0, 0, 0, 0)",
   shadow: "rgba(0, 0, 0, 0.25)",

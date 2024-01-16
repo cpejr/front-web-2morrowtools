@@ -8,26 +8,6 @@ export const Container = styled.div`
   width: 100%;
   margin-top: 2rem;
   align-self: center;
-
-  .ant-select-selector {
-    border: 0.2rem solid ${(props) => (props.error ? "red" : "#9f9f9f ")};
-    margin: 0 !important;
-    padding-left: 1.6rem !important;
-
-    @media (max-width: 700px) {
-      font-size: 1.6rem;
-    }
-
-    @media (max-width: 370px) {
-      font-size: 1.2rem;
-    }
-  }
-
-  .ant-select-selection-placeholder {
-    color: #9f9f9f;
-  }
-  .ant-select {
-  }
 `;
 
 export const ButtonContainer = styled.div`

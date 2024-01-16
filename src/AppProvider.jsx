@@ -1,6 +1,7 @@
 import Routes from "./routes";
 import { ConfigProvider } from "antd";
 import { colors, fonts } from "./styles/styleVariables";
+import { ColorProvider } from "./stores/GlobalColor.jsx";
 
 export default function AppProvider() {
   return (
@@ -49,7 +50,9 @@ export default function AppProvider() {
         },
       }}
     >
-      <Routes />
+      <ColorProvider>
+        <Routes />
+      </ColorProvider>
     </ConfigProvider>
   );
 }
