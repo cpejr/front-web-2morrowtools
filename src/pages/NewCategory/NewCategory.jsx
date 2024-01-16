@@ -64,7 +64,6 @@ export default function NewCategory() {
 
   // On submit
   const onSubmit = async (data) => {
-    console.log(data);
     if (!selectedCategoryType) {
       toast.error("Favor selecionar o tipo da categoria.");
       return;
@@ -387,9 +386,7 @@ export default function NewCategory() {
           <ModalEditCategory
             _id={selectedCategoryId}
             category={selectedCategory}
-            register={register}
             close={handleCloseEditModal}
-            
             editFunction={editFunction}
           />
         </StyledModal>
