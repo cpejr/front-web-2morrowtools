@@ -24,6 +24,7 @@ import * as managerService from "../../services/ManagerService";
 import { buildNewToolErrorMessage } from "./utils";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PropTypes from "prop-types";
 
 export default function NewTool() {
   // Set variables
@@ -34,6 +35,7 @@ export default function NewTool() {
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [categoriesPrices, setCategoriesPrices] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
+  const [imageUrl, setImageUrl] = useState();
   const [aiTools, setAiTools] = useState([]);
 
   // Forms values
@@ -45,6 +47,20 @@ export default function NewTool() {
     link: "",
     youtubeVideoLink: "",
   });
+
+  function pegarBase64(img, callback) {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => callback(reader.result));
+    reader.readAsDataURL(img);
+  }
+  async function aposMudanca(info) {
+    
+    pegarBase64(info.file.originFileObj, (url) => {
+  
+      setImageUrl(url);
+    });
+  }
+  
 
   // On submit
   const onSubmit = async (data) => {
@@ -63,8 +79,23 @@ export default function NewTool() {
       toast.clearWaitingQueue();
       console.error("Erro ao criar a ferramenta", error);
     }
+    if (imageUrl) {
+      const base64str = imageUrl.substring(imageUrl.indexOf(",") + 1);
+      const imagemDecodificada = atob(base64str);
+      if (imagemDecodificada.length < 2000000) {
+        
+        await managerService.useUpdateIAImage(_id, imageUrl);
+        toast.success("Imagem atualizada com sucesso");
+        
+        setImageUrl(null);
+      } else {
+        toast.error("Selecione uma imagem menor que 2Mb!");
+      }
+    } else {
+      toast.error("Selecione uma imagem para enviar!");
+    }
   };
-
+  
   // Get functions
   useEffect(() => {
     const fetchData = async () => {
@@ -80,6 +111,7 @@ export default function NewTool() {
 
         const resultAiTools = await managerService.useGetAITools();
         setAiTools(resultAiTools.aiTools);
+
       } catch (error) {
         const errorMessage = buildNewToolErrorMessage(error);
         console.error(errorMessage);
@@ -134,7 +166,7 @@ export default function NewTool() {
             placeholder='URL da imagem:'
             icon={FaUpload}
             errors={errors}
-            onChange={(e) => setFormData({ ...formData, imageURL: e.target.value })}
+            onChange={aposMudanca}
           />
           <FormInput
             name='shortDescription'
@@ -252,3 +284,6 @@ export default function NewTool() {
     </Container>
   );
 }
+NewTool.propTypes = {
+  _id: PropTypes.string.isRequired,
+};
