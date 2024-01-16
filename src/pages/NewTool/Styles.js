@@ -24,7 +24,7 @@ export const Title = styled.p`
   display: flex;
   align-items: center;
   font-size: 4rem;
-  color: white;
+  color: ${colors.white};
   font-weight: 600;
   margin: 0;
   margin-left: 5rem;
@@ -112,7 +112,7 @@ export const ToolList = styled.ul`
   font-size: 2rem;
   margin-left: 4rem;
   margin-bottom: 50rem;
-  color: white;
+  color: ${colors.white};
   @media (max-width: ${breakpoints.smallMobile}) {
     width: 80%;
   }
@@ -142,7 +142,7 @@ export const StyledModal = styled(Modal)`
     background-color: ${colors.grey.cardBackground};
   }
   .ant-modal-body {
-    color: white;
+    color: ${colors.white};
     border-radius: none;
   }
 `;

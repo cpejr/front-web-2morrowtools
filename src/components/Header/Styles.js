@@ -253,7 +253,7 @@ export const ThemeSelector = styled.div`
     button {
       font-size: 1.5rem;
       background-color: ${colors.blue.background};
-      color: black;
+      color: ${colors.white};
       font-weight: 600;
 
       p {

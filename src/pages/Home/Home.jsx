@@ -7,6 +7,7 @@ import {
   ButtonDiv,
   SVGDiv,
   DivLine,
+  IANotFound,
 } from "./Styles";
 import homeImage from "../../assets/home-image.svg";
 import { SearchOutlined } from "@ant-design/icons";
@@ -136,6 +137,9 @@ export default function Home() {
         setArray={setCategoryIDsArrays}
         filterReset={handleFilterReset}
       />
+      {filteredAiTools?.aiTools && filteredAiTools?.aiTools.length === 0 && (
+        <IANotFound>IA não encontrada</IANotFound>
+      )}
       {groupedData.map((page, pageIndex) => (
         <DivLine key={pageIndex} style={{ display: pageIndex === currentPage ? "flex" : "none" }}>
           {page.map((row, rowIndex) => (

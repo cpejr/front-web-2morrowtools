@@ -21,5 +21,5 @@ export function useGlobalColor() {
 }
 
 ColorProvider.propTypes = {
-  children: PropTypes.func.isRequired,
+  children: PropTypes.isRequired,
 };

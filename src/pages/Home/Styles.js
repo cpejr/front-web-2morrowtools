@@ -1,7 +1,7 @@
 import { Input } from "antd";
 import { AutoComplete } from "primereact/autocomplete";
 import styled from "styled-components";
-import { breakpoints, colors } from "../../styles/styleVariables";
+import { breakpoints, colors, fonts } from "../../styles/styleVariables";
 
 export const Container = styled.div`
   display: flex;
@@ -13,9 +13,6 @@ export const Container = styled.div`
   margin-bottom: 100px;
   gap: 2rem;
 
-  .p-autocomplete-items-wrapper {
-    background-color: green;
-  }
   h1 {
     font-size: 4rem;
     margin-bottom: 1rem;
@@ -156,4 +153,23 @@ export const DivLine = styled.div`
   align-self: center;
   justify-content: center;
   gap: 2rem;
+`;
+export const IANotFound = styled.div`
+  background-image: url("src/assets/imageIANotFound.png");
+  background-size: cover;
+  width: 500px;
+  height: 500px;
+  font-family: ${fonts.Exo2};
+  font-size: 1.5rem;
+  text-align: center;
+  @media (max-width: ${breakpoints.smallMobile}) {
+    width: 60%;
+  }
+  @media (max-width: ${breakpoints.smallDevice}) {
+    width: 70%;
+  }
+  @media (max-width: 520px) {
+    width: 300px;
+    height: 300px;
+  }
 `;

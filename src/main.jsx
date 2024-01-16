@@ -5,15 +5,12 @@ import { GlobalStyles } from "./styles/GlobalStyles.js";
 import { PrimeReactProvider } from "primereact/api";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { ToastContainer } from "react-toastify";
-import { ColorProvider } from "./stores/GlobalColor.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <PrimeReactProvider>
       <GlobalStyles />
-      <ColorProvider>
       <AppProvider />
-      </ColorProvider>
     </PrimeReactProvider>
     <ToastContainer
       position='bottom-right'
