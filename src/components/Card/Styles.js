@@ -5,14 +5,16 @@ import { breakpoints, colors } from "../../styles/styleVariables";
 export const StyledCard = styled(Card)`
   display: flex;
   flex-direction: column;
+
   width: 24rem;
   height: auto;
   align-items: center;
   border-radius: 4px;
   gap: 3.33rem;
   box-shadow: 0px 4px 4px 0px ${colors.shadow};
+  background-color: ${colors.grey.cardBackground};
   &:hover {
-    background-color: #1c2431;
+    background-color: ${colors.grey.cardHover};
   }
   @media (max-width: ${breakpoints.desktop}) {
     width: 24rem;

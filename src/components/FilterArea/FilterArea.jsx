@@ -11,6 +11,7 @@ import {
   MultipleSelect,
   DivSelect,
 } from "./Styles";
+import { useGlobalColor } from "../../stores/GlobalColor";
 
 export default function FilterArea({ onFilterClick, filterReset, idsArray, setArray }) {
   // Set variables
@@ -18,6 +19,7 @@ export default function FilterArea({ onFilterClick, filterReset, idsArray, setAr
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [categoriesPrices, setCategoriesPrices] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
+  const { globalColor } = useGlobalColor();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -100,6 +102,7 @@ export default function FilterArea({ onFilterClick, filterReset, idsArray, setAr
         <SelectStyled
           mode='multiple'
           showSearch
+          dropdownStyle={{ backgroundColor: globalColor === "Dark" ? "#080B10" : "#F4EFF9" }}
           placeholder='Ordernar Por'
           optionFilterProp='children'
           options={[
