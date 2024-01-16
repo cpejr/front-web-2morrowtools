@@ -1,4 +1,4 @@
-const theme = "Darks";
+const theme = "Light";
 export const colors = {
   blue: {
     background: theme === "Dark" ? "#080B10" : "#F4EFF9",
