@@ -1,51 +1,108 @@
-import { Checkbox } from "antd";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { Button } from "antd";
+import * as managerService from "../../services/ManagerService";
 import {
-  BlueCheckboxes,
-  Checkboxes,
   ContainerFilter,
   SearchBar,
   InputStyled,
   SelectStyled,
-  CheckboxItem,
+  MultipleSelect,
+  DivSelect,
 } from "./Styles";
+import { useGlobalColor } from "../../stores/GlobalColor";
 
-const checkboxes = [
-  "categoria1",
-  "categoria2",
-  "categoria3",
-  "categoria4",
-  "categoria5",
-  "categoria6",
-  "categoria7",
-  "categoria8",
-  "categoria9",
-  "categoria10",
-  "categoria11",
-  "categoria12",
-  "categoria13",
-  "categoria14",
-  "categoria15",
-  "categoria16",
-];
+export default function FilterArea({ onFilterClick, filterReset, idsArray, setArray }) {
+  // Set variables
 
-export default function FilterArea() {
+  const [categoriesFeature, setCategoriesFeature] = useState([]);
+  const [categoriesPrices, setCategoriesPrices] = useState([]);
+  const [categoriesProfession, setCategoriesProfession] = useState([]);
+  const { globalColor } = useGlobalColor();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const resultFeature = await managerService.usegetCategoriesFeature();
+      setCategoriesFeature(resultFeature.categoriesFeature);
+
+      const resultPrices = await managerService.usegetCategoriesPrices();
+      setCategoriesPrices(resultPrices.categoriesPrices);
+
+      const resultProfession = await managerService.usegetCategoriesProfession();
+      setCategoriesProfession(resultProfession.categoriesprofession);
+    };
+    fetchData();
+  }, []);
+
+  const handleClearFilters = () => {
+    setCategoriesFeature((prevCategories) =>
+      prevCategories.map((category) => ({ ...category, checked: false }))
+    );
+    setCategoriesPrices((prevCategories) =>
+      prevCategories.map((category) => ({ ...category, checked: false }))
+    );
+    setCategoriesProfession((prevCategories) =>
+      prevCategories.map((category) => ({ ...category, checked: false }))
+    );
+    setArray([]);
+    filterReset();
+  };
+
+  const transformArrayItems = (OriginalArray) => {
+    const newArray = OriginalArray.map((item) => ({
+      value: item._id,
+      label: item.name,
+    }));
+    return newArray;
+  };
+
+  const GroupArray = (categoryFeature, categoryPrices, categoryProfession) => {
+    const GroupedArray = [
+      {
+        label: "Características",
+        code: "Caracteristicas",
+        items: transformArrayItems(categoryFeature),
+      },
+      {
+        label: "Preços",
+        code: "Precos",
+        items: transformArrayItems(categoryPrices),
+      },
+      {
+        label: "Profissões",
+        code: "Profissoes",
+        items: transformArrayItems(categoryProfession),
+      },
+    ];
+    return GroupedArray;
+  };
+
+  const GroupedCategories =
+    GroupArray(categoriesFeature, categoriesPrices, categoriesProfession) || [];
+
   return (
     <ContainerFilter>
-      <Checkboxes>
-        {checkboxes.map((checkbox) => (
-          <CheckboxItem key={checkbox}>
-            <Checkbox>{checkbox}</Checkbox>
-          </CheckboxItem>
-        ))}
-      </Checkboxes>
-      <BlueCheckboxes>
-        <Checkbox>Lorem Ipsum</Checkbox>
-        <Checkbox>Minhas Ferramentas</Checkbox>
-        <Checkbox>Lorem Ipsum</Checkbox>
-      </BlueCheckboxes>
+      <DivSelect>
+        <MultipleSelect
+          value={idsArray}
+          onChange={(e) => setArray(e.value)}
+          options={GroupedCategories}
+          optionLabel='label'
+          optionGroupLabel='label'
+          optionGroupChildren='items'
+          placeholder='Escolha as categorias'
+          display='chip'
+          className='w-full md:w-20rem'
+        ></MultipleSelect>
+      </DivSelect>
+      <Button onClick={() => onFilterClick(idsArray)}>Filtrar</Button>
+      <Button onClick={handleClearFilters}>Limpar Filtros</Button>
       <SearchBar>
         <SelectStyled
+          mode='multiple'
           showSearch
+          dropdownStyle={{ backgroundColor: globalColor === "Dark" ? "#080B10" : "#F4EFF9" }}
           placeholder='Ordernar Por'
           optionFilterProp='children'
           options={[
@@ -68,3 +125,10 @@ export default function FilterArea() {
     </ContainerFilter>
   );
 }
+
+FilterArea.propTypes = {
+  onFilterClick: PropTypes.func.isRequired,
+  filterReset: PropTypes.func.isRequired,
+  idsArray: PropTypes.array.isRequired,
+  setArray: PropTypes.func.isRequired,
+};

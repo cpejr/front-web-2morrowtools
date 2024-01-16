@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Modal } from "antd";
-import { colors } from "../../styles/styleVariables";
+import { breakpoints, colors } from "../../styles/styleVariables";
+import { AutoComplete } from "primereact/autocomplete";
 
 export const Container = styled.div`
   display: flex;
@@ -8,7 +9,6 @@ export const Container = styled.div`
   flex-direction: column;
   width: 100%;
   height: auto;
-  padding-bottom: 15rem;
   padding-top: 8rem;
   gap: 3rem;
 
@@ -24,7 +24,7 @@ export const Title = styled.p`
   display: flex;
   align-items: center;
   font-size: 4rem;
-  color: white;
+  color: ${colors.white};
   font-weight: 600;
   margin: 0;
   margin-left: 5rem;
@@ -111,7 +111,14 @@ export const ToolList = styled.ul`
   height: 6rem;
   font-size: 2rem;
   margin-left: 4rem;
-  color: white;
+  margin-bottom: 50rem;
+  color: ${colors.white};
+  @media (max-width: ${breakpoints.smallMobile}) {
+    width: 80%;
+  }
+  @media (max-width: ${breakpoints.smallDevice}) {
+    width: 70%;
+  }
 `;
 
 export const ToolListItem = styled.li`
@@ -135,7 +142,78 @@ export const StyledModal = styled(Modal)`
     background-color: ${colors.grey.cardBackground};
   }
   .ant-modal-body {
-    color: white;
+    color: ${colors.white};
     border-radius: none;
+  }
+`;
+export const AutoCompleteInput = styled(AutoComplete)`
+  width: 95%;
+  align-self: flex-end;
+  > input {
+    background-color: ${colors.blue.background};
+    width: 100%;
+    height: 35px;
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    color: ${colors.white};
+    border: none;
+    margin: 0;
+
+    &:focus {
+      outline: none;
+      border: none;
+    }
+  }
+  @media (max-width: ${breakpoints.desktop}) {
+    width: 90%;
+  }
+  @media (max-width: ${breakpoints.smallMobile}) {
+    width: 87%;
+  }
+`;
+
+export const ShortDescription = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  font-size: 1rem;
+`;
+export const Collumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+export const IconWrapper = styled.div`
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border: 2px solid ${colors.white};
+  border-radius: 6px;
+`;
+export const SVGDiv = styled.div`
+  display: flex;
+  width: 5%;
+  padding-left: 1rem;
+  > span {
+    > svg {
+      font-size: 1.7rem;
+      @media (max-width: ${breakpoints.desktop}) {
+        font-size: 1.5rem;
+      }
+
+      @media (max-width: ${breakpoints.smallMobile}) {
+        font-size: 1.3rem;
+      }
+    }
+  }
+  @media (max-width: ${breakpoints.desktop}) {
+    width: 10%;
+  }
+  @media (max-width: ${breakpoints.smallMobile}) {
+    width: 13%;
   }
 `;

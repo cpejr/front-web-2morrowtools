@@ -1,18 +1,18 @@
 import styled from "styled-components";
 import Input from "antd/es/input/Input";
-import { colors } from "../../../styles/styleVariables";
+import { breakpoints, colors } from "../../../styles/styleVariables";
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   font-style: normal;
   font-weight: 500;
+
   width: 100%;
 `;
 
 export const Label = styled.label`
-  color: #ffffff;
-  margin-bottom: 1rem;
+  color: ${colors.white};
 
   @media (max-width: 700px) {
     font-size: 2rem;
@@ -25,17 +25,18 @@ export const Label = styled.label`
 export const StyledInput = styled.input`
   height: 3rem;
   padding: 0.8rem 1.6rem;
-  border-radius: 0;
-  border-color: ${colors.white};
+  border-radius: 0.4rem;
   color: ${colors.white};
-  
-
+  border: solid 0.1rem;
+  border-color: ${colors.white};
   width: 100%;
-  border: none;
-  border-bottom: 1px solid ${colors.white};
   background-color: ${colors.blue.background};
-  
-  @media (max-width: 700px) {
+  border: ${(props) => (props?.error ? "0.1rem red solid" : "0.1rem black solid")};
+  ::placeholder {
+    font-weight: 400;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
     font-weight: 400;
     font-size: 1.6rem;
     line-height: 2rem;
@@ -43,12 +44,6 @@ export const StyledInput = styled.input`
   }
   @media (max-width: 370px) {
     font-size: 1.2rem;
-  }
-  &:focus {
-    outline: none;
-  }
-  ::placeholder {
-    color: ${colors.white};
   }
 `;
 

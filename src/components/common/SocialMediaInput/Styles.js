@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Select, Input } from "antd";
+import { colors } from "../../../styles/styleVariables";
 
 export const Container = styled.div`
   display: flex;
@@ -12,7 +13,7 @@ export const Container = styled.div`
 `;
 
 export const Label = styled.label`
-  color: #ffffff;
+  color: ${colors.white};
   font-size: 2.4rem;
 
   @media (max-width: 700px) {
@@ -28,9 +29,9 @@ export const StyledInput = styled(Input)`
   font-size: 2rem;
   padding: 0.8rem 1.6rem;
   border-radius: 0.4rem;
-  color: white;
+  color: ${colors.white};
   border: solid 0.1rem;
-  border-color: white;
+  border-color: ${colors.white};
   width: 100%;
 
   @media (max-width: 700px) {

@@ -8,7 +8,9 @@ export const newToolValidationSchema = z.object({
     .string({ required_error: "O nome é obrigatório" })
     .min(2, { message: "O nome deve ter pelo menos 2 caracteres" })
     .max(60, { message: "O nome não pode exceder 60 caracteres" }),
-
+  imageURL: z
+    .string({ required_error: "A URL da imagem é obrigatória" })
+    .min(1, { message: "O URL deve ter pelo menos 1 caractere" }),
   shortDescription: z
     .string({ required_error: "A descrição curta é obrigatória" })
     .min(2, { message: "A descrição curta deve ter pelo menos 2 caracteres" })
@@ -20,10 +22,12 @@ export const newToolValidationSchema = z.object({
     .max(500, { message: "A descrição longa não pode exceder 500 caracteres" }),
 
   youtubeVideoLink: z
-    .string()
-    .min(5, { message: "O link do vídeo do YouTube deve ter pelo menos 5 caracteres" })
-    .optional(),
+    .string({ required_error: "O link do Vídeo do Youtube é obrigatório" })
+    .min(5, { message: "O link do vídeo do YouTube deve ter pelo menos 5 caracteres" }),
 
+  link: z
+    .string({ required_error: "O link é obrigatório" })
+    .min(1, { message: "O link não pode estár vazio" }),
   linkedIn: z
     .string()
     .min(5, { message: "O link do LinkedIn deve ter pelo menos 5 caracteres" })
@@ -69,8 +73,6 @@ export const newToolValidationSchema = z.object({
     .min(5, { message: "O link do YouTube deve ter pelo menos 5 caracteres" })
     .optional(),
 
-  imageURL: z.string({ required_error: "A URL da imagem é obrigatória" }),
-  link: z.string({ required_error: "O link é obrigatório" }),
   id_categoryfeature: z.string({ required_error: "A categoria de característica é obrigatória" }),
   id_categoryprice: z.string({ required_error: "A categoria de preço é obrigatória" }),
   id_categoryprofession: z.string({ required_error: "A categoria de profissão é obrigatória" }),

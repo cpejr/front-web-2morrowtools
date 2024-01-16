@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Input } from "antd";
+import { colors } from "../../../../styles/styleVariables";
 
 export const Container = styled.div`
   display: flex;
@@ -25,7 +26,7 @@ export const Tittle = styled.p`
   margin: 0;
   align-self: center;
 
-  color: white;
+  color: ${colors.white};
   padding-bottom: 2.5rem;
 `;
 
@@ -41,8 +42,7 @@ export const Label = styled.label`
   font-weight: 500;
   font-size: 1.6rem;
   align-self: baseline;
-
-  color: white;
+  color: ${colors.white};
   padding-bottom: 1rem;
 `;
 
@@ -51,8 +51,9 @@ export const StyledInput = styled(Input)`
   font-size: 2rem;
   padding: 0.8rem 1.6rem;
   border-radius: 0.4rem;
-  color: white;
+  color: ${colors.white};
   width: 100%;
+  
 
   @media (max-width: 700px) {
     font-weight: 400;

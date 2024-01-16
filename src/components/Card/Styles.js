@@ -5,13 +5,16 @@ import { breakpoints, colors } from "../../styles/styleVariables";
 export const StyledCard = styled(Card)`
   display: flex;
   flex-direction: column;
-  width: 30rem;
+
+  width: 24rem;
   height: auto;
   align-items: center;
+  border-radius: 4px;
   gap: 3.33rem;
   box-shadow: 0px 4px 4px 0px ${colors.shadow};
+  background-color: ${colors.grey.cardBackground};
   &:hover {
-    background-color: #1c2431;
+    background-color: ${colors.grey.cardHover};
   }
   @media (max-width: ${breakpoints.desktop}) {
     width: 24rem;
@@ -58,7 +61,7 @@ export const Stars = styled(Rate)`
 export const Image = styled.div`
   display: flex;
   height: auto;
-  width: 250px;
+  width: 290px;
   > img {
     width: 100%;
     height: 12.63rem;
@@ -66,10 +69,10 @@ export const Image = styled.div`
       height: 10rem;
     }
     @media (max-width: ${breakpoints.smallTablet}) {
-      height: 9rem;
+      height: 10rem;
     }
     @media (max-width: ${breakpoints.mobile}) {
-      height: 10rem;
+      height: 12rem;
     }
   }
 `;
@@ -156,8 +159,8 @@ export const Group = styled.div`
   font-size: 17.5px;
   .favoriteIcon {
     &:hover {
-    color: ${colors.blue.accent};
-  }
+      color: ${colors.blue.accent};
+    }
   }
   @media (max-width: ${breakpoints.desktop}) {
     font-size: 15.75px;
