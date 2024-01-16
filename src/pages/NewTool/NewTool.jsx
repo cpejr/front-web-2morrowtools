@@ -52,57 +52,54 @@ export default function NewTool() {
   const debouncedName = useDebounce(names);
 
   async function handleCreateAITools(data) {
-  // Forms values
-  const [formData, setFormData] = useState({
-    name: "",
-    imageURL: "",
-    shortDescription: "",
-    longDescription: "",
-    link: "",
-    youtubeVideoLink: "",
-  });
-
-  function pegarBase64(img, callback) {
-    const reader = new FileReader();
-    reader.addEventListener("load", () => callback(reader.result));
-    reader.readAsDataURL(img);
-  }
-  async function aposMudanca(info) {
-    
-    pegarBase64(info.file.originFileObj, (url) => {
-  
-      setImageUrl(url);
+    // Forms values
+    const [formData, setFormData] = useState({
+      name: "",
+      imageURL: "",
+      shortDescription: "",
+      longDescription: "",
+      link: "",
+      youtubeVideoLink: "",
     });
-  }
-  
 
-  // On submit
-  const onSubmit = async (data) => {
-    const combinedData = {
-      ...formData,
-      id_categoryfeature: data.id_categoryfeature,
-      id_categoryprice: data.id_categoryprice,
-      id_categoryprofession: data.id_categoryprofession,
-    };
-    try {
-      await managerService.useCreateAITools(data);
-      toast.success("Ferramente criado com sucesso!");
-      toast.clearWaitingQueue();
-    } catch (error) {
-      toast.error("Erro ao criar ferramenta. Favor tentar novamente!");
-      toast.clearWaitingQueue();
-      console.error("Erro ao criar a ferramenta", error);
+    function pegarBase64(img, callback) {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => callback(reader.result));
+      reader.readAsDataURL(img);
     }
-  }
+
+    async function aposMudanca(info) {
+      pegarBase64(info.file.originFileObj, (url) => {
+        setImageUrl(url);
+      });
+    }
+
+    // On submit
+    const onSubmit = async (data) => {
+      const combinedData = {
+        ...formData,
+        id_categoryfeature: data.id_categoryfeature,
+        id_categoryprice: data.id_categoryprice,
+        id_categoryprofession: data.id_categoryprofession,
+      };
+      try {
+        await managerService.useCreateAITools(data);
+        toast.success("Ferramente criado com sucesso!");
+        toast.clearWaitingQueue();
+      } catch (error) {
+        toast.error("Erro ao criar ferramenta. Favor tentar novamente!");
+        toast.clearWaitingQueue();
+        console.error("Erro ao criar a ferramenta", error);
+      }
+    };
 
     if (imageUrl) {
       const base64str = imageUrl.substring(imageUrl.indexOf(",") + 1);
       const imagemDecodificada = atob(base64str);
       if (imagemDecodificada.length < 2000000) {
-        
         await managerService.useUpdateIAImage(_id, imageUrl);
         toast.success("Imagem atualizada com sucesso");
-        
+
         setImageUrl(null);
       } else {
         toast.error("Selecione uma imagem menor que 2Mb!");
@@ -110,8 +107,8 @@ export default function NewTool() {
     } else {
       toast.error("Selecione uma imagem para enviar!");
     }
-  };
-  
+  }
+
   // Get functions
 
   async function GettingAIToolsDataByName() {
@@ -146,10 +143,6 @@ export default function NewTool() {
 
         const resultProfession = await managerService.usegetCategoriesProfession();
         setCategoriesProfession(resultProfession.categoriesprofession);
-
-        const resultAiTools = await managerService.useGetAITools();
-        setAiTools(resultAiTools.aiTools);
-
       } catch (error) {
         const errorMessage = buildNewToolErrorMessage(error);
         console.error(errorMessage);
@@ -375,6 +368,6 @@ export default function NewTool() {
     </Container>
   );
 }
-NewTool.propTypes = {
-  _id: PropTypes.string.isRequired,
-};
+// NewTool.propTypes = {
+//   _id: PropTypes.string.isRequired,
+// };
