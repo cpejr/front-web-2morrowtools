@@ -54,8 +54,8 @@ export default function Header() {
         imageURL: response?.user?.photoURL,
         type: "Admin",
       });
-
       setToken(tokenObject.token);
+      //setUser(tokenObject.userFound);
 
       window.location.reload();
 

@@ -11,6 +11,9 @@ const useAuthStore = create(
         const user = jwtDecode(token).userFound;
         set({ token, user });
       },
+      setUser: (user) => {
+        set({ user });
+      },
       getToken: () => {
         return get().token;
       },

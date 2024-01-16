@@ -19,78 +19,57 @@ import { Card, Comments, Tool } from "../../components";
 import { useMediaQuery } from "react-responsive";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useGetAITools, useGetAIToolsByName } from "../../services/ManagerService";
+import {
+  useGetAITools,
+  useGetAIToolsByName,
+  useGetComments,
+  usePostComments,
+} from "../../services/ManagerService";
 import { useParams } from "react-router-dom";
-
-const comments = [
-  {
-    name: "Arthur",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Lucas",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Breno",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Arthur2",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Lucas2",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Breno2",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Arthur3",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Lucas3",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Breno3",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-];
+import useAuthStore from "../../stores/auth";
+import { FaTrashCan } from "react-icons/fa6";
 
 export default function Tools() {
-  // Backend Calls
+  const { getUser } = useAuthStore();
   const [aiToolsByName, setAIToolsByName] = useState({});
+  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
 
+  //backend calls
   const { name } = useParams();
-  async function GettingAIToolsDataByName() {
+  async function gettingAIToolsDataByName() {
     const aiTools = await useGetAIToolsByName({ name });
     setAIToolsByName(aiTools);
   }
-  useEffect(() => {
-    GettingAIToolsDataByName();
-    GettingAIToolsData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  async function postComment() {
+    usePostComments({
+      comment,
+      id_user: getUser()?._id,
+      id_ia: aiToolsByName.aiTools[0]._id,
+    });
+    gettingComments();
+  }
+
+  async function gettingComments() {
+    const res = await useGetComments(aiToolsByName.aiTools[0]._id);
+    console.log(res);
+    setComments(res);
+  }
 
   const [aiTools, setAITools] = useState({});
-
-  async function GettingAIToolsData() {
+  async function gettingAIToolsData() {
     const aiTools = await useGetAITools();
     setAITools(aiTools);
   }
+
+  useEffect(() => {
+    gettingAIToolsDataByName();
+    gettingAIToolsData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    gettingComments();
+  }, [aiToolsByName]);
 
   // Grouping Data
   const groupedData = [];
@@ -122,14 +101,19 @@ export default function Tools() {
 
       <LetComment>
         <h2>Deixe seu comentário</h2>
-        <CommentInput placeholder='Escreva seu Comentário:' />
-        <BlueButton type='primary'>ENVIAR</BlueButton>
+        <CommentInput
+          onChange={(e) => setComment(e.target.value)}
+          placeholder='Escreva seu Comentário:'
+        />
+        <BlueButton onClick={postComment} type='primary'>
+          ENVIAR
+        </BlueButton>
       </LetComment>
       <CommentDiv>
         <h1>COMENTÁRIOS</h1>
         <Comment>
-          {comments.map((data) => (
-            <Comments key={data?.name} data={data} />
+          {comments?.comments?.map((comment) => (
+            <Comments key={comment?._id} data={comment} onDelete={gettingComments} />
           ))}
         </Comment>
       </CommentDiv>
