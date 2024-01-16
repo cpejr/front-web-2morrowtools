@@ -1,16 +1,17 @@
-import { CommentCollumn, Container, PhotoCollumn } from "./Styles";
+import { CommentCollumn, Container, DeleteButton, PhotoCollumn } from "./Styles";
 import { BsPersonFill } from "react-icons/bs";
 import { useDeleteComments, useGetuser } from "../../services/ManagerService";
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import useAuthStore from "../../stores/auth";
+import { FaTrashCan } from "react-icons/fa6";
 
 export default function Comments({ data, onDelete }) {
   const { getUser } = useAuthStore();
   const [name, setName] = useState("");
   async function deleteComment() {
-    const user = await getUser().userFound;
-    const res = await useDeleteComments(data._id, user);
+    const user = await getUser();
+    await useDeleteComments(data._id, user);
     onDelete();
   }
 
@@ -31,7 +32,9 @@ export default function Comments({ data, onDelete }) {
         {name}
         <p> {data.comment} </p>
       </CommentCollumn>
-      <button onClick={deleteComment}></button>
+      <DeleteButton onClick={deleteComment}>
+        <FaTrashCan size='20px' />
+      </DeleteButton>
     </Container>
   );
 }

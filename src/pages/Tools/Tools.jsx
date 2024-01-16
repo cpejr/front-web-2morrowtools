@@ -27,48 +27,49 @@ import {
 } from "../../services/ManagerService";
 import { useParams } from "react-router-dom";
 import useAuthStore from "../../stores/auth";
-import { Affix } from "antd";
+import { FaTrashCan } from "react-icons/fa6";
 
-var text;
 export default function Tools() {
   const { getUser } = useAuthStore();
   const [aiToolsByName, setAIToolsByName] = useState({});
   const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
 
   //backend calls
   const { name } = useParams();
-  async function GettingAIToolsDataByName() {
+  async function gettingAIToolsDataByName() {
     const aiTools = await useGetAIToolsByName({ name });
     setAIToolsByName(aiTools);
   }
-  async function PostComment() {
+  async function postComment() {
     usePostComments({
-      comment: text,
-      id_user: getUser()?.userFound?._id,
+      comment,
+      id_user: getUser()?._id,
       id_ia: aiToolsByName.aiTools[0]._id,
     });
+    gettingComments();
   }
 
-  async function GettingComments() {
+  async function gettingComments() {
     const res = await useGetComments(aiToolsByName.aiTools[0]._id);
+    console.log(res);
     setComments(res);
   }
 
-  useEffect(() => {
-    GettingAIToolsDataByName();
-    GettingAIToolsData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  useEffect(() => {
-    GettingComments();
-  }, [aiToolsByName, comments]);
-
   const [aiTools, setAITools] = useState({});
-
-  async function GettingAIToolsData() {
+  async function gettingAIToolsData() {
     const aiTools = await useGetAITools();
     setAITools(aiTools);
   }
+
+  useEffect(() => {
+    gettingAIToolsDataByName();
+    gettingAIToolsData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    gettingComments();
+  }, [aiToolsByName]);
 
   // Grouping Data
   const groupedData = [];
@@ -101,18 +102,18 @@ export default function Tools() {
       <LetComment>
         <h2>Deixe seu comentário</h2>
         <CommentInput
-          onChange={(e) => (text = e.target.value)}
+          onChange={(e) => setComment(e.target.value)}
           placeholder='Escreva seu Comentário:'
         />
-        <BlueButton onClick={PostComment} type='primary'>
+        <BlueButton onClick={postComment} type='primary'>
           ENVIAR
         </BlueButton>
       </LetComment>
       <CommentDiv>
         <h1>COMENTÁRIOS</h1>
         <Comment>
-          {comments?.comments?.map((Comment) => (
-            <Comments key={Comment?._id} data={Comment} onDelete={GettingComments} />
+          {comments?.comments?.map((comment) => (
+            <Comments key={comment?._id} data={comment} onDelete={gettingComments} />
           ))}
         </Comment>
       </CommentDiv>

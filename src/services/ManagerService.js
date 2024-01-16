@@ -63,7 +63,6 @@ export const usePostUser = async (user) => {
   return token;
 };
 
-
 export const useGetuser = async (id) => {
   let user;
   await requesterService.getUser(id).then((res) => {
@@ -246,11 +245,16 @@ export const useGetComments = async (id_ia) => {
 };
 
 export const usePostComments = async (body) => {
-  let comments = {};
-  await requesterService.postComments(body).then((res) => {
-    comments = res.data;
-  });
-  return { comments };
+  try {
+    let comments = {};
+    await requesterService.postComments(body).then((res) => {
+      comments = res.data;
+    });
+    return { comments };
+  } catch (error) {
+    console.error("Error editing comment", error);
+    throw error;
+  }
 };
 
 export const useEditComments = async (_id, body) => {
@@ -267,8 +271,8 @@ export const useEditComments = async (_id, body) => {
 };
 
 export const useDeleteComments = async (_id, user) => {
-  let comments = {};
   try {
+    let comments = {};
     await requesterService.deleteComments(_id, user).then((res) => {
       comments = res.data;
     });
