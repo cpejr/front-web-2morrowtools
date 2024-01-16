@@ -118,7 +118,7 @@ export default function Card({ data }) {
       <Tags>
         <Tag>{data?.id_categoryprofession?.name} </Tag>
       </Tags>
-      <BlueButton type='primary'>BOTÃO</BlueButton>
+      <BlueButton type='primary'>Acesse Agora</BlueButton>
     </StyledCard>
   );
 }

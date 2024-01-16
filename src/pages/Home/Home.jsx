@@ -1,7 +1,6 @@
 import {
   AutoCompleteInput,
   Container,
-  HomeImage,
   IconWrapper,
   Line,
   ButtonDiv,
@@ -9,7 +8,6 @@ import {
   DivLine,
   IANotFound,
 } from "./Styles";
-import homeImage from "../../assets/home-image.svg";
 import { SearchOutlined } from "@ant-design/icons";
 import { Card } from "../../components";
 import FilterArea from "../../components/FilterArea/FilterArea";
@@ -146,7 +144,6 @@ export default function Home() {
 
   return (
     <Container>
-      <HomeImage src={homeImage} />
       <h1>2MORROW TOOLS</h1>
       <IconWrapper>
         <SVGDiv>
