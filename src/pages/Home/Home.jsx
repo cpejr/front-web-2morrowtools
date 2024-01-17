@@ -7,6 +7,8 @@ import {
   SVGDiv,
   DivLine,
   IANotFound,
+  TrendingTools,
+  WellRatedTool,
 } from "./Styles";
 import { SearchOutlined } from "@ant-design/icons";
 import { Card } from "../../components";
@@ -149,8 +151,8 @@ export default function Home() {
       {filteredAiTools?.aiTools && filteredAiTools?.aiTools.length === 0 && (
         <IANotFound>IA não encontrada</IANotFound>
       )}
-      {groupedData.map((page, pageIndex) => (
-        <DivLine key={pageIndex} style={{ display: pageIndex === currentPage ? "flex" : "none" }}>
+      {groupedData.map((page, groupIndex) => (
+        <DivLine key={groupIndex} style={{ display: groupIndex === currentPage ? "flex" : "none" }}>
           {page.map((row, rowIndex) => (
             <Line key={rowIndex}>
               {row.map((content) => (
@@ -177,6 +179,56 @@ export default function Home() {
           setCurrentPage={setCurrentPage}
         />
       </ButtonDiv>
+      <TrendingTools>
+        <h1>Ferramentas Em Alta</h1>
+        {groupedData.map((group, groupIndex) => (
+          <DivLine
+            key={groupIndex}
+            style={{ display: groupIndex === currentPage ? "flex" : "none" }}
+          >
+            {group.map((row, rowIndex) => (
+              <Line key={rowIndex}>
+                {row.map((content) => (
+                  <Card
+                    data={{
+                      ...content,
+                      favorite: favoriteAiTools.find(
+                        (favoriteAiTool) => favoriteAiTool["_id"] === content._id
+                      ),
+                    }}
+                    key={content?.name}
+                  />
+                ))}
+              </Line>
+            ))}
+          </DivLine>
+        ))}
+      </TrendingTools>
+      <WellRatedTool>
+        <h1>Ferramentas Mais bem avaliadas</h1>
+        {groupedData.map((group, groupIndex) => (
+          <DivLine
+            key={groupIndex}
+            style={{ display: groupIndex === currentPage ? "flex" : "none" }}
+          >
+            {group.map((row, rowIndex) => (
+              <Line key={rowIndex}>
+                {row.map((content) => (
+                  <Card
+                    data={{
+                      ...content,
+                      favorite: favoriteAiTools.find(
+                        (favoriteAiTool) => favoriteAiTool["_id"] === content._id
+                      ),
+                    }}
+                    key={content?.name}
+                  />
+                ))}
+              </Line>
+            ))}
+          </DivLine>
+        ))}
+      </WellRatedTool>
     </Container>
   );
 }
