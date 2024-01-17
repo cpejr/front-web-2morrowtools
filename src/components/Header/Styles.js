@@ -90,7 +90,41 @@ export const LoginSocial = styled.div`
     display: none;
   }
 `;
+export const SubmitButton = styled.button`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 15rem;
+  height: 60px;
+  border: 1px solid;
+  border-radius: 24px;
+  color: ${colors.white};
+  background-color: ${colors.transparent};
+  font-family: ${fonts.Exo2};
+  font-size: 1.2rem;
+  font-weight: 400;
+  word-wrap: break-word;
+  margin-right: 10px;
 
+  &:hover {
+    background-color: ${colors.white};
+    color: ${colors.black};
+    cursor: pointer;
+  }
+  @media (max-width: ${breakpoints.tablet}) {
+    width: 10rem;
+    font-size: 1rem;
+  }
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 10rem;
+    height: 40px;
+    font-size: 1rem;
+  }
+  @media (max-width: ${breakpoints.smallDevice}) {
+    width: 7rem;
+    font-size: 0.8rem;
+  }
+`;
 export const LoginButton = styled.button`
   display: flex;
   justify-content: space-around;
@@ -98,9 +132,9 @@ export const LoginButton = styled.button`
   width: 12rem;
   height: 60px;
   border: 1px solid;
-  border-radius: 3px;
-  color: white;
-  background-color: transparent;
+  border-radius: 24px;
+  color: ${colors.white};
+  background-color: ${colors.transparent};
   font-family: ${fonts.Exo2};
   font-size: 1.2rem;
   font-weight: 400;
@@ -113,7 +147,7 @@ export const LoginButton = styled.button`
 
   &:hover {
     background-color: ${colors.white};
-    color: black;
+    color: ${colors.black};
     cursor: pointer;
   }
   @media (max-width: ${breakpoints.tablet}) {
@@ -161,5 +195,110 @@ export const HamburgerMenu = styled(Menu)`
   width: 0rem;
   @media (max-width: ${breakpoints.mobile}) {
     width: 6rem;
+  }
+`;
+
+export const Select = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-self: center;
+  :hover {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: ${colors.blue.accent};
+    text-decoration-thickness: 0.2rem;
+  }
+  @media (max-width: ${breakpoints.smallTablet}) {
+    display: flex;
+    flex-direction: row;
+    font-weight: 600;
+    :hover {
+      text-decoration: underline;
+      text-decoration-color: white;
+      text-decoration-thickness: 0.2rem;
+    }
+  }
+  p {
+    font-size: 1rem;
+  }
+`;
+
+export const Selected = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-width: 4.2rem;
+  @media (max-width: ${breakpoints.smallTablet}) {
+    padding-left: 1.4rem;
+    p {
+      text-align: center;
+    }
+  }
+  @media (max-width: ${breakpoints.smallDevice}) {
+    display: none;
+  }
+`;
+
+export const ThemeSelector = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  z-index: 200;
+  margin-top: 2rem;
+  transition: height 1s ease-in-out;
+  height: ${(props) => (props.collapse ? "auto" : "0rem")};
+  overflow-y: hidden;
+  border-radius: 0.5rem;
+
+  button {
+    border: none;
+    background-color: ${colors.blue.background};
+    width: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    :hover {
+      cursor: pointer;
+    }
+    p {
+      color: ${colors.white};
+      :hover {
+        cursor: pointer;
+        text-decoration: underline;
+        text-decoration-color: ${colors.blue.accent};
+        text-decoration-thickness: 0.2rem;
+      }
+    }
+  }
+  @media (max-width: ${breakpoints.smallTablet}) {
+    flex-direction: row;
+    border: none;
+    width: auto;
+    height: auto;
+    display: ${(props) => (props.collapse ? "flex" : "none")};
+    transition: display 500ms ease-in-out;
+    margin-top: 0;
+    background-color: ${colors.blue.background};
+    left: 0;
+    right: 0;
+    text-align: center;
+    justify-content: center;
+    button {
+      font-size: 1.5rem;
+      background-color: ${colors.blue.background};
+      color: ${colors.white};
+      font-weight: 600;
+
+      p {
+        font-weight: 700;
+        :hover {
+          cursor: pointer;
+          text-decoration: underline;
+          text-decoration-color: ${colors.blue.accent};
+          text-decoration-thickness: 0.2rem;
+        }
+      }
+    }
   }
 `;

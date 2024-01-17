@@ -1,6 +1,7 @@
 import api from "./api";
 
-// User
+//user
+export const getUser = (id) => api.get(`/User/${id}`);
 export const postUser = (user) => api.post(`/User`, user);
 
 // Favorite
@@ -59,6 +60,15 @@ export const editCategoriesProfession = (_id, body) =>
   api.put(`/categoriesprofession/${_id}`, body);
 export const getCategoriesProfession = () => api.get(`/categoriesprofession`);
 export const deleteCategoriesProfession = (_id) => api.delete(`/categoriesprofession/${_id}`);
+
+// Comments
+export const getComments = (id_ia) => api.get(`/comment/${id_ia}`);
+
+export const postComments = (body) => api.post(`/comment`, body);
+
+export const editComments = (_id, body) => api.put(`/comment/${_id}`, body);
+
+export const deleteComments = (_id, user) => api.delete(`/comment/${_id}`, { data: { user } });
 
 // Category Filter
 

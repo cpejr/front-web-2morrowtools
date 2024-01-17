@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { breakpoints, colors } from "../../styles/styleVariables";
-import { Input, Select } from "antd";
+import { Button, Input, Select } from "antd";
+import { MultiSelect } from "primereact/multiselect";
 
 export const ContainerFilter = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  width: 100%;
+  width: 90%;
   @media (max-width: ${breakpoints.mobile}) {
     flex-direction: column;
     justify-content: center;
@@ -81,10 +82,38 @@ export const InputStyled = styled(Input)`
 export const SelectStyled = styled(Select)`
   width: 15rem;
   height: 35px;
+  color: ${colors.blue.light};
+
   .ant-select-arrow {
-    color: white;
+    color: ${colors.white};
     transform: translate(-50%, -50%);
     position: absolute;
     top: 50%;
   }
+`;
+
+export const MultipleSelect = styled(MultiSelect)`
+  background-color: ${colors.black};
+
+  .p-multiselect-label {
+    color: ${colors.white};
+    max-width: 300px;
+    overflow-x: scroll;
+  }
+`;
+
+export const ButtonsDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+`;
+
+export const DivSelect = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+`;
+
+export const Buttons = styled(Button)`
+  border: solid 1px ${colors.white};
 `;

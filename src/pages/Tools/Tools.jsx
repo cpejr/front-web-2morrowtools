@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {
   BlueButton,
   CardLine,
@@ -19,80 +20,73 @@ import { Card, Comments, Tool } from "../../components";
 import { useMediaQuery } from "react-responsive";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useGetAITools, useGetAIToolsByName } from "../../services/ManagerService";
+import {
+  useGetAIToolsByCategoryId,
+  useGetAIToolsByName,
+  useGetComments,
+  usePostComments,
+} from "../../services/ManagerService";
 import { useParams } from "react-router-dom";
-
-const comments = [
-  {
-    name: "Arthur",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Lucas",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Breno",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Arthur2",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Lucas2",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Breno2",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Arthur3",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Lucas3",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-  {
-    name: "Breno3",
-    comment:
-      "Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet est mauris. Descrição breve Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
-  },
-];
+import useAuthStore from "../../stores/auth";
 
 export default function Tools() {
-  // Backend Calls
-  const [aiToolsByName, setAIToolsByName] = useState({});
+  // Variables
 
+  const { getUser } = useAuthStore();
   const { name } = useParams();
-  async function GettingAIToolsDataByName() {
+  const [aiTools, setAITools] = useState({});
+  const [aiToolsByName, setAIToolsByName] = useState({});
+  const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
+  const similarIDs = [
+    aiToolsByName?.aiTools?.[0]?.id_categoryfeature?._id,
+    aiToolsByName?.aiTools?.[0]?.id_categoryprice?._id,
+    aiToolsByName?.aiTools?.[0]?.id_categoryprofession?._id,
+  ];
+
+  //Backend calls
+
+  async function gettingAIToolsDataByName() {
     const aiTools = await useGetAIToolsByName({ name });
     setAIToolsByName(aiTools);
   }
-  useEffect(() => {
-    GettingAIToolsDataByName();
-    GettingAIToolsData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
-  const [aiTools, setAITools] = useState({});
+  async function postComment() {
+    usePostComments({
+      comment,
+      id_user: getUser()?._id,
+      id_ia: aiToolsByName.aiTools[0]._id,
+    });
+  }
+  async function gettingComments() {
+    const res = await useGetComments(aiToolsByName?.aiTools[0]?._id);
+    setComments(res);
+  }
 
-  async function GettingAIToolsData() {
-    const aiTools = await useGetAITools();
+  const convertArrayToString = (array) => {
+    return array.join(",");
+  };
+  async function similarAITools() {
+    const idsString = convertArrayToString(similarIDs);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const aiTools = await useGetAIToolsByCategoryId({
+      id: idsString,
+    });
     setAITools(aiTools);
   }
 
+  useEffect(() => {
+    gettingAIToolsDataByName();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect(() => {
+    gettingComments();
+    similarAITools();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [aiToolsByName]);
+
   // Grouping Data
+
   const groupedData = [];
   const isSmallDesktop = useMediaQuery({ maxWidth: 1370 });
   const isTabletScreen = useMediaQuery({ maxWidth: 1130 });
@@ -114,35 +108,12 @@ export default function Tools() {
       groupedData.push(aiTools?.aiTools?.slice(i, i + 4));
     }
   }
+
   return (
     <Container>
       <ToolCollumn>
         <Tool data={aiToolsByName} />
       </ToolCollumn>
-
-      <LetComment>
-        <h2>Deixe seu comentário</h2>
-        <CommentInput placeholder='Escreva seu Comentário:' />
-        <BlueButton type='primary'>ENVIAR</BlueButton>
-      </LetComment>
-      <CommentDiv>
-        <h1>COMENTÁRIOS</h1>
-        <Comment>
-          {comments.map((data) => (
-            <Comments key={data?.name} data={data} />
-          ))}
-        </Comment>
-      </CommentDiv>
-      <OtherTools>
-        <h1>OUTRAS FERRAMENTAS SIMILARES:</h1>
-        {groupedData.map((group, groupIndex) => (
-          <CardLine key={groupIndex}>
-            {group.map((content, contentIndex) => (
-              <Card data={content} key={contentIndex} />
-            ))}
-          </CardLine>
-        ))}
-      </OtherTools>
       <DiscoverDiv>
         <DiscoverData>
           <h6>Descubra novas ferramentas de tecnologia toda semana! </h6>
@@ -160,6 +131,34 @@ export default function Tools() {
           <BlueButton type='primary'>ENVIAR</BlueButton>
         </DiscoverInputs>
       </DiscoverDiv>
+      <LetComment>
+        <h2>Deixe seu comentário</h2>
+        <CommentInput
+          onChange={(e) => setComment(e.target.value)}
+          placeholder='Escreva seu Comentário:'
+        />
+        <BlueButton onClick={postComment} type='primary'>
+          ENVIAR
+        </BlueButton>
+      </LetComment>
+      <CommentDiv>
+        <h1>COMENTÁRIOS</h1>
+        <Comment>
+          {comments?.comments?.map((comment) => (
+            <Comments key={comment?._id} data={comment} onDelete={gettingComments} />
+          ))}
+        </Comment>
+      </CommentDiv>
+      <OtherTools>
+        <h1>OUTRAS FERRAMENTAS SIMILARES:</h1>
+        {groupedData.map((group, groupIndex) => (
+          <CardLine key={groupIndex}>
+            {group.map((content, contentIndex) => (
+              <Card data={content} key={contentIndex} />
+            ))}
+          </CardLine>
+        ))}
+      </OtherTools>
     </Container>
   );
 }

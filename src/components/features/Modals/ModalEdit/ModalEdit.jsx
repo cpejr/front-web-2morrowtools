@@ -6,12 +6,13 @@ import { toast } from "react-toastify";
 import * as managerService from "../../../../services/ManagerService";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import FormInput from "../../../common/FormInput/FormInput";
+import { zodResolver } from "@hookform/resolvers/zod";
+import FormInputBorder from "../../../common/FormInputBorder/FormInputBorder";
 import FormsTextArea from "../../../common/FormsTextArea/FormsTextArea";
 import { FaUpload } from "react-icons/fa";
 import {
   buildEditToolErrorMessage,
-  // editToolValidationSchema
+  editToolValidationSchema
 } from "./utils";
 import SubmitButton from "../../../common/SubmitButton/SubmitButton";
 
@@ -74,9 +75,10 @@ export default function ModalEdit({ _id, tool, close }) {
   const {
     handleSubmit,
     control,
+    register,
     formState: { errors },
   } = useForm({
-    // resolver: zodResolver(editToolValidationSchema),
+     resolver: zodResolver(editToolValidationSchema),
   });
 
   return (
@@ -87,34 +89,37 @@ export default function ModalEdit({ _id, tool, close }) {
           <Section>
             <div>
               <Label>Nome:</Label>
-              <FormInput
+              <FormInputBorder
                 name='name'
                 defaultValue={tool.name}
                 placeholder='Título:'
                 errors={errors}
+                register={register}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               />
             </div>
 
             <div>
               <Label>URL da imagem:</Label>
-              <FormInput
+              <FormInputBorder
                 name='imageURL'
                 defaultValue={tool.imageURL}
                 placeholder='URL da imagem:'
                 icon={FaUpload}
                 errors={errors}
+                register={register}
                 onChange={(e) => setFormData({ ...formData, imageURL: e.target.value })}
               />
             </div>
 
             <div>
               <Label>Descrição curta:</Label>
-              <FormInput
+              <FormInputBorder
                 name='shortDescription'
                 defaultValue={tool.shortDescription}
                 placeholder='Descrição curta:'
                 errors={errors}
+                register={register}
                 onChange={(e) => setFormData({ ...formData, shortDescription: e.target.value })}
               />
             </div>
@@ -126,28 +131,32 @@ export default function ModalEdit({ _id, tool, close }) {
                 rows={4}
                 defaultValue={tool.longDescription}
                 placeholder='Descrição longa:'
+                errors={errors}
+                register={register}
                 onChange={(e) => setFormData({ ...formData, longDescription: e.target.value })}
               />
             </div>
 
             <div>
               <Label>Link do site:</Label>
-              <FormInput
+              <FormInputBorder
                 name='link'
                 defaultValue={tool.link}
                 placeholder='Link do site:'
                 errors={errors}
+                register={register}
                 onChange={(e) => setFormData({ ...formData, link: e.target.value })}
               />
             </div>
 
             <div>
               <Label>Link do vídeo no Youtube:</Label>
-              <FormInput
+              <FormInputBorder
                 name='youtubeVideoLink'
                 defaultValue={tool.youtubeVideoLink}
                 placeholder='Link do vídeo no Youtube:'
                 errors={errors}
+                register={register}
                 onChange={(e) => setFormData({ ...formData, youtubeVideoLink: e.target.value })}
               />
             </div>

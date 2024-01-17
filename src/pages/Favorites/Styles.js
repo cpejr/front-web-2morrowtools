@@ -10,12 +10,18 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 80px;
+  align-content: center;
+  align-items: center;
   padding: 20px;
-
   h1 {
-  margin-left:40px;
-  font-family: ${fonts.Exo2};
-  font-weight: 400;
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    color: ${colors.blue.whiteBlue};
+  }
+  h2 {
+    margin-left: 0px;
+    font-family: ${fonts.Exo2};
+    font-weight: 400;
   }
 
   @media (max-width: ${breakpoints.desktop}) {
@@ -33,7 +39,6 @@ export const Container = styled.div`
       font-size: 1.6rem;
     }
   }
-  
 `;
 
 export const CardsContainer =  styled.div`
@@ -48,11 +53,37 @@ export const CardsContainer =  styled.div`
   }
 
 `
+export const DivLine = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 4rem;
+`;
+export const Line = styled.div`
+  display: flex;
+  width: 50%;
+  height: auto;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+  @media (max-width: ${breakpoints.mobile}) {
+    margin-bottom: 0;
+  }
+`;
+export const ButtonDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 
 export const SectionContainer = styled.div`
   display: flex;
   flex-direction: row;
-
+  width: 90%;
+  margin-top: 40px;
   .arrow {
     font-size: 40px;
   }

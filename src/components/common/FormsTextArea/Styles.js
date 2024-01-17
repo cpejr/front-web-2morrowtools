@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Input } from "antd";
+import { colors } from "../../../styles/styleVariables";
 const { TextArea } = Input;
 
 export const Container = styled.div`
@@ -13,7 +14,7 @@ export const Container = styled.div`
 `;
 
 export const Label = styled.label`
-  color: #ffffff;
+  color: ${colors.white};
   font-size: 2.4rem;
 
   @media (max-width: 700px) {
@@ -24,13 +25,17 @@ export const Label = styled.label`
   }
 `;
 
-export const StyledTextArea = styled(TextArea)`
+export const StyledTextArea = styled.textarea`
   height: 6rem;
-  font-size: 2rem;
+  font-size: 1rem;
   padding: 0.8rem 1.6rem;
   border-radius: 0.4rem;
   color: white;
-
+  background-color: ${colors.blue.background};
+  border: ${(props) => (props?.error ? "0.1rem red solid" : "0.1rem black solid")};
+  ::placeholder {
+    font-weight: 400;
+  }
   @media (max-width: 700px) {
     font-weight: 400;
     font-size: 1.6rem;
@@ -43,9 +48,9 @@ export const StyledTextArea = styled(TextArea)`
 `;
 
 export const ErrorMessage = styled.p`
-  font-weight: 600;
-  font-size: 1.6rem;
-  line-height: 2rem;
+  font-weight: 400;
+  font-size: 1.3rem;
+  line-height: 1rem;
   color: red;
 
   @media (max-width: 700px) {

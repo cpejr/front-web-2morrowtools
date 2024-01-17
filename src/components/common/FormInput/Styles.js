@@ -22,18 +22,19 @@ export const Label = styled.label`
   }
 `;
 
-export const StyledInput = styled(Input)`
+export const StyledInput = styled.input`
   height: 3rem;
   padding: 0.8rem 1.6rem;
   border-radius: 0;
   border-color: ${colors.white};
   color: ${colors.white};
+  
 
   width: 100%;
   border: none;
   border-bottom: 1px solid ${colors.white};
   background-color: ${colors.blue.background};
-
+  
   @media (max-width: 700px) {
     font-weight: 400;
     font-size: 1.6rem;
@@ -63,7 +64,7 @@ export const IconContainer = styled.div`
 `;
 
 export const ErrorMessage = styled.p`
-  font-size: 1.76rem;
+  font-size: 1.3rem;
   color: red;
-  font-weight: 700;
+  font-weight: 400;
 `;

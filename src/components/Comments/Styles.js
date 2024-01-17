@@ -89,3 +89,9 @@ export const CommentCollumn = styled.div`
     }
   }
 `;
+
+export const DeleteButton = styled.button`
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+`;

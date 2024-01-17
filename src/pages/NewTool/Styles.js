@@ -9,7 +9,6 @@ export const Container = styled.div`
   flex-direction: column;
   width: 100%;
   height: auto;
-  padding-bottom: 15rem;
   padding-top: 8rem;
   gap: 3rem;
 
@@ -25,7 +24,7 @@ export const Title = styled.p`
   display: flex;
   align-items: center;
   font-size: 4rem;
-  color: white;
+  color: ${colors.white};
   font-weight: 600;
   margin: 0;
   margin-left: 5rem;
@@ -112,7 +111,8 @@ export const ToolList = styled.ul`
   height: 6rem;
   font-size: 2rem;
   margin-left: 4rem;
-  color: white;
+  margin-bottom: 50rem;
+  color: ${colors.white};
   @media (max-width: ${breakpoints.smallMobile}) {
     width: 80%;
   }
@@ -142,7 +142,7 @@ export const StyledModal = styled(Modal)`
     background-color: ${colors.grey.cardBackground};
   }
   .ant-modal-body {
-    color: white;
+    color: ${colors.white};
     border-radius: none;
   }
 `;

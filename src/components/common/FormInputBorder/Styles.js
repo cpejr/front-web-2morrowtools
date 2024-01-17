@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Input from "antd/es/input/Input";
-import { breakpoints } from "../../../styles/styleVariables";
+import { breakpoints, colors } from "../../../styles/styleVariables";
 
 export const Container = styled.div`
   display: flex;
@@ -12,7 +12,7 @@ export const Container = styled.div`
 `;
 
 export const Label = styled.label`
-  color: #ffffff;
+  color: ${colors.white};
 
   @media (max-width: 700px) {
     font-size: 2rem;
@@ -22,14 +22,19 @@ export const Label = styled.label`
   }
 `;
 
-export const StyledInput = styled(Input)`
+export const StyledInput = styled.input`
   height: 3rem;
   padding: 0.8rem 1.6rem;
   border-radius: 0.4rem;
-  color: white;
+  color: ${colors.white};
   border: solid 0.1rem;
-  border-color: white;
+  border-color: ${colors.white};
   width: 100%;
+  background-color: ${colors.blue.background};
+  border: ${(props) => (props?.error ? "0.1rem red solid" : "0.1rem black solid")};
+  ::placeholder {
+    font-weight: 400;
+  }
 
   @media (max-width: ${breakpoints.mobile}) {
     font-weight: 400;
@@ -54,7 +59,7 @@ export const IconContainer = styled.div`
 `;
 
 export const ErrorMessage = styled.p`
-  font-size: 1.76rem;
+  font-size: 1.3rem;
   color: red;
-  font-weight: 700;
+  font-weight: 400;
 `;
