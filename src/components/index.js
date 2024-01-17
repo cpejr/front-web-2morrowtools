@@ -13,3 +13,4 @@ export { default as SocialMediaInput } from "./common/SocialMediaInput/SocialMed
 export { default as NewLink } from "./features/Modals/NewLink/NewLink";
 export { default as Tool } from "./Tool/Tool";
 export { default as Comments } from "./Comments/Comments";
+export { default as Newsletter } from "./Newsletter/Newsletter";

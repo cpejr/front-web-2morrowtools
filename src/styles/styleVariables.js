@@ -31,6 +31,7 @@ export const breakpoints = {
   tablet: "1024px",
   smallTablet: "800px",
   mobile: "700px",
+  newsletter: "550px",
   smallMobile: "500px",
   smallDevice: "350px",
 };
