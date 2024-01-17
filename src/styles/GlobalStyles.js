@@ -76,5 +76,8 @@ export const GlobalStyles = createGlobalStyle`
     background-color: ${colors.blue.background};
     color: ${colors.white};
   }
-   
+   .p-dropdown-item{
+    color: black;
+   }
+
 `;

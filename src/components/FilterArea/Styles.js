@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { breakpoints, colors } from "../../styles/styleVariables";
 import { Input, Select } from "antd";
 import { MultiSelect } from "primereact/multiselect";
+import { Dropdown } from "primereact/dropdown";
 
 export const ContainerFilter = styled.div`
   display: flex;
@@ -105,4 +106,13 @@ export const MultipleSelect = styled(MultiSelect)`
 export const DivSelect = styled.div`
   display: flex;
   justify-content: center;
+`;
+
+export const UniSelect = styled(Dropdown)`
+  background-color: ${colors.black};
+
+  .p-dropdown-label {
+    color: ${colors.white};
+    max-width: 200px;
+  }
 `;

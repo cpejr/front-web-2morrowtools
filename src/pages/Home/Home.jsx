@@ -29,6 +29,7 @@ export default function Home() {
   const [favoriteAiTools, setFavoriteAITools] = useState([]);
   const { getUser } = useAuthStore();
   const [categoryIDsArrays, setCategoryIDsArrays] = useState([]);
+  const [filter, setFilter] = useState([]);
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(0);
@@ -73,6 +74,7 @@ export default function Home() {
     const filteredCategory = await managerService.useGetAIToolsByCategoryId({
       id: idsString,
       name: debouncedName,
+      type: filter,
     });
     setFilteredAiTools(filteredCategory);
     if (!getUser()) {
@@ -90,34 +92,33 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function managerTest(){
-    const data  = {
-        comment: "Arthur",
-        id_user: "656f7ce5d0258e011a2cb56b",
-        id_ia: "656ccb5c2d3069936d590c72",
-    }
-    
-    await managerService.useGetComments()
-    const id = await managerService.usePostComments(data)
-    await managerService.useGetComments()
-    
+  async function managerTest() {
+    const data = {
+      comment: "Arthur",
+      id_user: "656f7ce5d0258e011a2cb56b",
+      id_ia: "656ccb5c2d3069936d590c72",
+    };
+
+    await managerService.useGetComments();
+    const id = await managerService.usePostComments(data);
+    await managerService.useGetComments();
+
     const idloggedin = {
       id_user_makingChange: id.comments.id_user,
-      type_user_makingChange: "Admin"
-    }
-    const dataAltered  = {
+      type_user_makingChange: "Admin",
+    };
+    const dataAltered = {
       comment: "Not Arthur",
       id_user: "656f7ce5d0258e011a2cb56b",
       id_ia: "656ccb5c2d3069936d590c72",
       id_user_makingChange: id.comments.id_user,
-      type_user_makingChange: "Admin"
+      type_user_makingChange: "Admin",
+    };
+    await managerService.useEditComments(id.comments._id, dataAltered);
+    await managerService.useGetComments();
+    await managerService.useDeleteComments(id.comments._id, idloggedin);
+    await managerService.useGetComments();
   }
-    await managerService.useEditComments(id.comments._id, dataAltered)
-    await managerService.useGetComments()
-    await managerService.useDeleteComments(id.comments._id, idloggedin)
-    await managerService.useGetComments()
-  }
-
 
   // Auto Complete
 
@@ -143,6 +144,7 @@ export default function Home() {
       setFavoriteAITools(favorites);
     }
   }
+  console.log("✌️filter --->", filter);
 
   return (
     <Container>
@@ -165,6 +167,8 @@ export default function Home() {
         idsArray={categoryIDsArrays}
         setArray={setCategoryIDsArrays}
         filterReset={handleFilterReset}
+        filter={filter}
+        setFilter={setFilter}
       />
       {filteredAiTools?.aiTools && filteredAiTools?.aiTools.length === 0 && (
         <IANotFound>IA não encontrada</IANotFound>

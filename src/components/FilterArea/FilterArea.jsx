@@ -10,10 +10,18 @@ import {
   SelectStyled,
   MultipleSelect,
   DivSelect,
+  UniSelect,
 } from "./Styles";
 import { useGlobalColor } from "../../stores/GlobalColor";
 
-export default function FilterArea({ onFilterClick, filterReset, idsArray, setArray }) {
+export default function FilterArea({
+  onFilterClick,
+  filterReset,
+  idsArray,
+  setArray,
+  filter,
+  setFilter,
+}) {
   // Set variables
 
   const [categoriesFeature, setCategoriesFeature] = useState([]);
@@ -80,6 +88,11 @@ export default function FilterArea({ onFilterClick, filterReset, idsArray, setAr
 
   const GroupedCategories =
     GroupArray(categoriesFeature, categoriesPrices, categoriesProfession) || [];
+  const filtros = [
+    { label: "Data", value: "data" },
+    { label: "Nome", value: "name" },
+    { label: "Estrelas", value: "estrelas" },
+  ];
 
   return (
     <ContainerFilter>
@@ -98,6 +111,19 @@ export default function FilterArea({ onFilterClick, filterReset, idsArray, setAr
       </DivSelect>
       <Button onClick={() => onFilterClick(idsArray)}>Filtrar</Button>
       <Button onClick={handleClearFilters}>Limpar Filtros</Button>
+      <DivSelect>
+        <UniSelect
+          value={filter}
+          onChange={(e) => setFilter(e.value)}
+          options={filtros}
+          optionLabel='label'
+          editable
+          showClear
+          placeholder='Ordenar Por'
+          className='w-full md:w-14rem'
+        ></UniSelect>
+      </DivSelect>
+
       <SearchBar>
         <SelectStyled
           mode='multiple'
