@@ -26,9 +26,14 @@ export default function Home() {
   const [namesArray, setNamesArray] = useState([]);
   const [favoriteAiTools, setFavoriteAITools] = useState([]);
   const { getUser } = useAuthStore();
+  const [features, setFeatures] = useState([]);
+  const [prices, setPrices] = useState([]);
+  const [profession, setProfession] = useState([]);
+
   const [categoryIDsArrays, setCategoryIDsArrays] = useState([]);
 
   // Pagination
+
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 8;
   const totalPages = Math.ceil(filteredAiTools?.aiTools?.length / itemsPerPage);
@@ -42,6 +47,7 @@ export default function Home() {
   };
 
   // Rendering multiples Cards
+
   const groupedData = [];
   const isLargeDesktopScreen = useMediaQuery({ minWidth: 1371 });
   const isDesktopScreen = useMediaQuery({ minWidth: 1130 });
@@ -133,6 +139,12 @@ export default function Home() {
         idsArray={categoryIDsArrays}
         setArray={setCategoryIDsArrays}
         filterReset={handleFilterReset}
+        features={features}
+        setFeatures={setFeatures}
+        prices={prices}
+        setPrices={setPrices}
+        profession={profession}
+        setProfession={setProfession}
       />
       {filteredAiTools?.aiTools && filteredAiTools?.aiTools.length === 0 && (
         <IANotFound>IA não encontrada</IANotFound>
