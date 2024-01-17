@@ -95,7 +95,23 @@ export default function Tools() {
       <ToolCollumn>
         <Tool data={aiToolsByName} />
       </ToolCollumn>
-
+      <DiscoverDiv>
+        <DiscoverData>
+          <h6>Descubra novas ferramentas de tecnologia toda semana! </h6>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua
+          </p>
+        </DiscoverData>
+        <DiscoverInputs>
+          <DiscoverLine>
+            <HalfInput placeholder='Nome:' />
+            <HalfInput placeholder='E-mail:' type='email' />
+          </DiscoverLine>
+          <FullInput placeholder='Mensagem:' />
+          <BlueButton type='primary'>ENVIAR</BlueButton>
+        </DiscoverInputs>
+      </DiscoverDiv>
       <LetComment>
         <h2>Deixe seu comentário</h2>
         <CommentInput
@@ -124,23 +140,6 @@ export default function Tools() {
           </CardLine>
         ))}
       </OtherTools>
-      <DiscoverDiv>
-        <DiscoverData>
-          <h6>Descubra novas ferramentas de tecnologia toda semana! </h6>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua
-          </p>
-        </DiscoverData>
-        <DiscoverInputs>
-          <DiscoverLine>
-            <HalfInput placeholder='Nome:' />
-            <HalfInput placeholder='E-mail:' type='email' />
-          </DiscoverLine>
-          <FullInput placeholder='Mensagem:' />
-          <BlueButton type='primary'>ENVIAR</BlueButton>
-        </DiscoverInputs>
-      </DiscoverDiv>
     </Container>
   );
 }

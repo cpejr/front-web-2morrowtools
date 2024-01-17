@@ -120,7 +120,6 @@ export default function FilterArea({ onFilterClick, filterReset, idsArray, setAr
             },
           ]}
         />
-        <InputStyled placeholder='Lorem Impsum'></InputStyled>
       </SearchBar>
     </ContainerFilter>
   );

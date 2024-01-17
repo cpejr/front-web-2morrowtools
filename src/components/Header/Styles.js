@@ -90,7 +90,41 @@ export const LoginSocial = styled.div`
     display: none;
   }
 `;
+export const SubmitButton = styled.button`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 15rem;
+  height: 60px;
+  border: 1px solid;
+  border-radius: 24px;
+  color: ${colors.white};
+  background-color: ${colors.transparent};
+  font-family: ${fonts.Exo2};
+  font-size: 1.2rem;
+  font-weight: 400;
+  word-wrap: break-word;
+  margin-right: 10px;
 
+  &:hover {
+    background-color: ${colors.white};
+    color: ${colors.black};
+    cursor: pointer;
+  }
+  @media (max-width: ${breakpoints.tablet}) {
+    width: 10rem;
+    font-size: 1rem;
+  }
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 10rem;
+    height: 40px;
+    font-size: 1rem;
+  }
+  @media (max-width: ${breakpoints.smallDevice}) {
+    width: 7rem;
+    font-size: 0.8rem;
+  }
+`;
 export const LoginButton = styled.button`
   display: flex;
   justify-content: space-around;
@@ -98,7 +132,7 @@ export const LoginButton = styled.button`
   width: 12rem;
   height: 60px;
   border: 1px solid;
-  border-radius: 3px;
+  border-radius: 24px;
   color: ${colors.white};
   background-color: ${colors.transparent};
   font-family: ${fonts.Exo2};

@@ -10,6 +10,7 @@ import {
   Select,
   Selected,
   ThemeSelector,
+  SubmitButton,
 } from "./Styles";
 import logo from "../../assets/logo.svg";
 import BlueLogo from "../../assets/blue-logo.svg";
@@ -119,7 +120,12 @@ export default function Header() {
           </React.Fragment>
         ) : null}
       </Links>
-      <Select>
+      <SubmitButton onClick={() => {
+        window.open('https://bit.ly/2MT_submeter_ferramenta', "_blank");
+      }}>
+        Submeter Ferramenta
+      </SubmitButton>
+      {/* <Select>
         <Selected onClick={() => setCollapse((prev) => !prev)}>
           <p>{globalColor}</p>
           <IoIosArrowDown />
@@ -139,7 +145,7 @@ export default function Header() {
             </button>
           ))}
         </ThemeSelector>
-      </Select>
+      </Select> */}
       <LoginSocial>
         <LoginButton onClick={logGoogleUser}>
           {loginLogoff}
