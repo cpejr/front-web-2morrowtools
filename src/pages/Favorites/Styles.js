@@ -53,6 +53,31 @@ export const CardsContainer =  styled.div`
   }
 
 `
+export const DivLine = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 4rem;
+`;
+export const Line = styled.div`
+  display: flex;
+  width: 50%;
+  height: auto;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+  @media (max-width: ${breakpoints.mobile}) {
+    margin-bottom: 0;
+  }
+`;
+export const ButtonDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 
 export const SectionContainer = styled.div`
   display: flex;
