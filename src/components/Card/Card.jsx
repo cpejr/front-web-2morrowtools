@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
-import { StyledCard, BlueButton, Line, Tags, Tag, Image, Stars, LineSVG, Group } from "./Styles";
+import { StyledCard, BlueButton, Line, Tags, Tag, Image, Stars, LineSVG, Group, ButtonDiv } from "./Styles";
 import { FaRegBookmark } from "react-icons/fa";
 import { FaBookmark, FaStarHalfStroke } from "react-icons/fa6";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
@@ -118,7 +118,12 @@ export default function Card({ data }) {
       <Tags>
         <Tag>{data?.id_categoryprofession?.name} </Tag>
       </Tags>
-      <BlueButton type='primary'>Acesse Agora</BlueButton>
+      <ButtonDiv>
+        <BlueButton type='primary' onClick={() => {
+          window.open(data?.link, "_blank");
+        }}>Acesse Agora</BlueButton>
+      </ButtonDiv>
+
     </StyledCard>
   );
 }

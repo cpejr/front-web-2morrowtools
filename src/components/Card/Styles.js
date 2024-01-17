@@ -5,11 +5,10 @@ import { breakpoints, colors } from "../../styles/styleVariables";
 export const StyledCard = styled(Card)`
   display: flex;
   flex-direction: column;
-
   width: 24rem;
   height: auto;
   align-items: center;
-  border-radius: 4px;
+  border-radius: 24px;
   gap: 3.33rem;
   box-shadow: 0px 4px 4px 0px ${colors.shadow};
   background-color: ${colors.grey.cardBackground};
@@ -176,16 +175,21 @@ export const Group = styled.div`
     font-size: 15.75px;
   }
 `;
-
+export const ButtonDiv = styled.div`
+  display: flex;
+  width: 100%;
+  align-content: center;
+  justify-content: center;
+`;
 export const BlueButton = styled(Button)`
-  width: 8rem;
+  width: 16rem;
   height: 3rem;
   background-color: ${colors.blue.accent};
   border: none;
   margin-top: 1rem;
 
   @media (max-width: ${breakpoints.desktop}) {
-    width: 6rem;
+    width: 12rem;
     height: 2.25rem;
   }
 
