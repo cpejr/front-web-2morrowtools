@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {
   BlueButton,
   CardLine,
@@ -20,7 +21,7 @@ import { useMediaQuery } from "react-responsive";
 import { useState } from "react";
 import { useEffect } from "react";
 import {
-  useGetAITools,
+  useGetAIToolsByCategoryId,
   useGetAIToolsByName,
   useGetComments,
   usePostComments,
@@ -29,17 +30,27 @@ import { useParams } from "react-router-dom";
 import useAuthStore from "../../stores/auth";
 
 export default function Tools() {
+  // Variables
+
   const { getUser } = useAuthStore();
+  const { name } = useParams();
+  const [aiTools, setAITools] = useState({});
   const [aiToolsByName, setAIToolsByName] = useState({});
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
+  const similarIDs = [
+    aiToolsByName?.aiTools?.[0]?.id_categoryfeature?._id,
+    aiToolsByName?.aiTools?.[0]?.id_categoryprice?._id,
+    aiToolsByName?.aiTools?.[0]?.id_categoryprofession?._id,
+  ];
 
-  //backend calls
-  const { name } = useParams();
+  //Backend calls
+
   async function gettingAIToolsDataByName() {
     const aiTools = await useGetAIToolsByName({ name });
     setAIToolsByName(aiTools);
   }
+
   async function postComment() {
     usePostComments({
       comment,
@@ -47,28 +58,35 @@ export default function Tools() {
       id_ia: aiToolsByName.aiTools[0]._id,
     });
   }
-
   async function gettingComments() {
-    const res = await useGetComments(aiToolsByName.aiTools[0]._id);
+    const res = await useGetComments(aiToolsByName?.aiTools[0]?._id);
     setComments(res);
   }
 
-  const [aiTools, setAITools] = useState({});
-  async function gettingAIToolsData() {
-    const aiTools = await useGetAITools();
+  const convertArrayToString = (array) => {
+    return array.join(",");
+  };
+  async function similarAITools() {
+    const idsString = convertArrayToString(similarIDs);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const aiTools = await useGetAIToolsByCategoryId({
+      id: idsString,
+    });
     setAITools(aiTools);
   }
 
   useEffect(() => {
     gettingAIToolsDataByName();
-    gettingAIToolsData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     gettingComments();
-  }, [aiToolsByName, postComment]);
+    similarAITools();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [aiToolsByName]);
 
   // Grouping Data
+
   const groupedData = [];
   const isSmallDesktop = useMediaQuery({ maxWidth: 1370 });
   const isTabletScreen = useMediaQuery({ maxWidth: 1130 });
@@ -90,6 +108,7 @@ export default function Tools() {
       groupedData.push(aiTools?.aiTools?.slice(i, i + 4));
     }
   }
+
   return (
     <Container>
       <ToolCollumn>
