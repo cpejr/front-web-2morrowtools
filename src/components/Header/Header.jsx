@@ -120,12 +120,14 @@ export default function Header() {
           </React.Fragment>
         ) : null}
       </Links>
-      <SubmitButton onClick={() => {
-        window.open('https://bit.ly/2MT_submeter_ferramenta', "_blank");
-      }}>
+      <SubmitButton
+        onClick={() => {
+          window.open("https://bit.ly/2MT_submeter_ferramenta", "_blank");
+        }}
+      >
         Submeter Ferramenta
       </SubmitButton>
-      {/* <Select>
+      <Select>
         <Selected onClick={() => setCollapse((prev) => !prev)}>
           <p>{globalColor}</p>
           <IoIosArrowDown />
@@ -138,6 +140,7 @@ export default function Header() {
               onClick={() => {
                 setGlobalColor(theme);
                 setCollapse((prev) => !prev);
+                window.location.reload();
               }}
               style={{ display: collapse ? "flex" : "none" }}
             >
@@ -145,7 +148,7 @@ export default function Header() {
             </button>
           ))}
         </ThemeSelector>
-      </Select> */}
+      </Select>
       <LoginSocial>
         <LoginButton onClick={logGoogleUser}>
           {loginLogoff}
