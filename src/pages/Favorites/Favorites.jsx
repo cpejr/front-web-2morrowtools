@@ -20,6 +20,7 @@ export default function Favorites() {
     if (getUser() !== null) {
       const favorites = await useGetFavorites(getUser()?._id);
       setAITools(favorites);
+      console.log(favorites)
     }
   }
 
@@ -36,12 +37,15 @@ export default function Favorites() {
 
   return (
     <Container>
-      <h1>FAVORITOS</h1>
-      <SectionContainer>
-        <CaretLeftOutlined className='arrow' onClick={() => scrollContainer("favorites", -250)} />
-        <CardsContainer className='favorites'>{cards}</CardsContainer>
-        <CaretRightOutlined className='arrow' onClick={() => scrollContainer("favorites", 250)} />
-      </SectionContainer>
+      <h1>SEUS FAVORITOS</h1>
+      {aiTools.length == 0 ? (<h2>Nenhum Favorito foi encontrado!</h2>) : (<>
+        <SectionContainer>
+          <CaretLeftOutlined className='arrow' onClick={() => scrollContainer("favorites", -250)} />
+          <CardsContainer className='favorites'>{cards}</CardsContainer>
+          <CaretRightOutlined className='arrow' onClick={() => scrollContainer("favorites", 250)} />
+        </SectionContainer>
+      </>)}
+
     </Container>
   );
 }
