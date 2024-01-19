@@ -8,7 +8,7 @@ import {
   DivLine,
   IANotFound,
   TrendingTools,
-  WellRatedTool,
+  RecentlyAddedTool,
 } from "./Styles";
 import { SearchOutlined } from "@ant-design/icons";
 import { Card } from "../../components";
@@ -31,9 +31,16 @@ export default function Home() {
   const [features, setFeatures] = useState([]);
   const [prices, setPrices] = useState([]);
   const [profession, setProfession] = useState([]);
-
   const [categoryIDsArrays, setCategoryIDsArrays] = useState([]);
-
+  //Trending Tools
+  const shuffleArray = (array) => {
+    const shuffledArray = [...array];
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    }
+    return shuffledArray;
+  };
   // Pagination
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -180,7 +187,7 @@ export default function Home() {
         />
       </ButtonDiv>
       <TrendingTools>
-        <h1>Ferramentas Em Alta</h1>
+        <h1>Em Alta</h1>
         {groupedData.map((group, groupIndex) => (
           <DivLine
             key={groupIndex}
@@ -188,7 +195,7 @@ export default function Home() {
           >
             {group.map((row, rowIndex) => (
               <Line key={rowIndex}>
-                {row.map((content) => (
+                {shuffleArray(row).map((content) => (
                   <Card
                     data={{
                       ...content,
@@ -204,16 +211,16 @@ export default function Home() {
           </DivLine>
         ))}
       </TrendingTools>
-      <WellRatedTool>
-        <h1>Ferramentas Mais bem avaliadas</h1>
-        {groupedData.map((group, groupIndex) => (
+      <RecentlyAddedTool>
+        <h1>Adicionados Recentemente</h1>
+        {groupedData.map((page, groupIndex) => (
           <DivLine
             key={groupIndex}
             style={{ display: groupIndex === currentPage ? "flex" : "none" }}
           >
-            {group.map((row, rowIndex) => (
+            {page.map((row, rowIndex) => (
               <Line key={rowIndex}>
-                {row.map((content) => (
+                {row.reverse().map((content) => (
                   <Card
                     data={{
                       ...content,
@@ -228,7 +235,7 @@ export default function Home() {
             ))}
           </DivLine>
         ))}
-      </WellRatedTool>
+      </RecentlyAddedTool>
     </Container>
   );
 }

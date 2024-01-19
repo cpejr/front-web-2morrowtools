@@ -197,7 +197,7 @@ export const TrendingTools = styled.div`
   }
 `;
 
-export const WellRatedTool = styled.div`
+export const RecentlyAddedTool = styled.div`
   display: flex;
   width: 95%;
   flex-direction: column;
