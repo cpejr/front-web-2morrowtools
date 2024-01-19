@@ -41,7 +41,6 @@ export const Container = styled.div`
   }
 `;
 
-
 export const InputStyled = styled(Input)`
   width: 35rem;
   height: 35px;
@@ -57,7 +56,6 @@ export const InputStyled = styled(Input)`
     width: 22rem;
   }
 `;
-
 
 export const IconWrapper = styled.div`
   width: 80%;
@@ -168,5 +166,73 @@ export const IANotFound = styled.div`
   @media (max-width: 520px) {
     width: 300px;
     height: 300px;
+  }
+`;
+
+export const TrendingTools = styled.div`
+  display: flex;
+  width: 95%;
+  flex-direction: column;
+  align-self: center;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  height: auto;
+  > h1 {
+    font-size: 50px;
+    @media (max-width: ${breakpoints.tablet}) {
+      font-size: 40px;
+    }
+    @media (max-width: ${breakpoints.smallTablet}) {
+      align-self: center;
+      text-align: center;
+      font-size: 32px;
+    }
+    @media (max-width: ${breakpoints.mobile}) {
+      font-size: 30px;
+    }
+    @media (max-width: ${breakpoints.smallDevice}) {
+      font-size: 25px;
+    }
+  }
+`;
+
+export const RecentlyAddedTool = styled.div`
+  display: flex;
+  width: 95%;
+  flex-direction: column;
+  align-self: center;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  height: auto;
+  > h1 {
+    font-size: 50px;
+    @media (max-width: ${breakpoints.tablet}) {
+      font-size: 40px;
+    }
+    @media (max-width: ${breakpoints.smallTablet}) {
+      align-self: center;
+      text-align: center;
+      font-size: 32px;
+    }
+    @media (max-width: ${breakpoints.mobile}) {
+      font-size: 30px;
+    }
+    @media (max-width: ${breakpoints.smallDevice}) {
+      font-size: 25px;
+    }
+  }
+`;
+export const CardLine = styled.div`
+  display: flex;
+  width: 95%;
+  height: auto;
+  flex-direction: row;
+  margin-bottom: 20px;
+  justify-content: space-around;
+  gap: 3rem;
+  @media (max-width: ${breakpoints.mobile}) {
+    margin-bottom: 0;
   }
 `;

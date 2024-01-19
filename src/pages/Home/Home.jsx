@@ -7,6 +7,8 @@ import {
   SVGDiv,
   DivLine,
   IANotFound,
+  TrendingTools,
+  RecentlyAddedTool,
 } from "./Styles";
 import { SearchOutlined } from "@ant-design/icons";
 import { Card } from "../../components";
@@ -29,9 +31,16 @@ export default function Home() {
   const [features, setFeatures] = useState([]);
   const [prices, setPrices] = useState([]);
   const [profession, setProfession] = useState([]);
-
   const [categoryIDsArrays, setCategoryIDsArrays] = useState([]);
-
+  //Trending Tools
+  const shuffleArray = (array) => {
+    const shuffledArray = [...array];
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    }
+    return shuffledArray;
+  };
   // Pagination
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -149,8 +158,8 @@ export default function Home() {
       {filteredAiTools?.aiTools && filteredAiTools?.aiTools.length === 0 && (
         <IANotFound>IA não encontrada</IANotFound>
       )}
-      {groupedData.map((page, pageIndex) => (
-        <DivLine key={pageIndex} style={{ display: pageIndex === currentPage ? "flex" : "none" }}>
+      {groupedData.map((page, groupIndex) => (
+        <DivLine key={groupIndex} style={{ display: groupIndex === currentPage ? "flex" : "none" }}>
           {page.map((row, rowIndex) => (
             <Line key={rowIndex}>
               {row.map((content) => (
@@ -177,6 +186,56 @@ export default function Home() {
           setCurrentPage={setCurrentPage}
         />
       </ButtonDiv>
+      <TrendingTools>
+        <h1>Em Alta</h1>
+        {groupedData.map((group, groupIndex) => (
+          <DivLine
+            key={groupIndex}
+            style={{ display: groupIndex === currentPage ? "flex" : "none" }}
+          >
+            {group.map((row, rowIndex) => (
+              <Line key={rowIndex}>
+                {shuffleArray(row).map((content) => (
+                  <Card
+                    data={{
+                      ...content,
+                      favorite: favoriteAiTools.find(
+                        (favoriteAiTool) => favoriteAiTool["_id"] === content._id
+                      ),
+                    }}
+                    key={content?.name}
+                  />
+                ))}
+              </Line>
+            ))}
+          </DivLine>
+        ))}
+      </TrendingTools>
+      <RecentlyAddedTool>
+        <h1>Adicionados Recentemente</h1>
+        {groupedData.map((page, groupIndex) => (
+          <DivLine
+            key={groupIndex}
+            style={{ display: groupIndex === currentPage ? "flex" : "none" }}
+          >
+            {page.map((row, rowIndex) => (
+              <Line key={rowIndex}>
+                {row.reverse().map((content) => (
+                  <Card
+                    data={{
+                      ...content,
+                      favorite: favoriteAiTools.find(
+                        (favoriteAiTool) => favoriteAiTool["_id"] === content._id
+                      ),
+                    }}
+                    key={content?.name}
+                  />
+                ))}
+              </Line>
+            ))}
+          </DivLine>
+        ))}
+      </RecentlyAddedTool>
     </Container>
   );
 }
