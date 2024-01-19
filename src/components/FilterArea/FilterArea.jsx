@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Button } from "antd";
 import * as managerService from "../../services/ManagerService";
 import {
   ContainerFilter,
   SearchBar,
-  InputStyled,
   SelectStyled,
   MultipleSelect,
   DivSelect,
   UniSelect,
+  ButtonsDiv,
+  Buttons,
 } from "./Styles";
 import { useGlobalColor } from "../../stores/GlobalColor";
 
@@ -19,8 +19,14 @@ export default function FilterArea({
   filterReset,
   idsArray,
   setArray,
-  filter,
+  features,
+  setFeatures,
+  prices,
+  setPrices,
+  profession,
+  setProfession,
   setFilter,
+  filter,
 }) {
   // Set variables
 
@@ -44,23 +50,17 @@ export default function FilterArea({
   }, []);
 
   const handleClearFilters = () => {
-    setCategoriesFeature((prevCategories) =>
-      prevCategories.map((category) => ({ ...category, checked: false }))
-    );
-    setCategoriesPrices((prevCategories) =>
-      prevCategories.map((category) => ({ ...category, checked: false }))
-    );
-    setCategoriesProfession((prevCategories) =>
-      prevCategories.map((category) => ({ ...category, checked: false }))
-    );
+    setFeatures([]);
+    setPrices([]);
+    setProfession([]);
     setArray([]);
     filterReset();
   };
 
   const transformArrayItems = (OriginalArray) => {
     const newArray = OriginalArray.map((item) => ({
-      value: item._id,
-      label: item.name,
+      value: item?._id,
+      label: item?.name,
     }));
     return newArray;
   };
@@ -70,12 +70,52 @@ export default function FilterArea({
     { label: "Nome", value: "name" },
     { label: "Avaliação", value: "avaliation" },
   ];
+  const handleFilterChange = () => {
+    const newArray = [...features, ...prices, ...profession];
+    setArray(newArray);
+  };
+  useEffect(() => {
+    handleFilterChange();
+  }, [features, prices, profession]);
 
   return (
     <ContainerFilter>
-      <Button onClick={() => onFilterClick(idsArray)}>Filtrar</Button>
-      <Button onClick={handleClearFilters}>Limpar Filtros</Button>
-
+      <DivSelect>
+        <MultipleSelect
+          value={features}
+          onChange={(e) => setFeatures(e.value)}
+          options={transformArrayItems(categoriesFeature)}
+          optionLabel='label'
+          placeholder='Escolha as características'
+          display='chip'
+          className='w-full md:w-20rem'
+          filter
+        />
+        <MultipleSelect
+          value={prices}
+          onChange={(e) => setPrices(e.value)}
+          options={transformArrayItems(categoriesPrices)}
+          optionLabel='label'
+          placeholder='Escolha os preços'
+          display='chip'
+          className='w-full md:w-20rem'
+          filter
+        />
+        <MultipleSelect
+          value={profession}
+          onChange={(e) => setProfession(e.value)}
+          options={transformArrayItems(categoriesProfession)}
+          optionLabel='label'
+          placeholder='Escolha as profissões'
+          display='chip'
+          className='w-full md:w-20rem'
+          filter
+        />
+      </DivSelect>
+      <ButtonsDiv>
+        <Buttons onClick={() => onFilterClick(idsArray)}>Filtrar</Buttons>
+        <Buttons onClick={handleClearFilters}>Limpar Filtros</Buttons>
+      </ButtonsDiv>
       <SearchBar>
         <UniSelect
           value={filter}
@@ -98,4 +138,10 @@ FilterArea.propTypes = {
   filterReset: PropTypes.func.isRequired,
   idsArray: PropTypes.array.isRequired,
   setArray: PropTypes.func.isRequired,
+  features: PropTypes.array.isRequired,
+  setFeatures: PropTypes.func.isRequired,
+  prices: PropTypes.array.isRequired,
+  setPrices: PropTypes.func.isRequired,
+  profession: PropTypes.array.isRequired,
+  setProfession: PropTypes.func.isRequired,
 };

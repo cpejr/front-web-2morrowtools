@@ -1,7 +1,6 @@
 import {
   AutoCompleteInput,
   Container,
-  HomeImage,
   IconWrapper,
   Line,
   ButtonDiv,
@@ -9,7 +8,6 @@ import {
   DivLine,
   IANotFound,
 } from "./Styles";
-import homeImage from "../../assets/home-image.svg";
 import { SearchOutlined } from "@ant-design/icons";
 import { Card } from "../../components";
 import FilterArea from "../../components/FilterArea/FilterArea";
@@ -28,10 +26,15 @@ export default function Home() {
   const [namesArray, setNamesArray] = useState([]);
   const [favoriteAiTools, setFavoriteAITools] = useState([]);
   const { getUser } = useAuthStore();
+  const [features, setFeatures] = useState([]);
+  const [prices, setPrices] = useState([]);
+  const [profession, setProfession] = useState([]);
+
   const [categoryIDsArrays, setCategoryIDsArrays] = useState([]);
   const [filter, setFilter] = useState([]);
 
   // Pagination
+
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 8;
   const totalPages = Math.ceil(filteredAiTools?.aiTools?.length / itemsPerPage);
@@ -45,6 +48,7 @@ export default function Home() {
   };
 
   // Rendering multiples Cards
+
   const groupedData = [];
   const isLargeDesktopScreen = useMediaQuery({ minWidth: 1371 });
   const isDesktopScreen = useMediaQuery({ minWidth: 1130 });
@@ -147,7 +151,6 @@ export default function Home() {
 
   return (
     <Container>
-      <HomeImage src={homeImage} />
       <h1>2MORROW TOOLS</h1>
       <IconWrapper>
         <SVGDiv>
@@ -166,6 +169,12 @@ export default function Home() {
         idsArray={categoryIDsArrays}
         setArray={setCategoryIDsArrays}
         filterReset={handleFilterReset}
+        features={features}
+        setFeatures={setFeatures}
+        prices={prices}
+        setPrices={setPrices}
+        profession={profession}
+        setProfession={setProfession}
         filter={filter}
         setFilter={setFilter}
       />

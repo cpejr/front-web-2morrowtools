@@ -41,9 +41,6 @@ export const Container = styled.div`
   }
 `;
 
-export const HomeImage = styled.img`
-  width: 100%;
-`;
 
 export const InputStyled = styled(Input)`
   width: 35rem;
@@ -61,18 +58,7 @@ export const InputStyled = styled(Input)`
   }
 `;
 
-export const Line = styled.div`
-  display: flex;
-  width: 100%;
-  height: auto;
-  flex-direction: row;
-  margin: 50px 0px 20px 0px;
-  justify-content: center;
-  gap: 4rem;
-  @media (max-width: ${breakpoints.mobile}) {
-    margin-bottom: 0;
-  }
-`;
+
 export const IconWrapper = styled.div`
   width: 80%;
   height: 3rem;
@@ -148,11 +134,22 @@ export const ButtonDiv = styled.div`
 export const DivLine = styled.div`
   display: flex;
   flex-direction: column;
-  width: 2rem;
-  width: fit-content;
+  width: 100%;
   align-self: center;
+  align-items: center;
   justify-content: center;
   gap: 2rem;
+`;
+export const Line = styled.div`
+  display: flex;
+  width: 50%;
+  height: auto;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+  @media (max-width: ${breakpoints.mobile}) {
+    margin-bottom: 0;
+  }
 `;
 export const IANotFound = styled.div`
   background-image: url("src/assets/imageIANotFound.png");

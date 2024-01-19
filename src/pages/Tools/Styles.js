@@ -131,6 +131,8 @@ export const DiscoverDiv = styled.div`
   width: 90%;
   flex-direction: row;
   align-self: center;
+   margin-top: 4rem;
+   margin-bottom: 2rem;
   gap: 1rem;
   height: auto;
   justify-content: center;
@@ -140,9 +142,6 @@ export const DiscoverDiv = styled.div`
   padding: 4rem 2rem;
   @media (max-width: ${breakpoints.smallTablet}) {
     flex-direction: column;
-  }
-  @media (max-width: ${breakpoints.mobile}) {
-    margin-top: 2rem;
   }
 `;
 export const DiscoverData = styled.div`

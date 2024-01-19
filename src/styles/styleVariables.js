@@ -1,4 +1,4 @@
-const theme = "Light";
+const theme = localStorage.getItem("globalColor");
 export const colors = {
   blue: {
     background: theme === "Dark" ? "#080B10" : "#F4EFF9",
