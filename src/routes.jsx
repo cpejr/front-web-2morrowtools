@@ -8,7 +8,7 @@ import {
 
 import { AppLayout } from "./layouts";
 
-import { Home, IAProfile, Favorites, NewTool, Tools, NewCategory } from "./pages";
+import { Home, IAProfile, Favorites, NewTool, Tools, NewCategory, Blog } from "./pages";
 import isAdm from "./utils/isAdm";
 import useAuthStore from "./stores/auth";
 
@@ -30,6 +30,11 @@ function Routes() {
             path='/adicionar-categoria'
             element={isAdm(userEmail) ? <NewCategory /> : <Navigate to='/' />}
           />
+          <Route
+            path='/blog'
+            element={isAdm(userEmail) ? <Blog /> : <Navigate to='/' />}
+          />
+           
           <Route path='/perfil-ia' element={<IAProfile />} />
           <Route path='/ferramenta/:name' element={<Tools />} />
           <Route index element={<Home />} />
