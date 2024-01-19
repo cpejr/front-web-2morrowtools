@@ -65,87 +65,28 @@ export default function FilterArea({
     return newArray;
   };
 
-  const GroupArray = (categoryFeature, categoryPrices, categoryProfession) => {
-    const GroupedArray = [
-      {
-        label: "Características",
-        code: "Caracteristicas",
-        items: transformArrayItems(categoryFeature),
-      },
-      {
-        label: "Preços",
-        code: "Precos",
-        items: transformArrayItems(categoryPrices),
-      },
-      {
-        label: "Profissões",
-        code: "Profissoes",
-        items: transformArrayItems(categoryProfession),
-      },
-    ];
-    return GroupedArray;
-  };
-
-  const GroupedCategories =
-    GroupArray(categoriesFeature, categoriesPrices, categoriesProfession) || [];
-  const filtros = [
-    { label: "Data", value: "data" },
+  const filters = [
+    { label: "Data", value: "date" },
     { label: "Nome", value: "name" },
-    { label: "Estrelas", value: "estrelas" },
+    { label: "Avaliação", value: "avaliation" },
   ];
 
   return (
     <ContainerFilter>
-      <DivSelect>
-        <MultipleSelect
-          value={idsArray}
-          onChange={(e) => setArray(e.value)}
-          options={GroupedCategories}
-          optionLabel='label'
-          optionGroupLabel='label'
-          optionGroupChildren='items'
-          placeholder='Escolha as categorias'
-          display='chip'
-          className='w-full md:w-20rem'
-        ></MultipleSelect>
-      </DivSelect>
       <Button onClick={() => onFilterClick(idsArray)}>Filtrar</Button>
       <Button onClick={handleClearFilters}>Limpar Filtros</Button>
-      <DivSelect>
+
+      <SearchBar>
         <UniSelect
           value={filter}
           onChange={(e) => setFilter(e.value)}
-          options={filtros}
+          options={filters}
           optionLabel='label'
           editable
           showClear
           placeholder='Ordenar Por'
           className='w-full md:w-14rem'
         ></UniSelect>
-      </DivSelect>
-
-      <SearchBar>
-        <SelectStyled
-          mode='multiple'
-          showSearch
-          dropdownStyle={{ backgroundColor: globalColor === "Dark" ? "#080B10" : "#F4EFF9" }}
-          placeholder='Ordernar Por'
-          optionFilterProp='children'
-          options={[
-            {
-              value: "date",
-              label: "Data",
-            },
-            {
-              value: "nome",
-              label: "Nome",
-            },
-            {
-              value: "estrelas",
-              label: "Estrelas",
-            },
-          ]}
-        />
         <InputStyled placeholder='Lorem Impsum'></InputStyled>
       </SearchBar>
     </ContainerFilter>

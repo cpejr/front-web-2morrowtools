@@ -110,6 +110,7 @@ export const DivSelect = styled.div`
 
 export const UniSelect = styled(Dropdown)`
   background-color: ${colors.black};
+  margin: 10px;
 
   .p-dropdown-label {
     color: ${colors.white};

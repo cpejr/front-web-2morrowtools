@@ -144,7 +144,6 @@ export default function Home() {
       setFavoriteAITools(favorites);
     }
   }
-  console.log("✌️filter --->", filter);
 
   return (
     <Container>
