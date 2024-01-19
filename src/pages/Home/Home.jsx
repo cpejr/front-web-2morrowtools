@@ -96,34 +96,6 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function managerTest() {
-    const data = {
-      comment: "Arthur",
-      id_user: "656f7ce5d0258e011a2cb56b",
-      id_ia: "656ccb5c2d3069936d590c72",
-    };
-
-    await managerService.useGetComments();
-    const id = await managerService.usePostComments(data);
-    await managerService.useGetComments();
-
-    const idloggedin = {
-      id_user_makingChange: id.comments.id_user,
-      type_user_makingChange: "Admin",
-    };
-    const dataAltered = {
-      comment: "Not Arthur",
-      id_user: "656f7ce5d0258e011a2cb56b",
-      id_ia: "656ccb5c2d3069936d590c72",
-      id_user_makingChange: id.comments.id_user,
-      type_user_makingChange: "Admin",
-    };
-    await managerService.useEditComments(id.comments._id, dataAltered);
-    await managerService.useGetComments();
-    await managerService.useDeleteComments(id.comments._id, idloggedin);
-    await managerService.useGetComments();
-  }
-
   // Auto Complete
 
   const search = () => {

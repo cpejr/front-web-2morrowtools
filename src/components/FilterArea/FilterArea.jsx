@@ -5,7 +5,6 @@ import * as managerService from "../../services/ManagerService";
 import {
   ContainerFilter,
   SearchBar,
-  SelectStyled,
   MultipleSelect,
   DivSelect,
   UniSelect,
@@ -127,7 +126,6 @@ export default function FilterArea({
           placeholder='Ordenar Por'
           className='w-full md:w-14rem'
         ></UniSelect>
-        <InputStyled placeholder='Lorem Impsum'></InputStyled>
       </SearchBar>
     </ContainerFilter>
   );
