@@ -27,7 +27,6 @@ import MenuHeader from "./MenuHeader";
 import { signInWithGooglePopup } from "./../../services/firebase";
 import { usePostUser } from "../../services/ManagerService";
 import useAuthStore from "../../stores/auth";
-import isAdm from "../../utils/isAdm";
 import React, { useState } from "react";
 import { useGlobalColor } from "../../stores/GlobalColor";
 
@@ -36,7 +35,7 @@ export default function Header() {
   const [collapse, setCollapse] = useState(false);
   const { globalColor, setGlobalColor } = useGlobalColor();
   const availableTheme = ["Dark", "Light"];
-  const { setToken, getToken, getUser, clearAuth } = useAuthStore();
+  const { setToken, getToken, getUser, clearAuth, setUser } = useAuthStore();
   const [loginLogoff, setLoginLogoff] = React.useState(getToken() ? "Fazer Logoff" : "Fazer Login");
   const [profilePicture, setProfilePicture] = React.useState(
     loginLogoff === "Fazer Login" ? (
@@ -45,18 +44,17 @@ export default function Header() {
       <img src={getUser()?.imageURL} alt='Profile' />
     )
   );
-
   const logGoogleUser = async () => {
     if (getToken() === null) {
-      const response = await signInWithGooglePopup();
-      const tokenObject = await usePostUser({
-        name: response?.user?.displayName,
-        email: response?.user?.email,
-        imageURL: response?.user?.photoURL,
-        type: "Admin",
+      const googleResponse = await signInWithGooglePopup();
+      const response = await usePostUser({
+        name: googleResponse?.user?.displayName,
+        email: googleResponse?.user?.email,
+        imageURL: googleResponse?.user?.photoURL,
+        type: "User",
       });
-      setToken(tokenObject.token);
-      //setUser(tokenObject.userFound);
+      setToken(response.token);
+      setUser(response.user);
 
       window.location.reload();
 
@@ -109,7 +107,7 @@ export default function Header() {
         <Link>
           <span onClick={() => redirectToFavorites()}>Meus Favoritos</span>
         </Link>
-        {isAdm(getUser()?.email) ? (
+        {getUser()?.type === "Admin" ? (
           <React.Fragment>
             <Link>
               <span onClick={() => redirectToIa()}>Gerenciar Ferramentas</span>
