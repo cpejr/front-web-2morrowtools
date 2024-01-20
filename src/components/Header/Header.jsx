@@ -27,7 +27,7 @@ import MenuHeader from "./MenuHeader";
 import { signInWithGooglePopup } from "./../../services/firebase";
 import { usePostUser } from "../../services/ManagerService";
 import useAuthStore from "../../stores/auth";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useGlobalColor } from "../../stores/GlobalColor";
 
 export default function Header() {
@@ -44,6 +44,7 @@ export default function Header() {
       <img src={getUser()?.imageURL} alt='Profile' />
     )
   );
+
   const logGoogleUser = async () => {
     if (getToken() === null) {
       const googleResponse = await signInWithGooglePopup();
@@ -54,7 +55,12 @@ export default function Header() {
         type: "User",
       });
       setToken(response.token);
-      setUser(response.user);
+      setUser({
+        name: googleResponse?.user?.displayName,
+        email: googleResponse?.user?.email,
+        imageURL: googleResponse?.user?.photoURL,
+        type: "User",
+      });
 
       window.location.reload();
 
