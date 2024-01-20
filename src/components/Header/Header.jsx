@@ -52,7 +52,7 @@ export default function Header() {
         name: googleResponse?.user?.displayName,
         email: googleResponse?.user?.email,
         imageURL: googleResponse?.user?.photoURL,
-        type: "",
+        type: "User",
       });
       setToken(response.token);
       setUser({
