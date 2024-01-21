@@ -86,7 +86,6 @@ export default function FilterArea({
           options={transformArrayItems(categoriesFeature)}
           optionLabel='label'
           placeholder='Escolha as características'
-          display='chip'
           className='w-full md:w-20rem'
           filter
         />
@@ -96,7 +95,6 @@ export default function FilterArea({
           options={transformArrayItems(categoriesPrices)}
           optionLabel='label'
           placeholder='Escolha os preços'
-          display='chip'
           className='w-full md:w-20rem'
           filter
         />
@@ -106,16 +104,10 @@ export default function FilterArea({
           options={transformArrayItems(categoriesProfession)}
           optionLabel='label'
           placeholder='Escolha as profissões'
-          display='chip'
           className='w-full md:w-20rem'
           filter
         />
-      </DivSelect>
-      <ButtonsDiv>
-        <Buttons onClick={() => onFilterClick(idsArray)}>Filtrar</Buttons>
-        <Buttons onClick={handleClearFilters}>Limpar Filtros</Buttons>
-      </ButtonsDiv>
-      <SearchBar>
+
         <UniSelect
           value={filter}
           onChange={(e) => setFilter(e.value)}
@@ -126,7 +118,11 @@ export default function FilterArea({
           placeholder='Ordenar Por'
           className='w-full md:w-14rem'
         ></UniSelect>
-      </SearchBar>
+      </DivSelect>
+      <ButtonsDiv>
+        <Buttons onClick={() => onFilterClick(idsArray)}>Filtrar</Buttons>
+        <Buttons onClick={handleClearFilters}>Limpar Filtros</Buttons>
+      </ButtonsDiv>
     </ContainerFilter>
   );
 }
