@@ -4,14 +4,12 @@ import PropTypes from "prop-types";
 import * as managerService from "../../services/ManagerService";
 import {
   ContainerFilter,
-  SearchBar,
   MultipleSelect,
   DivSelect,
   UniSelect,
   ButtonsDiv,
   Buttons,
 } from "./Styles";
-import { useGlobalColor } from "../../stores/GlobalColor";
 
 export default function FilterArea({
   onFilterClick,
@@ -32,7 +30,6 @@ export default function FilterArea({
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [categoriesPrices, setCategoriesPrices] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
-  const { globalColor } = useGlobalColor();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,6 +50,7 @@ export default function FilterArea({
     setPrices([]);
     setProfession([]);
     setArray([]);
+    setFilter([]);
     filterReset();
   };
 
@@ -138,4 +136,6 @@ FilterArea.propTypes = {
   setPrices: PropTypes.func.isRequired,
   profession: PropTypes.array.isRequired,
   setProfession: PropTypes.func.isRequired,
+  setFilter: PropTypes.func.isRequired,
+  filter: PropTypes.array.isRequired,
 };

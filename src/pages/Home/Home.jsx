@@ -7,6 +7,8 @@ import {
   SVGDiv,
   DivLine,
   IANotFound,
+  TrendingTools,
+  RecentlyAddedTool,
 } from "./Styles";
 import { SearchOutlined } from "@ant-design/icons";
 import { Card } from "../../components";
@@ -21,6 +23,9 @@ import Pagination from "../../components/features/Pagination/Pagination";
 
 export default function Home() {
   const [filteredAiTools, setFilteredAiTools] = useState([]);
+  const [recentFilteredAiTools, setRecentFilteredAiTools] = useState([]);
+  const [highRateFilteredAiTools, setHighRateFilteredAiTools] = useState([]);
+
   const [names, setNames] = useState("");
   const debouncedName = useDebounce(names);
   const [namesArray, setNamesArray] = useState([]);
@@ -29,15 +34,18 @@ export default function Home() {
   const [features, setFeatures] = useState([]);
   const [prices, setPrices] = useState([]);
   const [profession, setProfession] = useState([]);
-
   const [categoryIDsArrays, setCategoryIDsArrays] = useState([]);
   const [filter, setFilter] = useState([]);
 
   // Pagination
 
   const [currentPage, setCurrentPage] = useState(0);
+  const [highRateCurrentPage, setHighRateCurrentPage] = useState(0);
+  const [recentCurrentPage, setRecentCurrentPage] = useState(0);
   const itemsPerPage = 8;
   const totalPages = Math.ceil(filteredAiTools?.aiTools?.length / itemsPerPage);
+  const highRateTotalPages = Math.ceil(highRateFilteredAiTools?.aiTools?.length / itemsPerPage);
+  const recentTotalPages = Math.ceil(recentFilteredAiTools?.aiTools?.length / itemsPerPage);
 
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
@@ -47,9 +55,25 @@ export default function Home() {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
   };
 
+  const handleHighRatePrevPage = () => {
+    setHighRateCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
+  };
+  const handleHighRateNextPage = () => {
+    setHighRateCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
+  };
+
+  const handleRecentPrevPage = () => {
+    setRecentCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
+  };
+  const handleRecentNextPage = () => {
+    setRecentCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
+  };
+
   // Rendering multiples Cards
 
   const groupedData = [];
+  const highRateData = [];
+  const recentData = [];
   const isLargeDesktopScreen = useMediaQuery({ minWidth: 1371 });
   const isDesktopScreen = useMediaQuery({ minWidth: 1130 });
   const isMobileScreen = useMediaQuery({ maxWidth: 700 });
@@ -65,6 +89,26 @@ export default function Home() {
     }
 
     groupedData.push(rows);
+  }
+  for (let i = 0; i < recentFilteredAiTools?.aiTools?.length; i += itemsPerPage) {
+    const pageData = recentFilteredAiTools?.aiTools?.slice(i, i + itemsPerPage);
+    const rows = [];
+
+    for (let j = 0; j < itemsPerPage / itemsPerRow; j++) {
+      rows.push(pageData.slice(j * itemsPerRow, (j + 1) * itemsPerRow));
+    }
+
+    recentData.push(rows);
+  }
+  for (let i = 0; i < highRateFilteredAiTools?.aiTools?.length; i += itemsPerPage) {
+    const pageData = highRateFilteredAiTools?.aiTools?.slice(i, i + itemsPerPage);
+    const rows = [];
+
+    for (let j = 0; j < itemsPerPage / itemsPerRow; j++) {
+      rows.push(pageData.slice(j * itemsPerRow, (j + 1) * itemsPerRow));
+    }
+
+    highRateData.push(rows);
   }
 
   // Backend Calls
@@ -86,6 +130,18 @@ export default function Home() {
       setFavoriteAITools(favorites);
     }
   }
+  async function RecentSection() {
+    const filteredCategory = await managerService.useGetAIToolsByCategoryId({
+      type: "date",
+    });
+    setRecentFilteredAiTools(filteredCategory);
+  }
+  async function HighRateSection() {
+    const filteredCategory = await managerService.useGetAIToolsByCategoryId({
+      type: "avaliation",
+    });
+    setHighRateFilteredAiTools(filteredCategory);
+  }
 
   useEffect(() => {
     FilteringAIsByCategoriesIds();
@@ -93,6 +149,8 @@ export default function Home() {
   }, [debouncedName]);
   useEffect(() => {
     FilteringAIsByCategoriesIds();
+    HighRateSection();
+    RecentSection();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -135,7 +193,6 @@ export default function Home() {
           onChange={(e) => setNames(e.value)}
         ></AutoCompleteInput>
       </IconWrapper>
-
       <FilterArea
         onFilterClick={handleFilterClick}
         idsArray={categoryIDsArrays}
@@ -151,7 +208,7 @@ export default function Home() {
         setFilter={setFilter}
       />
       {filteredAiTools?.aiTools && filteredAiTools?.aiTools.length === 0 && (
-        <IANotFound>IA não encontrada</IANotFound>
+        <IANotFound>Nenhuma IA encontrada</IANotFound>
       )}
       {groupedData.map((page, pageIndex) => (
         <DivLine key={pageIndex} style={{ display: pageIndex === currentPage ? "flex" : "none" }}>
@@ -181,6 +238,68 @@ export default function Home() {
           setCurrentPage={setCurrentPage}
         />
       </ButtonDiv>
+      <TrendingTools>
+        <h1>Em Alta</h1>
+        {highRateData.map((page, pageIndex) => (
+          <DivLine key={pageIndex} style={{ display: pageIndex === currentPage ? "flex" : "none" }}>
+            {page.map((row, rowIndex) => (
+              <Line key={rowIndex}>
+                {row.map((content) => (
+                  <Card
+                    data={{
+                      ...content,
+                      favorite: favoriteAiTools.find(
+                        (favoriteAiTool) => favoriteAiTool["_id"] === content._id
+                      ),
+                    }}
+                    key={content?.name}
+                  />
+                ))}
+              </Line>
+            ))}
+          </DivLine>
+        ))}
+        <ButtonDiv>
+          <Pagination
+            currentPage={highRateCurrentPage}
+            totalPages={highRateTotalPages}
+            handlePrevPage={handleHighRatePrevPage}
+            handleNextPage={handleHighRateNextPage}
+            setCurrentPage={setHighRateCurrentPage}
+          />
+        </ButtonDiv>
+      </TrendingTools>
+      <RecentlyAddedTool>
+        <h1>Adicionados Recentemente</h1>
+        {recentData.map((page, pageIndex) => (
+          <DivLine key={pageIndex} style={{ display: pageIndex === currentPage ? "flex" : "none" }}>
+            {page.map((row, rowIndex) => (
+              <Line key={rowIndex}>
+                {row.map((content) => (
+                  <Card
+                    data={{
+                      ...content,
+                      favorite: favoriteAiTools.find(
+                        (favoriteAiTool) => favoriteAiTool["_id"] === content._id
+                      ),
+                    }}
+                    key={content?.name}
+                  />
+                ))}
+              </Line>
+            ))}
+          </DivLine>
+        ))}
+        <ButtonDiv>
+          <Pagination
+            currentPage={recentCurrentPage}
+            totalPages={recentTotalPages}
+            handlePrevPage={handleRecentPrevPage}
+            handleNextPage={handleRecentNextPage}
+            setCurrentPage={setRecentCurrentPage}
+          />
+        </ButtonDiv>
+      </RecentlyAddedTool>
     </Container>
   );
 }
