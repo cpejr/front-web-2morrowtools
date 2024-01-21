@@ -2,6 +2,7 @@ import { Input } from "antd";
 import { AutoComplete } from "primereact/autocomplete";
 import styled from "styled-components";
 import { breakpoints, colors, fonts } from "../../styles/styleVariables";
+import imageIANotFound from "../../assets/imageIANotFound.png";
 
 export const Container = styled.div`
   display: flex;
@@ -41,7 +42,6 @@ export const Container = styled.div`
   }
 `;
 
-
 export const InputStyled = styled(Input)`
   width: 35rem;
   height: 35px;
@@ -57,7 +57,6 @@ export const InputStyled = styled(Input)`
     width: 22rem;
   }
 `;
-
 
 export const IconWrapper = styled.div`
   width: 80%;
@@ -152,7 +151,7 @@ export const Line = styled.div`
   }
 `;
 export const IANotFound = styled.div`
-  background-image: url("src/assets/imageIANotFound.png");
+  background-image: url(${imageIANotFound});
   background-size: cover;
   width: 500px;
   height: 500px;
@@ -168,5 +167,60 @@ export const IANotFound = styled.div`
   @media (max-width: 520px) {
     width: 300px;
     height: 300px;
+  }
+`;
+export const TrendingTools = styled.div`
+  display: flex;
+  width: 95%;
+  flex-direction: column;
+  align-self: center;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  height: auto;
+  > h1 {
+    font-size: 50px;
+    @media (max-width: ${breakpoints.tablet}) {
+      font-size: 40px;
+    }
+    @media (max-width: ${breakpoints.smallTablet}) {
+      align-self: center;
+      text-align: center;
+      font-size: 32px;
+    }
+    @media (max-width: ${breakpoints.mobile}) {
+      font-size: 30px;
+    }
+    @media (max-width: ${breakpoints.smallDevice}) {
+      font-size: 25px;
+    }
+  }
+`;
+
+export const RecentlyAddedTool = styled.div`
+  display: flex;
+  width: 95%;
+  flex-direction: column;
+  align-self: center;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  height: auto;
+  > h1 {
+    font-size: 50px;
+    @media (max-width: ${breakpoints.tablet}) {
+      font-size: 40px;
+    }
+    @media (max-width: ${breakpoints.smallTablet}) {
+      align-self: center;
+      text-align: center;
+      font-size: 32px;
+    }
+    @media (max-width: ${breakpoints.mobile}) {
+      font-size: 30px;
+    }
+    @media (max-width: ${breakpoints.smallDevice}) {
+      font-size: 25px;
+    }
   }
 `;
