@@ -41,7 +41,6 @@ export const Container = styled.div`
   }
 `;
 
-
 export const InputStyled = styled(Input)`
   width: 35rem;
   height: 35px;
@@ -57,7 +56,6 @@ export const InputStyled = styled(Input)`
     width: 22rem;
   }
 `;
-
 
 export const IconWrapper = styled.div`
   width: 80%;
@@ -123,25 +121,6 @@ export const AutoCompleteInput = styled(AutoComplete)`
   }
   @media (max-width: ${breakpoints.smallMobile}) {
     width: 87%;
-  }
-`;
-export const IANotFound = styled.div`
-  background-image: url("src/assets/imageIANotFound.png");
-  background-size: cover;
-  width: 500px;
-  height: 500px;
-  font-family: ${fonts.Exo2};
-  font-size: 1.5rem;
-  text-align: center;
-  @media (max-width: ${breakpoints.smallMobile}) {
-    width: 60%;
-  }
-  @media (max-width: ${breakpoints.smallDevice}) {
-    width: 70%;
-  }
-  @media (max-width: 520px) {
-    width: 300px;
-    height: 300px;
   }
 `;
 

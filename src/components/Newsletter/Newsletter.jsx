@@ -1,22 +1,21 @@
-import { Container, Text1, Text2, Texts, Inputs, Break, SendButton, NameInput } from "./Styles";
-import { Input, Button } from "antd";
+import { Container, Title, Description, Texts, Inputs, Break, Input1, Button1 } from "./Styles";
 export default function Newsletter() {
   return (
     <Container>
       <Texts>
-        <Text1>Descubra novas ferramentas de tecnologia toda semana! </Text1>
-        <Text2>
+        <Title>Descubra novas ferramentas de tecnologia toda semana! </Title>
+        <Description>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua
-        </Text2>
+        </Description>
       </Texts>
       <Inputs>
         <Break>
-          <NameInput placeholder='Nome:'></NameInput>
-          <NameInput placeholder='Email:'></NameInput>
+          <Input1 placeholder='Nome:'></Input1>
+          <Input1 placeholder='Email:'></Input1>
         </Break>
-        <NameInput placeholder='Mensagem:'></NameInput>
-        <SendButton>ENVIAR</SendButton>
+        <Input1 placeholder='Mensagem:'></Input1>
+        <Button1>ENVIAR</Button1>
       </Inputs>
     </Container>
   );
