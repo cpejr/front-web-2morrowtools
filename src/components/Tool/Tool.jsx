@@ -29,13 +29,40 @@ import {
   useGetAvaliationByAIId,
   useGetAvaliation,
   useUpdateAvaliation,
+  useGetImage,
 } from "../../services/ManagerService";
 import { toast } from "react-toastify";
+import { LoadingOutlined } from "@ant-design/icons";
 
 export default function Tool({ data }) {
   const [starsValue, setStarsValue] = useState(0);
   const [starsValue2, setStarsValue2] = useState(data.stars || 0);
   const [hoverValue, setHoverValue] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState(data?.imageURL);
+
+  const getImage = async () => {
+    try {
+      if (
+        data.aiTools &&
+        data?.aiTools[0]?.imageURL.includes("2morrowstorage.blob.core.windows.net")
+      ) {
+        setLoading(true);
+
+        const azureImage = await useGetImage(data?.aiTools[0]?.imageURL);
+
+        setImage(azureImage.data.image);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar imagem de ferramenta", error);
+      toast.error(error.message);
+    }
+  };
+  useEffect(() => {
+    getImage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   const { getUser } = useAuthStore();
   const user = getUser()?._id;
@@ -139,7 +166,7 @@ export default function Tool({ data }) {
           <Row key={index}>
             <ImageCollumn>
               <Image>
-                <img src={toolData?.imageURL} alt={`ToolImage ${index}`} />
+                {loading ? <LoadingOutlined /> : <img src={image} alt={`ToolImage ${index}`} />}
               </Image>
               <TagsLine key={`line-${index}`}>
                 <Tag>{toolData?.id_categoryfeature?.name}</Tag>

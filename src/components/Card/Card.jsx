@@ -36,11 +36,15 @@ export default function Card({ data }) {
   const [loading, setLoading] = useState(false);
 
   const getImage = async () => {
-    if (data?.imageURL.includes("2morrowstorage.blob.core.windows.net")) {
-      setLoading(true);
-      const azureImage = await useGetImage(data.imageURL);
-      setImage(azureImage.data.image);
-      setLoading(false);
+    try {
+      if (data?.imageURL.includes("2morrowstorage.blob.core.windows.net")) {
+        setLoading(true);
+        const azureImage = await useGetImage(data.imageURL);
+        setImage(azureImage.data.image);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar imagem de ferramenta", error);
     }
   };
 
