@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import Input from "antd/es/input/Input";
 import { breakpoints, colors } from "../../../styles/styleVariables";
-
+import { Input } from "antd";
+Input;
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -55,6 +55,7 @@ export const IconContainer = styled.div`
   svg {
     position: absolute;
     left: 10px;
+    color: ${colors.icon};
   }
 `;
 

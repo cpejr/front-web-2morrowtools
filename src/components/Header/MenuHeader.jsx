@@ -10,7 +10,6 @@ import { HamburgerMenu } from "./Styles";
 import { signInWithGoogleRedirect, getGoogleRedirectResult } from "./../../services/firebase";
 import useAuthStore from "../../stores/auth";
 import { usePostUser } from "../../services/ManagerService";
-import isAdm from "../../utils/isAdm";
 import PropTypes from "prop-types";
 
 function getItem(label, key, icon, children, type) {
@@ -25,13 +24,13 @@ function getItem(label, key, icon, children, type) {
 
 export default function MenuHeader({ globalColor, setGlobalColor }) {
   const navigate = useNavigate();
-  const { setToken, getToken, getUser, clearAuth } = useAuthStore();
+  const { setToken, getToken, getUser, clearAuth, setUser } = useAuthStore();
 
   const menuItems = [
     getItem("", "hamburger", <MenuOutlined />, [
       getItem(" Página Inicial", "/", <ToolOutlined style={{ fontSize: "1.3rem" }} />),
       getItem(" Meus Favoritos", "/favoritos", <HeartOutlined style={{ fontSize: "1.3rem" }} />),
-      ...(isAdm(getUser()?.email)
+      ...(getUser()?.type === "Admin"
         ? [
             getItem(
               "Gerenciar Ferramentas",
@@ -65,9 +64,15 @@ export default function MenuHeader({ globalColor, setGlobalColor }) {
         name: response?.user?.displayName,
         email: response?.user?.email,
         imageURL: response?.user?.photoURL,
-        type: "Admin",
+        type: "User",
       }).then((tokenObject) => {
         setToken(tokenObject.token);
+        setUser({
+          name: response?.user?.displayName,
+          email: response?.user?.email,
+          imageURL: response?.user?.photoURL,
+          type: "User",
+        });
       });
     }
   });
