@@ -19,13 +19,13 @@ export const Container = styled.div`
       cursor: pointer;
     }
   }
-
+  /* 
   @media (max-width: ${breakpoints.smallDevice}) {
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 1rem;
-  }
+  } */
 `;
 
 export const ContainerMenu = styled.div`
