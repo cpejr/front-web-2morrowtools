@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Select, Input } from "antd";
+import { Select } from "antd";
 import { colors } from "../../../styles/styleVariables";
 
 export const Container = styled.div`
@@ -24,7 +24,7 @@ export const Label = styled.label`
   }
 `;
 
-export const StyledInput = styled(Input)`
+export const StyledInput = styled.input`
   height: 6rem;
   font-size: 2rem;
   padding: 0.8rem 1.6rem;

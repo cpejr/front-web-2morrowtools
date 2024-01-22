@@ -143,7 +143,6 @@ export const useDeleteCategoriesFeature = async (_id) => {
 // Category Price
 
 export const useCreateCategoriesPrices = async (body) => {
-
   const create = await requesterService.createCategoriesPrices(body).then((res) => {
     return res;
   });
@@ -335,6 +334,17 @@ export const useUpdateAvaliation = async (_id, body) => {
     return response.data;
   } catch (error) {
     console.error("Error updating avaliation", error);
+    throw error;
+  }
+};
+
+// image
+export const useGetImage = async (imageURL) => {
+  try {
+    const response = await requesterService.getImage(imageURL);
+    return response;
+  } catch (error) {
+    console.error("Error getting image", error);
     throw error;
   }
 };

@@ -6,7 +6,9 @@ import {
   ModalDelete,
   ModalEdit,
   FormSelect,
+  FormImageInput,
 } from "../../components";
+
 import { useForm } from "react-hook-form";
 import {
   Container,
@@ -170,10 +172,9 @@ export default function NewTool() {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Section>
           <FormInputBorder name='name' placeholder='Título:' errors={errors} register={register} />
-          <FormInputBorder
+          <FormImageInput
             name='imageURL'
-            placeholder='URL da imagem:'
-            icon={FaUpload}
+            placeholder='   URL da imagem:'
             errors={errors}
             register={register}
           />
