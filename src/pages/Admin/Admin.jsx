@@ -72,7 +72,7 @@ export default function Admin() {
     try {
       await useUpdateUser(_id, body);
       toast.success("Usuário alterado com sucesso");
-      window.location.reload();
+      getAllUsers();
     } catch (error) {
       toast.error("Erro ao editar o usuário");
       toast.clearWaitingQueue();
@@ -83,7 +83,7 @@ export default function Admin() {
     try {
       await useDeleteUsers(_id);
       toast.success("Usuário Deleteado com sucesso");
-      window.location.reload();
+      getAllUsers();
     } catch (error) {
       toast.error("Erro ao deletar o usuário");
       toast.clearWaitingQueue();
