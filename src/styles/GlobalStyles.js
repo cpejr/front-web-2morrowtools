@@ -63,12 +63,12 @@ export const GlobalStyles = createGlobalStyle`
   .p-multiselect-item {
     color: ${colors.white};
     &:hover{
-      background-color: ${colors.blue.dark};
+      background-color: ${colors.grey.cardHover};
     }
   }
 
   .p-highlight{
-    background-color: ${colors.blue.dark};
+    background-color: ${colors.grey.cardHover};
     } 
   
 
@@ -76,5 +76,38 @@ export const GlobalStyles = createGlobalStyle`
     background-color: ${colors.blue.background};
     color: ${colors.white};
   }
-   
+
+.p-dropdown-items-wrapper{
+  background-color: ${colors.blue.background};
+  color: ${colors.white}
+}
+.p-datatable .p-datatable-tbody > tr > td {
+  background-color: ${colors.blue.background}; 
+  color: ${colors.white};
+
+}  
+.p-datatable .p-sortable-column{
+  background-color: ${colors.blue.background};
+  color: ${colors.white};
+  
+}
+.p-datatable .p-paginator-bottom{
+  background-color: ${colors.blue.background};
+  color: ${colors.white};
+}
+.p-dropdown-item {
+    color: ${colors.white};
+    &:hover{
+      background-color: ${colors.grey.cardHover};
+    }
+}
+.p-dropdown-panel .p-dropdown-header{
+  background-color: ${colors.blue.background};
+  color: ${colors.white};
+}
+.p-checkbox-icon{
+  color: ${colors.white}
+}
+ 
+  
 `;

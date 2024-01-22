@@ -1,12 +1,7 @@
 import {
   Container,
   ContainerMenu,
-  GroupMedias,
-  Line,
   Links,
-  LoginButton,
-  LoginSocial,
-  SocialMedias,
   Select,
   Selected,
   ThemeSelector,
@@ -14,20 +9,13 @@ import {
 } from "./Styles";
 import logo from "../../assets/logo.svg";
 import BlueLogo from "../../assets/blue-logo.svg";
-import {
-  FacebookOutlined,
-  InstagramOutlined,
-  LinkedinOutlined,
-  TwitterOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import { IoIosArrowDown } from "react-icons/io";
+import { BulbOutlined, BulbFilled } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import MenuHeader from "./MenuHeader";
+import LoginSocialArea from "./LoginSocialArea";
 import { signInWithGooglePopup } from "./../../services/firebase";
 import { usePostUser } from "../../services/ManagerService";
 import useAuthStore from "../../stores/auth";
-import isAdm from "../../utils/isAdm";
 import React, { useState } from "react";
 import { useGlobalColor } from "../../stores/GlobalColor";
 
@@ -36,64 +24,34 @@ export default function Header() {
   const [collapse, setCollapse] = useState(false);
   const { globalColor, setGlobalColor } = useGlobalColor();
   const availableTheme = ["Dark", "Light"];
-  const { setToken, getToken, getUser, clearAuth } = useAuthStore();
-  const [loginLogoff, setLoginLogoff] = React.useState(getToken() ? "Fazer Logoff" : "Fazer Login");
-  const [profilePicture, setProfilePicture] = React.useState(
-    loginLogoff === "Fazer Login" ? (
-      <UserOutlined />
-    ) : (
-      <img src={getUser()?.imageURL} alt='Profile' />
-    )
-  );
+  const { setToken, getToken, getUser, clearAuth, setUser } = useAuthStore();
 
   const logGoogleUser = async () => {
     if (getToken() === null) {
-      const response = await signInWithGooglePopup();
-      const tokenObject = await usePostUser({
-        name: response?.user?.displayName,
-        email: response?.user?.email,
-        imageURL: response?.user?.photoURL,
-        type: "Admin",
+      const googleResponse = await signInWithGooglePopup();
+      const response = await usePostUser({
+        name: googleResponse?.user?.displayName,
+        email: googleResponse?.user?.email,
+        imageURL: googleResponse?.user?.photoURL,
+        type: "User",
       });
-      setToken(tokenObject.token);
-      //setUser(tokenObject.userFound);
+      setToken(response.token);
+      setUser({
+        ...response.user,
+        imageURL: googleResponse?.user?.photoURL,
+      });
 
       window.location.reload();
-
-      setLoginLogoff("Fazer Logoff");
-      setProfilePicture(<img src={getUser()?.imageURL} alt='Profile' />);
     } else {
       clearAuth();
-      setLoginLogoff("Fazer Login");
-      setProfilePicture(<UserOutlined />);
-    }
-  };
-  const redirectToFavorites = async () => {
-    if (getToken() === null) {
-      await logGoogleUser();
-    }
-    if (getToken() !== null) {
-      window.location.href = "./favoritos";
     }
   };
 
-  const redirectToIa = async () => {
-    if (getToken() === null) {
-      await logGoogleUser();
-    }
-    if (getToken() !== null) {
-      window.location.href = "./adicionar-ia";
-    }
+  const redirect = async (path) => {
+    if (!getToken()) await logGoogleUser();
+    if (getToken()) navigate(path);
   };
 
-  const redirectToCategories = async () => {
-    if (getToken() === null) {
-      await logGoogleUser();
-    }
-    if (getToken() !== null) {
-      window.location.href = "./adicionar-categoria";
-    }
-  };
   return (
     <Container>
       <ContainerMenu>
@@ -105,32 +63,29 @@ export default function Header() {
         )}
       </ContainerMenu>
       <Links>
-        <Link to='/'>Página Inicial</Link>
         <Link>
-          <span onClick={() => redirectToFavorites()}>Meus Favoritos</span>
+          <span onClick={() => redirect("/favorites")}>Favoritos</span>
         </Link>
-        {isAdm(getUser()?.email) ? (
+        {getUser()?.type === "Admin" ? (
           <React.Fragment>
             <Link>
-              <span onClick={() => redirectToIa()}>Gerenciar Ferramentas</span>
+              <span onClick={() => (window.location.href = "/adicionar-ia")}>Ferramentas</span>
             </Link>
             <Link>
-              <span onClick={() => redirectToCategories()}>Gerenciar Categorias</span>
+              <span onClick={() => (window.location.href = "/adicionar-categoria")}>
+                Categorias
+              </span>
+            </Link>
+            <Link>
+              <span onClick={() => (window.location.href = "/admin")}>Usuários</span>
             </Link>
           </React.Fragment>
         ) : null}
       </Links>
-      <SubmitButton
-        onClick={() => {
-          window.open("https://bit.ly/2MT_submeter_ferramenta", "_blank");
-        }}
-      >
-        Submeter Ferramenta
-      </SubmitButton>
+
       <Select>
         <Selected onClick={() => setCollapse((prev) => !prev)}>
-          <p>{globalColor}</p>
-          <IoIosArrowDown />
+          {globalColor === "Light" ? <BulbOutlined /> : <BulbFilled />}
         </Selected>
         <ThemeSelector collapse={+collapse}>
           {availableTheme.map((theme) => (
@@ -149,23 +104,14 @@ export default function Header() {
           ))}
         </ThemeSelector>
       </Select>
-      <LoginSocial>
-        <LoginButton onClick={logGoogleUser}>
-          {loginLogoff}
-          {profilePicture}
-        </LoginButton>
-        <Line />
-        <SocialMedias>
-          <GroupMedias>
-            <FacebookOutlined />
-            <TwitterOutlined />
-          </GroupMedias>
-          <GroupMedias>
-            <InstagramOutlined />
-            <LinkedinOutlined />
-          </GroupMedias>
-        </SocialMedias>
-      </LoginSocial>
+      <SubmitButton
+        onClick={() => {
+          window.open("https://bit.ly/2MT_submeter_ferramenta", "_blank");
+        }}
+      >
+        Submeter Ferramenta
+      </SubmitButton>
+      <LoginSocialArea />
     </Container>
   );
 }

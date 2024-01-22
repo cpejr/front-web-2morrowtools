@@ -9,13 +9,12 @@ import {
 import { AppLayout } from "./layouts";
 
 import { Home, IAProfile, Favorites, NewTool, Tools, NewCategory } from "./pages";
-import isAdm from "./utils/isAdm";
 import useAuthStore from "./stores/auth";
+import Admin from "./pages/Admin/Admin";
 
 function Routes() {
   const { getUser } = useAuthStore();
   const user = getUser();
-  const userEmail = user?.email || null;
 
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -24,12 +23,13 @@ function Routes() {
           <Route path='/favoritos' element={<Favorites />} />
           <Route
             path='/adicionar-ia'
-            element={isAdm(userEmail) ? <NewTool /> : <Navigate to='/' />}
+            element={user?.type === "Admin" ? <NewTool /> : <Navigate to='/' />}
           />
           <Route
             path='/adicionar-categoria'
-            element={isAdm(userEmail) ? <NewCategory /> : <Navigate to='/' />}
+            element={user?.type === "Admin" ? <NewCategory /> : <Navigate to='/' />}
           />
+          <Route path='/admin' element={user?.type === "Admin" ? <Admin /> : <Navigate to='/' />} />
           <Route path='/perfil-ia' element={<IAProfile />} />
           <Route path='/ferramenta/:name' element={<Tools />} />
           <Route index element={<Home />} />

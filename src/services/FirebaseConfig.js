@@ -1,8 +1,8 @@
 export const firebaseConfig = {
-    apiKey: "AIzaSyBWkDGpOtbcFLASAx_iHUHDbmamnktfKqg",
-    authDomain: "morrowtools.firebaseapp.com",
-    projectId: "morrowtools",
-    storageBucket: "morrowtools.appspot.com",
-    messagingSenderId: "307658588780",
-    appId: "1:307658588780:web:538b5a3bdedbeccdd08e49"
-  };
+  apiKey: `${import.meta.env.VITE_FIREBASE_API_KEY}`,
+  authDomain: `${import.meta.env.VITE_FIREBASE_AUTH_DOMAIN}`,
+  projectId: `${import.meta.env.VITE_FIREBASE_PROJECT_ID}`,
+  storageBucket: `${import.meta.env.VITE_FIREBASE_STORAGE_BUCKET}`,
+  messagingSenderId: `${import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID}`,
+  appId: `${import.meta.env.VITE_FIREBASE_APP_ID}`,
+};

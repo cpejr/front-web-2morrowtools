@@ -12,34 +12,20 @@ export const Container = styled.div`
   width: 100%;
   height: 85px;
   padding: 0 2%;
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   img {
-    width: 12rem;
+    width: 8rem;
     &:hover {
       cursor: pointer;
     }
   }
-  @media (max-width: ${breakpoints.tablet}) {
-    font-size: 1.6rem;
-    img {
-      width: 10rem;
-    }
-  }
-  @media (max-width: ${breakpoints.mobile}) {
-    font-size: 1.2rem;
-    img {
-      width: 10rem;
-    }
-  }
+  /* 
   @media (max-width: ${breakpoints.smallDevice}) {
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    img {
-      width: 8rem;
-    }
-  }
+  } */
 `;
 
 export const ContainerMenu = styled.div`
@@ -56,9 +42,10 @@ export const Links = styled.div`
   justify-content: space-around;
   word-wrap: break-word;
   width: 30rem;
+  font-size: 1rem;
   a {
     font-family: ${fonts.Exo2};
-    font-size: 1.2rem;
+
     &:hover {
       color: ${colors.blue.light};
       cursor: pointer;
@@ -67,7 +54,7 @@ export const Links = styled.div`
   @media (max-width: ${breakpoints.tablet}) {
     width: 30rem;
   }
-  @media (max-width: ${breakpoints.mobile}) {
+  @media (max-width: ${breakpoints.smallTablet}) {
     display: none;
   }
 `;
@@ -83,46 +70,34 @@ export const LoginSocial = styled.div`
   @media (max-width: ${breakpoints.smallTablet}) {
     width: 10rem;
   }
-  @media (max-width: ${breakpoints.mobile}) {
-    width: 10rem;
-  }
-  @media (max-width: ${breakpoints.smallDevice}) {
-    display: none;
-  }
 `;
 export const SubmitButton = styled.button`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 15rem;
-  height: 60px;
-  border: 1px solid;
-  border-radius: 24px;
+  width: 10rem;
+  height: 45px;
+  border: 1px solid black;
+  border-radius: 10px;
   color: ${colors.white};
   background-color: ${colors.transparent};
   font-family: ${fonts.Exo2};
-  font-size: 1.2rem;
   font-weight: 400;
   word-wrap: break-word;
   margin-right: 10px;
-
+  font-size: 1rem;
   &:hover {
     background-color: ${colors.white};
     color: ${colors.black};
     cursor: pointer;
   }
-  @media (max-width: ${breakpoints.tablet}) {
-    width: 10rem;
-    font-size: 1rem;
-  }
+
   @media (max-width: ${breakpoints.mobile}) {
-    width: 10rem;
     height: 40px;
-    font-size: 1rem;
   }
-  @media (max-width: ${breakpoints.smallDevice}) {
-    width: 7rem;
-    font-size: 0.8rem;
+
+  @media (max-width: ${breakpoints.smallMobile}) {
+    display: none;
   }
 `;
 export const LoginButton = styled.button`
@@ -130,18 +105,17 @@ export const LoginButton = styled.button`
   justify-content: space-around;
   align-items: center;
   width: 12rem;
-  height: 60px;
+  height: 45px;
   border: 1px solid;
-  border-radius: 24px;
+  border-radius: 10px;
   color: ${colors.white};
   background-color: ${colors.transparent};
   font-family: ${fonts.Exo2};
-  font-size: 1.2rem;
   font-weight: 400;
   word-wrap: break-word;
-
+  font-size: 1rem;
   img {
-    width: 30%;
+    width: 20%;
     border-radius: 50%;
   }
 
@@ -152,12 +126,10 @@ export const LoginButton = styled.button`
   }
   @media (max-width: ${breakpoints.tablet}) {
     width: 10rem;
-    font-size: 1rem;
   }
   @media (max-width: ${breakpoints.mobile}) {
     width: 10rem;
     height: 40px;
-    font-size: 1rem;
   }
   @media (max-width: ${breakpoints.smallDevice}) {
     width: 7rem;
@@ -193,7 +165,7 @@ export const GroupMedias = styled.div`
 
 export const HamburgerMenu = styled(Menu)`
   width: 0rem;
-  @media (max-width: ${breakpoints.mobile}) {
+  @media (max-width: ${breakpoints.smallTablet}) {
     width: 6rem;
   }
 `;
@@ -222,6 +194,9 @@ export const Select = styled.div`
   p {
     font-size: 1rem;
   }
+  @media (max-width: ${breakpoints.mobile}) {
+    display: none;
+  }
 `;
 
 export const Selected = styled.div`
@@ -234,9 +209,6 @@ export const Selected = styled.div`
     p {
       text-align: center;
     }
-  }
-  @media (max-width: ${breakpoints.smallDevice}) {
-    display: none;
   }
 `;
 
