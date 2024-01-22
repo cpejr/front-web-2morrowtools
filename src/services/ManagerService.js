@@ -143,7 +143,6 @@ export const useDeleteCategoriesFeature = async (_id) => {
 // Category Price
 
 export const useCreateCategoriesPrices = async (body) => {
-
   const create = await requesterService.createCategoriesPrices(body).then((res) => {
     return res;
   });
@@ -306,6 +305,22 @@ export const useGetAIToolsByCategoryId = async (info) => {
 
 // Avaliation
 
+export const useGetTrueOrFalse = async (aiId) => {
+  let result = true;
+  await requesterService.getTrueOrFalse(aiId).then((res) => {
+    result = res.data;
+  });
+  return { result };
+};
+
+export const useGetUserTrueOrFalse = async (info) => {
+  let result = true;
+  await requesterService.getUserTrueOrFalse(info).then((res) => {
+    result = res;
+  });
+  return { result };
+};
+
 export const useGetAvaliationByAIId = async (aiId) => {
   let { averagerate } = {};
   await requesterService.getByIaId(aiId).then((res) => {
@@ -327,6 +342,14 @@ export const useGetAvaliation = async () => {
     avaliation = res.data;
   });
   return { avaliation };
+};
+
+export const useGetAvaliationID = async (info) => {
+  let ai = {};
+  await requesterService.getAvaliationID(info).then((res) => {
+    ai = res.data;
+  });
+  return { ai };
 };
 
 export const useUpdateAvaliation = async (_id, body) => {

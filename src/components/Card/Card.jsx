@@ -1,18 +1,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
-import { StyledCard, BlueButton, Line, Tags, Tag, Image, Stars, LineSVG, Group, ButtonDiv } from "./Styles";
+import {
+  StyledCard,
+  BlueButton,
+  Line,
+  Tags,
+  Tag,
+  Image,
+  Stars,
+  LineSVG,
+  Group,
+  ButtonDiv,
+} from "./Styles";
 import { FaRegBookmark } from "react-icons/fa";
 import { FaBookmark, FaStarHalfStroke } from "react-icons/fa6";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import { usePostFavorite } from "../../services/ManagerService";
+import { useGetTrueOrFalse, usePostFavorite } from "../../services/ManagerService";
 import { signInWithGooglePopup } from "./../../services/firebase";
 import { usePostUser, useGetAvaliationByAIId } from "../../services/ManagerService";
 import useAuthStore from "../../stores/auth";
 
 export default function Card({ data }) {
-  const [starsValue, setStarsValue] = useState(data.stars || 0);
+  const [starsValue, setStarsValue] = useState(0);
   const [favoriteIcon, setFavoriteIcon] = useState(
     data.favorite ? (
       <FaBookmark className='favoriteIcon' />
@@ -20,20 +31,29 @@ export default function Card({ data }) {
       <FaRegBookmark className='favoriteIcon' />
     )
   );
+  const [hasPrevRating, setHasPrevRating] = useState(false);
   const navigate = useNavigate();
   const { setToken, getUser, getToken } = useAuthStore();
 
   const getByIaId = async () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const result = await useGetAvaliationByAIId(data?._id);
-    const averageRate = result?.averagerate || 0;
-    const roundedRating = Math?.ceil(averageRate.averageRating * 2) / 2;
-    setStarsValue(roundedRating?.toFixed(1));
+    if (hasPrevRating) {
+      const result = await useGetAvaliationByAIId(data?._id);
+      const averageRate = result?.averagerate || 0;
+      const roundedRating = Math?.ceil(averageRate.averageRating * 2) / 2;
+      setStarsValue(roundedRating?.toFixed(1));
+    }
   };
-
+  async function GetTrueOrFalse() {
+    const { result } = await useGetTrueOrFalse(data?._id);
+    setHasPrevRating(result);
+  }
+  useEffect(() => {
+    GetTrueOrFalse();
+  }, []);
   useEffect(() => {
     getByIaId();
-  }, []);
+  }, [data]);
 
   const saveFavorite = async () => {
     if (getToken() === null) {
@@ -119,11 +139,15 @@ export default function Card({ data }) {
         <Tag>{data?.id_categoryprofession?.name} </Tag>
       </Tags>
       <ButtonDiv>
-        <BlueButton type='primary' onClick={() => {
-          window.open(data?.link, "_blank");
-        }}>Acesse Agora</BlueButton>
+        <BlueButton
+          type='primary'
+          onClick={() => {
+            window.open(data?.link, "_blank");
+          }}
+        >
+          Acesse Agora
+        </BlueButton>
       </ButtonDiv>
-
     </StyledCard>
   );
 }

@@ -112,7 +112,6 @@ export default function Home() {
   }
 
   // Backend Calls
-
   const convertArrayToString = (array) => {
     return array.join(",");
   };
