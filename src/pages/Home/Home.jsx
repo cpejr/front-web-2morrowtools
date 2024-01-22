@@ -20,6 +20,7 @@ import useDebounce from "../../services/useDebounce";
 import { useMediaQuery } from "react-responsive";
 import * as managerService from "../../services/ManagerService";
 import Pagination from "../../components/features/Pagination/Pagination";
+import { Newsletter } from "../../components";
 
 export default function Home() {
   const [filteredAiTools, setFilteredAiTools] = useState([]);
@@ -237,6 +238,7 @@ export default function Home() {
           setCurrentPage={setCurrentPage}
         />
       </ButtonDiv>
+      <Newsletter />
       <TrendingTools>
         <h1>Em Alta</h1>
         {highRateData.map((page, pageIndex) => (
