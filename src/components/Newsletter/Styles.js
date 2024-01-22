@@ -1,4 +1,4 @@
-import { Button, Input } from "antd";
+import { Button as AntdButton, Input as AntdInput } from "antd";
 import styled from "styled-components";
 import { breakpoints } from "../../styles/styleVariables";
 
@@ -11,16 +11,16 @@ export const Container = styled.div`
   max-width: 80vw;
   box-shadow: -2px -1px 5px 0.5px white, 2px 2px 2px 1px grey;
   flex-wrap: wrap;
-  height: 150px;
+  height: 200px;
 `;
-export const Input1 = styled(Input)`
+export const Input1 = styled(AntdInput)`
   width: 100%;
   font-weight: 300;
   font-size: large;
   border: 2px solid #240079;
 `;
 
-export const Button1 = styled(Button)`
+export const Button = styled(AntdButton)`
   color: #240079;
   font-weight: bold;
   border-color: #240079;

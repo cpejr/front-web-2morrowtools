@@ -1,4 +1,4 @@
-import { Container, Title, Description, Texts, Inputs, Break, Input1, Button1 } from "./Styles";
+import { Container, Title, Description, Texts, Inputs, Break, Input, Button } from "./Styles";
 export default function Newsletter() {
   return (
     <Container>
@@ -11,11 +11,11 @@ export default function Newsletter() {
       </Texts>
       <Inputs>
         <Break>
-          <Input1 placeholder='Nome:'></Input1>
-          <Input1 placeholder='Email:'></Input1>
+          <Input placeholder='Nome:'></Input>
+          <Input placeholder='Email:'></Input>
         </Break>
-        <Input1 placeholder='Mensagem:'></Input1>
-        <Button1>ENVIAR</Button1>
+        <Input placeholder='Mensagem:'></Input>
+        <Button>ENVIAR</Button>
       </Inputs>
     </Container>
   );
