@@ -39,18 +39,15 @@ export default function Tool({ data }) {
   const [starsValue2, setStarsValue2] = useState(data.stars || 0);
   const [hoverValue, setHoverValue] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState(data?.imageURL);
-
+  const [image, setImage] = useState("");
   const getImage = async () => {
     try {
-      if (
-        data.aiTools &&
-        data?.aiTools[0]?.imageURL.includes("2morrowstorage.blob.core.windows.net")
-      ) {
+      if (data.aiTools) {
+        setImage(data?.aiTools[0]?.imageURL);
+
         setLoading(true);
 
         const azureImage = await useGetImage(data?.aiTools[0]?.imageURL);
-
         setImage(azureImage.data.image);
         setLoading(false);
       }
