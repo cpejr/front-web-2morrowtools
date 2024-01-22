@@ -27,17 +27,21 @@ import useAuthStore from "../../stores/auth";
 import {
   usePostAvaliation,
   useGetAvaliationByAIId,
-  useGetAvaliation,
   useUpdateAvaliation,
   useGetImage,
+  useGetUserTrueOrFalse,
+  useGetAvaliationID,
 } from "../../services/ManagerService";
 import { toast } from "react-toastify";
 import { LoadingOutlined } from "@ant-design/icons";
 
 export default function Tool({ data }) {
   const [starsValue, setStarsValue] = useState(0);
-  const [starsValue2, setStarsValue2] = useState(data.stars || 0);
+  const [starsValue2, setStarsValue2] = useState(0);
   const [hoverValue, setHoverValue] = useState(0);
+  const [userHasPrevRating, setUserHasPrevRating] = useState(false);
+  const [avaliationID, setAvaliationID] = useState({});
+  const ID = data?.aiTools?.[0]?._id;
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState("");
   const getImage = async () => {
@@ -62,24 +66,42 @@ export default function Tool({ data }) {
   }, [data]);
 
   const { getUser } = useAuthStore();
-  const user = getUser()?._id;
-  const handleStarsChange = async (value, toolData) => {
-    setStarsValue(value);
-    const iaId = toolData._id;
+  const userID = getUser()?._id;
 
-    try {
-      const result = await getAvaliation();
-      const idAvaliation = await getIdAvaliation();
-      const body = { userId: user, rate: value, iaId: iaId };
-      if (result) {
-        updateAvaliation(idAvaliation, body);
-        toast.success("Avaliação alterada com sucesso!");
-      } else {
-        await postAvaliationData(body);
-        toast.success("Avaliação realizada com sucesso!");
-      }
-    } catch (error) {
-      toast.error("Erro ao fazer a avaliação", error);
+  async function GetUserTrueOrFalse() {
+    if (ID && userID) {
+      const { result } = await useGetUserTrueOrFalse({ userId: userID, iaId: ID });
+      setUserHasPrevRating(result);
+    }
+  }
+  async function GetUserAvaliationID() {
+    const { ai } = await useGetAvaliationID({ iaId: ID, userId: userID });
+    setAvaliationID(ai);
+  }
+  const handleStarsChange = async (value) => {
+    setStarsValue(value);
+    switch (userHasPrevRating) {
+      case true:
+        try {
+          const result = useUpdateAvaliation(avaliationID?._id, {
+            userId: userID,
+            rate: value,
+            iaId: ID,
+          });
+          toast.success("Dados da avaliação atualizados", result);
+        } catch (error) {
+          toast.error("Erro ao atualizar avaliação:", error);
+        }
+        break;
+
+      default:
+        try {
+          const result = usePostAvaliation({ userId: userID, rate: value, iaId: ID });
+          toast.success("Avaliação Registrada", result);
+        } catch (error) {
+          toast.error("Error ao registrar a avaliação", error);
+        }
+        break;
     }
   };
 
@@ -99,62 +121,18 @@ export default function Tool({ data }) {
     return index <= (hoverValue || starsValue) - 1 ? <RiStarSFill /> : <RiStarSLine />;
   };
 
-  const getByIaId = async (toolData) => {
-    const result = await useGetAvaliationByAIId(toolData?._id);
+  async function GetByIaId() {
+    const result = await useGetAvaliationByAIId(ID);
     const averageRate = result?.averagerate || 0;
     const roundedRating = Math?.ceil(averageRate.averageRating * 2) / 2;
     setStarsValue2(roundedRating?.toFixed(1));
-  };
+  }
   useEffect(() => {
-    if (data?.aiTools) {
-      data.aiTools.forEach((toolData) => {
-        getByIaId(toolData);
-      });
-    }
-  }, [data]);
-
-  const getAvaliation = async () => {
-    try {
-      const { avaliation } = await useGetAvaliation();
-      if (avaliation && Array.isArray(avaliation)) {
-        const userAvaliation = avaliation.find((aval) => aval.userId === getUser()?._id);
-
-        if (userAvaliation) return true;
-        else {
-          toast.message("Nenhuma avaliação encontrada para o usuário atual.");
-          return false;
-        }
-      } else return false;
-    } catch (error) {
-      console.error("Erro ao buscar dados de avaliação:", error);
-      return false;
-    }
-  };
-
-  const getIdAvaliation = async () => {
-    const { avaliation } = await useGetAvaliation();
-
-    if (avaliation && Array.isArray(avaliation)) {
-      const userAvaliation = avaliation.find((aval) => aval.userId === getUser()?._id);
-      if (userAvaliation) {
-        return userAvaliation._id;
-      }
-    }
-  };
-
-  const postAvaliationData = async (body) => {
-    try {
-      const result = await usePostAvaliation(body);
-      toast.success("Dados da avaliação postados", result);
-    } catch (error) {
-      toast.error("Erro ao postar avaliação:", error);
-    }
-  };
-
-  const updateAvaliation = async (id, body) => {
-    const result = await useUpdateAvaliation(id, body);
-    return result;
-  };
+    GetByIaId();
+    GetUserTrueOrFalse();
+    GetUserAvaliationID();
+    setStarsValue(avaliationID?.rate || 0);
+  }, [data, avaliationID]);
 
   return (
     <>
@@ -181,12 +159,11 @@ export default function Tool({ data }) {
               </Group>
               <Line>
                 <Stars
+                  count={5}
                   value={starsValue2}
-                  onChange={(value) => handleStarsChange(value, toolData)}
-                  onHoverChange={(value) => handleHoverChange(value, toolData)}
-                  character={({ index }) => renderStarIcon(index)}
+                  character={({ index }) => renderStarIcon2(index)}
                 />
-                <span>({starsValue})</span>
+                <span>({starsValue2})</span>
               </Line>
               <p>{toolData?.shortDescription}</p>
               <TabletTagsLine key={`line-${index}`}>
@@ -209,12 +186,12 @@ export default function Tool({ data }) {
               <p>Você recomendaria essa ferramenta?</p>
               <Line>
                 <Stars
-                  count={5}
-                  value={starsValue2}
-                  character={({ index }) => renderStarIcon2(index)}
-                  onChange={() => getByIaId()}
+                  value={starsValue}
+                  onChange={(value) => handleStarsChange(value)}
+                  onHoverChange={(value) => handleHoverChange(value, toolData)}
+                  character={({ index }) => renderStarIcon(index)}
                 />
-                <span>({starsValue2})</span>
+                <span>({starsValue})</span>
               </Line>
             </RateDiv>
           </Row>
