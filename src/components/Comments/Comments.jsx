@@ -9,6 +9,8 @@ import { FaTrashCan } from "react-icons/fa6";
 export default function Comments({ data, onDelete }) {
   const { getUser } = useAuthStore();
   const [name, setName] = useState("");
+  const [creator, setCreator] = useState({});
+
   async function deleteComment() {
     const user = await getUser();
     await useDeleteComments(data._id, user);
@@ -32,12 +34,15 @@ export default function Comments({ data, onDelete }) {
         {name}
         <p> {data.comment} </p>
       </CommentCollumn>
-      <DeleteButton onClick={deleteComment}>
-        <FaTrashCan size='20px' />
-      </DeleteButton>
+      {getUser()?.type === "Admin" || name === getUser()?.name ? (
+        <DeleteButton onClick={deleteComment}>
+          <FaTrashCan size='20px' />
+        </DeleteButton>
+      ) : null}
     </Container>
   );
 }
 Comments.propTypes = {
   data: PropTypes.object.isRequired,
+  onDelete: PropTypes.func,
 };
