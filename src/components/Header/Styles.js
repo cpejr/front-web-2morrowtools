@@ -84,9 +84,6 @@ export const LoginSocial = styled.div`
     width: 10rem;
   }
   @media (max-width: ${breakpoints.mobile}) {
-    width: 10rem;
-  }
-  @media (max-width: ${breakpoints.smallDevice}) {
     display: none;
   }
 `;
@@ -222,6 +219,9 @@ export const Select = styled.div`
   p {
     font-size: 1rem;
   }
+  @media (max-width: ${breakpoints.mobile}) {
+    display: none;
+  }
 `;
 
 export const Selected = styled.div`
@@ -234,9 +234,6 @@ export const Selected = styled.div`
     p {
       text-align: center;
     }
-  }
-  @media (max-width: ${breakpoints.smallDevice}) {
-    display: none;
   }
 `;
 
