@@ -54,7 +54,7 @@ export const Links = styled.div`
   @media (max-width: ${breakpoints.tablet}) {
     width: 30rem;
   }
-  @media (max-width: ${breakpoints.mobile}) {
+  @media (max-width: ${breakpoints.smallTablet}) {
     display: none;
   }
 `;
@@ -165,7 +165,7 @@ export const GroupMedias = styled.div`
 
 export const HamburgerMenu = styled(Menu)`
   width: 0rem;
-  @media (max-width: ${breakpoints.mobile}) {
+  @media (max-width: ${breakpoints.smallTablet}) {
     width: 6rem;
   }
 `;

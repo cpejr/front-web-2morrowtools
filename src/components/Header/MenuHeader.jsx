@@ -4,6 +4,7 @@ import {
   ToolOutlined,
   BulbOutlined,
   ArrowUpOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { HamburgerMenu } from "./Styles";
@@ -41,6 +42,7 @@ export default function MenuHeader({ globalColor, setGlobalColor }) {
               "/adicionar-categoria",
               <ToolOutlined style={{ fontSize: "1.3rem" }} />
             ),
+            getItem("Usuários", "/admin", <UserOutlined style={{ fontSize: "1.3rem" }} />),
           ]
         : []),
       getItem("Submeter Ferramenta", "/submit", <ArrowUpOutlined style={{ fontSize: "1.3rem" }} />),
@@ -72,6 +74,9 @@ export default function MenuHeader({ globalColor, setGlobalColor }) {
       logGoogleUser();
     }
     if (key && key !== "login" && key !== "/favoritos") {
+      navigate(key);
+    }
+    if (key && key === "/admin") {
       navigate(key);
     }
     if (key && key === "/submit") {
