@@ -61,6 +61,7 @@ export default function Tools() {
       id_user: getUser()?._id,
       id_ia: aiToolsByName.aiTools[0]._id,
     });
+    gettingComments();
   }
   async function gettingComments() {
     const res = await useGetComments(aiToolsByName?.aiTools[0]?._id);

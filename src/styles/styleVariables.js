@@ -20,6 +20,7 @@ export const colors = {
   transparent: "rgba(0, 0, 0, 0)",
   shadow: "rgba(0, 0, 0, 0.25)",
   boxShadow: "#1A212D",
+  icon: theme === "Dark" ? "#6B7280" : "#7E7A7F",
 };
 
 export const fonts = {

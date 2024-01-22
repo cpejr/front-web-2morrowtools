@@ -361,3 +361,14 @@ export const useUpdateAvaliation = async (_id, body) => {
     throw error;
   }
 };
+
+// image
+export const useGetImage = async (imageURL) => {
+  try {
+    const response = await requesterService.getImage(imageURL);
+    return response;
+  } catch (error) {
+    console.error("Error getting image", error);
+    throw error;
+  }
+};

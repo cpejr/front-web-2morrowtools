@@ -93,3 +93,6 @@ export const putUpdateAvaliation = async (id, body) => {
 export const getByIaId = (aiId) => api.get(`/avaliation/${aiId}`);
 
 export const getAvaliation = () => api.get(`/avaliation`);
+
+//image
+export const getImage = (imageURL) => api.post(`/IAImage`, { imageURL });
