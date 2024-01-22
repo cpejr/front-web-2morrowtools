@@ -76,6 +76,14 @@ export const getAIToolsByCategoryId = (info) => api.get("IA/search-by-category",
 
 //Avaliation
 
+export const getTrueOrFalse = (iaId) => api.get(`/avaliation/check/${iaId}`);
+export const getUserTrueOrFalse = async (info) => {
+  const { userId, iaId } = info;
+  const res = await api.get(`/avaliation/userCheck/${iaId}`, { params: { userId } });
+  return res.data;
+};
+export const getAvaliationID = (info) => api.get("avaliation/ID", { params: info });
+
 export const postAvaliation = async (body) => {
   await api.post(`/avaliation`, { ...body });
 };
