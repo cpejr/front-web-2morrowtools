@@ -30,7 +30,7 @@ export const StyledTextArea = styled.textarea`
   font-size: 1rem;
   padding: 0.8rem 1.6rem;
   border-radius: 0.4rem;
-  color: white;
+  color: ${colors.white};
   background-color: ${colors.blue.background};
   border: ${(props) => (props?.error ? "0.1rem red solid" : "0.1rem black solid")};
   ::placeholder {
