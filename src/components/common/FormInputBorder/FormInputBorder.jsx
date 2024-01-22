@@ -9,11 +9,10 @@ export default function FormInput({
   register,
   defaultValue,
   icon: Icon,
+  readOnly,
   ...props
 }) {
   const errorMessage = errors?.[name]?.message;
-
-  
   return (
     <Container>
       <Label htmlFor={name}>{label}</Label>
@@ -25,6 +24,7 @@ export default function FormInput({
           placeholder={placeholder}
           defaultValue={defaultValue}
           {...props}
+          readOnly={readOnly}
           error={!!errorMessage}
         />
       </IconContainer>
@@ -41,4 +41,5 @@ FormInput.propTypes = {
   icon: PropTypes.elementType,
   errors: PropTypes.object.isRequired,
   defaultValue: PropTypes.string,
+  readOnly: PropTypes.string,
 };

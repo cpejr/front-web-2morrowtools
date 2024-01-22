@@ -44,7 +44,6 @@ export default function Header() {
       <img src={getUser()?.imageURL} alt='Profile' />
     )
   );
-  console.log(getUser());
   const logGoogleUser = async () => {
     if (getToken() === null) {
       const googleResponse = await signInWithGooglePopup();
