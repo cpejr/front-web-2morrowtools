@@ -34,7 +34,7 @@ export default function Card({ data }) {
   const navigate = useNavigate();
   const [image, setImage] = useState(data?.imageURL);
   const [loading, setLoading] = useState(false);
-
+  console.log(image);
   const getImage = async () => {
     try {
       if (data?.imageURL.includes("2morrowstorage.blob.core.windows.net")) {
