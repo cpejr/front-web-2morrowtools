@@ -238,6 +238,7 @@ export default function Home() {
           setCurrentPage={setCurrentPage}
         />
       </ButtonDiv>
+      <Newsletter />
       <TrendingTools>
         <h1>Em Alta</h1>
         {highRateData.map((page, pageIndex) => (
@@ -300,7 +301,6 @@ export default function Home() {
           />
         </ButtonDiv>
       </RecentlyAddedTool>
-      <Newsletter />
     </Container>
   );
 }

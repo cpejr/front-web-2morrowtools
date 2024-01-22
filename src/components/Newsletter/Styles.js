@@ -13,7 +13,7 @@ export const Container = styled.div`
   flex-wrap: wrap;
   height: 200px;
 `;
-export const Input1 = styled(AntdInput)`
+export const Input = styled(AntdInput)`
   width: 100%;
   font-weight: 300;
   font-size: large;
