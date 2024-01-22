@@ -98,7 +98,6 @@ export const MultipleSelect = styled(MultiSelect)`
 
   .p-multiselect-label {
     width: 215px;
-    overflow-x: scroll;
   }
   @media (max-width: ${breakpoints.tablet}) {
     width: 50%;
