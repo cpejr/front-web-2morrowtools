@@ -76,6 +76,9 @@ export default function Header() {
                 Categorias
               </span>
             </Link>
+            <Link>
+              <span onClick={() => (window.location.href = "/admin")}>Usuários</span>
+            </Link>
           </React.Fragment>
         ) : null}
       </Links>
