@@ -9,7 +9,6 @@ import { FaTrashCan } from "react-icons/fa6";
 export default function Comments({ data, onDelete }) {
   const { getUser } = useAuthStore();
   const [name, setName] = useState("");
-  const [creator, setCreator] = useState({});
 
   async function deleteComment() {
     const user = await getUser();
