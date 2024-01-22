@@ -3,6 +3,9 @@ import api from "./api";
 //user
 export const getUser = (id) => api.get(`/User/${id}`);
 export const postUser = (user) => api.post(`/User`, user);
+export const getUsers = () => api.get(`/User/getAll`);
+export const updateUser = (userId, body) => api.put(`/User/${userId}`, body);
+export const deleteUser = (userId) => api.delete(`/User/${userId}`);
 
 // Favorite
 

@@ -10,12 +10,12 @@ export default function Favorites() {
   const { getUser, getToken } = useAuthStore();
   const [aiTools, setAITools] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 8;
+  const itemsPerPage = 6;
   const totalPages = Math.ceil(aiTools?.length / itemsPerPage);
   const isLargeDesktopScreen = useMediaQuery({ minWidth: 1371 });
   const isDesktopScreen = useMediaQuery({ minWidth: 1130 });
   const isMobileScreen = useMediaQuery({ maxWidth: 700 });
-  const itemsPerRow = isLargeDesktopScreen ? 4 : isDesktopScreen ? 3 : isMobileScreen ? 1 : 2;
+  const itemsPerRow = isLargeDesktopScreen ? 3 : isDesktopScreen ? 3 : isMobileScreen ? 1 : 2;
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
   };

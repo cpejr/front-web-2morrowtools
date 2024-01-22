@@ -42,7 +42,7 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(0);
   const [highRateCurrentPage, setHighRateCurrentPage] = useState(0);
   const [recentCurrentPage, setRecentCurrentPage] = useState(0);
-  const itemsPerPage = 8;
+  const itemsPerPage = 6;
   const totalPages = Math.ceil(filteredAiTools?.aiTools?.length / itemsPerPage);
   const highRateTotalPages = Math.ceil(highRateFilteredAiTools?.aiTools?.length / itemsPerPage);
   const recentTotalPages = Math.ceil(recentFilteredAiTools?.aiTools?.length / itemsPerPage);
@@ -78,7 +78,7 @@ export default function Home() {
   const isDesktopScreen = useMediaQuery({ minWidth: 1130 });
   const isMobileScreen = useMediaQuery({ maxWidth: 700 });
 
-  const itemsPerRow = isLargeDesktopScreen ? 4 : isDesktopScreen ? 3 : isMobileScreen ? 1 : 2;
+  const itemsPerRow = isLargeDesktopScreen ? 3 : isDesktopScreen ? 3 : isMobileScreen ? 1 : 2;
 
   for (let i = 0; i < filteredAiTools?.aiTools?.length; i += itemsPerPage) {
     const pageData = filteredAiTools?.aiTools?.slice(i, i + itemsPerPage);

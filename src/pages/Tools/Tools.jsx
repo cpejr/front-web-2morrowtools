@@ -97,7 +97,7 @@ export default function Tools() {
   const isDesktopScreen = useMediaQuery({ minWidth: 1130 });
   const isMobileScreen = useMediaQuery({ maxWidth: 700 });
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 8;
+  const itemsPerPage = 6;
   const totalPages = Math.ceil(aiTools?.aiTools?.length / itemsPerPage);
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
@@ -105,7 +105,7 @@ export default function Tools() {
   const handleNextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
   };
-  const itemsPerRow = isLargeDesktopScreen ? 4 : isDesktopScreen ? 3 : isMobileScreen ? 1 : 2;
+  const itemsPerRow = isLargeDesktopScreen ? 3 : isDesktopScreen ? 3 : isMobileScreen ? 1 : 2;
   for (let i = 0; i < aiTools?.aiTools?.length; i += itemsPerPage) {
     const pageData = aiTools?.aiTools?.slice(i, i + itemsPerPage);
     const rows = [];

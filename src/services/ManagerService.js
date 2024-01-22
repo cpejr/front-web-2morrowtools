@@ -55,6 +55,22 @@ export const useGetAIToolsNames = async () => {
 
 // User
 
+export const useGetUsers = async () => {
+  let users = {};
+  await requesterService.getUsers().then((res) => {
+    users = res.data;
+  });
+  return users;
+};
+
+export const useDeleteUsers = async (userId) => {
+  let user = {};
+  await requesterService.deleteUser(userId).then((res) => {
+    user = res.data;
+  });
+  return user;
+};
+
 export const usePostUser = async (user) => {
   let token;
   await requesterService.postUser(user).then((res) => {
@@ -64,13 +80,26 @@ export const usePostUser = async (user) => {
 };
 
 export const useGetuser = async (id) => {
-  let user;
+  let user = {};
   await requesterService.getUser(id).then((res) => {
     user = res.data;
   });
   return user;
 };
-//favorites
+export const useUpdateUser = async (userId, body) => {
+  let user = {};
+  try {
+    await requesterService.updateUser(userId, body).then((res) => {
+      user = res.data;
+    });
+    return { user };
+  } catch (error) {
+    console.error("Error while updating User");
+    throw error;
+  }
+};
+
+// Favorites
 export const useGetFavorites = async (userId) => {
   let favorites = [];
   await requesterService.getFavorites(userId).then((res) => {
@@ -113,13 +142,8 @@ export const useCreateCategoriesFeature = async (body) => {
 };
 
 export const useEditCategoriesFeature = async (_id, body) => {
-  try {
-    const response = await requesterService.editCategoriesFeature(_id, body);
-    return response.data;
-  } catch (error) {
-    console.error("Error updating category feature", error);
-    throw error;
-  }
+  const response = await requesterService.editCategoriesFeature(_id, body);
+  return response.data;
 };
 
 export const usegetCategoriesFeature = async () => {

@@ -141,7 +141,7 @@ export default function NewTool() {
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 8;
+  const itemsPerPage = 6;
   const totalPages = Math.ceil(ainames?.aiTools?.length / itemsPerPage);
 
   const startIndex = currentPage * itemsPerPage;
