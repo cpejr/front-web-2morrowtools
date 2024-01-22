@@ -62,8 +62,6 @@ export default function Card({ data }) {
     getImage();
   }, []);
 
-  if (data?.name == "perplexity") console.log(image);
-
   const saveFavorite = async () => {
     if (getToken() === null) {
       await logGoogleUser();
