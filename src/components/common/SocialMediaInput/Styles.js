@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { Select } from "antd";
-import { colors } from "../../../styles/styleVariables";
+import { breakpoints, colors } from "../../../styles/styleVariables";
+import { Select as AntdSelect } from "antd";
 
 export const Container = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   font-style: normal;
   font-weight: 500;
   gap: 0.5rem;
@@ -25,16 +25,18 @@ export const Label = styled.label`
 `;
 
 export const StyledInput = styled.input`
-  height: 6rem;
-  font-size: 2rem;
+  height: 3rem;
   padding: 0.8rem 1.6rem;
   border-radius: 0.4rem;
   color: ${colors.white};
-  border: solid 0.1rem;
-  border-color: ${colors.white};
   width: 100%;
+  background-color: ${colors.blue.background};
+  border: ${(props) => (props?.error ? "0.1rem red solid" : `0.1rem ${colors.white} solid`)};
+  ::placeholder {
+    font-weight: 400;
+  }
 
-  @media (max-width: 700px) {
+  @media (max-width: ${breakpoints.mobile}) {
     font-weight: 400;
     font-size: 1.6rem;
     line-height: 2rem;
@@ -45,18 +47,8 @@ export const StyledInput = styled.input`
   }
 `;
 
-export const IconContainer = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-
-  svg {
-    position: absolute;
-    left: 10px;
-  }
-`;
-
-export const StyledSelect = styled(Select)`
-  height: 6rem;
+export const Select = styled(AntdSelect)`
+  border: ${(props) => (props?.error ? "0.1rem red solid" : `0.1rem ${colors.white} solid`)};
+  border-radius: 0.4rem;
+  width: 120px;
 `;

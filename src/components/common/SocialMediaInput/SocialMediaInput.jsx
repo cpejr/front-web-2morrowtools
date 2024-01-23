@@ -1,49 +1,43 @@
 import PropTypes from "prop-types";
-import { Container, IconContainer, StyledSelect, StyledInput } from "./Styles";
-import {
-  FaLinkedin,
-  FaDiscord,
-  FaTwitter,
-  FaInstagram,
-  FaTiktok,
-  FaFacebook,
-  FaReddit,
-  FaPinterest,
-  FaYoutube,
-} from "react-icons/fa";
+import { Container, StyledInput, Select } from "./Styles";
 import { useState } from "react";
+import { FormInputBorder } from "../..";
 
-export default function SocialMediaInput({ placeholder, icon: Icon }) {
-  const [selectedSocialMedia, setSelectedSocialMedia] = useState("linkedin");
-
-  const handleChange = (value) => {
-    setSelectedSocialMedia(value);
-  };
+export default function SocialMediaInput({ errors, register }) {
+  const [selectedSocialMedia, setSelectedSocialMedia] = useState({
+    value: "linkedin",
+    label: "Linkedin",
+  });
 
   const socialMediaOptions = [
-    { value: "linkedin", label: <FaLinkedin /> },
-    { value: "discord", label: <FaDiscord /> },
-    { value: "twitter", label: <FaTwitter /> },
-    { value: "instagram", label: <FaInstagram /> },
-    { value: "tiktok", label: <FaTiktok /> },
-    { value: "facebook", label: <FaFacebook /> },
-    { value: "reddit", label: <FaReddit /> },
-    { value: "pinterest", label: <FaPinterest /> },
-    { value: "youtube", label: <FaYoutube /> },
+    { value: "linkedin", label: "Linkedin" },
+    { value: "discord", label: "Discord" },
+    { value: "twitterX", label: "Twitter" },
+    { value: "instagram", label: "Instagram" },
+    { value: "tiktok", label: "Tiktok" },
+    { value: "facebook", label: "Facebook" },
+    { value: "reddit", label: "Reddit" },
+    { value: "pinterest", label: "Pinterest" },
+    { value: "youtube", label: "Youtube" },
   ];
+
+  const handleChange = (value) => {
+    setSelectedSocialMedia({ value, label: value.charAt(0).toUpperCase() + value.slice(1) });
+  };
 
   return (
     <Container>
-      <StyledSelect
-        defaultValue='linkedin'
-        style={{ width: 120 }}
+      <Select
+        defaultValue={selectedSocialMedia}
         onChange={handleChange}
         options={socialMediaOptions}
       />
-      <IconContainer>
-        {Icon && <Icon />}
-        <StyledInput id={selectedSocialMedia} placeholder={placeholder} />
-      </IconContainer>
+      <FormInputBorder
+        name={selectedSocialMedia.value}
+        placeholder={`Link para o ${selectedSocialMedia.label}`}
+        errors={errors}
+        register={register}
+      />
     </Container>
   );
 }

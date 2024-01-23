@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FormInputBorder,
   SubmitButton,
@@ -7,6 +7,8 @@ import {
   ModalEdit,
   FormSelect,
   FormImageInput,
+  FormSwitch,
+  SocialMediaInput,
 } from "../../components";
 
 import { useForm } from "react-hook-form";
@@ -19,14 +21,14 @@ import {
   ToolListItem,
   ToolButtons,
   StyledModal,
-  DivRow,
+  Selects,
   AutoCompleteInput,
   ShortDescription,
   Collumn,
   IconWrapper,
   SVGDiv,
 } from "./Styles";
-import { FaUpload, FaTrash, FaEdit } from "react-icons/fa";
+import { FaTrash, FaEdit } from "react-icons/fa";
 import * as managerService from "../../services/ManagerService";
 import { buildNewToolErrorMessage, newToolValidationSchema } from "./utils";
 import { toast } from "react-toastify";
@@ -50,6 +52,7 @@ export default function NewTool() {
   const [names, setNames] = useState("");
   const [ainames, setAINames] = useState("");
   const [namesArray, setNamesArray] = useState([]);
+  const [switchValue, setSwitchValue] = useState(false);
   const debouncedName = useDebounce(names);
 
   async function handleCreateAITools(data) {
@@ -192,18 +195,12 @@ export default function NewTool() {
             placeholder='Descrição longa:'
           />
           <FormInputBorder
-            name='link'
-            placeholder='Link do site:'
-            errors={errors}
-            register={register}
-          />
-          <FormInputBorder
             name='youtubeVideoLink'
             placeholder='Link do vídeo no Youtube:'
             errors={errors}
             register={register}
           />
-          <DivRow>
+          <Selects>
             <FormSelect
               name='id_categoryfeature'
               control={control}
@@ -224,7 +221,6 @@ export default function NewTool() {
               }))}
               placeholder='Preço'
             />
-
             <FormSelect
               name='id_categoryprofession'
               control={control}
@@ -235,7 +231,19 @@ export default function NewTool() {
               }))}
               placeholder='Profissão'
             />
-          </DivRow>
+          </Selects>
+          <FormSwitch switchValue={switchValue} setSwitchValue={setSwitchValue} />
+          {switchValue && (
+            <React.Fragment>
+              <FormInputBorder
+                name='link'
+                placeholder='Link do site:'
+                errors={errors}
+                register={register}
+              />
+              <SocialMediaInput errors={errors} register={register} />
+            </React.Fragment>
+          )}
         </Section>
         <SubmitButton>
           <p>Enviar</p>
