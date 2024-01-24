@@ -338,3 +338,10 @@ export const useUpdateAvaliation = async (_id, body) => {
     throw error;
   }
 };
+
+export const useCreateBlog = async (body) => {
+  const create = await requesterService.createBlog(body).then((res) => {
+    return res;
+  });
+  return create;
+};

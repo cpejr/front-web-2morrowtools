@@ -94,6 +94,15 @@ export default function Header() {
       window.location.href = "./adicionar-categoria";
     }
   };
+
+  const redirectToBlog = async () => {
+    if (getToken() === null) {
+      await logGoogleUser();
+    }
+    if (getToken() !== null) {
+      window.location.href = "./blog";
+    }
+  };
   return (
     <Container>
       <ContainerMenu>
@@ -116,6 +125,9 @@ export default function Header() {
             </Link>
             <Link>
               <span onClick={() => redirectToCategories()}>Gerenciar Categorias</span>
+            </Link>
+            <Link>
+              <span onClick={() => redirectToBlog()}>Gerenciar Blogs</span>
             </Link>
           </React.Fragment>
         ) : null}

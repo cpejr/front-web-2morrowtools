@@ -43,6 +43,11 @@ export default function MenuHeader({ globalColor, setGlobalColor }) {
               "/adicionar-categoria",
               <ToolOutlined style={{ fontSize: "1.3rem" }} />
             ),
+            getItem(
+              "Gerenciar Blogs",
+              "/blog",
+              <ToolOutlined style={{ fontSize: "1.3rem" }} />
+            ),
           ]
         : []),
       getItem(globalColor, "theme", <BulbOutlined style={{ fontSize: "1.3rem" }} />),

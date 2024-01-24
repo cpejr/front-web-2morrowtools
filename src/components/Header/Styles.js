@@ -54,8 +54,8 @@ export const ContainerMenu = styled.div`
 export const Links = styled.div`
   display: flex;
   justify-content: space-around;
-  word-wrap: break-word;
-  width: 30rem;
+  width: 35rem;
+  text-align:center;
   a {
     font-family: ${fonts.Exo2};
     font-size: 1.2rem;
@@ -65,7 +65,10 @@ export const Links = styled.div`
     }
   }
   @media (max-width: ${breakpoints.tablet}) {
-    width: 30rem;
+    width: 35rem;
+    a {
+      font-size:0.9rem;
+    }
   }
   @media (max-width: ${breakpoints.mobile}) {
     display: none;
@@ -76,9 +79,11 @@ export const LoginSocial = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 20rem;
+  width:20%;
+  min-width:15rem;
   @media (max-width: ${breakpoints.tablet}) {
-    width: 18rem;
+    width: 17rem;
+    min-width:0;
   }
   @media (max-width: ${breakpoints.smallTablet}) {
     width: 10rem;
@@ -94,7 +99,7 @@ export const SubmitButton = styled.button`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 15rem;
+  width: 9.5rem;
   height: 60px;
   border: 1px solid;
   border-radius: 24px;
@@ -104,7 +109,6 @@ export const SubmitButton = styled.button`
   font-size: 1.2rem;
   font-weight: 400;
   word-wrap: break-word;
-  margin-right: 10px;
 
   &:hover {
     background-color: ${colors.white};
@@ -112,11 +116,11 @@ export const SubmitButton = styled.button`
     cursor: pointer;
   }
   @media (max-width: ${breakpoints.tablet}) {
-    width: 10rem;
+    width: 7rem;
     font-size: 1rem;
   }
   @media (max-width: ${breakpoints.mobile}) {
-    width: 10rem;
+    width: 7rem;
     height: 40px;
     font-size: 1rem;
   }
@@ -125,20 +129,21 @@ export const SubmitButton = styled.button`
     font-size: 0.8rem;
   }
 `;
+
 export const LoginButton = styled.button`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 12rem;
+  width: 60%;
   height: 60px;
   border: 1px solid;
   border-radius: 24px;
   color: ${colors.white};
   background-color: ${colors.transparent};
   font-family: ${fonts.Exo2};
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 400;
-  word-wrap: break-word;
+  overflow-wrap:break-word;
 
   img {
     width: 30%;
@@ -151,7 +156,7 @@ export const LoginButton = styled.button`
     cursor: pointer;
   }
   @media (max-width: ${breakpoints.tablet}) {
-    width: 10rem;
+    width: 7.5rem;
     font-size: 1rem;
   }
   @media (max-width: ${breakpoints.mobile}) {
@@ -229,8 +234,9 @@ export const Selected = styled.div`
   flex-direction: row;
   align-items: center;
   min-width: 4.2rem;
+  padding-left:5%;
   @media (max-width: ${breakpoints.smallTablet}) {
-    padding-left: 1.4rem;
+    padding-left: 0.4rem;
     p {
       text-align: center;
     }

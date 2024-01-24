@@ -85,3 +85,10 @@ export const putUpdateAvaliation = async (id, body) => {
 export const getByIaId = (aiId) => api.get(`/avaliation/${aiId}`);
 
 export const getAvaliation = () => api.get(`/avaliation`);
+
+
+// Blog
+
+export const createBlog = async (body) => {
+  await api.post(`/blog`, { ...body });
+};

@@ -54,6 +54,19 @@ export const Section = styled.section`
   }
 `;
 
+export const DivRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  gap: 5rem;
+  padding-inline:15%;
+
+  @media (max-width: 850px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
+`;
+
 export const Form = styled.form`
   align-items: center;
   display: flex;
