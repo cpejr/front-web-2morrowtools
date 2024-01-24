@@ -89,7 +89,7 @@ export const Section2 = styled.section`
   }
 `;
 
-export const DivRow = styled.div`
+export const Selects = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;

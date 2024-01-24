@@ -26,8 +26,10 @@ export default function AppProvider() {
             colorTextPlaceholder: colors.white,
           },
           Select: {
-            activeBorderColor: colors.blue.accent,
-            activeShadow: `0 0 0 0.5px ${colors.blue.accentShadow}`,
+            colorBorder: colors.transparent,
+            colorPrimaryHover: colors.transparent,
+            colorPrimary: colors.transparent,
+            activeShadow: `0 0 0 0.5px ${colors.white}`,
             colorTextPlaceholder: colors.white,
             colorBgElevated: colors.blue.dark,
             optionActiveBg: colors.blue.light,

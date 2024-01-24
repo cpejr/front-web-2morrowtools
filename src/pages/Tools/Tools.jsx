@@ -119,9 +119,7 @@ export default function Tools() {
 
   return (
     <Container>
-      <ToolCollumn>
-        <Tool data={aiToolsByName} />
-      </ToolCollumn>
+      <ToolCollumn>{aiToolsByName.aiTools && <Tool data={aiToolsByName} />}</ToolCollumn>
       <DiscoverDiv>
         <DiscoverData>
           <h6>Descubra novas ferramentas de tecnologia toda semana! </h6>
