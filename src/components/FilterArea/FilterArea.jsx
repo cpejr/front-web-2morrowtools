@@ -111,14 +111,13 @@ export default function FilterArea({
           onChange={(e) => setFilter(e.value)}
           options={filters}
           optionLabel='label'
-          editable
           showClear
           placeholder='Ordenar Por'
           className='w-full md:w-14rem'
         ></UniSelect>
       </DivSelect>
       <ButtonsDiv>
-        <Buttons onClick={() => onFilterClick(idsArray)}>Filtrar</Buttons>
+        <Buttons onClick={() => onFilterClick()}>Filtrar</Buttons>
         <Buttons onClick={handleClearFilters}>Limpar Filtros</Buttons>
       </ButtonsDiv>
     </ContainerFilter>
