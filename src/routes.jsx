@@ -8,7 +8,7 @@ import {
 
 import { AppLayout } from "./layouts";
 
-import { Home, IAProfile, Favorites, NewTool, Tools, NewCategory } from "./pages";
+import { Home, IAProfile, Favorites, NewTool, Tools, NewCategory, Blog } from "./pages";
 import useAuthStore from "./stores/auth";
 import Admin from "./pages/Admin/Admin";
 
@@ -32,6 +32,7 @@ function Routes() {
           <Route path='/admin' element={user?.type === "Admin" ? <Admin /> : <Navigate to='/' />} />
           <Route path='/perfil-ia' element={<IAProfile />} />
           <Route path='/ferramenta/:name' element={<Tools />} />
+          <Route path='/Blog' element={<Blog />} />
           <Route index element={<Home />} />
           <Route path='*' element={<Home />} />
         </Route>
