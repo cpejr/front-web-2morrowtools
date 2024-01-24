@@ -57,6 +57,7 @@ export default function NewTool() {
 
   async function handleCreateAITools(data) {
     try {
+      console.log(data);
       await managerService.useCreateAITools(data);
       toast.success("Ferramente criado com sucesso!");
       toast.clearWaitingQueue();
@@ -245,9 +246,7 @@ export default function NewTool() {
             </React.Fragment>
           )}
         </Section>
-        <SubmitButton>
-          <p>Enviar</p>
-        </SubmitButton>
+        <SubmitButton>Enviar</SubmitButton>
       </Form>
       <div>
         <Title>GERENCIAR ITENS</Title>
