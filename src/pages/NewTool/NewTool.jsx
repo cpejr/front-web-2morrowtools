@@ -82,7 +82,6 @@ export default function NewTool() {
 
   async function handleCreateAITools(data) {
     try {
-      console.log(data);
       await managerService.useCreateAITools(data);
       toast.success("Ferramente criado com sucesso!");
       toast.clearWaitingQueue();
