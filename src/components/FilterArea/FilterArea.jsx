@@ -4,14 +4,12 @@ import PropTypes from "prop-types";
 import * as managerService from "../../services/ManagerService";
 import {
   ContainerFilter,
-  SearchBar,
-  SelectStyled,
   MultipleSelect,
   DivSelect,
+  UniSelect,
   ButtonsDiv,
   Buttons,
 } from "./Styles";
-import { useGlobalColor } from "../../stores/GlobalColor";
 
 export default function FilterArea({
   onFilterClick,
@@ -24,13 +22,14 @@ export default function FilterArea({
   setPrices,
   profession,
   setProfession,
+  setFilter,
+  filter,
 }) {
   // Set variables
 
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [categoriesPrices, setCategoriesPrices] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
-  const { globalColor } = useGlobalColor();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,6 +50,7 @@ export default function FilterArea({
     setPrices([]);
     setProfession([]);
     setArray([]);
+    setFilter([]);
     filterReset();
   };
 
@@ -61,6 +61,12 @@ export default function FilterArea({
     }));
     return newArray;
   };
+
+  const filters = [
+    { label: "Data", value: "date" },
+    { label: "Nome", value: "name" },
+    { label: "Avaliação", value: "avaliation" },
+  ];
   const handleFilterChange = () => {
     const newArray = [...features, ...prices, ...profession];
     setArray(newArray);
@@ -78,7 +84,6 @@ export default function FilterArea({
           options={transformArrayItems(categoriesFeature)}
           optionLabel='label'
           placeholder='Escolha as características'
-          display='chip'
           className='w-full md:w-20rem'
           filter
         />
@@ -88,7 +93,6 @@ export default function FilterArea({
           options={transformArrayItems(categoriesPrices)}
           optionLabel='label'
           placeholder='Escolha os preços'
-          display='chip'
           className='w-full md:w-20rem'
           filter
         />
@@ -98,38 +102,24 @@ export default function FilterArea({
           options={transformArrayItems(categoriesProfession)}
           optionLabel='label'
           placeholder='Escolha as profissões'
-          display='chip'
           className='w-full md:w-20rem'
           filter
         />
+
+        <UniSelect
+          value={filter}
+          onChange={(e) => setFilter(e.value)}
+          options={filters}
+          optionLabel='label'
+          showClear
+          placeholder='Ordenar Por'
+          className='w-full md:w-14rem'
+        ></UniSelect>
       </DivSelect>
       <ButtonsDiv>
-        <Buttons onClick={() => onFilterClick(idsArray)}>Filtrar</Buttons>
+        <Buttons onClick={() => onFilterClick()}>Filtrar</Buttons>
         <Buttons onClick={handleClearFilters}>Limpar Filtros</Buttons>
       </ButtonsDiv>
-      <SearchBar>
-        <SelectStyled
-          mode='multiple'
-          showSearch
-          dropdownStyle={{ backgroundColor: globalColor === "Dark" ? "#080B10" : "#F4EFF9" }}
-          placeholder='Ordernar Por'
-          optionFilterProp='children'
-          options={[
-            {
-              value: "date",
-              label: "Data",
-            },
-            {
-              value: "nome",
-              label: "Nome",
-            },
-            {
-              value: "estrelas",
-              label: "Estrelas",
-            },
-          ]}
-        />
-      </SearchBar>
     </ContainerFilter>
   );
 }
@@ -145,4 +135,6 @@ FilterArea.propTypes = {
   setPrices: PropTypes.func.isRequired,
   profession: PropTypes.array.isRequired,
   setProfession: PropTypes.func.isRequired,
+  setFilter: PropTypes.func.isRequired,
+  filter: PropTypes.array.isRequired,
 };

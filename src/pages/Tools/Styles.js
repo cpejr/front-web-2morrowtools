@@ -131,8 +131,8 @@ export const DiscoverDiv = styled.div`
   width: 90%;
   flex-direction: row;
   align-self: center;
-   margin-top: 4rem;
-   margin-bottom: 2rem;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
   gap: 1rem;
   height: auto;
   justify-content: center;
@@ -220,4 +220,28 @@ export const DiscoverLine = styled.div`
     flex-direction: column;
     gap: 1rem;
   }
+`;
+export const DivLine = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+`;
+export const Line = styled.div`
+  display: flex;
+  width: 50%;
+  height: auto;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+  @media (max-width: ${breakpoints.mobile}) {
+    margin-bottom: 0;
+  }
+`;
+export const ButtonDiv = styled.div`
+  display: flex;
+  flex-direction: row;
 `;

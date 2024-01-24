@@ -55,6 +55,22 @@ export const useGetAIToolsNames = async () => {
 
 // User
 
+export const useGetUsers = async () => {
+  let users = {};
+  await requesterService.getUsers().then((res) => {
+    users = res.data;
+  });
+  return users;
+};
+
+export const useDeleteUsers = async (userId) => {
+  let user = {};
+  await requesterService.deleteUser(userId).then((res) => {
+    user = res.data;
+  });
+  return user;
+};
+
 export const usePostUser = async (user) => {
   let token;
   await requesterService.postUser(user).then((res) => {
@@ -64,13 +80,26 @@ export const usePostUser = async (user) => {
 };
 
 export const useGetuser = async (id) => {
-  let user;
+  let user = {};
   await requesterService.getUser(id).then((res) => {
     user = res.data;
   });
   return user;
 };
-//favorites
+export const useUpdateUser = async (userId, body) => {
+  let user = {};
+  try {
+    await requesterService.updateUser(userId, body).then((res) => {
+      user = res.data;
+    });
+    return { user };
+  } catch (error) {
+    console.error("Error while updating User");
+    throw error;
+  }
+};
+
+// Favorites
 export const useGetFavorites = async (userId) => {
   let favorites = [];
   await requesterService.getFavorites(userId).then((res) => {
@@ -113,13 +142,8 @@ export const useCreateCategoriesFeature = async (body) => {
 };
 
 export const useEditCategoriesFeature = async (_id, body) => {
-  try {
-    const response = await requesterService.editCategoriesFeature(_id, body);
-    return response.data;
-  } catch (error) {
-    console.error("Error updating category feature", error);
-    throw error;
-  }
+  const response = await requesterService.editCategoriesFeature(_id, body);
+  return response.data;
 };
 
 export const usegetCategoriesFeature = async () => {
@@ -143,7 +167,6 @@ export const useDeleteCategoriesFeature = async (_id) => {
 // Category Price
 
 export const useCreateCategoriesPrices = async (body) => {
-
   const create = await requesterService.createCategoriesPrices(body).then((res) => {
     return res;
   });
@@ -306,6 +329,22 @@ export const useGetAIToolsByCategoryId = async (info) => {
 
 // Avaliation
 
+export const useGetTrueOrFalse = async (aiId) => {
+  let result = true;
+  await requesterService.getTrueOrFalse(aiId).then((res) => {
+    result = res.data;
+  });
+  return { result };
+};
+
+export const useGetUserTrueOrFalse = async (info) => {
+  let result = true;
+  await requesterService.getUserTrueOrFalse(info).then((res) => {
+    result = res;
+  });
+  return { result };
+};
+
 export const useGetAvaliationByAIId = async (aiId) => {
   let { averagerate } = {};
   await requesterService.getByIaId(aiId).then((res) => {
@@ -329,6 +368,14 @@ export const useGetAvaliation = async () => {
   return { avaliation };
 };
 
+export const useGetAvaliationID = async (info) => {
+  let ai = {};
+  await requesterService.getAvaliationID(info).then((res) => {
+    ai = res.data;
+  });
+  return { ai };
+};
+
 export const useUpdateAvaliation = async (_id, body) => {
   try {
     const response = await requesterService.putUpdateAvaliation(_id, body);
@@ -344,4 +391,14 @@ export const useCreateBlog = async (body) => {
     return res;
   });
   return create;
+};
+// image
+export const useGetImage = async (imageURL) => {
+  try {
+    const response = await requesterService.getImage(imageURL);
+    return response;
+  } catch (error) {
+    console.error("Error getting image", error);
+    throw error;
+  }
 };

@@ -295,3 +295,15 @@ export const VideoDiv = styled.div`
     height: 11.25rem;
   }
 `;
+
+export const IconContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Icon = styled.a`
+  font-size: 1.5rem;
+  cursor: pointer;
+`;

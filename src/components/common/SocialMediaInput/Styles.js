@@ -1,62 +1,35 @@
 import styled from "styled-components";
-import { Select, Input } from "antd";
 import { colors } from "../../../styles/styleVariables";
+import { Select as AntdSelect } from "antd";
 
 export const Container = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   font-style: normal;
   font-weight: 500;
-  gap: 0.5rem;
+  gap: 2rem;
 
   width: 100%;
-`;
-
-export const Label = styled.label`
-  color: ${colors.white};
-  font-size: 2.4rem;
 
   @media (max-width: 700px) {
-    font-size: 2rem;
-  }
-  @media (max-width: 370px) {
-    font-size: 1.5rem;
+    margin-bottom: 2rem;
   }
 `;
 
-export const StyledInput = styled(Input)`
-  height: 6rem;
-  font-size: 2rem;
-  padding: 0.8rem 1.6rem;
+export const Select = styled(AntdSelect)`
+  border: ${(props) => (props?.error ? "0.1rem red solid" : `0.1rem ${colors.white} solid`)};
   border-radius: 0.4rem;
-  color: ${colors.white};
-  border: solid 0.1rem;
-  border-color: ${colors.white};
-  width: 100%;
-
-  @media (max-width: 700px) {
-    font-weight: 400;
-    font-size: 1.6rem;
-    line-height: 2rem;
-    height: 3rem;
-  }
-  @media (max-width: 370px) {
-    font-size: 1.2rem;
-  }
+  width: 120px;
 `;
 
-export const IconContainer = styled.div`
+export const InputContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  width: 100%;
 
   svg {
     position: absolute;
-    left: 10px;
+    right: 10px;
+    color: ${colors.icon};
   }
-`;
-
-export const StyledSelect = styled(Select)`
-  height: 6rem;
 `;

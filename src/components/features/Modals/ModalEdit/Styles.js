@@ -84,3 +84,10 @@ export const Section = styled.section`
     width: 80%;
   }
 `;
+
+export const LabelWraper = styled.div`
+  display: flex;
+  width: 100%;
+  align-self: center;
+  flex-direction: column;
+`;

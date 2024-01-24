@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import {
   BlueButton,
+  ButtonDiv,
   CardLine,
   Comment,
   CommentDiv,
@@ -10,9 +11,11 @@ import {
   DiscoverDiv,
   DiscoverInputs,
   DiscoverLine,
+  DivLine,
   FullInput,
   HalfInput,
   LetComment,
+  Line,
   OtherTools,
   ToolCollumn,
 } from "./Styles";
@@ -28,6 +31,7 @@ import {
 } from "../../services/ManagerService";
 import { useParams } from "react-router-dom";
 import useAuthStore from "../../stores/auth";
+import Pagination from "../../components/features/Pagination/Pagination";
 
 export default function Tools() {
   // Variables
@@ -57,6 +61,7 @@ export default function Tools() {
       id_user: getUser()?._id,
       id_ia: aiToolsByName.aiTools[0]._id,
     });
+    gettingComments();
   }
   async function gettingComments() {
     const res = await useGetComments(aiToolsByName?.aiTools[0]?._id);
@@ -88,32 +93,33 @@ export default function Tools() {
   // Grouping Data
 
   const groupedData = [];
-  const isSmallDesktop = useMediaQuery({ maxWidth: 1370 });
-  const isTabletScreen = useMediaQuery({ maxWidth: 1130 });
+  const isLargeDesktopScreen = useMediaQuery({ minWidth: 1371 });
+  const isDesktopScreen = useMediaQuery({ minWidth: 1130 });
   const isMobileScreen = useMediaQuery({ maxWidth: 700 });
-  if (isMobileScreen) {
-    for (let i = 0; i < aiTools?.aiTools?.length; i += 1) {
-      groupedData.push(aiTools?.aiTools?.slice(i, i + 1));
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 6;
+  const totalPages = Math.ceil(aiTools?.aiTools?.length / itemsPerPage);
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
+  };
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
+  };
+  const itemsPerRow = isLargeDesktopScreen ? 3 : isDesktopScreen ? 3 : isMobileScreen ? 1 : 2;
+  for (let i = 0; i < aiTools?.aiTools?.length; i += itemsPerPage) {
+    const pageData = aiTools?.aiTools?.slice(i, i + itemsPerPage);
+    const rows = [];
+
+    for (let j = 0; j < itemsPerPage / itemsPerRow; j++) {
+      rows.push(pageData.slice(j * itemsPerRow, (j + 1) * itemsPerRow));
     }
-  } else if (isTabletScreen) {
-    for (let i = 0; i < aiTools?.aiTools?.length; i += 2) {
-      groupedData.push(aiTools?.aiTools?.slice(i, i + 2));
-    }
-  } else if (isSmallDesktop) {
-    for (let i = 0; i < aiTools?.aiTools?.length; i += 3) {
-      groupedData.push(aiTools?.aiTools?.slice(i, i + 3));
-    }
-  } else {
-    for (let i = 0; i < aiTools?.aiTools?.length; i += 4) {
-      groupedData.push(aiTools?.aiTools?.slice(i, i + 4));
-    }
+
+    groupedData.push(rows);
   }
 
   return (
     <Container>
-      <ToolCollumn>
-        <Tool data={aiToolsByName} />
-      </ToolCollumn>
+      <ToolCollumn>{aiToolsByName.aiTools && <Tool data={aiToolsByName} />}</ToolCollumn>
       <DiscoverDiv>
         <DiscoverData>
           <h6>Descubra novas ferramentas de tecnologia toda semana! </h6>
@@ -151,13 +157,31 @@ export default function Tools() {
       </CommentDiv>
       <OtherTools>
         <h1>OUTRAS FERRAMENTAS SIMILARES:</h1>
-        {groupedData.map((group, groupIndex) => (
-          <CardLine key={groupIndex}>
-            {group.map((content, contentIndex) => (
-              <Card data={content} key={contentIndex} />
+        {groupedData.map((page, pageIndex) => (
+          <DivLine key={pageIndex} style={{ display: pageIndex === currentPage ? "flex" : "none" }}>
+            {page.map((row, rowIndex) => (
+              <Line key={rowIndex}>
+                {row.map((content) => (
+                  <Card
+                    data={{
+                      ...content,
+                    }}
+                    key={content?.name}
+                  />
+                ))}
+              </Line>
             ))}
-          </CardLine>
+          </DivLine>
         ))}
+        <ButtonDiv>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            handlePrevPage={handlePrevPage}
+            handleNextPage={handleNextPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </ButtonDiv>
       </OtherTools>
     </Container>
   );

@@ -3,6 +3,9 @@ import api from "./api";
 //user
 export const getUser = (id) => api.get(`/User/${id}`);
 export const postUser = (user) => api.post(`/User`, user);
+export const getUsers = () => api.get(`/User/getAll`);
+export const updateUser = (userId, body) => api.put(`/User/${userId}`, body);
+export const deleteUser = (userId) => api.delete(`/User/${userId}`);
 
 // Favorite
 
@@ -76,6 +79,14 @@ export const getAIToolsByCategoryId = (info) => api.get("IA/search-by-category",
 
 //Avaliation
 
+export const getTrueOrFalse = (iaId) => api.get(`/avaliation/check/${iaId}`);
+export const getUserTrueOrFalse = async (info) => {
+  const { userId, iaId } = info;
+  const res = await api.get(`/avaliation/userCheck/${iaId}`, { params: { userId } });
+  return res.data;
+};
+export const getAvaliationID = (info) => api.get("avaliation/ID", { params: info });
+
 export const postAvaliation = async (body) => {
   await api.post(`/avaliation`, { ...body });
 };
@@ -92,3 +103,5 @@ export const getAvaliation = () => api.get(`/avaliation`);
 export const createBlog = async (body) => {
   await api.post(`/blog`, { ...body });
 };
+//image
+export const getImage = (imageURL) => api.post(`/IAImage`, { imageURL });

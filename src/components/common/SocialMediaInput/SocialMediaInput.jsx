@@ -1,54 +1,66 @@
 import PropTypes from "prop-types";
-import { Container, IconContainer, StyledSelect, StyledInput } from "./Styles";
-import {
-  FaLinkedin,
-  FaDiscord,
-  FaTwitter,
-  FaInstagram,
-  FaTiktok,
-  FaFacebook,
-  FaReddit,
-  FaPinterest,
-  FaYoutube,
-} from "react-icons/fa";
+import { Select, InputContainer, Container } from "./Styles";
 import { useState } from "react";
+import { FormInputBorder } from "../..";
+import { FaTrash } from "react-icons/fa";
 
-export default function SocialMediaInput({ placeholder, icon: Icon }) {
-  const [selectedSocialMedia, setSelectedSocialMedia] = useState("linkedin");
+export default function SocialMediaInput({ errors, register }) {
+  const OPTIONS = [
+    "linkedIn",
+    "discord",
+    "twitterX",
+    "instagram",
+    "tiktok",
+    "facebook",
+    "reddit",
+    "pinterest",
+    "youtube",
+  ];
+  const SELECT_OPTIONS = OPTIONS.map((option) => {
+    return {
+      value: option,
+      label: option.charAt(0).toUpperCase() + option.slice(1),
+    };
+  });
 
-  const handleChange = (value) => {
-    setSelectedSocialMedia(value);
+  const [shownInputs, setShownInputs] = useState([OPTIONS[0]]);
+
+  const handleSelectChange = (name) => {
+    if (!shownInputs.includes(name)) setShownInputs([name, ...shownInputs]);
   };
 
-  const socialMediaOptions = [
-    { value: "linkedin", label: <FaLinkedin /> },
-    { value: "discord", label: <FaDiscord /> },
-    { value: "twitter", label: <FaTwitter /> },
-    { value: "instagram", label: <FaInstagram /> },
-    { value: "tiktok", label: <FaTiktok /> },
-    { value: "facebook", label: <FaFacebook /> },
-    { value: "reddit", label: <FaReddit /> },
-    { value: "pinterest", label: <FaPinterest /> },
-    { value: "youtube", label: <FaYoutube /> },
-  ];
+  const removeInput = (name) => {
+    setShownInputs(shownInputs.filter((input) => input != name));
+  };
 
   return (
     <Container>
-      <StyledSelect
-        defaultValue='linkedin'
-        style={{ width: 120 }}
-        onChange={handleChange}
-        options={socialMediaOptions}
+      <Select
+        defaultValue={SELECT_OPTIONS[0]}
+        onChange={handleSelectChange}
+        options={SELECT_OPTIONS}
       />
-      <IconContainer>
-        {Icon && <Icon />}
-        <StyledInput id={selectedSocialMedia} placeholder={placeholder} />
-      </IconContainer>
+
+      {shownInputs.map((name) => (
+        <div key={name}>
+          <p>{name.charAt(0).toUpperCase() + name.slice(1)}</p>
+
+          <InputContainer>
+            <FormInputBorder
+              name={name}
+              placeholder={`Link para o ${name}`}
+              errors={errors}
+              register={register}
+            />
+            <FaTrash color='red' cursor='pointer' onClick={() => removeInput(name)} />
+          </InputContainer>
+        </div>
+      ))}
     </Container>
   );
 }
 
 SocialMediaInput.propTypes = {
-  placeholder: PropTypes.string.isRequired,
-  icon: PropTypes.elementType,
+  errors: PropTypes.object.isRequired,
+  register: PropTypes.func.isRequired,
 };
