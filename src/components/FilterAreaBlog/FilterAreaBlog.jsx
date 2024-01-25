@@ -7,7 +7,7 @@ import {
   Buttons,
 } from "./Styles";
 
-export default function FilterArea({}) {
+export default function FilterAreaBlog({}) {
   const transformArrayItems = (OriginalArray) => {
     const newArray = OriginalArray.map((item) => ({
       value: item?._id,
