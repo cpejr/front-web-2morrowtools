@@ -80,7 +80,6 @@ export default function MenuHeader({ globalColor, setGlobalColor }) {
       navigate(key);
     }
     if (key && key === "/submit") {
-      console.log("ok");
       window.open("https://bit.ly/2MT_submeter_ferramenta", "_blank");
     }
     if (key && key === "/theme") {

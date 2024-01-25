@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { Container, Tittle, Label, ModalContent, Form, Section } from "./Styles";
-import FormSelect from "../../../common/FormButton/FormButton";
+import { Container, Tittle, Label, ModalContent, Form, Section, LabelWraper } from "./Styles";
+import FormSelect from "../../../common/FormSelect/FormSelect";
 import { toast } from "react-toastify";
 import * as managerService from "../../../../services/ManagerService";
 import { useEffect } from "react";
@@ -10,17 +10,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import FormInputBorder from "../../../common/FormInputBorder/FormInputBorder";
 import FormsTextArea from "../../../common/FormsTextArea/FormsTextArea";
 import { FaUpload } from "react-icons/fa";
-import {
-  buildEditToolErrorMessage,
-  editToolValidationSchema
-} from "./utils";
+import { buildEditToolErrorMessage, editToolValidationSchema } from "./utils";
 import SubmitButton from "../../../common/SubmitButton/SubmitButton";
+import { colors } from "../../../../styles/styleVariables";
 
 export default function ModalEdit({ _id, tool, close }) {
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [categoriesPrices, setCategoriesPrices] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
-
   // Forms values
   const [formData, setFormData] = useState({
     name: tool.name,
@@ -78,7 +75,7 @@ export default function ModalEdit({ _id, tool, close }) {
     register,
     formState: { errors },
   } = useForm({
-     resolver: zodResolver(editToolValidationSchema),
+    resolver: zodResolver(editToolValidationSchema),
   });
 
   return (
@@ -87,7 +84,7 @@ export default function ModalEdit({ _id, tool, close }) {
         <ModalContent>
           <Tittle>Editar Informações</Tittle>
           <Section>
-            <div>
+            <LabelWraper>
               <Label>Nome:</Label>
               <FormInputBorder
                 name='name'
@@ -97,9 +94,9 @@ export default function ModalEdit({ _id, tool, close }) {
                 register={register}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               />
-            </div>
+            </LabelWraper>
 
-            <div>
+            <LabelWraper>
               <Label>URL da imagem:</Label>
               <FormInputBorder
                 name='imageURL'
@@ -110,9 +107,9 @@ export default function ModalEdit({ _id, tool, close }) {
                 register={register}
                 onChange={(e) => setFormData({ ...formData, imageURL: e.target.value })}
               />
-            </div>
+            </LabelWraper>
 
-            <div>
+            <LabelWraper>
               <Label>Descrição curta:</Label>
               <FormInputBorder
                 name='shortDescription'
@@ -122,9 +119,9 @@ export default function ModalEdit({ _id, tool, close }) {
                 register={register}
                 onChange={(e) => setFormData({ ...formData, shortDescription: e.target.value })}
               />
-            </div>
+            </LabelWraper>
 
-            <div>
+            <LabelWraper>
               <Label>Descrição longa:</Label>
               <FormsTextArea
                 name='longDescription'
@@ -135,9 +132,9 @@ export default function ModalEdit({ _id, tool, close }) {
                 register={register}
                 onChange={(e) => setFormData({ ...formData, longDescription: e.target.value })}
               />
-            </div>
+            </LabelWraper>
 
-            <div>
+            <LabelWraper>
               <Label>Link do site:</Label>
               <FormInputBorder
                 name='link'
@@ -147,9 +144,9 @@ export default function ModalEdit({ _id, tool, close }) {
                 register={register}
                 onChange={(e) => setFormData({ ...formData, link: e.target.value })}
               />
-            </div>
+            </LabelWraper>
 
-            <div>
+            <LabelWraper>
               <Label>Link do vídeo no Youtube:</Label>
               <FormInputBorder
                 name='youtubeVideoLink'
@@ -159,13 +156,14 @@ export default function ModalEdit({ _id, tool, close }) {
                 register={register}
                 onChange={(e) => setFormData({ ...formData, youtubeVideoLink: e.target.value })}
               />
-            </div>
+            </LabelWraper>
 
-            <div>
+            <LabelWraper>
               <Label>Category Feature:</Label>
               <FormSelect
                 name='id_categoryfeature'
                 control={control}
+                dropdownStyle={{ backgroundColor: colors.blue.background }}
                 defaultValue={tool.id_categoryfeature._id}
                 data={categoriesFeature.map(({ _id, name }) => ({
                   label: name,
@@ -173,13 +171,14 @@ export default function ModalEdit({ _id, tool, close }) {
                 }))}
                 placeholder='Característica'
               />
-            </div>
+            </LabelWraper>
 
-            <div>
+            <LabelWraper>
               <Label>Category Price:</Label>
               <FormSelect
                 name='id_categoryprice'
                 control={control}
+                dropdownStyle={{ backgroundColor: colors.blue.background }}
                 defaultValue={tool.id_categoryprice._id}
                 data={categoriesPrices.map(({ _id, name }) => ({
                   label: name,
@@ -187,13 +186,14 @@ export default function ModalEdit({ _id, tool, close }) {
                 }))}
                 placeholder='Preço'
               />
-            </div>
+            </LabelWraper>
 
-            <div>
+            <LabelWraper>
               <Label>Category Profession:</Label>
               <FormSelect
                 name='id_categoryprofession'
                 control={control}
+                dropdownStyle={{ backgroundColor: colors.blue.background }}
                 defaultValue={tool.id_categoryprofession._id}
                 data={categoriesProfession.map(({ _id, name }) => ({
                   label: name,
@@ -201,7 +201,7 @@ export default function ModalEdit({ _id, tool, close }) {
                 }))}
                 placeholder='Profissão'
               />
-            </div>
+            </LabelWraper>
           </Section>
           <SubmitButton type='submit'>
             <p>Salvar</p>

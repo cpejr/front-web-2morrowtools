@@ -15,9 +15,21 @@ import {
   Tag,
   TagsLine,
   VideoDiv,
+  Icon,
+  IconContainer,
 } from "./Styles";
+import {
+  FaLinkedin,
+  FaDiscord,
+  FaTwitter,
+  FaInstagram,
+  FaTiktok,
+  FaFacebook,
+  FaReddit,
+  FaPinterest,
+  FaYoutube,
+} from "react-icons/fa";
 import PropTypes from "prop-types";
-
 import { useState, useEffect } from "react";
 import { FaRegBookmark } from "react-icons/fa";
 import { FaStarHalfStroke } from "react-icons/fa6";
@@ -33,7 +45,7 @@ import {
   useGetAvaliationID,
 } from "../../services/ManagerService";
 import { toast } from "react-toastify";
-import { LoadingOutlined } from "@ant-design/icons";
+import React from "react";
 
 export default function Tool({ data }) {
   const [starsValue, setStarsValue] = useState(0);
@@ -42,18 +54,15 @@ export default function Tool({ data }) {
   const [userHasPrevRating, setUserHasPrevRating] = useState(false);
   const [avaliationID, setAvaliationID] = useState({});
   const ID = data?.aiTools?.[0]?._id;
-  const [loading, setLoading] = useState(false);
+
+  //images
   const [image, setImage] = useState("");
   const getImage = async () => {
     try {
       if (data.aiTools) {
         setImage(data?.aiTools[0]?.imageURL);
-
-        setLoading(true);
-
         const azureImage = await useGetImage(data?.aiTools[0]?.imageURL);
         setImage(azureImage.data.image);
-        setLoading(false);
       }
     } catch (error) {
       console.error("Erro ao buscar imagem de ferramenta", error);
@@ -65,9 +74,9 @@ export default function Tool({ data }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
+  //avaliation and comments
   const { getUser } = useAuthStore();
   const userID = getUser()?._id;
-
   async function GetUserTrueOrFalse() {
     if (ID && userID) {
       const { result } = await useGetUserTrueOrFalse({ userId: userID, iaId: ID });
@@ -104,11 +113,6 @@ export default function Tool({ data }) {
         break;
     }
   };
-
-  const handleHoverChange = (value) => {
-    setHoverValue(value);
-  };
-
   const renderStarIcon2 = (index) => {
     const floatValue = starsValue2;
     if (index < floatValue && index > floatValue - 1) {
@@ -121,6 +125,11 @@ export default function Tool({ data }) {
     return index <= (hoverValue || starsValue) - 1 ? <RiStarSFill /> : <RiStarSLine />;
   };
 
+  const handleHoverChange = (value) => {
+    setHoverValue(value);
+  };
+
+  //avaliaion
   async function GetByIaId() {
     const result = await useGetAvaliationByAIId(ID);
     const averageRate = result?.averagerate || 0;
@@ -134,6 +143,19 @@ export default function Tool({ data }) {
     setStarsValue(avaliationID?.rate || 0);
   }, [data, avaliationID]);
 
+  //icons
+  const iconOptions = {
+    linkedIn: <FaLinkedin />,
+    discord: <FaDiscord />,
+    twitterX: <FaTwitter />,
+    instagram: <FaInstagram />,
+    tiktok: <FaTiktok />,
+    facebook: <FaFacebook />,
+    reddit: <FaReddit />,
+    pinterest: <FaPinterest />,
+    youtube: <FaYoutube />,
+  };
+
   return (
     <>
       {data?.aiTools?.map((toolData, index) => (
@@ -141,7 +163,7 @@ export default function Tool({ data }) {
           <Row key={index}>
             <ImageCollumn>
               <Image>
-                {loading ? <LoadingOutlined /> : <img src={image} alt={`ToolImage ${index}`} />}
+                <img src={image} alt={`ToolImage ${index}`} />
               </Image>
               <TagsLine key={`line-${index}`}>
                 <Tag>{toolData?.id_categoryfeature?.name}</Tag>
@@ -179,6 +201,15 @@ export default function Tool({ data }) {
               >
                 ACESSE JÁ!
               </BlueButton>
+              <IconContainer>
+                {Object.entries(iconOptions)
+                  .filter(([name]) => data.aiTools[0][name])
+                  .map(([name]) => (
+                    <Icon href={data.aiTools[0][name]} target='_blank' rel='noreferrer' key={name}>
+                      {iconOptions[name]}
+                    </Icon>
+                  ))}
+              </IconContainer>
             </DataCollumn>
           </Row>
           <Row>
