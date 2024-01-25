@@ -63,6 +63,7 @@ export const DivRow = styled.div`
 
   @media (max-width: 850px) {
     flex-direction: column;
+    padding:0;
     gap: 1rem;
   }
 `;

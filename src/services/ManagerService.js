@@ -386,12 +386,33 @@ export const useUpdateAvaliation = async (_id, body) => {
   }
 };
 
+//Blog
+
 export const useCreateBlog = async (body) => {
   const create = await requesterService.createBlog(body).then((res) => {
     return res;
   });
   return create;
 };
+
+export const useGetBlogs = async () => {
+  let blogs = {};
+  await requesterService.getBlogs().then((res) => {
+    blogs = res.data;
+  });
+  return { blogs };
+};
+
+export const useDeletePost = async (_id) => {
+  try {
+    const response = await requesterService.deletePost(_id);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting post", error);
+    throw error;
+  }
+};
+
 // image
 export const useGetImage = async (imageURL) => {
   try {

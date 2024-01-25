@@ -29,11 +29,11 @@ function Routes() {
             path='/adicionar-categoria'
             element={user?.type === "Admin" ? <NewCategory /> : <Navigate to='/' />}
           />
-          <Route path='/admin' element={user?.type === "Admin" ? <Admin /> : <Navigate to='/' />} />
           <Route
             path='/blog'
-            element={isAdm(userEmail) ? <Blog /> : <Navigate to='/' />}
+            element={user?.type === "Admin" ? <Blog /> : <Navigate to='/' />}
           />
+          <Route path='/admin' element={user?.type === "Admin" ? <Admin /> : <Navigate to='/' />} />
           <Route path='/perfil-ia' element={<IAProfile />} />
           <Route path='/ferramenta/:name' element={<Tools />} />
           <Route index element={<Home />} />

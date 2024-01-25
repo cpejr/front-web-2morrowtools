@@ -1,54 +1,55 @@
 import { useState, useEffect } from "react";
 import { 
-  Container, 
-  Title, 
-  Section, 
-  Section2, 
   Form, 
+  Title, 
   DivRow,
-  StyledModal, 
+  SVGDiv, 
+  Section, 
   TextList, 
+  Section2,  
+  Container,
+  StyledModal, 
   TextButtons, 
-  TextListItem, 
   IconWrapper,
+  TextListItem, 
   AutoCompleteInput,
-  SVGDiv 
 } from "./Styles";
 import { 
-  FormInputBorder, 
-  ModalDelete, 
   ModalEdit,
   FormSelect,
+  ModalDelete, 
   SubmitButton, 
-  FormsTextArea 
+  FormsTextArea,
+  FormImageInput, 
+  FormInputBorder, 
 } from "../../components";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { newTextValidationSchema, buildNewToolErrorMessage } from "./utils";
-import { FaUpload, FaTrash, FaEdit } from "react-icons/fa";
-import { SearchOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
-import * as managerService from "../../services/ManagerService";
 import { useForm } from "react-hook-form";
+import { FaTrash, FaEdit } from "react-icons/fa";
+import { SearchOutlined } from "@ant-design/icons";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as managerService from "../../services/ManagerService";
+import { newTextValidationSchema, buildNewToolErrorMessage } from "./utils";
 
 export default function Blog() {
 
   // Set variables
-  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [names, setNames] = useState("");
+  const [namesArray, setNamesArray] = useState([]);
+  const [currentBlogs, setCurrentBlogs] = useState([]);
+  const [selectedText, setSelectedText] = useState(null);
   const [selectedTextId, setSelectedTextId] = useState(null);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
-  const [selectedText, setSelectedText] = useState(null);
-  const [namesArray, setNamesArray] = useState([]);
   const [categoriesFeature, setCategoriesFeature] = useState([]);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
-  const [resultPost, setPost] = useState([]);
-  const [names, setNames] = useState("");
-
 
   async function handleCreateBlog(data) {
     try {
       await managerService.useCreateBlog(data);
       toast.success("Post criado com sucesso!");
       toast.clearWaitingQueue();
+      getPosts();
     } catch (error) {
       toast.error("Erro ao criar post. Favor tentar novamente!");
       toast.clearWaitingQueue();
@@ -56,8 +57,14 @@ export default function Blog() {
     }
   }
   
+  async function getPosts() {
+    const posts = await managerService.useGetBlogs();
+    setCurrentBlogs(posts.blogs);
+    setNamesArray(posts.blogs.name)
+  }
 
   // Modal Functions
+
   const handleOpenDeleteModal = (TextId) => {
     setSelectedTextId(TextId);
     setDeleteModalOpen(true);
@@ -78,6 +85,7 @@ export default function Blog() {
   const handleCloseDeleteModal = () => {
     setSelectedTextId(null);
     setDeleteModalOpen(false);
+    getPosts();
   };
 
   useEffect(() => {
@@ -89,9 +97,7 @@ export default function Blog() {
         const resultProfession = await managerService.usegetCategoriesProfession();
         setCategoriesProfession(resultProfession.categoriesprofession);
 
-        const resultPosts = await managerService.usegetCategoriesProfession();
-        setCategoriesProfession(resultProfession.categoriesprofession);
-
+        getPosts();
       } catch (error) {
         const errorMessage = buildNewToolErrorMessage(error);
         console.error(errorMessage);
@@ -103,23 +109,16 @@ export default function Blog() {
 
 
   const search = () => {
-    const filteredSuggestions = aiTools?.filter((name) =>
-      name.toLowerCase().includes(names.toLowerCase())
-    );
+    const filteredSuggestions = currentBlogs?.filter((name) =>
+    name.toLowerCase().includes(name.toLowerCase()));
+
     setNamesArray(filteredSuggestions);
   };
 
-  const {
-    handleSubmit,
-    register,
-    control,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(newTextValidationSchema),
-  });
+  const { handleSubmit, register, control, formState: { errors } }
+          = useForm({ resolver: zodResolver(newTextValidationSchema) });
   
   const onSubmit = (data) => {
-    console.log("oi");
     const combinedData = {
       ...data,
       id_categoryfeature: data.id_categoryfeature,
@@ -136,17 +135,16 @@ export default function Blog() {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Section>
           <FormInputBorder
-            name='title'
+            name='name'
             register={register}
             placeholder='Título do post:'
             errors={errors}
           />
-          <FormInputBorder
-            name='imageUrl'
-            register={register}
-            placeholder=' Upload de imagem:'
-            icon={FaUpload}
+          <FormImageInput
+            name='imageURL'
+            placeholder='   URL da imagem:'
             errors={errors}
+            register={register}
           />
           <FormInputBorder
             name='shortDescription'
@@ -187,6 +185,7 @@ export default function Blog() {
           <SubmitButton>
             <p>Enviar</p>
           </SubmitButton>
+
         </Section>
       </Form>
 
@@ -202,13 +201,14 @@ export default function Blog() {
             footer={null}
             closeIcon={true}
             centered
-            destroyOnClose
-          >
+            destroyOnClose >
+
             <ModalDelete
               _id={selectedTextId}
               close={handleCloseDeleteModal}
-              //deleteFunction={managerService.useDeleteAITexts}
+              deleteFunction={managerService.useDeletePost}
             />
+            
           </StyledModal>
         )}
         {isEditModalOpen && (
@@ -245,25 +245,16 @@ export default function Blog() {
               onChange={(e) => setNames(e.value)}
             ></AutoCompleteInput>
           </IconWrapper>
-
-
-
-
-          <TextListItem key={Text._id}>
-            Título 1
-            <TextButtons>
-              <FaTrash onClick={() => handleOpenDeleteModal(Text?._id)} />
-              <FaEdit onClick={() => handleOpenEditModal(Text)} />
-            </TextButtons>
-          </TextListItem>
-          
-          <TextListItem key={Text._id}>
-            Título 2
-            <TextButtons>
-              <FaTrash onClick={() => handleOpenDeleteModal(Text?._id)} />
-              <FaEdit onClick={() => handleOpenEditModal(Text)} />
-            </TextButtons>
-          </TextListItem>
+  
+          {currentBlogs?.map((post) => (
+            <TextListItem key={post.name}>
+              {post.name}
+              <TextButtons>
+                <FaTrash onClick={() => handleOpenDeleteModal(post._id)} />
+                <FaEdit onClick={() => handleOpenEditModal(post._id)} />
+              </TextButtons>
+            </TextListItem>
+          ))}
 
         </TextList>
       </Section2>  
