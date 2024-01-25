@@ -28,6 +28,7 @@ import {
   useGetAIToolsByName,
   useGetComments,
   usePostComments,
+  usePostNewsletter,
 } from "../../services/ManagerService";
 import { useParams } from "react-router-dom";
 import useAuthStore from "../../stores/auth";
@@ -42,6 +43,9 @@ export default function Tools() {
   const [aiToolsByName, setAIToolsByName] = useState({});
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
+  const [nameInput, setNameInput] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, SetMessage] = useState("");
   const similarIDs = [
     aiToolsByName?.aiTools?.[0]?.id_categoryfeature?._id,
     aiToolsByName?.aiTools?.[0]?.id_categoryprice?._id,
@@ -49,6 +53,14 @@ export default function Tools() {
   ];
 
   //Backend calls
+
+  async function PostNewsletter() {
+    await usePostNewsletter({
+      name: nameInput,
+      email: email,
+      message: message,
+    });
+  }
 
   async function gettingAIToolsDataByName() {
     const aiTools = await useGetAIToolsByName({ name });
@@ -132,11 +144,17 @@ export default function Tools() {
         </DiscoverData>
         <DiscoverInputs>
           <DiscoverLine>
-            <HalfInput placeholder='Nome:' />
-            <HalfInput placeholder='E-mail:' type='email' />
+            <HalfInput onChange={(e) => setNameInput(e.target.value)} placeholder='Nome:' />
+            <HalfInput
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder='E-mail:'
+              type='email'
+            />
           </DiscoverLine>
-          <FullInput placeholder='Mensagem:' />
-          <BlueButton type='primary'>ENVIAR</BlueButton>
+          <FullInput onChange={(e) => SetMessage(e.target.value)} placeholder='Mensagem:' />
+          <BlueButton onClick={PostNewsletter} type='primary'>
+            ENVIAR
+          </BlueButton>
         </DiscoverInputs>
       </DiscoverDiv>
       <LetComment>
