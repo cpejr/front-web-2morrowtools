@@ -151,7 +151,7 @@ export default function Home() {
 
   return (
     <Container>
-      <h1>BLOG</h1>
+      <h1>Posts do Nosso Blog</h1>
       <IconWrapper>
         <SVGDiv>
           <SearchOutlined />
