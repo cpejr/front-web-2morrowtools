@@ -6,16 +6,15 @@ import {
   ButtonDiv,
   SVGDiv,
   DivLine,
-  IANotFound,
 } from "./Styles";
 import { SearchOutlined } from "@ant-design/icons";
 import { Post } from "../../components";
-import FilterArea from "../../components/FilterArea/FilterArea";
+
 import { useState } from "react";
-import useDebounce from "../../services/useDebounce";
+
 import { useMediaQuery } from "react-responsive";
 import Pagination from "../../components/features/Pagination/Pagination";
-import { Newsletter } from "../../components";
+import { Newsletter, FilterAreaBlog } from "../../components";
 
 export default function Home() {
   const [features, setFeatures] = useState([]);
@@ -27,7 +26,7 @@ export default function Home() {
     {
       title: "Conheça essas 5novas funçoes do chat GPT",
       shortDescription:
-        "O chat GPt amplamente utilizado nos dias de hj possui  funçoes que vc nao faz ideia lorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipson",
+        "O chat Glorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipson",
       imageUrl: "https://picsum.photos/id/237/536/354",
       longDescription: "textotextotextotextotexto",
       tagProfession: "engenharia",
@@ -46,108 +45,7 @@ export default function Home() {
     },
     {
       title: "Conheça essas 5novas funçoes do chat GPT",
-      shortDescription:
-        "O chat GPt amplamente utilizado nos dias de hj possui  funçoes que vc nao faz ideia lorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipson",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription: "textotextotextotextotexto",
-      tagProfession: "engenharia",
-      tagPrice: "10",
-      tagFeature: "review de codigo",
-    },
-    {
-      title: "Conheça essas 5novas funçoes do chat GPT",
-      shortDescription:
-        "O chat GPt amplamente utilizado nos dias de hj possui  funçoes que vc nao faz ideia lorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipson",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription: "textotextotextotextotexto",
-      tagProfession: "engenharia",
-      tagPrice: "10",
-      tagFeature: "review de codigo",
-    },
-    {
-      title: "Conheça essas 5novas funçoes do chat GPT",
-      shortDescription:
-        "O chat GPt amplamente utilizado nos dias de hj possui  funçoes que vc nao faz ideia lorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipson",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription: "textotextotextotextotexto",
-      tagProfession: "engenharia",
-      tagPrice: "10",
-      tagFeature: "review de codigo",
-    },
-    {
-      title: "Conheça essas 5novas funçoes do chat GPT",
-      shortDescription:
-        "O chat GPt amplamente utilizado nos dias de hj possui  funçoes que vc nao faz ideia lorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipson",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription: "textotextotextotextotexto",
-      tagProfession: "engenharia",
-      tagPrice: "10",
-      tagFeature: "review de codigo",
-    },
-    {
-      title: "Conheça essas 5novas funçoes do chat GPT",
-      shortDescription:
-        "O chat GPt amplamente utilizado nos dias de hj possui  funçoes que vc nao faz ideia lorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipson",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription: "textotextotextotextotexto",
-      tagProfession: "engenharia",
-      tagPrice: "10",
-      tagFeature: "review de codigo",
-    },
-    {
-      title: "Conheça essas 5novas funçoes do chat GPT",
-      shortDescription:
-        "O chat GPt amplamente utilizado nos dias de hj possui  funçoes que vc nao faz ideia lorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipson",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription: "textotextotextotextotexto",
-      tagProfession: "engenharia",
-      tagPrice: "10",
-      tagFeature: "review de codigo",
-    },
-    {
-      title: "Conheça essas 5novas funçoes do chat GPT",
-      shortDescription:
-        "O chat GPt amplamente utilizado nos dias de hj possui  funçoes que vc nao faz ideia lorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipson",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription: "textotextotextotextotexto",
-      tagProfession: "engenharia",
-      tagPrice: "10",
-      tagFeature: "review de codigo",
-    },
-    {
-      title: "Conheça essas 5novas funçoes do chat GPT",
-      shortDescription:
-        "O chat GPt amplamente utilizado nos dias de hj possui  funçoes que vc nao faz ideia lorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipson",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription: "textotextotextotextotexto",
-      tagProfession: "engenharia",
-      tagPrice: "10",
-      tagFeature: "review de codigo",
-    },
-    {
-      title: "Conheça essas 5novas funçoes do chat GPT",
-      shortDescription:
-        "O chat GPt amplamente utilizado nos dias de hj possui  funçoes que vc nao faz ideia lorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipson",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription: "textotextotextotextotexto",
-      tagProfession: "engenharia",
-      tagPrice: "10",
-      tagFeature: "review de codigo",
-    },
-    {
-      title: "Conheça essas 5novas funçoes do chat GPT",
-      shortDescription:
-        "O chat GPt amplamente utilizado nos dias de hj possui  funçoes que vc nao faz ideia lorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipson",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription: "textotextotextotextotexto",
-      tagProfession: "engenharia",
-      tagPrice: "10",
-      tagFeature: "review de codigo",
-    },
-    {
-      title: "Conheça essas 5novas funçoes do chat GPT",
-      shortDescription:
-        "O chat GPt amplamente utilizado nos dias de hj possui  funçoes que vc nao faz ideia lorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipson",
+      shortDescription: "bem pequeno pra ver",
       imageUrl: "https://picsum.photos/id/237/536/354",
       longDescription: "textotextotextotextotexto",
       tagProfession: "engenharia",
@@ -260,18 +158,7 @@ export default function Home() {
         </SVGDiv>
         <AutoCompleteInput></AutoCompleteInput>
       </IconWrapper>
-      <FilterArea
-        idsArray={categoryIDsArrays}
-        setArray={setCategoryIDsArrays}
-        features={features}
-        setFeatures={setFeatures}
-        prices={prices}
-        setPrices={setPrices}
-        profession={profession}
-        setProfession={setProfession}
-        filter={filter}
-        setFilter={setFilter}
-      />
+      <FilterAreaBlog />
 
       {groupedData.map((page, pageIndex) => (
         <DivLine key={pageIndex} style={{ display: pageIndex === currentPage ? "flex" : "none" }}>

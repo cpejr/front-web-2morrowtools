@@ -10,6 +10,8 @@ export const StyledCard = styled(Card)`
   align-items: center;
   border-radius: 24px;
   gap: 3.33rem;
+  margin-left: 40px;
+  margin-right: 20px;
   box-shadow: 0px 4px 4px 0px ${colors.shadow};
   background-color: ${colors.grey.cardBackground};
   &:hover {
@@ -125,6 +127,7 @@ export const Text = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 27px;
+  text-align: center;
   @media (max-width: ${breakpoints.tablet}) {
     height: 115px;
     font-size: 23px;
@@ -146,6 +149,9 @@ export const Line = styled.div`
   color: red;
   cursor: pointer;
   font-size: 20px;
+  &:hover {
+    color: darkred;
+  }
   @media (max-width: ${breakpoints.tablet}) {
     font-size: 15px;
   }

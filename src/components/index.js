@@ -16,3 +16,4 @@ export { default as Comments } from "./Comments/Comments";
 export { default as Newsletter } from "./Newsletter/Newsletter";
 export { default as FormImageInput } from "./common/FormImageInput/FormImageInput";
 export { default as Post } from "./Post/Post";
+export { default as FilterAreaBlog } from "./FilterAreaBlog/FilterAreaBlog";
