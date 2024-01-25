@@ -1,12 +1,4 @@
-import {
-  Container,
-  ContainerMenu,
-  Links,
-  Select,
-  Selected,
-  ThemeSelector,
-  SubmitButton,
-} from "./Styles";
+import { Container, ContainerMenu, Links, SubmitButton } from "./Styles";
 import logo from "../../assets/logo.svg";
 import BlueLogo from "../../assets/blue-logo.svg";
 import { BulbOutlined, BulbFilled } from "@ant-design/icons";
@@ -16,14 +8,12 @@ import LoginSocialArea from "./LoginSocialArea";
 import { signInWithGooglePopup } from "./../../services/firebase";
 import { usePostUser } from "../../services/ManagerService";
 import useAuthStore from "../../stores/auth";
-import React, { useState } from "react";
+import React from "react";
 import { useGlobalColor } from "../../stores/GlobalColor";
 
 export default function Header() {
   const navigate = useNavigate();
-  const [collapse, setCollapse] = useState(false);
   const { globalColor, setGlobalColor } = useGlobalColor();
-  const availableTheme = ["Dark", "Light"];
   const { setToken, getToken, getUser, clearAuth, setUser } = useAuthStore();
 
   const logGoogleUser = async () => {
@@ -50,6 +40,11 @@ export default function Header() {
   const redirect = async (path) => {
     if (!getToken()) await logGoogleUser();
     if (getToken()) navigate(path);
+  };
+
+  const changeTheme = () => {
+    setGlobalColor(globalColor === "Dark" ? "Light" : "Dark");
+    window.location.reload();
   };
 
   return (
@@ -79,31 +74,13 @@ export default function Header() {
             <Link>
               <span onClick={() => (window.location.href = "/admin")}>Usuários</span>
             </Link>
+            <span onClick={changeTheme} style={{ cursor: "pointer" }}>
+              {globalColor === "Light" ? <BulbOutlined /> : <BulbFilled />}
+            </span>
           </React.Fragment>
         ) : null}
       </Links>
 
-      <Select>
-        <Selected onClick={() => setCollapse((prev) => !prev)}>
-          {globalColor === "Light" ? <BulbOutlined /> : <BulbFilled />}
-        </Selected>
-        <ThemeSelector collapse={+collapse}>
-          {availableTheme.map((theme) => (
-            <button
-              type='button'
-              key={theme}
-              onClick={() => {
-                setGlobalColor(theme);
-                setCollapse((prev) => !prev);
-                window.location.reload();
-              }}
-              style={{ display: collapse ? "flex" : "none" }}
-            >
-              <p>{theme}</p>
-            </button>
-          ))}
-        </ThemeSelector>
-      </Select>
       <SubmitButton
         onClick={() => {
           window.open("https://bit.ly/2MT_submeter_ferramenta", "_blank");

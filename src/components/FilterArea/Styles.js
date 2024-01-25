@@ -160,7 +160,6 @@ export const UniSelect = styled(Dropdown)`
   .p-dropdown-label {
     color: ${colors.white};
     width: 200px;
-    overflow-x: scroll;
   }
   .p-inputtext {
     color: ${colors.white};
