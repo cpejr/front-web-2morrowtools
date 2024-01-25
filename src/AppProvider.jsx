@@ -31,9 +31,11 @@ export default function AppProvider() {
             colorPrimary: colors.transparent,
             activeShadow: `0 0 0 0.5px ${colors.white}`,
             colorTextPlaceholder: colors.white,
-            colorBgElevated: colors.blue.dark,
+            colorBgElevated: colors.blue.background,
             optionActiveBg: colors.blue.light,
             optionSelectedBg: colors.blue.light,
+            boxShadowSecondary:
+              "0 6px 16px 0 rgba(0, 0, 0, 0.08),      0 3px 6px -4px rgba(0, 0, 0, 0.12),      0 9px 28px 8px rgba(0, 0, 0, 0.05)",
           },
           Menu: {
             colorBgElevated: colors.blue.background,

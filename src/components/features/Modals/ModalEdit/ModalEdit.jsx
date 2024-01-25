@@ -39,13 +39,13 @@ export default function ModalEdit({ _id, tool, close }) {
 
     try {
       await managerService.useEditAITools(_id, body);
-      toast.success("Ferramenta editada com sucesso!");
+      toast.success("Item editado com sucesso!");
       toast.clearWaitingQueue();
       close();
     } catch (error) {
-      toast.error("Erro ao editar ferramenta. Favor tentar novamente!");
+      toast.error("Erro ao editar item. Favor tentar novamente!");
       toast.clearWaitingQueue();
-      console.error("Erro ao editar a ferramenta", error);
+      console.error("Erro ao editar a item", error);
     }
   };
 
