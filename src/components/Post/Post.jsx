@@ -1,5 +1,5 @@
-import { Alert } from "antd";
-import { ImageHolder, StyledCard, LineTags, Tag, Title, Text, Line } from "./Styles";
+import { ImageHolder, StyledCard, LineTags, Tag, Title, Text, Link } from "./Styles";
+import PropTypes from "prop-types";
 export default function Post({ data }) {
   return (
     <StyledCard>
@@ -11,7 +11,11 @@ export default function Post({ data }) {
       </LineTags>
       <Title>{data.title}</Title>
       <Text>{data.shortDescription}</Text>
-      <Line>Ler mais</Line>
+      <Link>Ler mais</Link>
     </StyledCard>
   );
 }
+
+Post.propTypes = {
+  data: PropTypes.func.isRequired,
+};

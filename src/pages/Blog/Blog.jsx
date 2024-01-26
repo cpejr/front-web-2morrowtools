@@ -17,11 +17,6 @@ import Pagination from "../../components/features/Pagination/Pagination";
 import { Newsletter, FilterAreaBlog } from "../../components";
 
 export default function Home() {
-  const [features, setFeatures] = useState([]);
-  const [prices, setPrices] = useState([]);
-  const [profession, setProfession] = useState([]);
-  const [categoryIDsArrays, setCategoryIDsArrays] = useState([]);
-  const [filter, setFilter] = useState([]);
   const posts = [
     {
       title: "Conheça essas 5novas funçoes do chat GPT",
@@ -118,7 +113,7 @@ export default function Home() {
 
   const [currentPage, setCurrentPage] = useState(0);
 
-  const itemsPerPage = 6;
+  const itemsPerPage = 8;
   const totalPages = Math.ceil(posts.length / itemsPerPage);
 
   const handlePrevPage = () => {
@@ -165,7 +160,7 @@ export default function Home() {
           {page.map((row, rowIndex) => (
             <Line key={rowIndex}>
               {row.map((content) => (
-                <Post data={content} />
+                <Post data={content} key={content._id} />
               ))}
             </Line>
           ))}

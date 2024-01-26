@@ -1,4 +1,4 @@
-import { Card, Button, Rate } from "antd";
+import { Card } from "antd";
 import styled from "styled-components";
 import { breakpoints, colors } from "../../styles/styleVariables";
 
@@ -141,14 +141,16 @@ export const Text = styled.div`
     font-size: 12px;
   }
 `;
-export const Line = styled.div`
+export const Link = styled.button`
   display: flex;
   flex-direction: row;
   width: 17%;
   height: auto;
   color: red;
+  background-color: white;
+  border: none;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
   &:hover {
     color: darkred;
   }
