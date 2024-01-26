@@ -10,8 +10,8 @@
     "preview": "vite preview"
   },
   "engines": {
-    "node": ">=18.18.0"
-},
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
     "@hookform/resolvers": "^3.3.2",
