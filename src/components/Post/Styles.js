@@ -10,8 +10,8 @@ export const StyledCard = styled(Card)`
   align-items: center;
   border-radius: 24px;
   gap: 3.33rem;
-  margin-left: 40px;
-  margin-right: 20px;
+  margin-left: 50px;
+  margin-right: 40px;
   box-shadow: 0px 4px 4px 0px ${colors.shadow};
   background-color: ${colors.grey.cardBackground};
   &:hover {
@@ -35,17 +35,19 @@ export const StyledCard = styled(Card)`
 export const ImageHolder = styled.div`
   display: flex;
   height: auto;
-  width: 34rem;
+  width: 27rem;
   border-radius: 20px;
+  align-items: center;
+  align-self: center;
 
   @media (max-width: ${breakpoints.tablet}) {
-    width: 28rem;
+    width: 25rem;
   }
   @media (max-width: ${breakpoints.smallTablet}) {
-    width: 23rem;
+    width: 21rem;
   }
   @media (max-width: ${breakpoints.mobile}) {
-    width: 20rem;
+    width: 19rem;
   }
   > img {
     width: 100%;
@@ -65,76 +67,79 @@ export const ImageHolder = styled.div`
 export const LineTags = styled.div`
   display: flex;
   flex-direction: row;
-  width: auto;
+  width: 90%;
+  justify-content: first baseline;
   height: auto;
-  gap: 2rem;
-  @media (max-width: ${breakpoints.tablet}) {
-    gap: 2.5rem;
-  }
-  @media (max-width: ${breakpoints.smallTablet}) {
-    gap: 3rem;
-  }
-  @media (max-width: ${breakpoints.mobile}) {
-    gap: 4rem;
-  }
+  gap: 10px;
 `;
 export const Tag = styled.div`
-  width: 9.5rem;
-  opacity: 0.8;
-  justify-content: center;
+  display: flex;
+  width: auto;
+  padding: 5px 0.8rem;
+  height: 2.5rem;
+  border: 1px solid ${colors.white};
+  color: ${colors.white};
+  font-size: 14px;
+  border-radius: 20px;
+  align-items: center;
   text-align: center;
-  font-size: 15px;
   cursor: pointer;
-  border: 2px solid;
-  border-radius: 10px;
-  &:hover {
-    border: 2px solid ${colors.blue.light};
-    color: ${colors.blue.light};
-    opacity: 1;
+  @media (max-width: ${breakpoints.desktop}) {
+    height: 32px;
+    font-size: 12px;
   }
   @media (max-width: ${breakpoints.tablet}) {
-    width: 7.5rem;
-    font-size: 13px;
-  }
-  @media (max-width: ${breakpoints.smallTablet}) {
-    width: 5.5rem;
+    height: 24px;
     font-size: 11px;
   }
+
+  @media (max-width: ${breakpoints.smallTablet}) {
+    height: 21.6px;
+    font-size: 10px;
+  }
   @media (max-width: ${breakpoints.mobile}) {
-    width: 4rem;
-    font-size: 8px;
+    height: 32px;
+    font-size: 10px;
+  }
+  @media (max-width: ${breakpoints.smallDevice}) {
+    font-size: 9px;
+  }
+  &:hover {
+    border: 1px solid ${colors.blue.light};
+    color: ${colors.blue.light};
   }
 `;
+
 export const Title = styled.div`
   width: 100%;
   text-align: center;
-  font-size: 35px;
+  font-size: 25px;
   font-weight: bold;
   @media (max-width: ${breakpoints.tablet}) {
-    font-size: 30px;
+    font-size: 20px;
   }
   @media (max-width: ${breakpoints.smallTablet}) {
-    font-size: 25px;
+    font-size: 15px;
   }
   @media (max-width: ${breakpoints.mobile}) {
-    font-size: 22px;
+    font-size: 14px;
   }
 `;
 export const Text = styled.div`
-  width: auto;
+  width: 90%;
   display: block;
-  height: 135px;
+  height: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 27px;
-  text-align: center;
+  font-size: 20px;
+
   @media (max-width: ${breakpoints.tablet}) {
-    height: 115px;
-    font-size: 23px;
+    height: 90px;
+    font-size: 18px;
   }
   @media (max-width: ${breakpoints.smallTablet}) {
-    height: 90;
-    font-size: 18px;
+    height: 80;
+    font-size: 16px;
   }
   @media (max-width: ${breakpoints.mobile}) {
     height: 60px;
@@ -144,23 +149,23 @@ export const Text = styled.div`
 export const Link = styled.button`
   display: flex;
   flex-direction: row;
-  width: 17%;
+  width: 20%;
   height: auto;
   color: red;
   background-color: white;
   border: none;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 16px;
   &:hover {
     color: darkred;
   }
   @media (max-width: ${breakpoints.tablet}) {
-    font-size: 15px;
+    font-size: 14px;
   }
   @media (max-width: ${breakpoints.smallTablet}) {
-    font-size: 13px;
+    font-size: 12px;
   }
   @media (max-width: ${breakpoints.mobile}) {
-    font-size: 10 px;
+    font-size: 9 px;
   }
 `;

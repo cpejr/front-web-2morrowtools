@@ -63,6 +63,7 @@ export default function Header() {
         )}
       </ContainerMenu>
       <Links>
+        <Link onClick={() => navigate("/blog")}>Blog</Link>
         <Link>
           <span onClick={() => redirect("/favorites")}>Favoritos</span>
         </Link>

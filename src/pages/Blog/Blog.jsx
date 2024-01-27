@@ -151,7 +151,7 @@ export default function Home() {
         <SVGDiv>
           <SearchOutlined />
         </SVGDiv>
-        <AutoCompleteInput></AutoCompleteInput>
+        <AutoCompleteInput />
       </IconWrapper>
       <FilterAreaBlog />
 

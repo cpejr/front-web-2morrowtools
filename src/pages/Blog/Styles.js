@@ -138,6 +138,7 @@ export const DivLine = styled.div`
   align-items: center;
   justify-content: center;
   gap: 2rem;
+  display: ${({ isCurrentPage }) => (isCurrentPage ? "flex" : "none")};
 `;
 export const Line = styled.div`
   display: flex;
