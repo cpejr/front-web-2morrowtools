@@ -2,7 +2,6 @@
 import {
   BlueButton,
   ButtonDiv,
-  CardLine,
   Comment,
   CommentDiv,
   CommentInput,
@@ -20,7 +19,6 @@ import {
   ToolCollumn,
 } from "./Styles";
 import { Card, Comments, Tool } from "../../components";
-import { useMediaQuery } from "react-responsive";
 import { useState } from "react";
 import { useEffect } from "react";
 import {

@@ -5,7 +5,7 @@ import { Button, Rate } from "antd";
 export const Row = styled.div`
   display: flex;
   flex-direction: row;
-  width: 95%;
+  width: 90%;
   height: auto;
   align-items: center;
   align-self: center;
@@ -33,7 +33,8 @@ export const Image = styled.div`
   justify-content: center;
 
   > img {
-    width: 95%;
+    width: 80%;
+    border-radius: 1rem;
   }
 `;
 export const DataCollumn = styled.div`

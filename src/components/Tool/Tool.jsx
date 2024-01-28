@@ -45,7 +45,6 @@ import {
   useGetAvaliationID,
 } from "../../services/ManagerService";
 import { toast } from "react-toastify";
-import React from "react";
 
 export default function Tool({ data }) {
   const [starsValue, setStarsValue] = useState(0);
