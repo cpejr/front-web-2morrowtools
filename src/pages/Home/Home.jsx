@@ -60,14 +60,14 @@ export default function Home() {
     setHighRateCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
   };
   const handleHighRateNextPage = () => {
-    setHighRateCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
+    setHighRateCurrentPage((prevPage) => Math.min(prevPage + 1, highRateTotalPages - 1));
   };
 
   const handleRecentPrevPage = () => {
     setRecentCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
   };
   const handleRecentNextPage = () => {
-    setRecentCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
+    setRecentCurrentPage((prevPage) => Math.min(prevPage + 1, recentTotalPages - 1));
   };
 
   // Rendering multiples Cards

@@ -56,7 +56,7 @@ export default function NewTool() {
   const [categoriesProfession, setCategoriesProfession] = useState([]);
   const [aiTools, setAiTools] = useState([]);
   const [names, setNames] = useState("");
-  const [ainames, setAINames] = useState("");
+  const [ainames, setAINames] = useState([]);
   const [namesArray, setNamesArray] = useState([]);
   const [switchValue, setSwitchValue] = useState(false);
   const debouncedName = useDebounce(names);
@@ -145,8 +145,9 @@ export default function NewTool() {
   }, [features, prices, profession]);
 
   async function handleFilterReset() {
+    setAINames([]);
     const filteredCategory = await managerService.useGetAIToolsByCategoryId({});
-    setAINames(filteredCategory);
+    setAINames(filteredCategory?.aiTools);
   }
   const handleClearFilters = () => {
     setFeatures([]);
@@ -154,7 +155,7 @@ export default function NewTool() {
     setProfession([]);
     setCategoryIDsArrays([]);
     setFilter([]);
-    selectedItems = [];
+    setShowFilters([]);
     handleFilterReset();
   };
   useEffect(() => {
