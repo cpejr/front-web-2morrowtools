@@ -2,9 +2,16 @@ import PropTypes from "prop-types";
 import { FaUpload } from "react-icons/fa";
 import { Upload } from "./Styles";
 import { FormInputBorder } from "../..";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function FormImageInput({ name, placeholder, errors, register }) {
+export default function FormImageInput({
+  name,
+  placeholder,
+  errors,
+  register,
+  onChange,
+  defaultValue,
+}) {
   const [imageURL, setImageURL] = useState();
 
   function getBase64(img, callback) {
@@ -24,6 +31,10 @@ export default function FormImageInput({ name, placeholder, errors, register }) 
     }
   }
 
+  useEffect(() => {
+    if (onChange) onChange(imageURL);
+  }, [imageURL]);
+
   return (
     <Upload name={name} onChange={handleChange} beforeUpload={() => false} maxCount={1}>
       <FormInputBorder
@@ -33,6 +44,7 @@ export default function FormImageInput({ name, placeholder, errors, register }) 
         register={register}
         icon={FaUpload}
         value={imageURL}
+        defaultValue={defaultValue}
         readOnly='readonly'
       />
     </Upload>
@@ -44,4 +56,5 @@ FormImageInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   register: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
+  onChange: PropTypes.func,
 };
