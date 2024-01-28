@@ -116,10 +116,14 @@ export const AutoCompleteInput = styled(AutoComplete)`
       outline: none;
       border: none;
     }
+    @media (max-width: ${breakpoints.mobile}) {
+      height: 2rem;
+    }
   }
   @media (max-width: ${breakpoints.desktop}) {
     width: 90%;
   }
+
   @media (max-width: ${breakpoints.smallMobile}) {
     width: 87%;
   }
@@ -141,11 +145,12 @@ export const DivLine = styled.div`
 `;
 export const Line = styled.div`
   display: flex;
-  width: 50%;
+  width: 90%;
   height: auto;
   flex-direction: row;
   justify-content: center;
   gap: 2rem;
+  flex-wrap: wrap;
   @media (max-width: ${breakpoints.mobile}) {
     margin-bottom: 0;
   }

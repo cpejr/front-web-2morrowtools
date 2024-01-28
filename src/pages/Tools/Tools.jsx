@@ -92,12 +92,8 @@ export default function Tools() {
 
   // Grouping Data
 
-  const groupedData = [];
-  const isLargeDesktopScreen = useMediaQuery({ minWidth: 1371 });
-  const isDesktopScreen = useMediaQuery({ minWidth: 1130 });
-  const isMobileScreen = useMediaQuery({ maxWidth: 700 });
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 6;
+  const itemsPerPage = 12;
   const totalPages = Math.ceil(aiTools?.aiTools?.length / itemsPerPage);
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
@@ -105,17 +101,6 @@ export default function Tools() {
   const handleNextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
   };
-  const itemsPerRow = isLargeDesktopScreen ? 3 : isDesktopScreen ? 3 : isMobileScreen ? 1 : 2;
-  for (let i = 0; i < aiTools?.aiTools?.length; i += itemsPerPage) {
-    const pageData = aiTools?.aiTools?.slice(i, i + itemsPerPage);
-    const rows = [];
-
-    for (let j = 0; j < itemsPerPage / itemsPerRow; j++) {
-      rows.push(pageData.slice(j * itemsPerRow, (j + 1) * itemsPerRow));
-    }
-
-    groupedData.push(rows);
-  }
 
   return (
     <Container>
@@ -157,22 +142,21 @@ export default function Tools() {
       </CommentDiv>
       <OtherTools>
         <h1>OUTRAS FERRAMENTAS SIMILARES:</h1>
-        {groupedData.map((page, pageIndex) => (
-          <DivLine key={pageIndex} style={{ display: pageIndex === currentPage ? "flex" : "none" }}>
-            {page.map((row, rowIndex) => (
-              <Line key={rowIndex}>
-                {row.map((content) => (
-                  <Card
-                    data={{
-                      ...content,
-                    }}
-                    key={content?.name}
-                  />
-                ))}
-              </Line>
-            ))}
-          </DivLine>
-        ))}
+        <DivLine>
+          <Line>
+            {aiTools?.aiTools
+              ?.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
+              .map((content, index) => (
+                <Card
+                  data={{
+                    ...content,
+                  }}
+                  key={index}
+                />
+              ))}
+          </Line>
+        </DivLine>
+
         <ButtonDiv>
           <Pagination
             currentPage={currentPage}
