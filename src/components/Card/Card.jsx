@@ -134,7 +134,7 @@ export default function Card({ data }) {
     <StyledCard>
       <Image>{loading ? <RiLoader2Fill /> : <img src={image} alt={data?.name} />}</Image>
       <Group>
-        <Line onClick={handleLineClick}>{data?.name}:</Line>
+        <Line onClick={handleLineClick}>{data?.name}</Line>
         <LineSVG>{favorite}</LineSVG>
       </Group>
       <Line>
