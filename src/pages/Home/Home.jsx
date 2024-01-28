@@ -17,7 +17,6 @@ import { useGetFavorites } from "../../services/ManagerService";
 import { useEffect, useState } from "react";
 import useAuthStore from "../../stores/auth";
 import useDebounce from "../../services/useDebounce";
-import { useMediaQuery } from "react-responsive";
 import * as managerService from "../../services/ManagerService";
 import Pagination from "../../components/features/Pagination/Pagination";
 import { Newsletter } from "../../components";
