@@ -64,6 +64,7 @@ export const Image = styled.div`
   > img {
     width: 100%;
     height: 12.63rem;
+    border-radius: 1rem;
     @media (max-width: ${breakpoints.desktop}) {
       height: 10rem;
     }

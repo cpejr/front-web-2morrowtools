@@ -128,6 +128,7 @@ export const ToolButtons = styled.div`
   gap: 8px;
 
   svg {
+    color: ${colors.white};
     cursor: pointer;
   }
 `;
