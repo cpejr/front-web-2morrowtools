@@ -52,9 +52,13 @@ export default function Header() {
       <ContainerMenu>
         <MenuHeader globalColor={globalColor} setGlobalColor={setGlobalColor} />
         {globalColor === "Dark" ? (
-          <img onClick={() => navigate("/")} src={logo} alt='Logo' />
+          <a href='/'>
+            <img src={logo} alt='Logo' />
+          </a>
         ) : (
-          <img onClick={() => navigate("/")} src={BlueLogo} alt='Logo' />
+          <a href='/'>
+            <img src={BlueLogo} alt='Logo' />
+          </a>
         )}
       </ContainerMenu>
       <Links>
