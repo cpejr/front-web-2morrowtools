@@ -46,7 +46,7 @@ import {
 } from "../../services/ManagerService";
 import { toast } from "react-toastify";
 import React from "react";
-
+import { Share } from "../";
 export default function Tool({ data }) {
   const [starsValue, setStarsValue] = useState(0);
   const [starsValue2, setStarsValue2] = useState(0);
@@ -176,7 +176,7 @@ export default function Tool({ data }) {
                 <Line>{toolData.name}</Line>
                 <LineSVG>
                   <FaRegBookmark />
-                  <IoShareSocial />
+                  <Share url={window.location.href} />
                 </LineSVG>
               </Group>
               <Line>
