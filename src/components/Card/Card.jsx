@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import {
@@ -35,6 +36,11 @@ export default function Card({ data }) {
   const navigate = useNavigate();
   const [image, setImage] = useState(data?.imageURL);
   const [loading, setLoading] = useState(false);
+  let categories = [
+    ...data.id_categoryprices,
+    ...data.id_categoryfeatures,
+    ...data.id_categoryprofessions,
+  ];
 
   const getImage = async () => {
     try {
@@ -52,7 +58,6 @@ export default function Card({ data }) {
   const { setToken, getUser, getToken } = useAuthStore();
 
   const getByIaId = async () => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     if (hasPrevRating) {
       const result = await useGetAvaliationByAIId(data?._id);
       const averageRate = result?.averagerate || 0;
@@ -146,12 +151,11 @@ export default function Card({ data }) {
       </Line>
 
       <Tags>
-        <Tag>{data?.id_categoryfeature?.name} </Tag>
-        <Tag>{data?.id_categoryprice?.name} </Tag>
+        {categories?.map((category, index) => (
+          <Tag key={index}>{category?.name}</Tag>
+        ))}
       </Tags>
-      <Tags>
-        <Tag>{data?.id_categoryprofession?.name} </Tag>
-      </Tags>
+
       <ButtonDiv>
         <BlueButton
           type='primary'

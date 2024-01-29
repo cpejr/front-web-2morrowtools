@@ -205,6 +205,7 @@ export const Tags = styled.div`
   justify-content: first baseline;
   height: auto;
   gap: 10px;
+  flex-wrap: wrap;
 `;
 export const Tag = styled.div`
   display: flex;

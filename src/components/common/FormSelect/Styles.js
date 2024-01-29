@@ -31,9 +31,9 @@ export const Container = styled.div`
 export const StyledSelect = styled(Select)`
   flex-grow: 1;
   width: 100%;
-  height: 3rem;
   border: ${(props) => (props?.error ? "0.1rem red solid" : `0.1rem ${colors.white} solid`)};
   border-radius: 0.4rem;
+  overflow-wrap: break-word;
 
   :active {
     border-width: 0.15rem;

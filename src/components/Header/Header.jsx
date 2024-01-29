@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { Container, ContainerMenu, Links, SubmitButton } from "./Styles";
 import logo from "../../assets/logo.svg";
 import BlueLogo from "../../assets/blue-logo.svg";
@@ -78,11 +79,11 @@ export default function Header() {
             <Link>
               <span onClick={() => (window.location.href = "/admin")}>Usuários</span>
             </Link>
-            <span onClick={changeTheme} style={{ cursor: "pointer" }}>
-              {globalColor === "Light" ? <BulbOutlined /> : <BulbFilled />}
-            </span>
           </React.Fragment>
         ) : null}
+        <span onClick={changeTheme} style={{ cursor: "pointer" }}>
+          {globalColor === "Light" ? <BulbOutlined /> : <BulbFilled />}
+        </span>
       </Links>
 
       <SubmitButton
