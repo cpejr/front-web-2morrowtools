@@ -28,12 +28,12 @@ import {
   FaReddit,
   FaPinterest,
   FaYoutube,
+  FaBookmark,
 } from "react-icons/fa";
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import { FaRegBookmark } from "react-icons/fa";
 import { FaStarHalfStroke } from "react-icons/fa6";
-import { IoShareSocial } from "react-icons/io5";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import useAuthStore from "../../stores/auth";
 import {
@@ -43,11 +43,16 @@ import {
   useGetImage,
   useGetUserTrueOrFalse,
   useGetAvaliationID,
+  usePostUser,
+  usePostFavorite,
+  useGetFavorites,
+  useDeleteFavorite,
 } from "../../services/ManagerService";
 import { toast } from "react-toastify";
-import React from "react";
 import { Share } from "../";
+import { signInWithGooglePopup } from "../../services/firebase";
 export default function Tool({ data }) {
+  const { setToken, getUser, getToken } = useAuthStore();
   const [starsValue, setStarsValue] = useState(0);
   const [starsValue2, setStarsValue2] = useState(0);
   const [hoverValue, setHoverValue] = useState(0);
@@ -71,11 +76,11 @@ export default function Tool({ data }) {
   };
   useEffect(() => {
     getImage();
+    getIsFavorite();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   //avaliation and comments
-  const { getUser } = useAuthStore();
   const userID = getUser()?._id;
   async function GetUserTrueOrFalse() {
     if (ID && userID) {
@@ -156,6 +161,69 @@ export default function Tool({ data }) {
     youtube: <FaYoutube />,
   };
 
+  //favorites
+  //TODO->MOVE ALL OF THIS TO A COMPONENT
+  const [favorite, setFavorite] = useState();
+
+  const logGoogleUser = async () => {
+    if (getToken() === null) {
+      const response = await signInWithGooglePopup();
+      const tokenObject = await usePostUser({
+        name: response?.user?.displayName,
+        email: response?.user?.email,
+        imageURL: response?.user?.photoURL,
+        type: "User",
+      });
+
+      setToken(tokenObject.token);
+
+      window.location.reload();
+    }
+  };
+
+  const getIsFavorite = async () => {
+    if (getUser()) {
+      const favorites = await useGetFavorites(getUser()._id);
+      const result = favorites.find((tool) => tool._id === data.aiTools[0]._id);
+      setFavorite(result);
+    }
+  };
+
+  const changeFavorite = async () => {
+    if (getToken() === null) {
+      await logGoogleUser();
+    }
+
+    if (favorite) {
+      await useDeleteFavorite({ toolId: favorite._id, userId: getUser()._id });
+      //TODO -> CREATE ALL THE LOGIC FOR DELETING FAVORITE
+      setFavorite({});
+    } else {
+      //TODO -> VERIFY IF THE POST FAVORITE FUNCTION IS WORKING
+      const favorite = await usePostFavorite({
+        userId: getUser()?._id || " ",
+        toolId: data?.aiTools[0]?._id,
+      });
+      setFavorite(favorite);
+    }
+
+    setFavoriteIcon(
+      data.favorite ? (
+        <FaBookmark className='favoriteIcon' />
+      ) : (
+        <FaRegBookmark className='favoriteIcon' />
+      )
+    );
+  };
+
+  const [favoriteIcon, setFavoriteIcon] = useState(
+    data.favorite ? (
+      <FaBookmark className='favoriteIcon' onClick={changeFavorite} />
+    ) : (
+      <FaRegBookmark className='favoriteIcon' onClick={changeFavorite} />
+    )
+  );
+
   return (
     <>
       {data?.aiTools?.map((toolData, index) => (
@@ -175,7 +243,7 @@ export default function Tool({ data }) {
               <Group>
                 <Line>{toolData.name}</Line>
                 <LineSVG>
-                  <FaRegBookmark />
+                  {favoriteIcon}
                   <Share url={window.location.href} />
                 </LineSVG>
               </Group>

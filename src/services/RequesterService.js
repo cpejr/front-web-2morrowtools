@@ -13,6 +13,7 @@ export const getFavorites = (userId) => api.get(`/Favorite/${userId}`);
 
 export const postFavorite = (data) => api.post(`/Favorite`, data);
 
+export const deleteFavorite = (params) => api.delete(`/FavoriteByIds`, { params });
 // AI
 
 export const getAITools = () => api.get(`/IA`);
