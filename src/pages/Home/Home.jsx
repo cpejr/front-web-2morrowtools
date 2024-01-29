@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {
   AutoCompleteInput,
   Container,
@@ -168,25 +169,25 @@ export default function Home() {
       {filteredAiTools?.aiTools && filteredAiTools?.aiTools.length === 0 && (
         <IANotFound>Nenhuma IA encontrada</IANotFound>
       )}
-
-      <DivLine>
-        <Line>
-          {filteredAiTools?.aiTools
-            ?.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
-            .map((content, index) => (
-              <Card
-                data={{
-                  ...content,
-                  favorite: favoriteAiTools.find(
-                    (favoriteAiTool) => favoriteAiTool["_id"] === content._id
-                  ),
-                }}
-                key={index}
-              />
-            ))}
-        </Line>
-      </DivLine>
-
+      <TrendingTools>
+        <DivLine>
+          <Line>
+            {filteredAiTools?.aiTools
+              ?.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
+              .map((content, index) => (
+                <Card
+                  data={{
+                    ...content,
+                    favorite: favoriteAiTools.find(
+                      (favoriteAiTool) => favoriteAiTool["_id"] === content._id
+                    ),
+                  }}
+                  key={index}
+                />
+              ))}
+          </Line>
+        </DivLine>
+      </TrendingTools>
       <ButtonDiv>
         <Pagination
           currentPage={currentPage}
