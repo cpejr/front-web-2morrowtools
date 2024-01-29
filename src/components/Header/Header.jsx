@@ -64,7 +64,7 @@ export default function Header() {
       </ContainerMenu>
       <Links>
         <Link>
-          <span onClick={() => redirect("/favorites")}>Favoritos</span>
+          <span onClick={() => (window.location.href = "/favoritos")}>Favoritos</span>
         </Link>
         {getUser()?.type === "Admin" ? (
           <React.Fragment>
