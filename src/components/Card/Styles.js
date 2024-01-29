@@ -21,11 +21,11 @@ export const StyledCard = styled(Card)`
   @media (max-width: ${breakpoints.tablet}) {
     width: 25rem;
   }
-  @media (max-width: ${breakpoints.smallTablet}) {
-    width: 30rem;
-  }
   @media (max-width: ${breakpoints.mobile}) {
     width: 26.66rem;
+  }
+  @media (max-width: ${breakpoints.smallDevice}) {
+    width: 22rem;
   }
   > div {
     display: flex;
@@ -60,7 +60,7 @@ export const Stars = styled(Rate)`
 export const Image = styled.div`
   display: flex;
   height: auto;
-  width: 290px;
+  width: 100%;
   > img {
     width: 100%;
     height: 12.63rem;
@@ -218,7 +218,6 @@ export const Tag = styled.div`
   border-radius: 20px;
   align-items: center;
   text-align: center;
-  cursor: pointer;
   @media (max-width: ${breakpoints.desktop}) {
     height: 32px;
     font-size: 12px;
@@ -230,7 +229,7 @@ export const Tag = styled.div`
 
   @media (max-width: ${breakpoints.smallTablet}) {
     height: 21.6px;
-    font-size: 8.1px;
+    font-size: 12px;
   }
   @media (max-width: ${breakpoints.mobile}) {
     height: 32px;
