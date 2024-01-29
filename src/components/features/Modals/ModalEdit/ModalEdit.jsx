@@ -9,6 +9,7 @@ import {
   Section,
   LabelWraper,
   MultipleSelect,
+  SubmitText,
 } from "./Styles";
 import { toast } from "react-toastify";
 import * as managerService from "../../../../services/ManagerService";
@@ -231,7 +232,7 @@ export default function ModalEdit({ _id, tool, close, transformArrayItems }) {
             </LabelWraper>
           </Section>
           <SubmitButton type='submit'>
-            <p>Salvar</p>
+            <SubmitText>Salvar</SubmitText>
           </SubmitButton>
         </ModalContent>
       </Form>

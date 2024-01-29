@@ -111,3 +111,9 @@ export const MultipleSelect = styled(MultiSelect)`
     width: 50%;
   }
 `;
+export const SubmitText = styled.p`
+  color: ${colors.white};
+  &:hover {
+    color: ${colors.black};
+  }
+`;
