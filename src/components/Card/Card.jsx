@@ -22,7 +22,6 @@ import { useGetTrueOrFalse, usePostFavorite } from "../../services/ManagerServic
 import { signInWithGooglePopup } from "./../../services/firebase";
 import { usePostUser, useGetAvaliationByAIId, useGetImage } from "../../services/ManagerService";
 import useAuthStore from "../../stores/auth";
-
 export default function Card({ data }) {
   const [starsValue, setStarsValue] = useState(0);
   const [favoriteIcon, setFavoriteIcon] = useState(
@@ -104,12 +103,6 @@ export default function Card({ data }) {
     );
   };
 
-  let favorite = (
-    <span onClick={saveFavorite} style={{ cursor: "pointer" }}>
-      {favoriteIcon}
-    </span>
-  );
-
   const logGoogleUser = async () => {
     if (getToken() === null) {
       const response = await signInWithGooglePopup();
@@ -149,7 +142,7 @@ export default function Card({ data }) {
       <Image>{loading ? <RiLoader2Fill /> : <img src={image} alt={data?.name} />}</Image>
       <Group>
         <Line onClick={handleLineClick}>{data?.name}</Line>
-        <LineSVG>{favorite}</LineSVG>
+        <LineSVG onClick={saveFavorite}>{favoriteIcon}</LineSVG>
       </Group>
       <Line>
         <Stars count={5} value={starsValue} character={({ index }) => renderStarIcon(index)} />
