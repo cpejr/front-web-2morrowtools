@@ -85,7 +85,8 @@ export default function Card({ data }) {
     return () => clearInterval(interval);
   }, [hasPrevRating]);
 
-  const saveFavorite = async () => {
+  const saveFavorite = async (event) => {
+    event.stopPropagation();
     if (getToken() === null) {
       await logGoogleUser();
     }
@@ -138,14 +139,19 @@ export default function Card({ data }) {
     window.scrollTo(0, 0);
   };
   return (
-    <StyledCard>
+    <StyledCard onClick={handleLineClick}>
       <Image>{loading ? <RiLoader2Fill /> : <img src={image} alt={data?.name} />}</Image>
       <Group>
         <Line onClick={handleLineClick}>{data?.name}</Line>
         <LineSVG onClick={saveFavorite}>{favoriteIcon}</LineSVG>
       </Group>
       <Line>
-        <Stars count={5} value={starsValue} character={({ index }) => renderStarIcon(index)} />
+        <Stars
+          onClick={(event) => event.stopPropagation()}
+          count={5}
+          value={starsValue}
+          character={({ index }) => renderStarIcon(index)}
+        />
         <span>({starsValue})</span>
       </Line>
       <Line>
@@ -154,14 +160,17 @@ export default function Card({ data }) {
 
       <Tags>
         {categories?.map((category, index) => (
-          <Tag key={index}>{category?.name}</Tag>
+          <Tag key={index} onClick={(event) => event.stopPropagation()}>
+            {category?.name}
+          </Tag>
         ))}
       </Tags>
 
       <ButtonDiv>
         <BlueButton
           type='primary'
-          onClick={() => {
+          onClick={(event) => {
+            event.stopPropagation();
             window.open(data?.link, "_blank");
           }}
         >

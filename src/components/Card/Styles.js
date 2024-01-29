@@ -61,6 +61,7 @@ export const Image = styled.div`
   display: flex;
   height: auto;
   width: 100%;
+  cursor: pointer;
   > img {
     width: 100%;
     height: 12.63rem;
