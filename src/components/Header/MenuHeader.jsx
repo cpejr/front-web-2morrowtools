@@ -75,6 +75,11 @@ export default function MenuHeader({ globalColor, setGlobalColor }) {
   });
 
   function onClick(key) {
+    if (key && key === "/theme") {
+      setGlobalColor(globalColor === "Dark" ? "Light" : "Dark");
+      window.location.reload();
+      return;
+    }
     if (key && key == "/favoritos" && getToken() === null) {
       logGoogleUser();
     }
@@ -86,10 +91,6 @@ export default function MenuHeader({ globalColor, setGlobalColor }) {
     }
     if (key && key === "/submit") {
       window.open("https://bit.ly/2MT_submeter_ferramenta", "_blank");
-    }
-    if (key && key === "/theme") {
-      setGlobalColor(globalColor === "Dark" ? "Light" : "Dark");
-      window.location.href = "/";
     }
   }
 

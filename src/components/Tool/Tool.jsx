@@ -33,7 +33,6 @@ import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 import { FaRegBookmark } from "react-icons/fa";
 import { FaStarHalfStroke } from "react-icons/fa6";
-import { IoShareSocial } from "react-icons/io5";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import useAuthStore from "../../stores/auth";
 import {
@@ -45,8 +44,7 @@ import {
   useGetAvaliationID,
 } from "../../services/ManagerService";
 import { toast } from "react-toastify";
-import React from "react";
-
+import { Share } from "../";
 export default function Tool({ data }) {
   const [starsValue, setStarsValue] = useState(0);
   const [starsValue2, setStarsValue2] = useState(0);
@@ -176,7 +174,7 @@ export default function Tool({ data }) {
                 <Line>{toolData.name}</Line>
                 <LineSVG>
                   <FaRegBookmark />
-                  <IoShareSocial />
+                  <Share url={window.location.href} />
                 </LineSVG>
               </Group>
               <Line>

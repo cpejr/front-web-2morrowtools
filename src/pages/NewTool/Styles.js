@@ -128,6 +128,7 @@ export const ToolButtons = styled.div`
   gap: 8px;
 
   svg {
+    color: ${colors.white};
     cursor: pointer;
   }
 `;
@@ -370,7 +371,6 @@ export const UniSelect = styled(Dropdown)`
   .p-dropdown-label {
     color: ${colors.white};
     width: 200px;
-    overflow-x: scroll;
   }
   .p-inputtext {
     color: ${colors.white};

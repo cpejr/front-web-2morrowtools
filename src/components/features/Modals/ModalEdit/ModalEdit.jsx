@@ -1,18 +1,21 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { Container, Tittle, Label, ModalContent, Form, Section, LabelWraper } from "./Styles";
-import FormSelect from "../../../common/FormSelect/FormSelect";
 import { toast } from "react-toastify";
 import * as managerService from "../../../../services/ManagerService";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import FormInputBorder from "../../../common/FormInputBorder/FormInputBorder";
-import FormsTextArea from "../../../common/FormsTextArea/FormsTextArea";
 import { FaUpload } from "react-icons/fa";
 import { buildEditToolErrorMessage, editToolValidationSchema } from "./utils";
-import SubmitButton from "../../../common/SubmitButton/SubmitButton";
 import { colors } from "../../../../styles/styleVariables";
+import {
+  FormsTextArea,
+  FormInputBorder,
+  SubmitButton,
+  FormSelect,
+  FormImageInput,
+} from "../../../";
 
 export default function ModalEdit({ _id, tool, close }) {
   const [categoriesFeature, setCategoriesFeature] = useState([]);
@@ -39,13 +42,13 @@ export default function ModalEdit({ _id, tool, close }) {
 
     try {
       await managerService.useEditAITools(_id, body);
-      toast.success("Ferramenta editada com sucesso!");
+      toast.success("Item editado com sucesso!");
       toast.clearWaitingQueue();
       close();
     } catch (error) {
-      toast.error("Erro ao editar ferramenta. Favor tentar novamente!");
+      toast.error("Erro ao editar item. Favor tentar novamente!");
       toast.clearWaitingQueue();
-      console.error("Erro ao editar a ferramenta", error);
+      console.error("Erro ao editar a item", error);
     }
   };
 
@@ -98,7 +101,16 @@ export default function ModalEdit({ _id, tool, close }) {
 
             <LabelWraper>
               <Label>URL da imagem:</Label>
-              <FormInputBorder
+              <FormImageInput
+                name='imageURL'
+                defaultValue={tool.imageURL}
+                placeholder='URL da imagem:'
+                icon={FaUpload}
+                errors={errors}
+                register={register}
+                onChange={(imageURL) => setFormData({ ...formData, imageURL })}
+              />
+              {/* <FormInputBorder
                 name='imageURL'
                 defaultValue={tool.imageURL}
                 placeholder='URL da imagem:'
@@ -106,7 +118,7 @@ export default function ModalEdit({ _id, tool, close }) {
                 errors={errors}
                 register={register}
                 onChange={(e) => setFormData({ ...formData, imageURL: e.target.value })}
-              />
+              /> */}
             </LabelWraper>
 
             <LabelWraper>

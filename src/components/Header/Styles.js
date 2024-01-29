@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { breakpoints, colors, fonts } from "../../styles/styleVariables";
-import { Menu } from "antd";
+import { Menu, Modal } from "antd";
 
 export const Container = styled.div`
   display: flex;
@@ -279,5 +279,17 @@ export const ThemeSelector = styled.div`
         }
       }
     }
+  }
+`;
+export const ModalStyle = styled(Modal)`
+  .ant-modal-content {
+    background-color: ${colors.blue.background};
+    padding: 1rem;
+    align-items: center;
+    justify-content: center;
+    color: ${colors.white};
+    padding: 6;
+    margin: 0;
+    border-radius: none;
   }
 `;
