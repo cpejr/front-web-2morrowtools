@@ -76,7 +76,10 @@ export default function MenuHeader({ globalColor, setGlobalColor }) {
       window.location.reload();
       return;
     }
-    if (key && key == "/favoritos" && getToken() === null) {
+    if (key && key == "/favoritos" && getUser()) {
+      navigate(key);
+    }
+    if (key && key == "/favoritos" && !getUser()) {
       logGoogleUser();
     }
     if (key && key !== "login" && key !== "/favoritos") {
