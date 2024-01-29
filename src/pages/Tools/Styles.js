@@ -50,7 +50,7 @@ export const CommentInput = styled(Input)`
   width: 100%;
   height: 3rem;
   padding-left: 1rem;
-
+  border: 1px solid ${colors.white};
   @media (max-width: ${breakpoints.smallDevice}) {
     font-size: 13px;
   }
@@ -232,11 +232,12 @@ export const DivLine = styled.div`
 `;
 export const Line = styled.div`
   display: flex;
-  width: 50%;
+  width: 100%;
   height: auto;
   flex-direction: row;
   justify-content: center;
   gap: 2rem;
+  flex-wrap: wrap;
   @media (max-width: ${breakpoints.mobile}) {
     margin-bottom: 0;
   }

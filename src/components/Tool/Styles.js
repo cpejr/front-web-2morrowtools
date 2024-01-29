@@ -5,7 +5,7 @@ import { Button, Rate } from "antd";
 export const Row = styled.div`
   display: flex;
   flex-direction: row;
-  width: 95%;
+  width: 90%;
   height: auto;
   align-items: center;
   align-self: center;
@@ -33,7 +33,8 @@ export const Image = styled.div`
   justify-content: center;
 
   > img {
-    width: 95%;
+    width: 80%;
+    border-radius: 1rem;
   }
 `;
 export const DataCollumn = styled.div`
@@ -60,6 +61,8 @@ export const DataCollumn = styled.div`
 
   > p {
     font-size: 25px;
+    text-align: justify;
+
     @media (max-width: ${breakpoints.desktop}) {
       font-size: 20px;
     }
@@ -111,6 +114,7 @@ export const TagsLine = styled.div`
   height: auto;
   gap: 1rem;
   font-size: 55px;
+  flex-wrap: wrap;
   @media (max-width: ${breakpoints.desktop}) {
     font-size: 40px;
   }
@@ -269,6 +273,7 @@ export const KnowMore = styled.div`
   }
   > p {
     font-size: 25px;
+    text-align: justify;
     @media (max-width: ${breakpoints.smallTablet}) {
       font-size: 20px;
     }

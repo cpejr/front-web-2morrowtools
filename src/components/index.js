@@ -16,3 +16,4 @@ export { default as Comments } from "./Comments/Comments";
 export { default as Newsletter } from "./Newsletter/Newsletter";
 export { default as FormImageInput } from "./common/FormImageInput/FormImageInput";
 export { default as FormSwitch } from "./common/FormSwitch/FormSwitch";
+export { default as Share } from "./Share/Share";

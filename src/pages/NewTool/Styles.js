@@ -94,10 +94,12 @@ export const Selects = styled.div`
   flex-direction: row;
   width: 100%;
   gap: 3rem;
+  justify-content: space-around;
 
   @media (max-width: 850px) {
     flex-direction: column;
     gap: 1rem;
+    align-items: center;
   }
 `;
 
@@ -128,6 +130,7 @@ export const ToolButtons = styled.div`
   gap: 8px;
 
   svg {
+    color: ${colors.white};
     cursor: pointer;
   }
 `;

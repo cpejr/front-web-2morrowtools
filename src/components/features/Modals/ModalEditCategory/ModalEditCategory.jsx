@@ -12,7 +12,7 @@ export default function ModalEditCategory({ _id, category, close, editFunction }
   // On Submit
   const onSubmit = async (data) => {
     try {
-      await editFunction(_id, { data });
+      await editFunction(_id, data);
       toast.success("Item editado com sucesso!");
       toast.clearWaitingQueue();
       close();

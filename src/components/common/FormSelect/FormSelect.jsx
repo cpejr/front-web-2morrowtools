@@ -6,7 +6,6 @@ import { Container, ErrorMessage, Label, StyledSelect } from "./Styles";
 
 export default function FormSelect({ data, name, control, defaultValue, errors, ...props }) {
   const errorMessage = errors?.[name]?.message;
-
   return (
     <Container error={errorMessage ? 1 : 0}>
       <Label htmlFor={name}></Label>
@@ -19,6 +18,7 @@ export default function FormSelect({ data, name, control, defaultValue, errors, 
             listHeight={120}
             onChange={onChange}
             ref={ref}
+            mode='multiple'
             value={currValue}
             error={!!errorMessage}
             notFoundContent={<Empty description={false} />}

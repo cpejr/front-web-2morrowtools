@@ -178,3 +178,18 @@ export const UniSelect = styled(Dropdown)`
     width: 50%;
   }
 `;
+export const ShowTags = styled.div`
+  display: flex;
+  gap: 0.2rem;
+  margin-top: 1rem;
+  padding: 0.2rem 1rem;
+  color: ${colors.white};
+  cursor: pointer;
+  flex-wrap: wrap;
+`;
+export const Tags = styled.span`
+  border-radius: 20px;
+  border: 1px solid ${colors.white};
+  padding: 0.5rem;
+  background-color: ${colors.black};
+`;
