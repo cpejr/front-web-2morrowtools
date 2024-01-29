@@ -192,7 +192,7 @@ export default function Tool({ data }) {
       const result = favorites.find((tool) => tool._id === data.aiTools[0]._id);
       setFavorite(result);
     } else {
-      setFavorite({});
+      setFavorite(undefined);
     }
   };
 
@@ -211,9 +211,8 @@ export default function Tool({ data }) {
       getIsFavorite();
     }
   };
-
   const [favoriteIcon, setFavoriteIcon] = useState(
-    favorite ? (
+    favorite && getUser() ? (
       <FaBookmark className='favoriteIcon' onClick={changeFavorite} />
     ) : (
       <FaRegBookmark className='favoriteIcon' onClick={changeFavorite} />
