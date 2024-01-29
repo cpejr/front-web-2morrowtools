@@ -52,6 +52,11 @@ export default function Tool({ data }) {
   const [userHasPrevRating, setUserHasPrevRating] = useState(false);
   const [avaliationID, setAvaliationID] = useState({});
   const ID = data?.aiTools?.[0]?._id;
+  let categories = [
+    ...data.aiTools[0].id_categoryprices,
+    ...data.aiTools[0].id_categoryfeatures,
+    ...data.aiTools[0].id_categoryprofessions,
+  ];
 
   //images
   const [image, setImage] = useState("");
@@ -87,6 +92,7 @@ export default function Tool({ data }) {
   }
   const handleStarsChange = async (value) => {
     setStarsValue(value);
+    GetByIaId();
     switch (userHasPrevRating) {
       case true:
         try {
@@ -164,9 +170,9 @@ export default function Tool({ data }) {
                 <img src={image} alt={`ToolImage ${index}`} />
               </Image>
               <TagsLine key={`line-${index}`}>
-                <Tag>{toolData?.id_categoryfeature?.name}</Tag>
-                <Tag>{toolData?.id_categoryprice?.name}</Tag>
-                <Tag>{toolData?.id_categoryprofession?.name}</Tag>
+                {categories?.map((category, index) => (
+                  <Tag key={index}>{category?.name}</Tag>
+                ))}
               </TagsLine>
             </ImageCollumn>
             <DataCollumn>
