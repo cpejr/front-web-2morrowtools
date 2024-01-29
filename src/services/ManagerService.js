@@ -413,6 +413,17 @@ export const useDeletePost = async (_id) => {
   }
 };
 
+
+export const useEditBlog = async (_id, body) => {
+  try {
+    const response = await requesterService.editBlog(_id, body);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating post", error);
+    throw error;
+  }
+};
+
 // image
 export const useGetImage = async (imageURL) => {
   try {

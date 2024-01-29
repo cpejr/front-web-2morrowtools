@@ -108,5 +108,7 @@ export const getBlogs = async () => api.get(`/blog`);
 
 export const deletePost = (id) => api.delete(`/blog/${id}`);
 
+export const editBlog = (_id, body) => api.put(`/blog/${_id}`, body);
+
 //image
 export const getImage = (imageURL) => api.post(`/IAImage`, { imageURL });

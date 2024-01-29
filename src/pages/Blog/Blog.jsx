@@ -15,7 +15,7 @@ import {
   AutoCompleteInput,
 } from "./Styles";
 import { 
-  ModalEdit,
+  ModalEditBlog,
   FormSelect,
   ModalDelete, 
   SubmitButton, 
@@ -70,9 +70,9 @@ export default function Blog() {
     setDeleteModalOpen(true);
   };
 
-  const handleOpenEditModal = (Text) => {
-    setSelectedTextId(Text._id);
-    setSelectedText(Text);
+  const handleOpenEditModal = (post) => {
+    setSelectedTextId(post._id);
+    setSelectedText(post);
     setEditModalOpen(true);
   };
 
@@ -229,7 +229,7 @@ export default function Blog() {
             centered
             destroyOnClose
           >
-            <ModalEdit _id={selectedTextId} Text={selectedText} close={handleCloseEditModal} />
+            <ModalEditBlog _id={selectedTextId} post={selectedText} close={handleCloseEditModal} />
           </StyledModal>
         )}
         <TextList>
@@ -251,7 +251,7 @@ export default function Blog() {
               {post.name}
               <TextButtons>
                 <FaTrash onClick={() => handleOpenDeleteModal(post._id)} />
-                <FaEdit onClick={() => handleOpenEditModal(post._id)} />
+                <FaEdit onClick={() => handleOpenEditModal(post)} />
               </TextButtons>
             </TextListItem>
           ))}

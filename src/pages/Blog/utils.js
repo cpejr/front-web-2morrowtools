@@ -7,8 +7,7 @@ export const newTextValidationSchema = z.object({
     .string({ required_error: "O título é obrigatório" })
     .min(2, { message: "O título deve ter pelo menos 2 caracteres" })
     .max(60, { message: "O título não pode exceder 60 caracteres" }),
-  imageUrl: z.string({required_error: "Campo obrigatório"})
-    .min(1, { message: "Campo obrigatório" }),
+  imageUrl: z.string({required_error: "Campo obrigatório"}),
   shortDescription: z
     .string({ required_error: "A descrição curta é obrigatória" })
     .min(1, { message: "Campo obrigatório" }),

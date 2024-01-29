@@ -8,6 +8,7 @@ export { default as FormButton } from "./common/FormButton/FormButton";
 export { default as FormsTextArea } from "./common/FormsTextArea/FormsTextArea";
 export { default as ModalDelete } from "./features/Modals/ModalDelete/ModalDelete";
 export { default as ModalEdit } from "./features/Modals/ModalEdit/ModalEdit";
+export { default as ModalEditBlog } from "./features/Modals/ModalEditBlog/ModalEditBlog";
 export { default as ModalEditCategory } from "./features/Modals/ModalEditCategory/ModalEditCategory";
 export { default as SocialMediaInput } from "./common/SocialMediaInput/SocialMediaInput";
 export { default as NewLink } from "./features/Modals/NewLink/NewLink";
