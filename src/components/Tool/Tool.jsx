@@ -180,12 +180,13 @@ export default function Tool({ data }) {
       window.location.reload();
     }
   };
-
   const getIsFavorite = async () => {
     if (getUser()) {
       const favorites = await useGetFavorites(getUser()._id);
       const result = favorites.find((tool) => tool._id === data.aiTools[0]._id);
       setFavorite(result);
+    } else {
+      setFavorite({});
     }
   };
 
@@ -193,37 +194,37 @@ export default function Tool({ data }) {
     if (getToken() === null) {
       await logGoogleUser();
     }
-
     if (favorite) {
-      await useDeleteFavorite({ toolId: favorite._id, userId: getUser()._id });
-      //TODO -> CREATE ALL THE LOGIC FOR DELETING FAVORITE
-      setFavorite({});
+      await useDeleteFavorite({ toolId: data?.aiTools[0]._id, userId: getUser()._id });
+      getIsFavorite();
     } else {
-      //TODO -> VERIFY IF THE POST FAVORITE FUNCTION IS WORKING
-      const favorite = await usePostFavorite({
+      await usePostFavorite({
         userId: getUser()?._id || " ",
         toolId: data?.aiTools[0]?._id,
       });
-      setFavorite(favorite);
+      getIsFavorite();
     }
-
-    setFavoriteIcon(
-      data.favorite ? (
-        <FaBookmark className='favoriteIcon' />
-      ) : (
-        <FaRegBookmark className='favoriteIcon' />
-      )
-    );
   };
 
   const [favoriteIcon, setFavoriteIcon] = useState(
-    data.favorite ? (
+    favorite ? (
       <FaBookmark className='favoriteIcon' onClick={changeFavorite} />
     ) : (
       <FaRegBookmark className='favoriteIcon' onClick={changeFavorite} />
     )
   );
 
+  useEffect(
+    () =>
+      setFavoriteIcon(
+        favorite ? (
+          <FaBookmark className='favoriteIcon' onClick={changeFavorite} />
+        ) : (
+          <FaRegBookmark className='favoriteIcon' onClick={changeFavorite} />
+        )
+      ),
+    [favorite]
+  );
   return (
     <>
       {data?.aiTools?.map((toolData, index) => (
