@@ -1,7 +1,7 @@
 import { Container, Title, Description, Texts, Inputs, Break, Input, Button } from "./Styles";
 export default function Newsletter() {
   return (
-    <Container>
+    <Container style={{ display: "none" }}>
       <Texts>
         <Title>Descubra novas ferramentas de tecnologia toda semana! </Title>
         <Description>
