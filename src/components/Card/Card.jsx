@@ -57,6 +57,11 @@ export default function Card({ data }) {
 
   const { setToken, getUser, getToken } = useAuthStore();
 
+  async function GetTrueOrFalse() {
+    const { result } = await useGetTrueOrFalse(data?._id);
+    setHasPrevRating(result);
+  }
+
   const getByIaId = async () => {
     if (hasPrevRating) {
       const result = await useGetAvaliationByAIId(data?._id);
@@ -65,10 +70,7 @@ export default function Card({ data }) {
       setStarsValue(roundedRating?.toFixed(1));
     }
   };
-  async function GetTrueOrFalse() {
-    const { result } = await useGetTrueOrFalse(data?._id);
-    setHasPrevRating(result);
-  }
+
   useEffect(() => {
     GetTrueOrFalse();
   }, []);
@@ -76,6 +78,13 @@ export default function Card({ data }) {
     getByIaId();
     getImage();
   }, [data]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getByIaId();
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, [hasPrevRating]);
 
   const saveFavorite = async () => {
     if (getToken() === null) {
