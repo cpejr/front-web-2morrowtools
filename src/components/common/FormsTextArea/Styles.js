@@ -32,7 +32,7 @@ export const StyledTextArea = styled.textarea`
   border-radius: 0.4rem;
   color: ${colors.white};
   background-color: ${colors.blue.background};
-  border: ${(props) => (props?.error ? "0.1rem red solid" : "0.1rem black solid")};
+  border: ${(props) => (props?.error ? "0.1rem red solid" : `0.1rem ${colors.white} solid`)};
   ::placeholder {
     font-weight: 400;
   }
