@@ -155,7 +155,7 @@ export default function Card({ data }) {
         <span>({starsValue})</span>
       </Line>
       <Line>
-        <p>{data?.description}</p>
+        <p>{data?.shortDescription}</p>
       </Line>
 
       <Tags>
