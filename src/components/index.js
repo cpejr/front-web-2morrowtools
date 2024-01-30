@@ -12,7 +12,7 @@ export { default as ModalEditCategory } from "./features/Modals/ModalEditCategor
 export { default as SocialMediaInput } from "./common/SocialMediaInput/SocialMediaInput";
 export { default as NewLink } from "./features/Modals/NewLink/NewLink";
 export { default as Tool } from "./Tool/Tool";
-export { default as Comments } from "./Comments/Comments";
+export { default as Comment } from "./Comment/Comment";
 export { default as Newsletter } from "./Newsletter/Newsletter";
 export { default as FormImageInput } from "./common/FormImageInput/FormImageInput";
 export { default as FormSwitch } from "./common/FormSwitch/FormSwitch";

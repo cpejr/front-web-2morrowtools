@@ -1,14 +1,12 @@
-import { CommentCollumn, Container, DeleteButton, PhotoCollumn } from "./Styles";
-import { BsPersonFill } from "react-icons/bs";
-import { useDeleteComments, useGetuser } from "../../services/ManagerService";
+import { CommentCollumn, Container, DeleteButton, Image, ImageContainer } from "./Styles";
+import { useDeleteComments } from "../../services/ManagerService";
 import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
 import useAuthStore from "../../stores/auth";
 import { FaTrashCan } from "react-icons/fa6";
+import { colors } from "../../styles/styleVariables";
 
-export default function Comments({ data, onDelete }) {
+export default function Comment({ data, onDelete }) {
   const { getUser } = useAuthStore();
-  const [name, setName] = useState("");
 
   async function deleteComment() {
     const user = await getUser();
@@ -16,32 +14,26 @@ export default function Comments({ data, onDelete }) {
     onDelete();
   }
 
-  async function GettingName() {
-    const res = await useGetuser(data.id_user);
-    setName(res.name);
-  }
-
-  useEffect(() => {
-    GettingName();
-  }, []);
   return (
     <Container>
-      <PhotoCollumn>
-        <BsPersonFill />
-      </PhotoCollumn>
+      <ImageContainer>
+        <Image src={data.id_user.imageURL} alt='Commenter image'></Image>
+      </ImageContainer>
+
       <CommentCollumn>
-        {name}
+        {data.id_user.name}
         <p> {data.comment} </p>
       </CommentCollumn>
       {getUser()?.type === "Admin" || name === getUser()?.name ? (
         <DeleteButton onClick={deleteComment}>
-          <FaTrashCan size='20px' />
+          <FaTrashCan size='20px' color={colors.white} />
         </DeleteButton>
       ) : null}
     </Container>
   );
 }
-Comments.propTypes = {
+
+Comment.propTypes = {
   data: PropTypes.object.isRequired,
   onDelete: PropTypes.func,
 };
