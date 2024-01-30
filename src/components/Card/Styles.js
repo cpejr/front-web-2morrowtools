@@ -12,6 +12,7 @@ export const StyledCard = styled(Card)`
   gap: 3.33rem;
   box-shadow: 0px 4px 4px 0px ${colors.shadow};
   background-color: ${colors.grey.cardBackground};
+
   &:hover {
     background-color: ${colors.grey.cardHover};
   }
@@ -31,6 +32,11 @@ export const StyledCard = styled(Card)`
     display: flex;
     flex-direction: column;
     gap: 1rem;
+  }
+
+  div.ant-card-body {
+    height: 100%;
+    justify-content: space-between;
   }
 `;
 export const Stars = styled(Rate)`
