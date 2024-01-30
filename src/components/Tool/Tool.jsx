@@ -263,9 +263,9 @@ export default function Tool({ data }) {
               </Line>
               <p>{toolData?.shortDescription}</p>
               <TabletTagsLine key={`line-${index}`}>
-                <Tag>{toolData?.id_categoryfeature?.name}</Tag>
-                <Tag>{toolData?.id_categoryprice?.name}</Tag>
-                <Tag>{toolData?.id_categoryprofession?.name}</Tag>
+                {categories?.map((category, index) => (
+                  <Tag key={index}>{category?.name}</Tag>
+                ))}
               </TabletTagsLine>
               <BlueButton
                 type='primary'

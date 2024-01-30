@@ -132,10 +132,11 @@ export const TabletTagsLine = styled.div`
   width: 100%;
   height: auto;
   gap: 1rem;
-  font-size: 55px;
+  font-size: 1rem;
 
   @media (max-width: ${breakpoints.smallTablet}) {
     display: flex;
+    flex-wrap: wrap;
     margin-bottom: 1rem;
   }
 `;
