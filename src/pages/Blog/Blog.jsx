@@ -16,7 +16,7 @@ import { useMediaQuery } from "react-responsive";
 import Pagination from "../../components/features/Pagination/Pagination";
 import { Newsletter, FilterAreaBlog } from "../../components";
 
-export default function Home() {
+export default function Blog() {
   const posts = [
     {
       title: "Conheça essas 5novas funçoes do chat GPT",
@@ -156,7 +156,7 @@ export default function Home() {
       <FilterAreaBlog />
 
       {groupedData.map((page, pageIndex) => (
-        <DivLine key={pageIndex} style={{ display: pageIndex === currentPage ? "flex" : "none" }}>
+        <DivLine key={pageIndex} isCurrentPage={pageIndex === currentPage}>
           {page.map((row, rowIndex) => (
             <Line key={rowIndex}>
               {row.map((content) => (
