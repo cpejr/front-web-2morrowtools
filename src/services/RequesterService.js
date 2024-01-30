@@ -97,7 +97,6 @@ export const getByIaId = (aiId) => api.get(`/avaliation/${aiId}`);
 
 export const getAvaliation = () => api.get(`/avaliation`);
 
-
 // Blog
 
 export const createBlog = async (body) => {
@@ -108,7 +107,7 @@ export const getBlogs = async () => api.get(`/blog`);
 
 export const deletePost = (id) => api.delete(`/blog/${id}`);
 
-export const editBlog = (_id, body) => api.put(`/blog/${_id}`, body);
+export const updatePut = (_id, body) => api.put(`/blog/${_id}`, body);
 
 //image
 export const getImage = (imageURL) => api.post(`/IAImage`, { imageURL });

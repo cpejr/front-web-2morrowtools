@@ -59,11 +59,11 @@ export const DivRow = styled.div`
   flex-direction: row;
   width: 100%;
   gap: 5rem;
-  padding-inline:15%;
+  padding-inline: 15%;
 
   @media (max-width: 850px) {
     flex-direction: column;
-    padding:0;
+    padding: 0;
     gap: 1rem;
   }
 `;
@@ -91,7 +91,7 @@ export const Form = styled.form`
 export const Section2 = styled.section`
   display: flex;
   flex-direction: column;
-  justify-content:center;
+  justify-content: center;
   width: 100%;
   height: 100%;
 
@@ -161,6 +161,7 @@ export const SVGDiv = styled.div`
 export const AutoCompleteInput = styled(AutoComplete)`
   width: 95%;
   align-self: flex-end;
+  box-shadow: none;
   > input {
     background-color: ${colors.blue.background};
     width: 100%;

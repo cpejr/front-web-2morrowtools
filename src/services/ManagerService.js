@@ -413,10 +413,9 @@ export const useDeletePost = async (_id) => {
   }
 };
 
-
-export const useEditBlog = async (_id, body) => {
+export const useUpdatePost = async (_id, body) => {
   try {
-    const response = await requesterService.editBlog(_id, body);
+    const response = await requesterService.updatePut(_id, body);
     return response.data;
   } catch (error) {
     console.error("Error updating post", error);

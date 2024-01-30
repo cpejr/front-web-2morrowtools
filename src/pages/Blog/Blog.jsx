@@ -1,27 +1,27 @@
 import { useState, useEffect } from "react";
-import { 
-  Form, 
-  Title, 
+import {
+  Form,
+  Title,
   DivRow,
-  SVGDiv, 
-  Section, 
-  TextList, 
-  Section2,  
+  SVGDiv,
+  Section,
+  TextList,
+  Section2,
   Container,
-  StyledModal, 
-  TextButtons, 
+  StyledModal,
+  TextButtons,
   IconWrapper,
-  TextListItem, 
+  TextListItem,
   AutoCompleteInput,
 } from "./Styles";
-import { 
+import {
   ModalEditBlog,
   FormSelect,
-  ModalDelete, 
-  SubmitButton, 
+  ModalDelete,
+  SubmitButton,
   FormsTextArea,
-  FormImageInput, 
-  FormInputBorder, 
+  FormImageInput,
+  FormInputBorder,
 } from "../../components";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
@@ -32,7 +32,6 @@ import * as managerService from "../../services/ManagerService";
 import { newTextValidationSchema, buildNewToolErrorMessage } from "./utils";
 
 export default function Blog() {
-
   // Set variables
   const [names, setNames] = useState("");
   const [namesArray, setNamesArray] = useState([]);
@@ -56,11 +55,11 @@ export default function Blog() {
       console.error("Erro ao criar a post", error);
     }
   }
-  
+
   async function getPosts() {
     const posts = await managerService.useGetBlogs();
     setCurrentBlogs(posts.blogs);
-    setNamesArray(posts.blogs.name)
+    setNamesArray(posts.blogs.name);
   }
 
   // Modal Functions
@@ -107,24 +106,27 @@ export default function Blog() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
   const search = () => {
     const filteredSuggestions = currentBlogs?.filter((name) =>
-    name.toLowerCase().includes(name.toLowerCase()));
+      name.toLowerCase().includes(name.toLowerCase())
+    );
 
     setNamesArray(filteredSuggestions);
   };
 
-  const { handleSubmit, register, control, formState: { errors } }
-          = useForm({ resolver: zodResolver(newTextValidationSchema) });
-  
+  const {
+    handleSubmit,
+    register,
+    control,
+    formState: { errors },
+  } = useForm({ resolver: zodResolver(newTextValidationSchema) });
+
   const onSubmit = (data) => {
     const combinedData = {
       ...data,
       id_categoryfeature: data.id_categoryfeature,
       id_categoryprofession: data.id_categoryprofession,
     };
-    console.log(combinedData);
     handleCreateBlog(combinedData);
   };
 
@@ -185,7 +187,6 @@ export default function Blog() {
           <SubmitButton>
             <p>Enviar</p>
           </SubmitButton>
-
         </Section>
       </Form>
 
@@ -201,14 +202,13 @@ export default function Blog() {
             footer={null}
             closeIcon={true}
             centered
-            destroyOnClose >
-
+            destroyOnClose
+          >
             <ModalDelete
               _id={selectedTextId}
               close={handleCloseDeleteModal}
               deleteFunction={managerService.useDeletePost}
             />
-            
           </StyledModal>
         )}
         {isEditModalOpen && (
@@ -233,7 +233,6 @@ export default function Blog() {
           </StyledModal>
         )}
         <TextList>
-
           <IconWrapper>
             <SVGDiv>
               <SearchOutlined />
@@ -245,7 +244,7 @@ export default function Blog() {
               onChange={(e) => setNames(e.value)}
             ></AutoCompleteInput>
           </IconWrapper>
-  
+
           {currentBlogs?.map((post) => (
             <TextListItem key={post.name}>
               {post.name}
@@ -255,10 +254,8 @@ export default function Blog() {
               </TextButtons>
             </TextListItem>
           ))}
-
         </TextList>
-      </Section2>  
-     
+      </Section2>
     </Container>
   );
 }

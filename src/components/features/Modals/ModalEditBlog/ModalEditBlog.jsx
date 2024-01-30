@@ -1,24 +1,20 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { Container, Tittle, Label, ModalContent, Form, Section, LabelWraper } from "./Styles";
+import FormSelect from "../../../common/FormSelect/FormSelect";
 import { toast } from "react-toastify";
 import * as managerService from "../../../../services/ManagerService";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import FormInputBorder from "../../../common/FormInputBorder/FormInputBorder";
+import FormsTextArea from "../../../common/FormsTextArea/FormsTextArea";
 import { FaUpload } from "react-icons/fa";
-import { buildEditPostErrorMessage, editPostValidationSchema } from "./utils";
+import { buildEditToolErrorMessage, editToolValidationSchema } from "./utils";
+import SubmitButton from "../../../common/SubmitButton/SubmitButton";
 import { colors } from "../../../../styles/styleVariables";
-import {
-  FormsTextArea,
-  FormInputBorder,
-  SubmitButton,
-  FormSelect,
-  FormImageInput,
-} from "../../..";
 
 export default function ModalEditBlog({ _id, post, close }) {
-
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
 
@@ -27,7 +23,7 @@ export default function ModalEditBlog({ _id, post, close }) {
     name: post.name,
     imageURL: post.imageURL,
     shortDescription: post.shortDescription,
-    longDescription: post.longDescription
+    longDescription: post.longDescription,
   });
 
   // On Submit
@@ -39,14 +35,14 @@ export default function ModalEditBlog({ _id, post, close }) {
     };
 
     try {
-      await managerService.useEditBlog(_id, body);
-      toast.success("Item editado com sucesso!");
+      await managerService.useUpdatePost(_id, body);
+      toast.success("Post editada com sucesso!");
       toast.clearWaitingQueue();
       close();
     } catch (error) {
-      toast.error("Erro ao editar item. Favor tentar novamente!");
+      toast.error("Erro ao editar post. Favor tentar novamente!");
       toast.clearWaitingQueue();
-      console.error("Erro ao editar a item", error);
+      console.error("Erro ao editar o post", error);
     }
   };
 
@@ -56,10 +52,11 @@ export default function ModalEditBlog({ _id, post, close }) {
       try {
         const resultFeature = await managerService.usegetCategoriesFeature();
         setCategoriesFeature(resultFeature.categoriesFeature);
+
         const resultProfession = await managerService.usegetCategoriesProfession();
         setCategoriesProfession(resultProfession.categoriesprofession);
       } catch (error) {
-        const errorMessage = buildEditPostErrorMessage(error);
+        const errorMessage = buildEditToolErrorMessage(error);
         console.error(errorMessage);
       }
     };
@@ -72,7 +69,7 @@ export default function ModalEditBlog({ _id, post, close }) {
     register,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(editPostValidationSchema),
+    resolver: zodResolver(editToolValidationSchema),
   });
 
   return (
@@ -95,16 +92,7 @@ export default function ModalEditBlog({ _id, post, close }) {
 
             <LabelWraper>
               <Label>URL da imagem:</Label>
-              <FormImageInput
-                name='imageURL'
-                defaultValue={post.imageURL}
-                placeholder='  URL da imagem:'
-                icon={FaUpload}
-                errors={errors}
-                register={register}
-                onChange={(imageURL) => setFormData({ ...formData, imageURL })}
-              />
-              {/* <FormInputBorder
+              <FormInputBorder
                 name='imageURL'
                 defaultValue={post.imageURL}
                 placeholder='URL da imagem:'
@@ -112,7 +100,7 @@ export default function ModalEditBlog({ _id, post, close }) {
                 errors={errors}
                 register={register}
                 onChange={(e) => setFormData({ ...formData, imageURL: e.target.value })}
-              /> */}
+              />
             </LabelWraper>
 
             <LabelWraper>
@@ -146,7 +134,7 @@ export default function ModalEditBlog({ _id, post, close }) {
                 name='id_categoryfeature'
                 control={control}
                 dropdownStyle={{ backgroundColor: colors.blue.background }}
-                defaultValue={post.id_categoryfeature?._id}
+                defaultValue={post.id_categoryfeature._id}
                 data={categoriesFeature.map(({ _id, name }) => ({
                   label: name,
                   value: _id,
@@ -161,7 +149,7 @@ export default function ModalEditBlog({ _id, post, close }) {
                 name='id_categoryprofession'
                 control={control}
                 dropdownStyle={{ backgroundColor: colors.blue.background }}
-                defaultValue={post.id_categoryprofession?._id}
+                defaultValue={post.id_categoryprofession._id}
                 data={categoriesProfession.map(({ _id, name }) => ({
                   label: name,
                   value: _id,
