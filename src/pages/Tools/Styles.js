@@ -55,7 +55,7 @@ export const CommentInput = styled(Input)`
     font-size: 13px;
   }
 `;
-export const CommentDiv = styled.div`
+export const CommentSection = styled.div`
   display: flex;
   width: 90%;
   flex-direction: column;
@@ -77,7 +77,7 @@ export const CommentDiv = styled.div`
     }
   }
 `;
-export const Comment = styled.div`
+export const CommentContainer = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;

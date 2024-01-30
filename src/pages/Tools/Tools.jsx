@@ -2,8 +2,8 @@
 import {
   BlueButton,
   ButtonDiv,
-  Comment,
-  CommentDiv,
+  CommentContainer,
+  CommentSection,
   CommentInput,
   Container,
   DiscoverData,
@@ -18,7 +18,7 @@ import {
   OtherTools,
   ToolCollumn,
 } from "./Styles";
-import { Card, Comments, Tool } from "../../components";
+import { Card, Comment, Tool } from "../../components";
 import { useState } from "react";
 import { useEffect } from "react";
 import {
@@ -130,14 +130,14 @@ export default function Tools() {
           ENVIAR
         </BlueButton>
       </LetComment>
-      <CommentDiv>
+      <CommentSection>
         <h1>COMENTÁRIOS</h1>
-        <Comment>
+        <CommentContainer>
           {comments?.comments?.map((comment) => (
-            <Comments key={comment?._id} data={comment} onDelete={gettingComments} />
+            <Comment key={comment?._id} data={comment} onDelete={gettingComments} />
           ))}
-        </Comment>
-      </CommentDiv>
+        </CommentContainer>
+      </CommentSection>
       <OtherTools>
         <h1>OUTRAS FERRAMENTAS SIMILARES:</h1>
         <DivLine>
