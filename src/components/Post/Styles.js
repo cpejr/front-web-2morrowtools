@@ -151,13 +151,13 @@ export const Link = styled.button`
   flex-direction: row;
   width: 20%;
   height: auto;
-  color: red;
-  background-color: white;
+  color: ${colors.blue.accent};
+  background-color: transparent;
   border: none;
   cursor: pointer;
   font-size: 16px;
   &:hover {
-    color: darkred;
+    color: ${colors.blue.hover};
   }
   @media (max-width: ${breakpoints.tablet}) {
     font-size: 14px;
