@@ -5,7 +5,6 @@ import {
   FormsTextArea,
   ModalDelete,
   ModalEdit,
-  FormSelect,
   FormImageInput,
   FormSwitch,
   SocialMediaInput,
@@ -54,9 +53,12 @@ export default function NewTool() {
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [categoriesPrices, setCategoriesPrices] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
+  const [idCategoriesFeature, setIdsCategoriesFeature] = useState([]);
+  const [idCategoriesPrices, setIdsCategoriesPrices] = useState([]);
+  const [idCategoriesProfession, setIdsCategoriesProfession] = useState([]);
   const [aiTools, setAiTools] = useState([]);
   const [names, setNames] = useState("");
-  const [ainames, setAINames] = useState("");
+  const [ainames, setAINames] = useState([]);
   const [namesArray, setNamesArray] = useState([]);
   const [switchValue, setSwitchValue] = useState(false);
   const debouncedName = useDebounce(names);
@@ -88,7 +90,6 @@ export default function NewTool() {
     } catch (error) {
       toast.error("Erro ao criar ferramenta. Favor tentar novamente!");
       toast.clearWaitingQueue();
-      console.error("Erro ao criar a ferramenta", error);
     }
   }
 
@@ -145,8 +146,19 @@ export default function NewTool() {
   }, [features, prices, profession]);
 
   async function handleFilterReset() {
+    setAINames([]);
     const filteredCategory = await managerService.useGetAIToolsByCategoryId({});
-    setAINames(filteredCategory);
+    const formattedAIs = filteredCategory?.aiTools?.map((tools) => ({
+      name: tools.name,
+      shortDescription: tools.shortDescription,
+      manage: (
+        <ToolButtons>
+          <FaTrash onClick={() => handleOpenDeleteModal(tools?._id)} />
+          <FaEdit onClick={() => handleOpenEditModal(tools)} />
+        </ToolButtons>
+      ),
+    }));
+    setAINames(formattedAIs);
   }
   const handleClearFilters = () => {
     setFeatures([]);
@@ -154,7 +166,7 @@ export default function NewTool() {
     setProfession([]);
     setCategoryIDsArrays([]);
     setFilter([]);
-    selectedItems = [];
+    setShowFilters([]);
     handleFilterReset();
   };
   useEffect(() => {
@@ -187,7 +199,7 @@ export default function NewTool() {
   };
 
   const handleOpenEditModal = (tool) => {
-    setSelectedToolId(tool._id);
+    setSelectedToolId(tool?._id);
     setSelectedTool(tool);
     setEditModalOpen(true);
   };
@@ -208,7 +220,6 @@ export default function NewTool() {
   const {
     handleSubmit,
     register,
-    control,
     formState: { errors },
   } = useForm({ resolver: zodResolver(newToolValidationSchema) });
 
@@ -223,16 +234,16 @@ export default function NewTool() {
   const onSubmit = (data) => {
     const combinedData = {
       ...data,
-      id_categoryfeature: data.id_categoryfeature,
-      id_categoryprice: data.id_categoryprice,
-      id_categoryprofession: data.id_categoryprofession,
+      id_categoryfeature: idCategoriesFeature,
+      id_categoryprice: idCategoriesPrices,
+      id_categoryprofession: idCategoriesProfession,
     };
     handleCreateAITools(combinedData);
   };
   const SelectedTags = ({ selectedItems }) => (
     <ShowTags>
       {selectedItems.map((item) => (
-        <Tags key={item.value}>{item}</Tags>
+        <Tags key={item}>{item}</Tags>
       ))}
     </ShowTags>
   );
@@ -278,47 +289,53 @@ export default function NewTool() {
             errors={errors}
             register={register}
           />
+          <FormInputBorder
+            name='link'
+            placeholder='Link do site:'
+            errors={errors}
+            register={register}
+          />
           <Selects>
-            <FormSelect
+            <MultipleSelect
+              value={idCategoriesFeature}
               name='id_categoryfeature'
-              control={control}
-              errors={errors}
-              data={categoriesFeature.map(({ _id, name }) => ({
-                label: name,
-                value: _id,
-              }))}
-              placeholder='Característica'
+              onChange={(e) => {
+                setIdsCategoriesFeature(e.value);
+              }}
+              options={transformArrayItems(categoriesFeature)}
+              optionLabel='label'
+              placeholder='Escolha as características'
+              className='w-full md:w-20rem'
+              filter
             />
-            <FormSelect
+            <MultipleSelect
+              value={idCategoriesPrices}
               name='id_categoryprice'
-              control={control}
-              errors={errors}
-              data={categoriesPrices.map(({ _id, name }) => ({
-                label: name,
-                value: _id,
-              }))}
-              placeholder='Preço'
+              onChange={(e) => {
+                setIdsCategoriesPrices(e.value);
+              }}
+              options={transformArrayItems(categoriesPrices)}
+              optionLabel='label'
+              placeholder='Escolha as características'
+              className='w-full md:w-20rem'
+              filter
             />
-            <FormSelect
+            <MultipleSelect
+              value={idCategoriesProfession}
               name='id_categoryprofession'
-              control={control}
-              errors={errors}
-              data={categoriesProfession.map(({ _id, name }) => ({
-                label: name,
-                value: _id,
-              }))}
-              placeholder='Profissão'
+              onChange={(e) => {
+                setIdsCategoriesProfession(e.value);
+              }}
+              options={transformArrayItems(categoriesProfession)}
+              optionLabel='label'
+              placeholder='Escolha as características'
+              className='w-full md:w-20rem'
+              filter
             />
           </Selects>
           <FormSwitch switchValue={switchValue} setSwitchValue={setSwitchValue} />
           {switchValue && (
             <React.Fragment>
-              <FormInputBorder
-                name='link'
-                placeholder='Link do site:'
-                errors={errors}
-                register={register}
-              />
               <SocialMediaInput errors={errors} register={register} />
             </React.Fragment>
           )}
@@ -417,7 +434,12 @@ export default function NewTool() {
             centered
             destroyOnClose
           >
-            <ModalEdit _id={selectedToolId} tool={selectedTool} close={handleCloseEditModal} />
+            <ModalEdit
+              _id={selectedToolId}
+              tool={selectedTool}
+              close={handleCloseEditModal}
+              transformArrayItems={transformArrayItems}
+            />
           </StyledModal>
         )}
         <ToolList>

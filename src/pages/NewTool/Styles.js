@@ -94,10 +94,12 @@ export const Selects = styled.div`
   flex-direction: row;
   width: 100%;
   gap: 3rem;
+  justify-content: space-around;
 
   @media (max-width: 850px) {
     flex-direction: column;
     gap: 1rem;
+    align-items: center;
   }
 `;
 
@@ -128,6 +130,7 @@ export const ToolButtons = styled.div`
   gap: 8px;
 
   svg {
+    color: ${colors.white};
     cursor: pointer;
   }
 `;
@@ -152,6 +155,7 @@ export const AutoCompleteInput = styled(AutoComplete)`
     margin-bottom: 2rem;
     color: ${colors.white};
     border: none;
+    box-shadow: none;
     margin: 0;
 
     &:focus {
@@ -370,7 +374,6 @@ export const UniSelect = styled(Dropdown)`
   .p-dropdown-label {
     color: ${colors.white};
     width: 200px;
-    overflow-x: scroll;
   }
   .p-inputtext {
     color: ${colors.white};

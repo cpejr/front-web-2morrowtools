@@ -1,24 +1,41 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { Container, Tittle, Label, ModalContent, Form, Section, LabelWraper } from "./Styles";
-import FormSelect from "../../../common/FormSelect/FormSelect";
+import {
+  Container,
+  Tittle,
+  Label,
+  ModalContent,
+  Form,
+  Section,
+  LabelWraper,
+  MultipleSelect,
+  SubmitText,
+} from "./Styles";
 import { toast } from "react-toastify";
 import * as managerService from "../../../../services/ManagerService";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import FormInputBorder from "../../../common/FormInputBorder/FormInputBorder";
-import FormsTextArea from "../../../common/FormsTextArea/FormsTextArea";
 import { FaUpload } from "react-icons/fa";
 import { buildEditToolErrorMessage, editToolValidationSchema } from "./utils";
-import SubmitButton from "../../../common/SubmitButton/SubmitButton";
-import { colors } from "../../../../styles/styleVariables";
+import { FormsTextArea, FormInputBorder, SubmitButton, FormImageInput } from "../../../";
 
-export default function ModalEdit({ _id, tool, close }) {
+export default function ModalEdit({ _id, tool, close, transformArrayItems }) {
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [categoriesPrices, setCategoriesPrices] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
+  const [idCategoriesFeature, setIdsCategoriesFeature] = useState([]);
+  const [idCategoriesPrices, setIdsCategoriesPrices] = useState([]);
+  const [idCategoriesProfession, setIdsCategoriesProfession] = useState([]);
   // Forms values
+
+  useEffect(() => {
+    setIdsCategoriesFeature(tool?.id_categoryfeatures.map((ids) => ids._id) || []);
+    setIdsCategoriesPrices(tool?.id_categoryprices.map((ids) => ids._id) || []);
+    setIdsCategoriesProfession(tool?.id_categoryprofessions.map((ids) => ids._id) || []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const [formData, setFormData] = useState({
     name: tool.name,
     imageURL: tool.imageURL,
@@ -29,23 +46,23 @@ export default function ModalEdit({ _id, tool, close }) {
   });
 
   // On Submit
-  const onSubmit = async (data) => {
+  const onSubmit = async () => {
     const body = {
       ...formData,
-      id_categoryfeature: data.id_categoryfeature,
-      id_categoryprice: data.id_categoryprice,
-      id_categoryprofession: data.id_categoryprofession,
+      id_categoryfeature: idCategoriesFeature,
+      id_categoryprice: idCategoriesPrices,
+      id_categoryprofession: idCategoriesProfession,
     };
 
     try {
       await managerService.useEditAITools(_id, body);
-      toast.success("Ferramenta editada com sucesso!");
+      toast.success("Item editado com sucesso!");
       toast.clearWaitingQueue();
       close();
     } catch (error) {
-      toast.error("Erro ao editar ferramenta. Favor tentar novamente!");
+      toast.error("Erro ao editar item. Favor tentar novamente!");
       toast.clearWaitingQueue();
-      console.error("Erro ao editar a ferramenta", error);
+      console.error("Erro ao editar a item", error);
     }
   };
 
@@ -71,7 +88,6 @@ export default function ModalEdit({ _id, tool, close }) {
 
   const {
     handleSubmit,
-    control,
     register,
     formState: { errors },
   } = useForm({
@@ -98,7 +114,16 @@ export default function ModalEdit({ _id, tool, close }) {
 
             <LabelWraper>
               <Label>URL da imagem:</Label>
-              <FormInputBorder
+              <FormImageInput
+                name='imageURL'
+                defaultValue={tool.imageURL}
+                placeholder='URL da imagem:'
+                icon={FaUpload}
+                errors={errors}
+                register={register}
+                onChange={(imageURL) => setFormData({ ...formData, imageURL })}
+              />
+              {/* <FormInputBorder
                 name='imageURL'
                 defaultValue={tool.imageURL}
                 placeholder='URL da imagem:'
@@ -106,7 +131,7 @@ export default function ModalEdit({ _id, tool, close }) {
                 errors={errors}
                 register={register}
                 onChange={(e) => setFormData({ ...formData, imageURL: e.target.value })}
-              />
+              /> */}
             </LabelWraper>
 
             <LabelWraper>
@@ -160,51 +185,54 @@ export default function ModalEdit({ _id, tool, close }) {
 
             <LabelWraper>
               <Label>Category Feature:</Label>
-              <FormSelect
+              <MultipleSelect
+                value={idCategoriesFeature}
                 name='id_categoryfeature'
-                control={control}
-                dropdownStyle={{ backgroundColor: colors.blue.background }}
-                defaultValue={tool.id_categoryfeature._id}
-                data={categoriesFeature.map(({ _id, name }) => ({
-                  label: name,
-                  value: _id,
-                }))}
-                placeholder='Característica'
+                onChange={(e) => {
+                  setIdsCategoriesFeature(e.value);
+                }}
+                options={transformArrayItems(categoriesFeature)}
+                optionLabel='label'
+                placeholder='Escolha as características'
+                className='w-full md:w-20rem'
+                filter
               />
             </LabelWraper>
 
             <LabelWraper>
               <Label>Category Price:</Label>
-              <FormSelect
+              <MultipleSelect
+                value={idCategoriesPrices}
                 name='id_categoryprice'
-                control={control}
-                dropdownStyle={{ backgroundColor: colors.blue.background }}
-                defaultValue={tool.id_categoryprice._id}
-                data={categoriesPrices.map(({ _id, name }) => ({
-                  label: name,
-                  value: _id,
-                }))}
-                placeholder='Preço'
+                onChange={(e) => {
+                  setIdsCategoriesPrices(e.value);
+                }}
+                options={transformArrayItems(categoriesPrices)}
+                optionLabel='label'
+                placeholder='Escolha as características'
+                className='w-full md:w-20rem'
+                filter
               />
             </LabelWraper>
 
             <LabelWraper>
               <Label>Category Profession:</Label>
-              <FormSelect
+              <MultipleSelect
+                value={idCategoriesProfession}
                 name='id_categoryprofession'
-                control={control}
-                dropdownStyle={{ backgroundColor: colors.blue.background }}
-                defaultValue={tool.id_categoryprofession._id}
-                data={categoriesProfession.map(({ _id, name }) => ({
-                  label: name,
-                  value: _id,
-                }))}
-                placeholder='Profissão'
+                onChange={(e) => {
+                  setIdsCategoriesProfession(e.value);
+                }}
+                options={transformArrayItems(categoriesProfession)}
+                optionLabel='label'
+                placeholder='Escolha as características'
+                className='w-full md:w-20rem'
+                filter
               />
             </LabelWraper>
           </Section>
           <SubmitButton type='submit'>
-            <p>Salvar</p>
+            <SubmitText>Salvar</SubmitText>
           </SubmitButton>
         </ModalContent>
       </Form>
@@ -216,4 +244,5 @@ ModalEdit.propTypes = {
   tool: PropTypes.object,
   _id: PropTypes.string.isRequired,
   close: PropTypes.func.isRequired,
+  transformArrayItems: PropTypes.func.isRequired,
 };

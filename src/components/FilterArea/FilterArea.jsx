@@ -9,12 +9,13 @@ import {
   UniSelect,
   ButtonsDiv,
   Buttons,
+  ShowTags,
+  Tags,
 } from "./Styles";
 
 export default function FilterArea({
   onFilterClick,
   filterReset,
-  idsArray,
   setArray,
   features,
   setFeatures,
@@ -30,6 +31,8 @@ export default function FilterArea({
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [categoriesPrices, setCategoriesPrices] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
+  const [showFilters, setShowFilters] = useState([]);
+  let selectedItems = [...features, ...prices, ...profession];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,6 +55,7 @@ export default function FilterArea({
     setArray([]);
     setFilter([]);
     filterReset();
+    setShowFilters([]);
   };
 
   const transformArrayItems = (OriginalArray) => {
@@ -73,7 +77,31 @@ export default function FilterArea({
   };
   useEffect(() => {
     handleFilterChange();
+    Finder();
   }, [features, prices, profession]);
+
+  const Finder = () => {
+    const filteredNames = [];
+    [categoriesFeature, categoriesPrices, categoriesProfession].forEach((categoryArray) => {
+      categoryArray.forEach((category) => {
+        if (selectedItems.includes(category._id)) {
+          filteredNames.push(category.name);
+        }
+      });
+    });
+    setShowFilters(filteredNames);
+  };
+
+  const SelectedTags = ({ selectedItems }) => (
+    <ShowTags>
+      {selectedItems.map((item) => (
+        <Tags key={item.value}>{item}</Tags>
+      ))}
+    </ShowTags>
+  );
+  SelectedTags.propTypes = {
+    selectedItems: PropTypes.array.isRequired,
+  };
 
   return (
     <ContainerFilter>
@@ -116,6 +144,7 @@ export default function FilterArea({
           className='w-full md:w-14rem'
         ></UniSelect>
       </DivSelect>
+      <SelectedTags selectedItems={showFilters} />
       <ButtonsDiv>
         <Buttons onClick={() => onFilterClick()}>Filtrar</Buttons>
         <Buttons onClick={handleClearFilters}>Limpar Filtros</Buttons>
