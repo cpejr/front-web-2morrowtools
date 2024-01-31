@@ -14,14 +14,14 @@ import {
   TextListItem,
   AutoCompleteInput,
 } from "./Styles";
-import {
-  ModalEditBlog,
+import { 
   FormSelect,
   ModalDelete,
   SubmitButton,
   FormsTextArea,
-  FormImageInput,
-  FormInputBorder,
+  ModalEditBlog,
+  FormImageInput, 
+  FormInputBorder, 
 } from "../../components";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
@@ -143,7 +143,7 @@ export default function Blog() {
             errors={errors}
           />
           <FormImageInput
-            name='imageURL'
+            name='imageUrl'
             placeholder='   URL da imagem:'
             errors={errors}
             register={register}

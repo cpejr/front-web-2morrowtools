@@ -10,7 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import FormInputBorder from "../../../common/FormInputBorder/FormInputBorder";
 import FormsTextArea from "../../../common/FormsTextArea/FormsTextArea";
 import { FaUpload } from "react-icons/fa";
-import { buildEditToolErrorMessage, editToolValidationSchema } from "./utils";
+import { buildEditPostErrorMessage, editPostValidationSchema } from "./utils";
 import SubmitButton from "../../../common/SubmitButton/SubmitButton";
 import { colors } from "../../../../styles/styleVariables";
 
@@ -56,7 +56,7 @@ export default function ModalEditBlog({ _id, post, close }) {
         const resultProfession = await managerService.usegetCategoriesProfession();
         setCategoriesProfession(resultProfession.categoriesprofession);
       } catch (error) {
-        const errorMessage = buildEditToolErrorMessage(error);
+        const errorMessage = buildEditPostErrorMessage(error);
         console.error(errorMessage);
       }
     };
@@ -69,7 +69,7 @@ export default function ModalEditBlog({ _id, post, close }) {
     register,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(editToolValidationSchema),
+    resolver: zodResolver(editPostValidationSchema),
   });
 
   return (
