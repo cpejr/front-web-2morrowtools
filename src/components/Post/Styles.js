@@ -149,7 +149,7 @@ export const Text = styled.div`
 export const Link = styled.button`
   display: flex;
   flex-direction: row;
-  width: 20%;
+  width: fit-content;
   height: auto;
   color: ${colors.blue.accent};
   background-color: transparent;
