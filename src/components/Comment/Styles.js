@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { breakpoints, colors } from "../../styles/styleVariables";
+import { breakpoints } from "../../styles/styleVariables";
 
 export const Container = styled.div`
   display: flex;
@@ -7,43 +7,31 @@ export const Container = styled.div`
   width: 100%;
   gap: 2rem;
 `;
-export const PhotoCollumn = styled.div`
+export const ImageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 5%;
-  border-radius: 50%;
-  background-color: ${colors.white};
-  align-items: center;
   justify-content: center;
-  height: 100%;
-  align-self: center;
+  align-items: center;
+`;
+export const Image = styled.img`
+  height: auto;
+  width: 60px;
+  border-radius: 50%;
 
+  @media (max-width: ${breakpoints.desktop}) {
+    width: 50px;
+  }
+  @media (max-width: ${breakpoints.tablet}) {
+    width: 45px;
+  }
   @media (max-width: ${breakpoints.smallTablet}) {
-    width: 10%;
+    width: 40px;
   }
-
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 35px;
+  }
   @media (max-width: ${breakpoints.smallDevice}) {
-    width: 15%;
-  }
-  > svg {
-    color: ${colors.black};
-    font-size: 60px;
-
-    @media (max-width: ${breakpoints.desktop}) {
-      font-size: 50px;
-    }
-    @media (max-width: ${breakpoints.tablet}) {
-      font-size: 45px;
-    }
-    @media (max-width: ${breakpoints.smallTablet}) {
-      font-size: 40px;
-    }
-    @media (max-width: ${breakpoints.mobile}) {
-      font-size: 35px;
-    }
-    @media (max-width: ${breakpoints.smallDevice}) {
-      font-size: 30px;
-    }
+    width: 30px;
   }
 `;
 export const CommentCollumn = styled.div`

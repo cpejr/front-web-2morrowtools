@@ -17,6 +17,7 @@ export const Button = styled.button`
   cursor: pointer;
   font-weight: 500;
   font-size: 1.5rem;
+  color: ${colors.white};
 
   @media (max-width: ${breakpoints.desktop}) {
     width: 128px;
@@ -37,10 +38,10 @@ export const Button = styled.button`
   }
   &:hover {
     background-color: ${colors.white};
+    color: ${colors.black};
     > p {
       font-weight: 500;
       font-size: 1.5rem;
-      color: ${colors.black};
     }
   }
   p {

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import {
@@ -21,7 +22,6 @@ import { useGetTrueOrFalse, usePostFavorite } from "../../services/ManagerServic
 import { signInWithGooglePopup } from "./../../services/firebase";
 import { usePostUser, useGetAvaliationByAIId, useGetImage } from "../../services/ManagerService";
 import useAuthStore from "../../stores/auth";
-
 export default function Card({ data }) {
   const [starsValue, setStarsValue] = useState(0);
   const [favoriteIcon, setFavoriteIcon] = useState(
@@ -35,6 +35,11 @@ export default function Card({ data }) {
   const navigate = useNavigate();
   const [image, setImage] = useState(data?.imageURL);
   const [loading, setLoading] = useState(false);
+  let categories = [
+    ...data.id_categoryprices,
+    ...data.id_categoryfeatures,
+    ...data.id_categoryprofessions,
+  ];
 
   const getImage = async () => {
     try {
@@ -51,8 +56,12 @@ export default function Card({ data }) {
 
   const { setToken, getUser, getToken } = useAuthStore();
 
+  async function GetTrueOrFalse() {
+    const { result } = await useGetTrueOrFalse(data?._id);
+    setHasPrevRating(result);
+  }
+
   const getByIaId = async () => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     if (hasPrevRating) {
       const result = await useGetAvaliationByAIId(data?._id);
       const averageRate = result?.averagerate || 0;
@@ -60,10 +69,7 @@ export default function Card({ data }) {
       setStarsValue(roundedRating?.toFixed(1));
     }
   };
-  async function GetTrueOrFalse() {
-    const { result } = await useGetTrueOrFalse(data?._id);
-    setHasPrevRating(result);
-  }
+
   useEffect(() => {
     GetTrueOrFalse();
   }, []);
@@ -71,8 +77,16 @@ export default function Card({ data }) {
     getByIaId();
     getImage();
   }, [data]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getByIaId();
+    }, 10000);
 
-  const saveFavorite = async () => {
+    return () => clearInterval(interval);
+  }, [hasPrevRating]);
+
+  const saveFavorite = async (event) => {
+    event.stopPropagation();
     if (getToken() === null) {
       await logGoogleUser();
     }
@@ -89,12 +103,6 @@ export default function Card({ data }) {
       )
     );
   };
-
-  let favorite = (
-    <span onClick={saveFavorite} style={{ cursor: "pointer" }}>
-      {favoriteIcon}
-    </span>
-  );
 
   const logGoogleUser = async () => {
     if (getToken() === null) {
@@ -131,31 +139,38 @@ export default function Card({ data }) {
     window.scrollTo(0, 0);
   };
   return (
-    <StyledCard>
+    <StyledCard onClick={handleLineClick}>
       <Image>{loading ? <RiLoader2Fill /> : <img src={image} alt={data?.name} />}</Image>
       <Group>
         <Line onClick={handleLineClick}>{data?.name}</Line>
-        <LineSVG>{favorite}</LineSVG>
+        <LineSVG onClick={saveFavorite}>{favoriteIcon}</LineSVG>
       </Group>
       <Line>
-        <Stars count={5} value={starsValue} character={({ index }) => renderStarIcon(index)} />
+        <Stars
+          onClick={(event) => event.stopPropagation()}
+          count={5}
+          value={starsValue}
+          character={({ index }) => renderStarIcon(index)}
+        />
         <span>({starsValue})</span>
       </Line>
       <Line>
-        <p>{data?.description}</p>
+        <p>{data?.shortDescription}</p>
       </Line>
 
       <Tags>
-        <Tag>{data?.id_categoryfeature?.name} </Tag>
-        <Tag>{data?.id_categoryprice?.name} </Tag>
+        {categories?.map((category, index) => (
+          <Tag key={index} onClick={(event) => event.stopPropagation()}>
+            {category?.name}
+          </Tag>
+        ))}
       </Tags>
-      <Tags>
-        <Tag>{data?.id_categoryprofession?.name} </Tag>
-      </Tags>
+
       <ButtonDiv>
         <BlueButton
           type='primary'
-          onClick={() => {
+          onClick={(event) => {
+            event.stopPropagation();
             window.open(data?.link, "_blank");
           }}
         >

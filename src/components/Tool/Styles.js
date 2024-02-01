@@ -61,6 +61,8 @@ export const DataCollumn = styled.div`
 
   > p {
     font-size: 25px;
+    text-align: justify;
+
     @media (max-width: ${breakpoints.desktop}) {
       font-size: 20px;
     }
@@ -112,6 +114,7 @@ export const TagsLine = styled.div`
   height: auto;
   gap: 1rem;
   font-size: 55px;
+  flex-wrap: wrap;
   @media (max-width: ${breakpoints.desktop}) {
     font-size: 40px;
   }
@@ -129,10 +132,11 @@ export const TabletTagsLine = styled.div`
   width: 100%;
   height: auto;
   gap: 1rem;
-  font-size: 55px;
+  font-size: 1rem;
 
   @media (max-width: ${breakpoints.smallTablet}) {
     display: flex;
+    flex-wrap: wrap;
     margin-bottom: 1rem;
   }
 `;
@@ -270,6 +274,7 @@ export const KnowMore = styled.div`
   }
   > p {
     font-size: 25px;
+    text-align: justify;
     @media (max-width: ${breakpoints.smallTablet}) {
       font-size: 20px;
     }
