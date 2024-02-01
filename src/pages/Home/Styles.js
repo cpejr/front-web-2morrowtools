@@ -110,6 +110,7 @@ export const AutoCompleteInput = styled(AutoComplete)`
     margin-bottom: 2rem;
     color: ${colors.white};
     border: none;
+    box-shadow: none;
     margin: 0;
 
     &:focus {

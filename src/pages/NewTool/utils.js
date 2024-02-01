@@ -28,54 +28,6 @@ export const newToolValidationSchema = z.object({
   link: z
     .string({ required_error: "O link é obrigatório" })
     .min(1, { message: "O link não pode estár vazio" }),
-  linkedIn: z
-    .string()
-    .min(5, { message: "O link do LinkedIn deve ter pelo menos 5 caracteres" })
-    .optional(),
-
-  discord: z
-    .string()
-    .min(5, { message: "O link do Discord deve ter pelo menos 5 caracteres" })
-    .optional(),
-
-  twitterX: z
-    .string()
-    .min(5, { message: "O link do Twitter deve ter pelo menos 5 caracteres" })
-    .optional(),
-
-  instagram: z
-    .string()
-    .min(5, { message: "O link do Instagram deve ter pelo menos 5 caracteres" })
-    .optional(),
-
-  tiktok: z
-    .string()
-    .min(5, { message: "O link do TikTok deve ter pelo menos 5 caracteres" })
-    .optional(),
-
-  facebook: z
-    .string()
-    .min(5, { message: "O link do Facebook deve ter pelo menos 5 caracteres" })
-    .optional(),
-
-  reddit: z
-    .string()
-    .min(5, { message: "O link do Reddit deve ter pelo menos 5 caracteres" })
-    .optional(),
-
-  pinterest: z
-    .string()
-    .min(5, { message: "O link do Pinterest deve ter pelo menos 5 caracteres" })
-    .optional(),
-
-  youtube: z
-    .string()
-    .min(5, { message: "O link do YouTube deve ter pelo menos 5 caracteres" })
-    .optional(),
-
-  id_categoryfeature: z.string({ required_error: "A categoria de característica é obrigatória" }),
-  id_categoryprice: z.string({ required_error: "A categoria de preço é obrigatória" }),
-  id_categoryprofession: z.string({ required_error: "A categoria de profissão é obrigatória" }),
 });
 
 // Error Handling

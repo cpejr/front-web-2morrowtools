@@ -97,18 +97,14 @@ export const MultipleSelect = styled(MultiSelect)`
   background-color: ${colors.black};
 
   .p-multiselect-label {
+    color: ${colors.white};
+
     width: 215px;
   }
   @media (max-width: ${breakpoints.tablet}) {
     width: 50%;
   }
   @media (max-width: ${breakpoints.smallTablet}) {
-    width: 50%;
-  }
-  @media (max-width: ${breakpoints.mobile}) {
-    width: 33%;
-  }
-  @media (max-width: ${breakpoints.smallDevice}) {
     width: 50%;
   }
 `;
@@ -131,13 +127,8 @@ export const DivSelect = styled.div`
     width: 40%;
   }
   @media (max-width: ${breakpoints.smallTablet}) {
-    width: 50%;
-  }
-  @media (max-width: ${breakpoints.mobile}) {
-    width: 60%;
-  }
-  @media (max-width: ${breakpoints.smallDevice}) {
-    width: 40%;
+    flex-direction: column;
+    width: 80%;
   }
 `;
 
@@ -169,12 +160,6 @@ export const UniSelect = styled(Dropdown)`
     width: 50%;
   }
   @media (max-width: ${breakpoints.smallTablet}) {
-    width: 50%;
-  }
-  @media (max-width: ${breakpoints.mobile}) {
-    width: 33%;
-  }
-  @media (max-width: ${breakpoints.smallDevice}) {
     width: 50%;
   }
 `;
