@@ -14,19 +14,19 @@ import {
   TextListItem,
   AutoCompleteInput,
 } from "./Styles";
-import { 
+import {
   FormSelect,
   ModalDelete,
   SubmitButton,
   FormsTextArea,
   ModalEditBlog,
-  FormImageInput, 
-  FormInputBorder, 
+  FormImageInput,
+  FormInputBorder,
 } from "../../components";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { FaTrash, FaEdit } from "react-icons/fa";
-import { SearchOutlined } from "@ant-design/icons";
+import { ConsoleSqlOutlined, SearchOutlined } from "@ant-design/icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as managerService from "../../services/ManagerService";
 import { newTextValidationSchema, buildNewToolErrorMessage } from "./utils";
@@ -34,7 +34,7 @@ import { string } from "prop-types";
 
 export default function Blog() {
   // Set variables
-  const [names, setNames] = useState("");
+  const [nameQuery, setNameQuery] = useState("");
   const [namesArray, setNamesArray] = useState([]);
   const [currentBlogs, setCurrentBlogs] = useState([]);
   const [selectedText, setSelectedText] = useState(null);
@@ -109,19 +109,24 @@ export default function Blog() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const search = () => {
+  const search = ({ query }) => {
     const postNames = currentBlogs?.map(function (post) {
       return post.name;
     });
-    const filteredPostNames = postNames.filter(
-      (name) => name.toLowerCase().includes(names.toLowerCase()) || !names
+    const filteredPostNames = postNames.filter((name) =>
+      name.toLowerCase().includes(query.toLowerCase())
     );
+
     setNamesArray(filteredPostNames);
-    const filterObjects = currentBlogs.filter(
-      (post) => post.name.toLowerCase().includes(names.toLowerCase()) ||!names
+    const filterObjects = currentBlogs.filter((post) =>
+      post.name.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredPosts(filterObjects);
   };
+
+  useEffect(() => {
+    search({ query: nameQuery });
+  }, [nameQuery]);
 
   const {
     handleSubmit,
@@ -247,10 +252,10 @@ export default function Blog() {
               <SearchOutlined />
             </SVGDiv>
             <AutoCompleteInput
-              value={names}
               suggestions={namesArray}
               completeMethod={search}
-              onChange={(e) => setNames(e.value)}
+              value={nameQuery}
+              onChange={(e) => setNameQuery(e.value)}
             ></AutoCompleteInput>
           </IconWrapper>
           {filteredPosts?.map((post) => (
