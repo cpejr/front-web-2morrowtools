@@ -3,7 +3,7 @@ import { z } from "zod";
 import { ERROR_CODES } from "../.../../../../../utils/constants";
 
 // Form Validation
-export const editToolValidationSchema = z.object({
+export const editPostValidationSchema = z.object({
   name: z
     .string()
     .min(2, { message: "O nome deve ter pelo menos 2 caracteres" })
@@ -22,16 +22,16 @@ export const editToolValidationSchema = z.object({
 
   id_categoryfeature: z.string(),
   id_categoryprofession: z.string(),
-});
+  });
 
 // Error Handling
-const editToolErrorMessages = {
+const editPostErrorMessages = {
   [ERROR_CODES.BAD_REQUEST]: "Dados inválidos",
   [ERROR_CODES.CONFLICT]: "O nome do post já está sendo utilizado",
 };
-const editToolDefaultErrorMessage = "Erro ao criar novo post. Tente novamente mais tarde";
+const editPostDefaultErrorMessage = "Erro ao criar novo post. Tente novamente mais tarde";
 
-export function buildEditToolErrorMessage(err) {
+export function buildEditPostErrorMessage(err) {
   const code = err?.response?.data?.httpCode;
-  return editToolErrorMessages[code] || editToolDefaultErrorMessage;
+  return editPostErrorMessages[code] || editPostDefaultErrorMessage;
 }
