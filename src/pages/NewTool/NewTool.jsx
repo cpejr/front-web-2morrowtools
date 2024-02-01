@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FormInputBorder,
   SubmitButton,
   FormsTextArea,
   ModalDelete,
   ModalEdit,
-  FormSelect,
   FormImageInput,
+  FormSwitch,
+  SocialMediaInput,
 } from "../../components";
 
 import { useForm } from "react-hook-form";
@@ -16,25 +17,31 @@ import {
   Form,
   Section,
   ToolList,
-  ToolListItem,
   ToolButtons,
   StyledModal,
-  DivRow,
+  Selects,
   AutoCompleteInput,
-  ShortDescription,
-  Collumn,
   IconWrapper,
   SVGDiv,
+  ContainerFilter,
+  DivSelect,
+  MultipleSelect,
+  UniSelect,
+  ButtonsDiv,
+  Buttons,
+  ShowTags,
+  Tags,
+  Table,
+  TableColumn,
 } from "./Styles";
-import { FaUpload, FaTrash, FaEdit } from "react-icons/fa";
+import PropTypes from "prop-types";
+import { FaTrash, FaEdit } from "react-icons/fa";
 import * as managerService from "../../services/ManagerService";
 import { buildNewToolErrorMessage, newToolValidationSchema } from "./utils";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useDebounce from "../../services/useDebounce";
 import { SearchOutlined } from "@ant-design/icons";
-import Pagination from "../../components/features/Pagination/Pagination";
-import { ButtonDiv } from "../Home/Styles";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function NewTool() {
@@ -46,11 +53,34 @@ export default function NewTool() {
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [categoriesPrices, setCategoriesPrices] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
+  const [idCategoriesFeature, setIdsCategoriesFeature] = useState([]);
+  const [idCategoriesPrices, setIdsCategoriesPrices] = useState([]);
+  const [idCategoriesProfession, setIdsCategoriesProfession] = useState([]);
   const [aiTools, setAiTools] = useState([]);
   const [names, setNames] = useState("");
-  const [ainames, setAINames] = useState("");
+  const [ainames, setAINames] = useState([]);
   const [namesArray, setNamesArray] = useState([]);
+  const [switchValue, setSwitchValue] = useState(false);
   const debouncedName = useDebounce(names);
+  const [filter, setFilter] = useState([]);
+  const [categoryIDsArrays, setCategoryIDsArrays] = useState([]);
+  const [features, setFeatures] = useState([]);
+  const [prices, setPrices] = useState([]);
+  const [profession, setProfession] = useState([]);
+  let selectedItems = [...features, ...prices, ...profession];
+  const [showFilters, setShowFilters] = useState([]);
+
+  const Finder = () => {
+    const filteredNames = [];
+    [categoriesFeature, categoriesPrices, categoriesProfession].forEach((categoryArray) => {
+      categoryArray.forEach((category) => {
+        if (selectedItems.includes(category._id)) {
+          filteredNames.push(category.name);
+        }
+      });
+    });
+    setShowFilters(filteredNames);
+  };
 
   async function handleCreateAITools(data) {
     try {
@@ -60,18 +90,37 @@ export default function NewTool() {
     } catch (error) {
       toast.error("Erro ao criar ferramenta. Favor tentar novamente!");
       toast.clearWaitingQueue();
-      console.error("Erro ao criar a ferramenta", error);
     }
   }
 
   // Get functions
 
-  async function GettingAIToolsDataByName() {
-    const aiTools = await managerService.useGetAIToolsByName({ name: debouncedName });
-    setAINames(aiTools);
+  const convertArrayToString = (array) => {
+    return array.join(",");
+  };
+  async function FilteringAIsByCategoriesIds() {
+    const idsString = convertArrayToString(categoryIDsArrays);
+
+    const filteredCategory = await managerService.useGetAIToolsByCategoryId({
+      id: idsString,
+      name: debouncedName,
+      type: filter,
+    });
+    const formattedAIs = filteredCategory?.aiTools?.map((tools) => ({
+      name: tools.name,
+      shortDescription: tools.shortDescription,
+      manage: (
+        <ToolButtons>
+          <FaTrash onClick={() => handleOpenDeleteModal(tools?._id)} />
+          <FaEdit onClick={() => handleOpenEditModal(tools)} />
+        </ToolButtons>
+      ),
+    }));
+    setAINames(formattedAIs);
   }
+
   useEffect(() => {
-    GettingAIToolsDataByName();
+    FilteringAIsByCategoriesIds();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedName]);
@@ -80,6 +129,45 @@ export default function NewTool() {
       name.toLowerCase().includes(names.toLowerCase())
     );
     setNamesArray(filteredSuggestions);
+  };
+  const filters = [
+    { label: "Data", value: "date" },
+    { label: "Nome", value: "name" },
+    { label: "Avaliação", value: "avaliation" },
+  ];
+  const handleFilterChange = () => {
+    const newArray = [...features, ...prices, ...profession];
+    setCategoryIDsArrays(newArray);
+  };
+  useEffect(() => {
+    handleFilterChange();
+    Finder();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [features, prices, profession]);
+
+  async function handleFilterReset() {
+    setAINames([]);
+    const filteredCategory = await managerService.useGetAIToolsByCategoryId({});
+    const formattedAIs = filteredCategory?.aiTools?.map((tools) => ({
+      name: tools.name,
+      shortDescription: tools.shortDescription,
+      manage: (
+        <ToolButtons>
+          <FaTrash onClick={() => handleOpenDeleteModal(tools?._id)} />
+          <FaEdit onClick={() => handleOpenEditModal(tools)} />
+        </ToolButtons>
+      ),
+    }));
+    setAINames(formattedAIs);
+  }
+  const handleClearFilters = () => {
+    setFeatures([]);
+    setPrices([]);
+    setProfession([]);
+    setCategoryIDsArrays([]);
+    setFilter([]);
+    setShowFilters([]);
+    handleFilterReset();
   };
   useEffect(() => {
     const fetchData = async () => {
@@ -92,9 +180,6 @@ export default function NewTool() {
 
         const resultAiTools = await managerService.useGetAIToolsNames();
         setAiTools(resultAiTools.aiTools);
-
-        const resultNames = await managerService.useGetAIToolsByName({ name: debouncedName });
-        setAINames(resultNames);
 
         const resultProfession = await managerService.usegetCategoriesProfession();
         setCategoriesProfession(resultProfession.categoriesprofession);
@@ -114,7 +199,7 @@ export default function NewTool() {
   };
 
   const handleOpenEditModal = (tool) => {
-    setSelectedToolId(tool._id);
+    setSelectedToolId(tool?._id);
     setSelectedTool(tool);
     setEditModalOpen(true);
   };
@@ -135,35 +220,42 @@ export default function NewTool() {
   const {
     handleSubmit,
     register,
-    control,
     formState: { errors },
   } = useForm({ resolver: zodResolver(newToolValidationSchema) });
 
-  // Pagination
-  const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 6;
-  const totalPages = Math.ceil(ainames?.aiTools?.length / itemsPerPage);
-
-  const startIndex = currentPage * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-
-  const handlePrevPage = () => {
-    setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
-  };
-
-  const handleNextPage = () => {
-    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
+  const transformArrayItems = (OriginalArray) => {
+    const newArray = OriginalArray.map((item) => ({
+      value: item?._id,
+      label: item?.name,
+    }));
+    return newArray;
   };
 
   const onSubmit = (data) => {
     const combinedData = {
       ...data,
-      id_categoryfeature: data.id_categoryfeature,
-      id_categoryprice: data.id_categoryprice,
-      id_categoryprofession: data.id_categoryprofession,
+      id_categoryfeature: idCategoriesFeature,
+      id_categoryprice: idCategoriesPrices,
+      id_categoryprofession: idCategoriesProfession,
     };
     handleCreateAITools(combinedData);
   };
+  const SelectedTags = ({ selectedItems }) => (
+    <ShowTags>
+      {selectedItems.map((item) => (
+        <Tags key={item}>{item}</Tags>
+      ))}
+    </ShowTags>
+  );
+  SelectedTags.propTypes = {
+    selectedItems: PropTypes.array.isRequired,
+  };
+
+  const columns = [
+    { field: "name", header: "Nome" },
+    { field: "shortDescription", header: "Descrisção" },
+    { field: "manage", header: "Manage" },
+  ];
 
   return (
     <Container>
@@ -192,57 +284,119 @@ export default function NewTool() {
             placeholder='Descrição longa:'
           />
           <FormInputBorder
-            name='link'
-            placeholder='Link do site:'
-            errors={errors}
-            register={register}
-          />
-          <FormInputBorder
             name='youtubeVideoLink'
             placeholder='Link do vídeo no Youtube:'
             errors={errors}
             register={register}
           />
-          <DivRow>
-            <FormSelect
+          <FormInputBorder
+            name='link'
+            placeholder='Link do site:'
+            errors={errors}
+            register={register}
+          />
+          <Selects>
+            <MultipleSelect
+              value={idCategoriesFeature}
               name='id_categoryfeature'
-              control={control}
-              errors={errors}
-              data={categoriesFeature.map(({ _id, name }) => ({
-                label: name,
-                value: _id,
-              }))}
-              placeholder='Característica'
+              onChange={(e) => {
+                setIdsCategoriesFeature(e.value);
+              }}
+              options={transformArrayItems(categoriesFeature)}
+              optionLabel='label'
+              placeholder='Escolha as características'
+              className='w-full md:w-20rem'
+              filter
             />
-            <FormSelect
+            <MultipleSelect
+              value={idCategoriesPrices}
               name='id_categoryprice'
-              control={control}
-              errors={errors}
-              data={categoriesPrices.map(({ _id, name }) => ({
-                label: name,
-                value: _id,
-              }))}
-              placeholder='Preço'
+              onChange={(e) => {
+                setIdsCategoriesPrices(e.value);
+              }}
+              options={transformArrayItems(categoriesPrices)}
+              optionLabel='label'
+              placeholder='Escolha as características'
+              className='w-full md:w-20rem'
+              filter
             />
-
-            <FormSelect
+            <MultipleSelect
+              value={idCategoriesProfession}
               name='id_categoryprofession'
-              control={control}
-              errors={errors}
-              data={categoriesProfession.map(({ _id, name }) => ({
-                label: name,
-                value: _id,
-              }))}
-              placeholder='Profissão'
+              onChange={(e) => {
+                setIdsCategoriesProfession(e.value);
+              }}
+              options={transformArrayItems(categoriesProfession)}
+              optionLabel='label'
+              placeholder='Escolha as características'
+              className='w-full md:w-20rem'
+              filter
             />
-          </DivRow>
+          </Selects>
+          <FormSwitch switchValue={switchValue} setSwitchValue={setSwitchValue} />
+          {switchValue && (
+            <React.Fragment>
+              <SocialMediaInput errors={errors} register={register} />
+            </React.Fragment>
+          )}
         </Section>
-        <SubmitButton>
-          <p>Enviar</p>
-        </SubmitButton>
+        <SubmitButton>Enviar</SubmitButton>
       </Form>
-      <div>
-        <Title>GERENCIAR ITENS</Title>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <Title>FILTROS</Title>
+        <ContainerFilter>
+          <DivSelect>
+            <MultipleSelect
+              value={features}
+              onChange={(e) => {
+                setFeatures(e.value);
+              }}
+              options={transformArrayItems(categoriesFeature)}
+              optionLabel='label'
+              placeholder='Escolha as características'
+              className='w-full md:w-20rem'
+              filter
+            />
+            <MultipleSelect
+              value={prices}
+              onChange={(e) => {
+                setPrices(e.value);
+              }}
+              options={transformArrayItems(categoriesPrices)}
+              optionLabel='label'
+              placeholder='Escolha os preços'
+              className='w-full md:w-20rem'
+              filter
+            />
+            <MultipleSelect
+              value={profession}
+              onChange={(e) => {
+                setProfession(e.value);
+              }}
+              options={transformArrayItems(categoriesProfession)}
+              optionLabel='label'
+              placeholder='Escolha as profissões'
+              className='w-full md:w-20rem'
+              filter
+            />
+            <UniSelect
+              value={filter}
+              onChange={(e) => setFilter(e.value)}
+              options={filters}
+              optionLabel='label'
+              showClear
+              placeholder='Ordenar Por'
+              className='w-full md:w-14rem'
+              x
+            ></UniSelect>
+          </DivSelect>
+          <SelectedTags selectedItems={showFilters} />
+          <ButtonsDiv>
+            <Buttons onClick={() => FilteringAIsByCategoriesIds()}>Filtrar</Buttons>
+            <Buttons onClick={handleClearFilters}>Limpar Filtros</Buttons>
+          </ButtonsDiv>
+        </ContainerFilter>
+        <Title>GERENCIAR ITENS</Title>{" "}
         {isDeleteModalOpen && (
           <StyledModal
             open={isDeleteModalOpen}
@@ -280,7 +434,12 @@ export default function NewTool() {
             centered
             destroyOnClose
           >
-            <ModalEdit _id={selectedToolId} tool={selectedTool} close={handleCloseEditModal} />
+            <ModalEdit
+              _id={selectedToolId}
+              tool={selectedTool}
+              close={handleCloseEditModal}
+              transformArrayItems={transformArrayItems}
+            />
           </StyledModal>
         )}
         <ToolList>
@@ -295,29 +454,12 @@ export default function NewTool() {
               onChange={(e) => setNames(e.value)}
             ></AutoCompleteInput>
           </IconWrapper>
-
-          {ainames?.aiTools?.slice(startIndex, endIndex).map((tool) => (
-            <ToolListItem key={tool._id}>
-              <Collumn>
-                {tool?.name}
-                <ShortDescription> {tool?.shortDescription}</ShortDescription>
-              </Collumn>
-              <ToolButtons>
-                <FaTrash onClick={() => handleOpenDeleteModal(tool?._id)} />
-                <FaEdit onClick={() => handleOpenEditModal(tool)} />
-              </ToolButtons>
-            </ToolListItem>
-          ))}
-          <ButtonDiv>
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              handlePrevPage={handlePrevPage}
-              handleNextPage={handleNextPage}
-              setCurrentPage={setCurrentPage}
-            />
-          </ButtonDiv>
         </ToolList>
+        <Table value={ainames} paginator rows={10} removableSort>
+          {columns.map((data) => (
+            <TableColumn sortable key={data.field} field={data.field} header={data.header} />
+          ))}
+        </Table>
       </div>
     </Container>
   );

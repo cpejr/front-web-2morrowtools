@@ -12,14 +12,14 @@ export default function ModalEditCategory({ _id, category, close, editFunction }
   // On Submit
   const onSubmit = async (data) => {
     try {
-      await editFunction(_id, { data });
-      toast.success("Ferramenta editada com sucesso!");
+      await editFunction(_id, data);
+      toast.success("Item editado com sucesso!");
       toast.clearWaitingQueue();
       close();
     } catch (error) {
-      toast.error("Erro ao editar ferramenta. Favor tentar novamente!");
+      toast.error("Erro ao editar item. Favor tentar novamente!");
       toast.clearWaitingQueue();
-      console.error("Erro ao editar a ferramenta", error);
+      console.error("Erro ao editar a item", error);
     }
   };
 

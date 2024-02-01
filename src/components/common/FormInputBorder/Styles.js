@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { breakpoints, colors } from "../../../styles/styleVariables";
-import { Input } from "antd";
-Input;
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -27,11 +26,9 @@ export const StyledInput = styled.input`
   padding: 0.8rem 1.6rem;
   border-radius: 0.4rem;
   color: ${colors.white};
-  border: solid 0.1rem;
-  border-color: ${colors.white};
   width: 100%;
   background-color: ${colors.blue.background};
-  border: ${(props) => (props?.error ? "0.1rem red solid" : "0.1rem black solid")};
+  border: ${(props) => (props?.error ? "0.1rem red solid" : `0.1rem ${colors.white} solid`)};
   ::placeholder {
     font-weight: 400;
   }

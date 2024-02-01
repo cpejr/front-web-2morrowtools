@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {
   AutoCompleteInput,
   Container,
@@ -17,7 +18,6 @@ import { useGetFavorites } from "../../services/ManagerService";
 import { useEffect, useState } from "react";
 import useAuthStore from "../../stores/auth";
 import useDebounce from "../../services/useDebounce";
-import { useMediaQuery } from "react-responsive";
 import * as managerService from "../../services/ManagerService";
 import Pagination from "../../components/features/Pagination/Pagination";
 import { Newsletter } from "../../components";
@@ -43,7 +43,7 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(0);
   const [highRateCurrentPage, setHighRateCurrentPage] = useState(0);
   const [recentCurrentPage, setRecentCurrentPage] = useState(0);
-  const itemsPerPage = 6;
+  const itemsPerPage = 12;
   const totalPages = Math.ceil(filteredAiTools?.aiTools?.length / itemsPerPage);
   const highRateTotalPages = Math.ceil(highRateFilteredAiTools?.aiTools?.length / itemsPerPage);
   const recentTotalPages = Math.ceil(recentFilteredAiTools?.aiTools?.length / itemsPerPage);
@@ -60,59 +60,18 @@ export default function Home() {
     setHighRateCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
   };
   const handleHighRateNextPage = () => {
-    setHighRateCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
+    setHighRateCurrentPage((prevPage) => Math.min(prevPage + 1, highRateTotalPages - 1));
   };
 
   const handleRecentPrevPage = () => {
     setRecentCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
   };
   const handleRecentNextPage = () => {
-    setRecentCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
+    setRecentCurrentPage((prevPage) => Math.min(prevPage + 1, recentTotalPages - 1));
   };
 
-  // Rendering multiples Cards
-
-  const groupedData = [];
-  const highRateData = [];
-  const recentData = [];
-  const isLargeDesktopScreen = useMediaQuery({ minWidth: 1371 });
-  const isDesktopScreen = useMediaQuery({ minWidth: 1130 });
-  const isMobileScreen = useMediaQuery({ maxWidth: 700 });
-
-  const itemsPerRow = isLargeDesktopScreen ? 3 : isDesktopScreen ? 3 : isMobileScreen ? 1 : 2;
-
-  for (let i = 0; i < filteredAiTools?.aiTools?.length; i += itemsPerPage) {
-    const pageData = filteredAiTools?.aiTools?.slice(i, i + itemsPerPage);
-    const rows = [];
-
-    for (let j = 0; j < itemsPerPage / itemsPerRow; j++) {
-      rows.push(pageData.slice(j * itemsPerRow, (j + 1) * itemsPerRow));
-    }
-
-    groupedData.push(rows);
-  }
-  for (let i = 0; i < recentFilteredAiTools?.aiTools?.length; i += itemsPerPage) {
-    const pageData = recentFilteredAiTools?.aiTools?.slice(i, i + itemsPerPage);
-    const rows = [];
-
-    for (let j = 0; j < itemsPerPage / itemsPerRow; j++) {
-      rows.push(pageData.slice(j * itemsPerRow, (j + 1) * itemsPerRow));
-    }
-
-    recentData.push(rows);
-  }
-  for (let i = 0; i < highRateFilteredAiTools?.aiTools?.length; i += itemsPerPage) {
-    const pageData = highRateFilteredAiTools?.aiTools?.slice(i, i + itemsPerPage);
-    const rows = [];
-
-    for (let j = 0; j < itemsPerPage / itemsPerRow; j++) {
-      rows.push(pageData.slice(j * itemsPerRow, (j + 1) * itemsPerRow));
-    }
-
-    highRateData.push(rows);
-  }
-
   // Backend Calls
+
   const convertArrayToString = (array) => {
     return array.join(",");
   };
@@ -210,11 +169,12 @@ export default function Home() {
       {filteredAiTools?.aiTools && filteredAiTools?.aiTools.length === 0 && (
         <IANotFound>Nenhuma IA encontrada</IANotFound>
       )}
-      {groupedData.map((page, pageIndex) => (
-        <DivLine key={pageIndex} style={{ display: pageIndex === currentPage ? "flex" : "none" }}>
-          {page.map((row, rowIndex) => (
-            <Line key={rowIndex}>
-              {row.map((content) => (
+      <TrendingTools>
+        <DivLine>
+          <Line>
+            {filteredAiTools?.aiTools
+              ?.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
+              .map((content, index) => (
                 <Card
                   data={{
                     ...content,
@@ -222,13 +182,12 @@ export default function Home() {
                       (favoriteAiTool) => favoriteAiTool["_id"] === content._id
                     ),
                   }}
-                  key={content?.name}
+                  key={index}
                 />
               ))}
-            </Line>
-          ))}
+          </Line>
         </DivLine>
-      ))}
+      </TrendingTools>
       <ButtonDiv>
         <Pagination
           currentPage={currentPage}
@@ -241,25 +200,25 @@ export default function Home() {
       <Newsletter />
       <TrendingTools>
         <h1>Em Alta</h1>
-        {highRateData.map((page, pageIndex) => (
-          <DivLine key={pageIndex} style={{ display: pageIndex === currentPage ? "flex" : "none" }}>
-            {page.map((row, rowIndex) => (
-              <Line key={rowIndex}>
-                {row.map((content) => (
-                  <Card
-                    data={{
-                      ...content,
-                      favorite: favoriteAiTools.find(
-                        (favoriteAiTool) => favoriteAiTool["_id"] === content._id
-                      ),
-                    }}
-                    key={content?.name}
-                  />
-                ))}
-              </Line>
-            ))}
-          </DivLine>
-        ))}
+
+        <DivLine>
+          <Line>
+            {highRateFilteredAiTools?.aiTools
+              ?.slice(highRateCurrentPage * itemsPerPage, (highRateCurrentPage + 1) * itemsPerPage)
+              .map((content, index) => (
+                <Card
+                  data={{
+                    ...content,
+                    favorite: favoriteAiTools.find(
+                      (favoriteAiTool) => favoriteAiTool["_id"] === content._id
+                    ),
+                  }}
+                  key={index}
+                />
+              ))}
+          </Line>
+        </DivLine>
+
         <ButtonDiv>
           <Pagination
             currentPage={highRateCurrentPage}
@@ -272,25 +231,23 @@ export default function Home() {
       </TrendingTools>
       <RecentlyAddedTool>
         <h1>Adicionados Recentemente</h1>
-        {recentData.map((page, pageIndex) => (
-          <DivLine key={pageIndex} style={{ display: pageIndex === currentPage ? "flex" : "none" }}>
-            {page.map((row, rowIndex) => (
-              <Line key={rowIndex}>
-                {row.map((content) => (
-                  <Card
-                    data={{
-                      ...content,
-                      favorite: favoriteAiTools.find(
-                        (favoriteAiTool) => favoriteAiTool["_id"] === content._id
-                      ),
-                    }}
-                    key={content?.name}
-                  />
-                ))}
-              </Line>
-            ))}
-          </DivLine>
-        ))}
+        <DivLine>
+          <Line>
+            {recentFilteredAiTools?.aiTools
+              ?.slice(recentCurrentPage * itemsPerPage, (recentCurrentPage + 1) * itemsPerPage)
+              .map((content, index) => (
+                <Card
+                  data={{
+                    ...content,
+                    favorite: favoriteAiTools.find(
+                      (favoriteAiTool) => favoriteAiTool["_id"] === content._id
+                    ),
+                  }}
+                  key={index}
+                />
+              ))}
+          </Line>
+        </DivLine>
         <ButtonDiv>
           <Pagination
             currentPage={recentCurrentPage}

@@ -2,9 +2,8 @@
 import {
   BlueButton,
   ButtonDiv,
-  CardLine,
-  Comment,
-  CommentDiv,
+  CommentContainer,
+  CommentSection,
   CommentInput,
   Container,
   DiscoverData,
@@ -19,8 +18,7 @@ import {
   OtherTools,
   ToolCollumn,
 } from "./Styles";
-import { Card, Comments, Tool } from "../../components";
-import { useMediaQuery } from "react-responsive";
+import { Card, Comment, Tool } from "../../components";
 import { useState } from "react";
 import { useEffect } from "react";
 import {
@@ -104,12 +102,8 @@ export default function Tools() {
 
   // Grouping Data
 
-  const groupedData = [];
-  const isLargeDesktopScreen = useMediaQuery({ minWidth: 1371 });
-  const isDesktopScreen = useMediaQuery({ minWidth: 1130 });
-  const isMobileScreen = useMediaQuery({ maxWidth: 700 });
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 6;
+  const itemsPerPage = 12;
   const totalPages = Math.ceil(aiTools?.aiTools?.length / itemsPerPage);
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
@@ -117,24 +111,11 @@ export default function Tools() {
   const handleNextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
   };
-  const itemsPerRow = isLargeDesktopScreen ? 3 : isDesktopScreen ? 3 : isMobileScreen ? 1 : 2;
-  for (let i = 0; i < aiTools?.aiTools?.length; i += itemsPerPage) {
-    const pageData = aiTools?.aiTools?.slice(i, i + itemsPerPage);
-    const rows = [];
-
-    for (let j = 0; j < itemsPerPage / itemsPerRow; j++) {
-      rows.push(pageData.slice(j * itemsPerRow, (j + 1) * itemsPerRow));
-    }
-
-    groupedData.push(rows);
-  }
 
   return (
     <Container>
-      <ToolCollumn>
-        <Tool data={aiToolsByName} />
-      </ToolCollumn>
-      <DiscoverDiv>
+      <ToolCollumn>{aiToolsByName.aiTools && <Tool data={aiToolsByName} />}</ToolCollumn>
+      <DiscoverDiv style={{ display: "none" }}>
         <DiscoverData>
           <h6>Descubra novas ferramentas de tecnologia toda semana! </h6>
           <p>
@@ -167,32 +148,31 @@ export default function Tools() {
           ENVIAR
         </BlueButton>
       </LetComment>
-      <CommentDiv>
+      <CommentSection>
         <h1>COMENTÁRIOS</h1>
-        <Comment>
+        <CommentContainer>
           {comments?.comments?.map((comment) => (
-            <Comments key={comment?._id} data={comment} onDelete={gettingComments} />
+            <Comment key={comment?._id} data={comment} onDelete={gettingComments} />
           ))}
-        </Comment>
-      </CommentDiv>
+        </CommentContainer>
+      </CommentSection>
       <OtherTools>
         <h1>OUTRAS FERRAMENTAS SIMILARES:</h1>
-        {groupedData.map((page, pageIndex) => (
-          <DivLine key={pageIndex} style={{ display: pageIndex === currentPage ? "flex" : "none" }}>
-            {page.map((row, rowIndex) => (
-              <Line key={rowIndex}>
-                {row.map((content) => (
-                  <Card
-                    data={{
-                      ...content,
-                    }}
-                    key={content?.name}
-                  />
-                ))}
-              </Line>
-            ))}
-          </DivLine>
-        ))}
+        <DivLine>
+          <Line>
+            {aiTools?.aiTools
+              ?.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
+              .map((content, index) => (
+                <Card
+                  data={{
+                    ...content,
+                  }}
+                  key={index}
+                />
+              ))}
+          </Line>
+        </DivLine>
+
         <ButtonDiv>
           <Pagination
             currentPage={currentPage}

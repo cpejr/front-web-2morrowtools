@@ -15,13 +15,25 @@ import {
   Tag,
   TagsLine,
   VideoDiv,
+  Icon,
+  IconContainer,
 } from "./Styles";
+import {
+  FaLinkedin,
+  FaDiscord,
+  FaTwitter,
+  FaInstagram,
+  FaTiktok,
+  FaFacebook,
+  FaReddit,
+  FaPinterest,
+  FaYoutube,
+  FaBookmark,
+} from "react-icons/fa";
 import PropTypes from "prop-types";
-
 import { useState, useEffect } from "react";
 import { FaRegBookmark } from "react-icons/fa";
 import { FaStarHalfStroke } from "react-icons/fa6";
-import { IoShareSocial } from "react-icons/io5";
 import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import useAuthStore from "../../stores/auth";
 import {
@@ -31,29 +43,36 @@ import {
   useGetImage,
   useGetUserTrueOrFalse,
   useGetAvaliationID,
+  usePostUser,
+  usePostFavorite,
+  useGetFavorites,
+  useDeleteFavorite,
 } from "../../services/ManagerService";
 import { toast } from "react-toastify";
-import { LoadingOutlined } from "@ant-design/icons";
-
+import { Share } from "../";
+import { signInWithGooglePopup } from "../../services/firebase";
 export default function Tool({ data }) {
+  const { setToken, getUser, getToken } = useAuthStore();
   const [starsValue, setStarsValue] = useState(0);
   const [starsValue2, setStarsValue2] = useState(0);
   const [hoverValue, setHoverValue] = useState(0);
   const [userHasPrevRating, setUserHasPrevRating] = useState(false);
   const [avaliationID, setAvaliationID] = useState({});
   const ID = data?.aiTools?.[0]?._id;
-  const [loading, setLoading] = useState(false);
+  let categories = [
+    ...data.aiTools[0].id_categoryprices,
+    ...data.aiTools[0].id_categoryfeatures,
+    ...data.aiTools[0].id_categoryprofessions,
+  ];
+
+  //images
   const [image, setImage] = useState("");
   const getImage = async () => {
     try {
       if (data.aiTools) {
         setImage(data?.aiTools[0]?.imageURL);
-
-        setLoading(true);
-
         const azureImage = await useGetImage(data?.aiTools[0]?.imageURL);
         setImage(azureImage.data.image);
-        setLoading(false);
       }
     } catch (error) {
       console.error("Erro ao buscar imagem de ferramenta", error);
@@ -62,12 +81,12 @@ export default function Tool({ data }) {
   };
   useEffect(() => {
     getImage();
+    getIsFavorite();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  const { getUser } = useAuthStore();
+  //avaliation and comments
   const userID = getUser()?._id;
-
   async function GetUserTrueOrFalse() {
     if (ID && userID) {
       const { result } = await useGetUserTrueOrFalse({ userId: userID, iaId: ID });
@@ -80,6 +99,7 @@ export default function Tool({ data }) {
   }
   const handleStarsChange = async (value) => {
     setStarsValue(value);
+    GetByIaId();
     switch (userHasPrevRating) {
       case true:
         try {
@@ -104,11 +124,6 @@ export default function Tool({ data }) {
         break;
     }
   };
-
-  const handleHoverChange = (value) => {
-    setHoverValue(value);
-  };
-
   const renderStarIcon2 = (index) => {
     const floatValue = starsValue2;
     if (index < floatValue && index > floatValue - 1) {
@@ -121,6 +136,11 @@ export default function Tool({ data }) {
     return index <= (hoverValue || starsValue) - 1 ? <RiStarSFill /> : <RiStarSLine />;
   };
 
+  const handleHoverChange = (value) => {
+    setHoverValue(value);
+  };
+
+  //avaliaion
   async function GetByIaId() {
     const result = await useGetAvaliationByAIId(ID);
     const averageRate = result?.averagerate || 0;
@@ -134,6 +154,82 @@ export default function Tool({ data }) {
     setStarsValue(avaliationID?.rate || 0);
   }, [data, avaliationID]);
 
+  //icons
+  const iconOptions = {
+    linkedIn: <FaLinkedin />,
+    discord: <FaDiscord />,
+    twitterX: <FaTwitter />,
+    instagram: <FaInstagram />,
+    tiktok: <FaTiktok />,
+    facebook: <FaFacebook />,
+    reddit: <FaReddit />,
+    pinterest: <FaPinterest />,
+    youtube: <FaYoutube />,
+  };
+
+  //favorites
+  //TODO->MOVE ALL OF THIS TO A COMPONENT
+  const [favorite, setFavorite] = useState();
+
+  const logGoogleUser = async () => {
+    if (getToken() === null) {
+      const response = await signInWithGooglePopup();
+      const tokenObject = await usePostUser({
+        name: response?.user?.displayName,
+        email: response?.user?.email,
+        imageURL: response?.user?.photoURL,
+        type: "User",
+      });
+
+      setToken(tokenObject.token);
+
+      window.location.reload();
+    }
+  };
+  const getIsFavorite = async () => {
+    if (getUser()) {
+      const favorites = await useGetFavorites(getUser()._id);
+      const result = favorites.find((tool) => tool._id === data.aiTools[0]._id);
+      setFavorite(result);
+    } else {
+      setFavorite(undefined);
+    }
+  };
+
+  const changeFavorite = async () => {
+    if (getToken() === null) {
+      await logGoogleUser();
+    }
+    if (favorite) {
+      await useDeleteFavorite({ toolId: data?.aiTools[0]._id, userId: getUser()._id });
+      getIsFavorite();
+    } else {
+      await usePostFavorite({
+        userId: getUser()?._id || " ",
+        toolId: data?.aiTools[0]?._id,
+      });
+      getIsFavorite();
+    }
+  };
+  const [favoriteIcon, setFavoriteIcon] = useState(
+    favorite && getUser() ? (
+      <FaBookmark className='favoriteIcon' onClick={changeFavorite} />
+    ) : (
+      <FaRegBookmark className='favoriteIcon' onClick={changeFavorite} />
+    )
+  );
+
+  useEffect(
+    () =>
+      setFavoriteIcon(
+        favorite ? (
+          <FaBookmark className='favoriteIcon' onClick={changeFavorite} />
+        ) : (
+          <FaRegBookmark className='favoriteIcon' onClick={changeFavorite} />
+        )
+      ),
+    [favorite]
+  );
   return (
     <>
       {data?.aiTools?.map((toolData, index) => (
@@ -141,20 +237,20 @@ export default function Tool({ data }) {
           <Row key={index}>
             <ImageCollumn>
               <Image>
-                {loading ? <LoadingOutlined /> : <img src={image} alt={`ToolImage ${index}`} />}
+                <img src={image} alt={`ToolImage ${index}`} />
               </Image>
               <TagsLine key={`line-${index}`}>
-                <Tag>{toolData?.id_categoryfeature?.name}</Tag>
-                <Tag>{toolData?.id_categoryprice?.name}</Tag>
-                <Tag>{toolData?.id_categoryprofession?.name}</Tag>
+                {categories?.map((category, index) => (
+                  <Tag key={index}>{category?.name}</Tag>
+                ))}
               </TagsLine>
             </ImageCollumn>
             <DataCollumn>
               <Group>
                 <Line>{toolData.name}</Line>
                 <LineSVG>
-                  <FaRegBookmark />
-                  <IoShareSocial />
+                  {favoriteIcon}
+                  <Share url={window.location.href} />
                 </LineSVG>
               </Group>
               <Line>
@@ -167,9 +263,9 @@ export default function Tool({ data }) {
               </Line>
               <p>{toolData?.shortDescription}</p>
               <TabletTagsLine key={`line-${index}`}>
-                <Tag>{toolData?.id_categoryfeature?.name}</Tag>
-                <Tag>{toolData?.id_categoryprice?.name}</Tag>
-                <Tag>{toolData?.id_categoryprofession?.name}</Tag>
+                {categories?.map((category, index) => (
+                  <Tag key={index}>{category?.name}</Tag>
+                ))}
               </TabletTagsLine>
               <BlueButton
                 type='primary'
@@ -179,6 +275,15 @@ export default function Tool({ data }) {
               >
                 ACESSE JÁ!
               </BlueButton>
+              <IconContainer>
+                {Object.entries(iconOptions)
+                  .filter(([name]) => data.aiTools[0][name])
+                  .map(([name]) => (
+                    <Icon href={data.aiTools[0][name]} target='_blank' rel='noreferrer' key={name}>
+                      {iconOptions[name]}
+                    </Icon>
+                  ))}
+              </IconContainer>
             </DataCollumn>
           </Row>
           <Row>

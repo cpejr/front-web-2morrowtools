@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {
   HeartOutlined,
   MenuOutlined,
@@ -70,7 +71,15 @@ export default function MenuHeader({ globalColor, setGlobalColor }) {
   });
 
   function onClick(key) {
-    if (key && key == "/favoritos" && getToken() === null) {
+    if (key && key === "/theme") {
+      setGlobalColor(globalColor === "Dark" ? "Light" : "Dark");
+      window.location.reload();
+      return;
+    }
+    if (key && key == "/favoritos" && getUser()) {
+      navigate(key);
+    }
+    if (key && key == "/favoritos" && !getUser()) {
       logGoogleUser();
     }
     if (key && key !== "login" && key !== "/favoritos") {
@@ -80,12 +89,7 @@ export default function MenuHeader({ globalColor, setGlobalColor }) {
       navigate(key);
     }
     if (key && key === "/submit") {
-      console.log("ok");
       window.open("https://bit.ly/2MT_submeter_ferramenta", "_blank");
-    }
-    if (key && key === "/theme") {
-      setGlobalColor(globalColor === "Dark" ? "Light" : "Dark");
-      window.location.href = "/";
     }
   }
 

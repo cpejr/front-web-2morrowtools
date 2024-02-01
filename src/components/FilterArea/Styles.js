@@ -97,18 +97,14 @@ export const MultipleSelect = styled(MultiSelect)`
   background-color: ${colors.black};
 
   .p-multiselect-label {
+    color: ${colors.white};
+
     width: 215px;
   }
   @media (max-width: ${breakpoints.tablet}) {
     width: 50%;
   }
   @media (max-width: ${breakpoints.smallTablet}) {
-    width: 50%;
-  }
-  @media (max-width: ${breakpoints.mobile}) {
-    width: 33%;
-  }
-  @media (max-width: ${breakpoints.smallDevice}) {
     width: 50%;
   }
 `;
@@ -131,13 +127,8 @@ export const DivSelect = styled.div`
     width: 40%;
   }
   @media (max-width: ${breakpoints.smallTablet}) {
-    width: 50%;
-  }
-  @media (max-width: ${breakpoints.mobile}) {
-    width: 60%;
-  }
-  @media (max-width: ${breakpoints.smallDevice}) {
-    width: 40%;
+    flex-direction: column;
+    width: 80%;
   }
 `;
 
@@ -160,7 +151,6 @@ export const UniSelect = styled(Dropdown)`
   .p-dropdown-label {
     color: ${colors.white};
     width: 200px;
-    overflow-x: scroll;
   }
   .p-inputtext {
     color: ${colors.white};
@@ -172,10 +162,19 @@ export const UniSelect = styled(Dropdown)`
   @media (max-width: ${breakpoints.smallTablet}) {
     width: 50%;
   }
-  @media (max-width: ${breakpoints.mobile}) {
-    width: 33%;
-  }
-  @media (max-width: ${breakpoints.smallDevice}) {
-    width: 50%;
-  }
+`;
+export const ShowTags = styled.div`
+  display: flex;
+  gap: 0.2rem;
+  margin-top: 1rem;
+  padding: 0.2rem 1rem;
+  color: ${colors.white};
+  cursor: pointer;
+  flex-wrap: wrap;
+`;
+export const Tags = styled.span`
+  border-radius: 20px;
+  border: 1px solid ${colors.white};
+  padding: 0.5rem;
+  background-color: ${colors.black};
 `;

@@ -116,6 +116,14 @@ export const usePostFavorite = async (data) => {
   return favorite;
 };
 
+export const useDeleteFavorite = async (data) => {
+  let result = {};
+  await requesterService.deleteFavorite(data).then((res) => {
+    result = res.data;
+  });
+  return result;
+};
+
 // Category Feature
 
 export const useGetCategoryFeaturesByName = async ({ name }) => {

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Input } from "antd";
-import { colors } from "../../../../styles/styleVariables";
+import { breakpoints, colors } from "../../../../styles/styleVariables";
+import { MultiSelect } from "primereact/multiselect";
 
 export const Container = styled.div`
   display: flex;
@@ -82,5 +83,37 @@ export const Section = styled.section`
 
   @media (max-width: 700px) {
     width: 80%;
+  }
+`;
+
+export const LabelWraper = styled.div`
+  display: flex;
+  width: 100%;
+  align-self: center;
+  flex-direction: column;
+`;
+export const MultipleSelect = styled(MultiSelect)`
+  background-color: ${colors.black};
+
+  .p-multiselect-label {
+    width: 215px;
+  }
+  @media (max-width: ${breakpoints.tablet}) {
+    width: 50%;
+  }
+  @media (max-width: ${breakpoints.smallTablet}) {
+    width: 50%;
+  }
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 33%;
+  }
+  @media (max-width: ${breakpoints.smallDevice}) {
+    width: 50%;
+  }
+`;
+export const SubmitText = styled.p`
+  color: ${colors.white};
+  &:hover {
+    color: ${colors.black};
   }
 `;

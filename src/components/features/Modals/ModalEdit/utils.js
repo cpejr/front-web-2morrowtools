@@ -74,9 +74,6 @@ export const editToolValidationSchema = z.object({
 
   imageURL: z.string().optional(),
   link: z.string().optional(),
-  id_categoryfeature: z.string().optional(),
-  id_categoryprice: z.string().optional(),
-  id_categoryprofession: z.string().optional(),
 });
 
 // Error Handling
