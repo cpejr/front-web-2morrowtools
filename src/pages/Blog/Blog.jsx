@@ -30,6 +30,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as managerService from "../../services/ManagerService";
 import { newTextValidationSchema, buildNewToolErrorMessage } from "./utils";
+import { string } from "prop-types";
 
 export default function Blog() {
   // Set variables
@@ -42,6 +43,7 @@ export default function Blog() {
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState([]);
 
   async function handleCreateBlog(data) {
     try {
@@ -59,6 +61,7 @@ export default function Blog() {
   async function getPosts() {
     const posts = await managerService.useGetBlogs();
     setCurrentBlogs(posts.blogs);
+    setFilteredPosts(posts.blogs);
     setNamesArray(posts.blogs.name);
   }
 
@@ -107,11 +110,17 @@ export default function Blog() {
   }, []);
 
   const search = () => {
-    const filteredSuggestions = currentBlogs?.filter((name) =>
-      name.toLowerCase().includes(name.toLowerCase())
+    const postNames = currentBlogs?.map(function (post) {
+      return post.name;
+    });
+    const filteredPostNames = postNames.filter(
+      (name) => name.toLowerCase().includes(names.toLowerCase()) || !names
     );
-
-    setNamesArray(filteredSuggestions);
+    setNamesArray(filteredPostNames);
+    const filterObjects = currentBlogs.filter(
+      (post) => post.name.toLowerCase().includes(names.toLowerCase()) ||!names
+    );
+    setFilteredPosts(filterObjects);
   };
 
   const {
@@ -244,8 +253,7 @@ export default function Blog() {
               onChange={(e) => setNames(e.value)}
             ></AutoCompleteInput>
           </IconWrapper>
-
-          {currentBlogs?.map((post) => (
+          {filteredPosts?.map((post) => (
             <TextListItem key={post.name}>
               {post.name}
               <TextButtons>

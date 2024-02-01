@@ -163,6 +163,7 @@ export const AutoCompleteInput = styled(AutoComplete)`
   align-self: flex-end;
   box-shadow: none;
   > input {
+    box-shadow: none;
     background-color: ${colors.blue.background};
     width: 100%;
     height: 35px;
