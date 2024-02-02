@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Button as AntdButton, Input as AntdInput } from "antd";
 import { breakpoints, colors } from "../../styles/styleVariables";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -55,5 +56,18 @@ export const ModalStyle = styled(Modal)`
     padding: 6;
     margin: 0;
     border-radius: none;
+  }
+`;
+export const Button = styled(AntdButton)`
+  color: #240079;
+  font-weight: bold;
+  border-color: #240079;
+  width: 15%;
+  align-self: center;
+  @media (max-width: ${breakpoints.tablet}) {
+    font-size: smaller;
+  }
+  @media (max-width: 380px) {
+    font-size: 0.6rem;
   }
 `;

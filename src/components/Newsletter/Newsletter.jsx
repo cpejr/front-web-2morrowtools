@@ -16,7 +16,7 @@ export default function Newsletter() {
     }
 
     fetchData();
-  }, []); 
+  }, []);
 
   const PostNewsletter = async () => {
     await usePostNewsletter({
@@ -26,19 +26,19 @@ export default function Newsletter() {
     });
   };
 
-  const exportData = () => {
-    const csvContent =
-      "Nome,Email,Mensagem\n" +
-      newsletters
-        .map((newsletter) => [newsletter.name, newsletter.email, newsletter.message].join(","))
-        .join("\n");
+  // const exportData = () => {
+  //   const csvContent =
+  //     "Nome,Email,Mensagem\n" +
+  //     newsletters
+  //       .map((newsletter) => [newsletter.name, newsletter.email, newsletter.message].join(","))
+  //       .join("\n");
 
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    saveAs(blob, "newsletter_data.csv");
-  };
+  //   const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  //   saveAs(blob, "newsletter_data.csv");
+  // };
 
   return (
-    <Container style={{ display: "none" }}>
+    <Container>
       <Texts>
         <Title>Descubra novas ferramentas de tecnologia toda semana! </Title>
         <Description>
@@ -52,12 +52,12 @@ export default function Newsletter() {
           <Input onChange={(e) => setEmail(e.target.value)} placeholder='Email:'></Input>
         </Break>
         <Input onChange={(e) => SetMessage(e.target.value)} placeholder='Mensagem:'></Input>
-        <Button onClick={PostNewsletter} type='primary'>
+        <Button onClick={PostNewsletter} type='submit'>
           ENVIAR
         </Button>
-        <Button onClick={exportData} type='secondary'>
+        {/* <Button onClick={exportData} type='secondary'>
           EXPORTAR
-        </Button>
+        </Button> */}
       </Inputs>
     </Container>
   );

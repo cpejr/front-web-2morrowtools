@@ -1,6 +1,6 @@
 import { Button as AntdButton, Input as AntdInput } from "antd";
 import styled from "styled-components";
-import { breakpoints } from "../../styles/styleVariables";
+import { breakpoints, colors } from "../../styles/styleVariables";
 
 export const Container = styled.div`
   display: flex;
@@ -12,18 +12,21 @@ export const Container = styled.div`
   box-shadow: -2px -1px 5px 0.5px white, 2px 2px 2px 1px grey;
   flex-wrap: wrap;
   height: 200px;
+  @media (max-width: ${breakpoints.tablet}) {
+    height: 250px;
+  }
 `;
 export const Input = styled(AntdInput)`
   width: 100%;
   font-weight: 300;
   font-size: large;
-  border: 2px solid #240079;
+  border: 2px solid ${colors.white};
 `;
 
 export const Button = styled(AntdButton)`
-  color: #240079;
+  color: ${colors.white};
   font-weight: bold;
-  border-color: #240079;
+  border-color: ${colors.white};
   width: 40%;
   align-self: center;
 `;
