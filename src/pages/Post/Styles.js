@@ -10,19 +10,9 @@ export const Container = styled.div`
   margin-bottom: 100px;
   gap: 2rem;
   text-align: center;
-
-  div {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    color: #240079;
-  }
 `;
 
-export const Card = styled.div`
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  border-color: #240079;
-`;
+export const Card = styled.div``;
 
 export const Section = styled.div`
   width: 80%;
@@ -31,17 +21,29 @@ export const Section = styled.div`
   margin-top: 50px;
 `;
 
-export const Title = styled.h1`
+export const Title = styled.div`
   font-size: 32px;
   margin-bottom: 10px;
 `;
 
-export const Categories = styled.p`
-  font-size: 14px;
-  color: #666;
+export const Tags = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  text-align: center;
 `;
 
-export const SmallDescription = styled.p`
+export const Categories = styled.div`
+  font-size: 14px;
+  border: 1px solid;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+`;
+
+export const SmallDescription = styled.div`
   font-size: 18px;
   line-height: 1.5;
 `;
@@ -53,7 +55,7 @@ export const Image = styled.img`
   border-radius: 8px;
 `;
 
-export const LargeDescription = styled.p`
+export const LargeDescription = styled.div`
   font-size: 20px;
   line-height: 1.6;
 `;

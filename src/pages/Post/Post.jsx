@@ -2,18 +2,19 @@ import {
   Container,
   Section,
   Title,
-  Categories,
   SmallDescription,
   Image,
   LargeDescription,
   Card,
+  Categories,
+  Tags,
 } from "./Styles";
 
 export default function Post() {
   const posts = [
     {
       title: "Ferramenta 1",
-      categories: "IA/Visão computacional/Processamento de audio",
+      tag: "Grátis",
       shortDescription: "Descrição curta",
       imageUrl: "https://picsum.photos/id/237/536/354",
       longDescription:
@@ -21,7 +22,7 @@ export default function Post() {
     },
     {
       title: "Ferramenta 2",
-      categories: "IA/Visão computacional/Processamento de audio",
+      tag: "Artes",
       shortDescription: "Descrição curta",
       imageUrl: "https://picsum.photos/id/237/536/354",
       longDescription:
@@ -29,7 +30,7 @@ export default function Post() {
     },
     {
       title: "Ferramenta 3",
-      categories: "IA/Visão computacional/Processamento de audio",
+      tag: "Computação",
       shortDescription: "Descrição curta",
       imageUrl: "https://picsum.photos/id/237/536/354",
       longDescription:
@@ -39,14 +40,15 @@ export default function Post() {
 
   return (
     <Container>
-      <div>Página específica de post</div>
-
       {posts.map((post, index) => (
         <div key={index}>
           <Card>
             <Section>
               <Title>{post.title}</Title>
-              <Categories>{post.categories}</Categories>
+              <Tags>
+                <Categories>{post.tag}</Categories>
+                <Categories>{post.tag}</Categories>
+              </Tags>
             </Section>
 
             <Section>
