@@ -34,7 +34,7 @@ function Routes() {
           <Route path='/ferramenta/:name' element={<Tools />} />
           <Route index element={<Home />} />
           <Route path='*' element={<Home />} />
-          <Route path='/post' element={<Post />} />
+          <Route path='/post/:name' element={<Post />} />
         </Route>
       </Route>
     )
