@@ -6,6 +6,7 @@ import {
   SmallDescription,
   Image,
   LargeDescription,
+  Card,
 } from "./Styles";
 
 export default function Post() {
@@ -42,22 +43,24 @@ export default function Post() {
 
       {posts.map((post, index) => (
         <div key={index}>
-          <Section>
-            <Title>{post.title}</Title>
-            <Categories>{post.categories}</Categories>
-          </Section>
+          <Card>
+            <Section>
+              <Title>{post.title}</Title>
+              <Categories>{post.categories}</Categories>
+            </Section>
 
-          <Section>
-            <SmallDescription>{post.shortDescription}</SmallDescription>
-          </Section>
+            <Section>
+              <SmallDescription>{post.shortDescription}</SmallDescription>
+            </Section>
 
-          <Section>
-            <Image src={post.imageUrl} alt={`Post Image ${index}`} />
-          </Section>
+            <Section>
+              <Image src={post.imageUrl} alt={`Post Image ${index}`} />
+            </Section>
 
-          <Section>
-            <LargeDescription>{post.longDescription}</LargeDescription>
-          </Section>
+            <Section>
+              <LargeDescription>{post.longDescription}</LargeDescription>
+            </Section>
+          </Card>
         </div>
       ))}
     </Container>

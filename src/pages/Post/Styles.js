@@ -6,7 +6,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 85px;
+  margin-top: 90px;
   margin-bottom: 100px;
   gap: 2rem;
   text-align: center;
@@ -18,10 +18,17 @@ export const Container = styled.div`
   }
 `;
 
+export const Card = styled.div`
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  border-color: #240079;
+`;
+
 export const Section = styled.div`
   width: 80%;
   margin-bottom: 20px;
   margin-left: 10%;
+  margin-top: 50px;
 `;
 
 export const Title = styled.h1`
