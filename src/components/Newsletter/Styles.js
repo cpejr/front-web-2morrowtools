@@ -16,6 +16,9 @@ export const Container = styled.div`
     height: 250px;
   }
 `;
+export const Form = styled.form`
+  display: flex;
+`;
 export const Input = styled(AntdInput)`
   width: 100%;
   font-weight: 300;
@@ -29,6 +32,9 @@ export const Button = styled(AntdButton)`
   border-color: ${colors.white};
   width: 40%;
   align-self: center;
+  @media (max-width: ${breakpoints.tablet}) {
+    font-size: 90%;
+  }
 `;
 
 export const Title = styled.div`
