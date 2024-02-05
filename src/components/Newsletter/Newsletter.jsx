@@ -74,12 +74,11 @@
 //   );
 // }
 
-
-
 import { Container, Title, Description, Texts, Inputs, Break, Input, Button } from "./Styles";
 import { usePostNewsletter, useGetNewsletter } from "../../services/ManagerService";
 import { useState, useEffect } from "react";
 import { saveAs } from "file-saver";
+import { toast } from "react-toastify";
 
 export default function Newsletter() {
   const [name, setName] = useState("");
@@ -97,11 +96,17 @@ export default function Newsletter() {
   }, []);
 
   const PostNewsletter = async () => {
-    await usePostNewsletter({
-      name: name,
-      email: email,
-      message: message,
-    });
+    try {
+      await usePostNewsletter({
+        name: name,
+        email: email,
+        message: message,
+      });
+      toast.success("Email postado com sucesso");
+    } catch (error) {
+      toast.error("Erro ao postar email");
+      toast.clearWaitingQueue();
+    }
   };
 
   // const exportData = () => {
