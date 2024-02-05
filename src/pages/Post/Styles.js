@@ -1,24 +1,23 @@
 import styled from "styled-components";
+import { breakpoints, colors } from "../../styles/styleVariables";
 
 export const Container = styled.div`
   display: flex;
-  width: 100%;
+  width: 80%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 5rem;
-  margin-bottom: 6rem;
+  margin: 7rem auto;
   gap: 2rem;
   text-align: center;
-`;
 
-export const Card = styled.div``;
+  @media (max-width: ${breakpoints.desktop}) {
+    width: 90%;
+  }
+`;
 
 export const Section = styled.div`
   width: 80%;
-  margin-bottom: 20px;
-  margin-left: 10%;
-  margin-top: 50px;
 `;
 
 export const Title = styled.div`
@@ -48,8 +47,6 @@ export const SmallDescription = styled.div`
   line-height: 1.5;
   text-align: left;
   width: 80%;
-  margin-left: 10%;
-  margin-top: 50px;
 `;
 
 export const Image = styled.img`
@@ -58,7 +55,6 @@ export const Image = styled.img`
   object-fit: cover;
   border-radius: 0.5rem;
   width: 80%;
-  margin-top: 50px;
 `;
 
 export const LargeDescription = styled.div`
@@ -66,6 +62,44 @@ export const LargeDescription = styled.div`
   line-height: 1.6;
   text-align: left;
   width: 80%;
-  margin-left: 10%;
-  margin-top: 50px;
+`;
+
+export const TagsLine = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: auto;
+  gap: 1rem;
+  font-size: 55px;
+  flex-wrap: wrap;
+  justify-content: center;
+  @media (max-width: ${breakpoints.desktop}) {
+    font-size: 40px;
+  }
+  @media (max-width: ${breakpoints.tablet}) {
+    font-size: 30px;
+  }
+`;
+
+export const Tag = styled.div`
+  display: flex;
+  width: auto;
+  padding: 5px 1.5rem;
+  height: 2rem;
+  border: 1px solid ${colors.white};
+  color: ${colors.white};
+  font-size: 15px;
+  border-radius: 20px;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+
+  @media (max-width: ${breakpoints.smallDevice}) {
+    font-size: 13px;
+    padding: 5px 1rem;
+  }
+  &:hover {
+    border: 1px solid ${colors.blue.light};
+    color: ${colors.blue.light};
+  }
 `;

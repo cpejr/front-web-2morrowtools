@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom";
 import {
   Container,
   Section,
@@ -5,60 +6,38 @@ import {
   SmallDescription,
   Image,
   LargeDescription,
-  Card,
-  Categories,
-  Tags,
+  TagsLine,
+  Tag,
 } from "./Styles";
 
 export default function Post() {
-  const posts = [
-    {
-      title: "Ferramenta 1",
-      tag: "Grátis",
-      shortDescription: "Descrição curta",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription:
-        "Sed ut perspiciatis unde omnis iste natus error sit Sed ut perspiciatis unde omnis iste natus error sit Sed ut perspiciatis unde omnis iste natus error sit",
-    },
-    {
-      title: "Ferramenta 2",
-      tag: "Artes",
-      shortDescription: "Descrição curta",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription:
-        "Sed ut perspiciatis unde omnis iste natus error sit Sed ut perspiciatis unde omnis iste natus error sit Sed ut perspiciatis unde omnis iste natus error sit",
-    },
-    {
-      title: "Ferramenta 3",
-      tag: "Computação",
-      shortDescription: "Descrição curta",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription:
-        "Sed ut perspiciatis unde omnis iste natus error sit Sed ut perspiciatis unde omnis iste natus error sit Sed ut perspiciatis unde omnis iste natus error sit",
-    },
-  ];
+  const { name } = useParams();
+  console.log(name);
+
+  const post = {
+    title: "Ferramenta 1",
+    tag: "Grátis",
+    shortDescription: "Descrição curta",
+    imageUrl: "https://picsum.photos/id/237/536/354",
+    longDescription:
+      "Sed ut perspiciatis unde omnis iste natus error sit Sed ut perspiciatis unde omnis iste natus error sit Sed ut perspiciatis unde omnis iste natus error sit",
+  };
 
   return (
     <Container>
-      {posts.map((post, index) => (
-        <div key={index}>
-          <Card>
-            <Section>
-              <Title>{post.title}</Title>
-              <Tags>
-                <Categories>{post.tag}</Categories>
-                <Categories>{post.tag}</Categories>
-              </Tags>
-            </Section>
+      <Section>
+        <Title>{post.title}</Title>
+        <TagsLine>
+          <Tag> {post.tag} </Tag>
+          <Tag> {post.tag} </Tag>
+        </TagsLine>
+      </Section>
 
-            <SmallDescription>{post.shortDescription}</SmallDescription>
+      <SmallDescription>{post.shortDescription}</SmallDescription>
 
-            <Image src={post.imageUrl} alt={`Post Image ${index}`} />
+      <Image src={post.imageUrl} />
 
-            <LargeDescription>{post.longDescription}</LargeDescription>
-          </Card>
-        </div>
-      ))}
+      <LargeDescription>{post.longDescription}</LargeDescription>
     </Container>
   );
 }
