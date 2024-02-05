@@ -51,17 +51,11 @@ export default function Post() {
               </Tags>
             </Section>
 
-            <Section>
-              <SmallDescription>{post.shortDescription}</SmallDescription>
-            </Section>
+            <SmallDescription>{post.shortDescription}</SmallDescription>
 
-            <Section>
-              <Image src={post.imageUrl} alt={`Post Image ${index}`} />
-            </Section>
+            <Image src={post.imageUrl} alt={`Post Image ${index}`} />
 
-            <Section>
-              <LargeDescription>{post.longDescription}</LargeDescription>
-            </Section>
+            <LargeDescription>{post.longDescription}</LargeDescription>
           </Card>
         </div>
       ))}
