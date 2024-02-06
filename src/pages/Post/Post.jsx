@@ -12,7 +12,6 @@ import {
 
 export default function Post() {
   const { name } = useParams();
-  console.log(name);
 
   const post = {
     title: "Ferramenta 1",
