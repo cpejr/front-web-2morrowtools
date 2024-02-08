@@ -6,19 +6,13 @@ import {
   CommentSection,
   CommentInput,
   Container,
-  DiscoverData,
-  DiscoverDiv,
-  DiscoverInputs,
-  DiscoverLine,
   DivLine,
-  FullInput,
-  HalfInput,
   LetComment,
   Line,
   OtherTools,
   ToolCollumn,
 } from "./Styles";
-import { Card, Comment, Tool } from "../../components";
+import { Card, Comment, Newsletter, Tool } from "../../components";
 import { useState } from "react";
 import { useEffect } from "react";
 import {
@@ -103,23 +97,7 @@ export default function Tools() {
   return (
     <Container>
       <ToolCollumn>{aiToolsByName.aiTools && <Tool data={aiToolsByName} />}</ToolCollumn>
-      <DiscoverDiv style={{ display: "none" }}>
-        <DiscoverData>
-          <h6>Descubra novas ferramentas de tecnologia toda semana! </h6>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua
-          </p>
-        </DiscoverData>
-        <DiscoverInputs>
-          <DiscoverLine>
-            <HalfInput placeholder='Nome:' />
-            <HalfInput placeholder='E-mail:' type='email' />
-          </DiscoverLine>
-          <FullInput placeholder='Mensagem:' />
-          <BlueButton type='primary'>ENVIAR</BlueButton>
-        </DiscoverInputs>
-      </DiscoverDiv>
+      <Newsletter />
       <LetComment>
         <h2>Deixe seu comentário</h2>
         <CommentInput
