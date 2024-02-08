@@ -8,7 +8,7 @@ import {
 
 import { AppLayout } from "./layouts";
 
-import { Home, IAProfile, Favorites, NewTool, Tools, NewCategory } from "./pages";
+import { Home, IAProfile, Favorites, NewTool, Tools, NewCategory, Post } from "./pages";
 import useAuthStore from "./stores/auth";
 import Admin from "./pages/Admin/Admin";
 
@@ -34,6 +34,7 @@ function Routes() {
           <Route path='/ferramenta/:name' element={<Tools />} />
           <Route index element={<Home />} />
           <Route path='*' element={<Home />} />
+          <Route path='/post/:name' element={<Post />} />
         </Route>
       </Route>
     )
