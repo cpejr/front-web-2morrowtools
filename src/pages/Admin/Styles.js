@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button as AntdButton, Input as AntdInput } from "antd";
+import { Button as AntdButton } from "antd";
 import { breakpoints, colors } from "../../styles/styleVariables";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -58,10 +58,21 @@ export const ModalStyle = styled(Modal)`
     border-radius: none;
   }
 `;
+
+export const NewsLetter = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: center;
+`;
 export const Button = styled(AntdButton)`
-  color: #240079;
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+  align-items: center;
+  color: ${colors.white};
   font-weight: bold;
-  border-color: #240079;
+  border-color: ${colors.white};
   width: 15%;
   align-self: center;
   @media (max-width: ${breakpoints.tablet}) {
@@ -69,5 +80,8 @@ export const Button = styled(AntdButton)`
   }
   @media (max-width: 380px) {
     font-size: 0.6rem;
+  }
+  > svg {
+    font-size: larger;
   }
 `;

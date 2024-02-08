@@ -16,6 +16,7 @@ export const ToolCollumn = styled.div`
   width: 95%;
   height: auto;
   justify-content: center;
+  margin-bottom: 2rem;
 `;
 
 export const LetComment = styled.div`

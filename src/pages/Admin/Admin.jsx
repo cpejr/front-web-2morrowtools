@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from "react";
 import {
@@ -6,13 +7,23 @@ import {
   useUpdateUser,
   useGetNewsletter,
 } from "../../services/ManagerService";
-import { Container, Select, ProfilePic, Table, TableColumn, ModalStyle, Button } from "./Styles";
+import {
+  Container,
+  Select,
+  ProfilePic,
+  Table,
+  TableColumn,
+  ModalStyle,
+  Button,
+  NewsLetter,
+} from "./Styles";
 import { toast } from "react-toastify";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import ModalDeleteUser from "../../components/features/Modals/ModalDeleteUser/ModalDeleteUser";
 import { CloseOutlined } from "@ant-design/icons";
 import { colors } from "../../styles/styleVariables";
 import { saveAs } from "file-saver";
+import { CiExport } from "react-icons/ci";
 export default function Admin() {
   const [users, setUsers] = useState([]);
   const [modalDelete, setModalDelete] = useState(false);
@@ -113,7 +124,7 @@ export default function Admin() {
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     saveAs(blob, "newsletter_data.csv");
   };
-console.log(newsletterData);
+  console.log(newsletterData);
   return (
     <Container>
       <Table value={users} paginator rows={10} removableSort>
@@ -134,9 +145,13 @@ console.log(newsletterData);
       >
         <ModalDeleteUser close={closeModalDelete} handleUserDelete={handleUserDelete} id={userID} />
       </ModalStyle>
-      <Button onClick={exportNewsletterData} type='secondary'>
-        EXPORTAR
-      </Button>
+      <NewsLetter>
+        <h1>Newsletter</h1>
+        <Button onClick={exportNewsletterData} type='secondary'>
+          <CiExport />
+          EXPORTAR
+        </Button>
+      </NewsLetter>
     </Container>
   );
 }

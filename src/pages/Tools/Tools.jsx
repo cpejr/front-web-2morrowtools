@@ -6,19 +6,13 @@ import {
   CommentSection,
   CommentInput,
   Container,
-  DiscoverData,
-  DiscoverDiv,
-  DiscoverInputs,
-  DiscoverLine,
   DivLine,
-  FullInput,
-  HalfInput,
   LetComment,
   Line,
   OtherTools,
   ToolCollumn,
 } from "./Styles";
-import { Card, Comment, Tool } from "../../components";
+import { Card, Comment, Newsletter, Tool } from "../../components";
 import { useState } from "react";
 import { useEffect } from "react";
 import {
@@ -26,7 +20,6 @@ import {
   useGetAIToolsByName,
   useGetComments,
   usePostComments,
-  usePostNewsletter,
 } from "../../services/ManagerService";
 import { useParams } from "react-router-dom";
 import useAuthStore from "../../stores/auth";
@@ -41,9 +34,6 @@ export default function Tools() {
   const [aiToolsByName, setAIToolsByName] = useState({});
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
-  const [nameInput, setNameInput] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, SetMessage] = useState("");
   const similarIDs = [
     aiToolsByName?.aiTools?.[0]?.id_categoryfeature?._id,
     aiToolsByName?.aiTools?.[0]?.id_categoryprice?._id,
@@ -51,14 +41,6 @@ export default function Tools() {
   ];
 
   //Backend calls
-
-  async function PostNewsletter() {
-    await usePostNewsletter({
-      name: nameInput,
-      email: email,
-      message: message,
-    });
-  }
 
   async function gettingAIToolsDataByName() {
     const aiTools = await useGetAIToolsByName({ name });
@@ -115,29 +97,7 @@ export default function Tools() {
   return (
     <Container>
       <ToolCollumn>{aiToolsByName.aiTools && <Tool data={aiToolsByName} />}</ToolCollumn>
-      <DiscoverDiv style={{ display: "none" }}>
-        <DiscoverData>
-          <h6>Descubra novas ferramentas de tecnologia toda semana! </h6>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua
-          </p>
-        </DiscoverData>
-        <DiscoverInputs>
-          <DiscoverLine>
-            <HalfInput onChange={(e) => setNameInput(e.target.value)} placeholder='Nome:' />
-            <HalfInput
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder='E-mail:'
-              type='email'
-            />
-          </DiscoverLine>
-          <FullInput onChange={(e) => SetMessage(e.target.value)} placeholder='Mensagem:' />
-          <BlueButton onClick={PostNewsletter} type='primary'>
-            ENVIAR
-          </BlueButton>
-        </DiscoverInputs>
-      </DiscoverDiv>
+      <Newsletter />
       <LetComment>
         <h2>Deixe seu comentário</h2>
         <CommentInput

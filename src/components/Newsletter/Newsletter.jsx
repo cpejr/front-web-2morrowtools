@@ -1,23 +1,12 @@
 import { Container, Title, Description, Texts, Inputs, Break, Input, Button } from "./Styles";
-import { usePostNewsletter, useGetNewsletter } from "../../services/ManagerService";
-import { useState, useEffect } from "react";
-import { saveAs } from "file-saver";
+import { usePostNewsletter } from "../../services/ManagerService";
+import { useState } from "react";
 import { toast } from "react-toastify";
 
 export default function Newsletter() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, SetMessage] = useState("");
-  const [newsletters, setNewsletters] = useState([]);
-
-  useEffect(() => {
-    async function fetchData() {
-      const result = await useGetNewsletter();
-      setNewsletters(result.Newsletters);
-    }
-
-    fetchData();
-  }, []);
 
   const PostNewsletter = async () => {
     try {
@@ -66,9 +55,6 @@ export default function Newsletter() {
         <Button onClick={handleSubmit} type='submit'>
           ENVIAR
         </Button>
-        {/* <Button onClick={exportData} type='secondary'>
-          EXPORTAR
-        </Button> */}
       </Inputs>
     </Container>
   );
