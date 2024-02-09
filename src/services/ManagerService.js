@@ -441,3 +441,18 @@ export const useGetImage = async (imageURL) => {
     throw error;
   }
 };
+
+export const usePostNewsletter = async (body) => {
+  const create = await requesterService.postNewsletter(body).then((res) => {
+    return res;
+  });
+  return create;
+};
+
+export const useGetNewsletter = async () => {
+  let Newsletters = {};
+  await requesterService.getNewsletter().then((res) => {
+    Newsletters = res.data;
+  });
+  return { Newsletters };
+};
