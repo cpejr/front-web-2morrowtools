@@ -1,7 +1,8 @@
-import styled from "styled-components";
-import { breakpoints, colors } from "../../styles/styleVariables";
 import { Modal } from "antd";
+import styled from "styled-components";
+import { MultiSelect } from "primereact/multiselect";
 import { AutoComplete } from "primereact/autocomplete";
+import { breakpoints, colors } from "../../styles/styleVariables";
 
 export const Container = styled.div`
   display: flex;
@@ -35,10 +36,13 @@ export const Title = styled.p`
     font-size: 2.5rem;
     line-height: 3.9rem;
     height: 3.9rem;
+    margin-top:50px;
+    margin-inline:auto;
   }
 
   @media (max-width: 370px) {
     font-size: 2.5rem;
+    margin-top:80px;
   }
 `;
 
@@ -54,17 +58,19 @@ export const Section = styled.section`
   }
 `;
 
-export const DivRow = styled.div`
+export const Selects = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
   gap: 5rem;
   padding-inline: 15%;
+  justify-content:space-around;
 
   @media (max-width: 850px) {
     flex-direction: column;
     padding: 0;
     gap: 1rem;
+    align-items:center;
   }
 `;
 
@@ -88,6 +94,26 @@ export const Form = styled.form`
   }
 `;
 
+export const MultipleSelect = styled(MultiSelect)`
+  background-color: ${colors.black};
+
+  .p-multiselect-label {
+    width: 215px;
+  }
+  @media (max-width: ${breakpoints.tablet}) {
+    width: 50%;
+  }
+  @media (max-width: ${breakpoints.smallTablet}) {
+    width: 50%;
+  }
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 33%;
+  }
+  @media (max-width: ${breakpoints.smallDevice}) {
+    width: 50%;
+  }
+`;
+
 export const Section2 = styled.section`
   display: flex;
   flex-direction: column;
@@ -102,12 +128,17 @@ export const Section2 = styled.section`
 
 export const StyledModal = styled(Modal)`
   .ant-modal-content {
-    background-color: ${colors.grey.cardBackground};
+    background-color: ${colors.grey.cardBackground};  
+    @media (max-width: ${breakpoints.tablet}) {
+      width: 90%;
+      margin-inline:auto;
+    }
   }
   .ant-modal-body {
     color: ${colors.white};
     border-radius: none;
-  }
+  }  
+
 `;
 
 export const TextList = styled.ul`

@@ -2,32 +2,32 @@ import { z } from "zod";
 import { ERROR_CODES } from "../../utils/constants";
 
 // Form Validation
-export const newTextValidationSchema = z.object({
+export const newPostValidationSchema = z.object({
   name: z
     .string({ required_error: "O título é obrigatório" })
     .min(2, { message: "O título deve ter pelo menos 2 caracteres" })
     .max(60, { message: "O título não pode exceder 60 caracteres" }),
-  imageUrl: z.string({required_error: "Campo obrigatório"}),
+  imageUrl: 
+    z.string({ required_error: "A URL da imagem é obrigatória" })
+    .min(1, { message: "O URL deve ter pelo menos 1 caractere" }),
   shortDescription: z
     .string({ required_error: "A descrição curta é obrigatória" })
     .min(1, { message: "Campo obrigatório" }),
   longDescription: z
-    .string()
+    .string({ required_error: "A descrição longa é obrigatória" })
     .min(20, { message: "A descrição longa deve ter pelo menos 20 caracteres" })
     .max(750, { message: "A descrição longa não pode exceder 750 caracteres" }),
-  id_categoryfeature: z.string( {required_error: "Característica inválida"}),  
-  id_categoryprofession: z.string( {required_error: "Profissão inválida"}),
 });
 
 
 // Error Handling
-const newToolErrorMessages = {
+const newPostErrorMessages = {
   [ERROR_CODES.BAD_REQUEST]: "Dados inválidos",
   [ERROR_CODES.CONFLICT]: "O título do post já está sendo utilizado",
 };
-const newToolDefaultErrorMessage = "Erro ao criar novo post. Tente novamente mais tarde";
+const newPostDefaultErrorMessage = "Erro ao criar novo post. Tente novamente mais tarde";
 
-export function buildNewToolErrorMessage(err) {
+export function buildNewPostErrorMessage(err) {
   const code = err?.response?.data?.httpCode;
-  return newToolErrorMessages[code] || newToolDefaultErrorMessage;
+  return newPostErrorMessages[code] || newPostDefaultErrorMessage;
 }

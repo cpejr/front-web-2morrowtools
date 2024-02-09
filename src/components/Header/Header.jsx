@@ -77,8 +77,8 @@ export default function Header() {
               </span>
             </Link>
             <Link>
-              <span onClick={() => (window.location.href = "/blog")}>
-                Blog
+              <span onClick={() => (window.location.href = "/newpost")}>
+                Adicionar Post
               </span>
             </Link>
             <Link>

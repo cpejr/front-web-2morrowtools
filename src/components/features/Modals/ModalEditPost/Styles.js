@@ -1,6 +1,7 @@
-import styled from "styled-components";
 import { Input } from "antd";
-import { colors } from "../../../../styles/styleVariables";
+import styled from "styled-components";
+import { MultiSelect } from "primereact/multiselect";
+import { breakpoints, colors } from "../../../../styles/styleVariables";
 
 export const Container = styled.div`
   display: flex;
@@ -32,7 +33,7 @@ export const Tittle = styled.p`
 export const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: baseline;
+  align-items: center;
   gap: 0.8rem;
 `;
 
@@ -89,5 +90,17 @@ export const LabelWraper = styled.div`
   display: flex;
   width: 100%;
   align-self: center;
+  align-items:center;
   flex-direction: column;
+`;
+
+export const MultipleSelect = styled(MultiSelect)`
+  background-color: ${colors.black};
+
+  .p-multiselect-label {
+    width: 215px;
+  }
+  @media (max-width: ${breakpoints.tablet}) {
+    width: 80%;
+  }
 `;

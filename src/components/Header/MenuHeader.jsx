@@ -44,8 +44,8 @@ export default function MenuHeader({ globalColor, setGlobalColor }) {
               <ToolOutlined style={{ fontSize: "1.3rem" }} />
             ),
             getItem(
-              "Gerenciar Blog",
-              "/blog",
+              "Adicionar Posts",
+              "/newpost",
               <ToolOutlined style={{ fontSize: "1.3rem" }} />
             ),
             getItem("Usuários", "/admin", <UserOutlined style={{ fontSize: "1.3rem" }} />),

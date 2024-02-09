@@ -1,27 +1,28 @@
-import PropTypes from "prop-types";
 import { useState } from "react";
-import { Container, Tittle, Label, ModalContent, Form, Section, LabelWraper } from "./Styles";
-import FormSelect from "../../../common/FormSelect/FormSelect";
-import { toast } from "react-toastify";
-import * as managerService from "../../../../services/ManagerService";
 import { useEffect } from "react";
+import PropTypes from "prop-types";
+import { toast } from "react-toastify";
+import { FaUpload } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import FormInputBorder from "../../../common/FormInputBorder/FormInputBorder";
-import FormsTextArea from "../../../common/FormsTextArea/FormsTextArea";
-import { FaUpload } from "react-icons/fa";
-import { buildEditPostErrorMessage, editPostValidationSchema } from "./utils";
 import SubmitButton from "../../../common/SubmitButton/SubmitButton";
-import { colors } from "../../../../styles/styleVariables";
+import * as managerService from "../../../../services/ManagerService";
+import FormsTextArea from "../../../common/FormsTextArea/FormsTextArea";
+import FormInputBorder from "../../../common/FormInputBorder/FormInputBorder";
+import { buildEditPostErrorMessage, editPostValidationSchema } from "./utils";
+import { Container, Tittle, Label, ModalContent, Form, Section, LabelWraper, MultipleSelect } from "./Styles";
 
-export default function ModalEditBlog({ _id, post, close }) {
+export default function ModalEditPost({ _id, post, close }) {
+  
   const [categoriesFeature, setCategoriesFeature] = useState([]);
+  const [idCategoriesFeature, setIdsCategoriesFeature] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
+  const [idCategoriesProfession, setIdsCategoriesProfession] = useState([]);
 
   // Forms values
   const [formData, setFormData] = useState({
     name: post.name,
-    imageURL: post.imageURL,
+    imageUrl: post.imageUrl,
     shortDescription: post.shortDescription,
     longDescription: post.longDescription,
   });
@@ -29,9 +30,9 @@ export default function ModalEditBlog({ _id, post, close }) {
   // On Submit
   const onSubmit = async (data) => {
     const body = {
-      ...formData,
-      id_categoryfeature: data.id_categoryfeature,
-      id_categoryprofession: data.id_categoryprofession,
+      ...data,
+      id_categoryfeature: idCategoriesFeature,
+      id_categoryprofession: idCategoriesProfession,
     };
 
     try {
@@ -65,12 +66,19 @@ export default function ModalEditBlog({ _id, post, close }) {
 
   const {
     handleSubmit,
-    control,
     register,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(editPostValidationSchema),
   });
+
+  const transformArrayItems = (OriginalArray) => {
+    const newArray = OriginalArray.map((item) => ({
+      value: item?._id,
+      label: item?.name,
+    }));
+    return newArray;
+  };
 
   return (
     <Container>
@@ -93,8 +101,8 @@ export default function ModalEditBlog({ _id, post, close }) {
             <LabelWraper>
               <Label>URL da imagem:</Label>
               <FormInputBorder
-                name='imageURL'
-                defaultValue={post.imageURL}
+                name='imageUrl'
+                defaultValue={post.imageUrl}
                 placeholder='URL da imagem:'
                 icon={FaUpload}
                 errors={errors}
@@ -129,32 +137,34 @@ export default function ModalEditBlog({ _id, post, close }) {
             </LabelWraper>
 
             <LabelWraper>
-              <Label>Category Feature:</Label>
-              <FormSelect
+              <Label>Características:</Label>
+              <MultipleSelect
+                value={idCategoriesFeature}
                 name='id_categoryfeature'
-                control={control}
-                dropdownStyle={{ backgroundColor: colors.blue.background }}
-                defaultValue={post.id_categoryfeature._id}
-                data={categoriesFeature.map(({ _id, name }) => ({
-                  label: name,
-                  value: _id,
-                }))}
-                placeholder='Característica'
+                onChange={(e) => {
+                  setIdsCategoriesFeature(e.value);
+                }}
+                options={transformArrayItems(categoriesFeature)}
+                optionLabel='label'
+                placeholder='Escolha as características'
+                className='w-full md:w-20rem'
+                filter
               />
             </LabelWraper>
 
             <LabelWraper>
-              <Label>Category Profession:</Label>
-              <FormSelect
+              <Label>Profissões:</Label>
+              <MultipleSelect
+                value={idCategoriesProfession}
                 name='id_categoryprofession'
-                control={control}
-                dropdownStyle={{ backgroundColor: colors.blue.background }}
-                defaultValue={post.id_categoryprofession._id}
-                data={categoriesProfession.map(({ _id, name }) => ({
-                  label: name,
-                  value: _id,
-                }))}
-                placeholder='Profissão'
+                onChange={(e) => {
+                  setIdsCategoriesProfession(e.value);
+                }}
+                options={transformArrayItems(categoriesProfession)}
+                optionLabel='label'
+                placeholder='Escolha as características'
+                className='w-full md:w-20rem'
+                filter
               />
             </LabelWraper>
           </Section>
@@ -167,7 +177,7 @@ export default function ModalEditBlog({ _id, post, close }) {
   );
 }
 
-ModalEditBlog.propTypes = {
+ModalEditPost.propTypes = {
   post: PropTypes.object,
   _id: PropTypes.string.isRequired,
   close: PropTypes.func.isRequired,

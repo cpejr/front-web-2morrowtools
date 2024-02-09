@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import {
   Form,
   Title,
-  DivRow,
+  Selects,
   SVGDiv,
   Section,
   TextList,
@@ -12,42 +12,44 @@ import {
   TextButtons,
   IconWrapper,
   TextListItem,
+  MultipleSelect,
   AutoCompleteInput,
 } from "./Styles";
 import {
-  FormSelect,
   ModalDelete,
   SubmitButton,
   FormsTextArea,
-  ModalEditBlog,
+  ModalEditPost,
   FormImageInput,
   FormInputBorder,
 } from "../../components";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { FaTrash, FaEdit } from "react-icons/fa";
-import { ConsoleSqlOutlined, SearchOutlined } from "@ant-design/icons";
+import { SearchOutlined } from "@ant-design/icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as managerService from "../../services/ManagerService";
-import { newTextValidationSchema, buildNewToolErrorMessage } from "./utils";
-import { string } from "prop-types";
+import { newPostValidationSchema, buildNewPostErrorMessage } from "./utils";
 
-export default function Blog() {
+export default function NewPost() {
+
   // Set variables
   const [nameQuery, setNameQuery] = useState("");
   const [namesArray, setNamesArray] = useState([]);
-  const [currentBlogs, setCurrentBlogs] = useState([]);
+  const [currentPosts, setCurrentPosts] = useState([]);
   const [selectedText, setSelectedText] = useState(null);
+  const [filteredPosts, setFilteredPosts] = useState([]);
   const [selectedTextId, setSelectedTextId] = useState(null);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [idCategoriesFeature, setIdsCategoriesFeature] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
-  const [filteredPosts, setFilteredPosts] = useState([]);
+  const [idCategoriesProfession, setIdsCategoriesProfession] = useState([]);
 
-  async function handleCreateBlog(data) {
+  async function handleCreatePost(data) {
     try {
-      await managerService.useCreateBlog(data);
+      await managerService.useCreatePost(data);
       toast.success("Post criado com sucesso!");
       toast.clearWaitingQueue();
       getPosts();
@@ -59,10 +61,10 @@ export default function Blog() {
   }
 
   async function getPosts() {
-    const posts = await managerService.useGetBlogs();
-    setCurrentBlogs(posts.blogs);
-    setFilteredPosts(posts.blogs);
-    setNamesArray(posts.blogs.name);
+    const posts = await managerService.useGetPosts();
+    setCurrentPosts(posts.Posts);
+    setFilteredPosts(posts.Posts);
+    setNamesArray(posts.Posts.name);
   }
 
   // Modal Functions
@@ -101,7 +103,7 @@ export default function Blog() {
 
         getPosts();
       } catch (error) {
-        const errorMessage = buildNewToolErrorMessage(error);
+        const errorMessage = buildNewPostErrorMessage(error);
         console.error(errorMessage);
       }
     };
@@ -110,7 +112,7 @@ export default function Blog() {
   }, []);
 
   const search = ({ query }) => {
-    const postNames = currentBlogs?.map(function (post) {
+    const postNames = currentPosts?.map(function (post) {
       return post.name;
     });
     const filteredPostNames = postNames.filter((name) =>
@@ -118,7 +120,7 @@ export default function Blog() {
     );
 
     setNamesArray(filteredPostNames);
-    const filterObjects = currentBlogs.filter((post) =>
+    const filterObjects = currentPosts.filter((post) =>
       post.name.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredPosts(filterObjects);
@@ -131,17 +133,24 @@ export default function Blog() {
   const {
     handleSubmit,
     register,
-    control,
     formState: { errors },
-  } = useForm({ resolver: zodResolver(newTextValidationSchema) });
+  } = useForm({ resolver: zodResolver(newPostValidationSchema) });
 
   const onSubmit = (data) => {
     const combinedData = {
       ...data,
-      id_categoryfeature: data.id_categoryfeature,
-      id_categoryprofession: data.id_categoryprofession,
-    };
-    handleCreateBlog(combinedData);
+      id_categoryfeature: idCategoriesFeature,
+      id_categoryprofession: idCategoriesProfession,
+    };  
+    handleCreatePost(combinedData);
+  };
+
+  const transformArrayItems = (OriginalArray) => {
+    const newArray = OriginalArray.map((item) => ({
+      value: item?._id,
+      label: item?.name,
+    }));
+    return newArray;
   };
 
   return (
@@ -175,28 +184,34 @@ export default function Blog() {
             errors={errors}
           />
 
-          <DivRow>
-            <FormSelect
+          <Selects>
+            <MultipleSelect
+              value={idCategoriesFeature}
               name='id_categoryfeature'
-              control={control}
+              onChange={(e) => {
+                setIdsCategoriesFeature(e.value);
+              }}
+              options={transformArrayItems(categoriesFeature)}
+              optionLabel='label'
+              placeholder='Escolha as características'
+              className='w-full md:w-20rem'
+              filter
               errors={errors}
-              data={categoriesFeature.map(({ _id, name }) => ({
-                label: name,
-                value: _id,
-              }))}
-              placeholder='Característica'
             />
-            <FormSelect
+            <MultipleSelect
+              value={idCategoriesProfession}
               name='id_categoryprofession'
-              control={control}
+              onChange={(e) => {
+                setIdsCategoriesProfession(e.value);
+              }}
+              options={transformArrayItems(categoriesProfession)}
+              optionLabel='label'
+              placeholder='Escolha as profissões'
+              className='w-full md:w-20rem'
+              filter
               errors={errors}
-              data={categoriesProfession.map(({ _id, name }) => ({
-                label: name,
-                value: _id,
-              }))}
-              placeholder='Profissão'
-            />
-          </DivRow>
+          />
+          </Selects>
 
           <SubmitButton>
             <p>Enviar</p>
@@ -243,7 +258,7 @@ export default function Blog() {
             centered
             destroyOnClose
           >
-            <ModalEditBlog _id={selectedTextId} post={selectedText} close={handleCloseEditModal} />
+            <ModalEditPost _id={selectedTextId} post={selectedText} close={handleCloseEditModal} />
           </StyledModal>
         )}
         <TextList>

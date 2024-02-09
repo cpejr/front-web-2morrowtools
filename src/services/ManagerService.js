@@ -394,21 +394,21 @@ export const useUpdateAvaliation = async (_id, body) => {
   }
 };
 
-//Blog
+// NewPost
 
-export const useCreateBlog = async (body) => {
-  const create = await requesterService.createBlog(body).then((res) => {
+export const useCreatePost = async (body) => {
+  const create = await requesterService.createPost(body).then((res) => {
     return res;
   });
   return create;
 };
 
-export const useGetBlogs = async () => {
-  let blogs = {};
-  await requesterService.getBlogs().then((res) => {
-    blogs = res.data;
+export const useGetPosts = async () => {
+  let Posts = {};
+  await requesterService.getPosts().then((res) => {
+    Posts = res.data;
   });
-  return { blogs };
+  return { Posts };
 };
 
 export const useDeletePost = async (_id) => {

@@ -5,23 +5,17 @@ import { ERROR_CODES } from "../.../../../../../utils/constants";
 // Form Validation
 export const editPostValidationSchema = z.object({
   name: z
-    .string()
-    .min(2, { message: "O nome deve ter pelo menos 2 caracteres" })
-    .max(60, { message: "O nome não pode exceder 60 caracteres" }),
-
-  imageURL: z.string(),
+    .string({ required_error: "O título é obrigatório" })
+    .max(60, { message: "O título não pode exceder 60 caracteres" })
+    .optional(),
+  imageUrl: 
+    z.string().optional(),
   shortDescription: z
-    .string()
-    .min(2, { message: "A descrição curta deve ter pelo menos 2 caracteres" })
-    .max(100, { message: "A descrição curta não pode exceder 100 caracteres" }),
-
+    .string().optional(),
   longDescription: z
     .string()
-    .min(20, { message: "A descrição longa deve ter pelo menos 20 caracteres" })
-    .max(750, { message: "A descrição longa não pode exceder 750 caracteres" }),
-
-  id_categoryfeature: z.string(),
-  id_categoryprofession: z.string(),
+    .max(750, { message: "A descrição longa não pode exceder 750 caracteres" })
+    .optional(),
   });
 
 // Error Handling
