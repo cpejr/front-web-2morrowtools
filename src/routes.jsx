@@ -8,7 +8,7 @@ import {
 
 import { AppLayout } from "./layouts";
 
-import { Home, IAProfile, Favorites, NewTool, Tools, NewCategory, NewPost } from "./pages";
+import { Home, IAProfile, Favorites, NewTool, Tools, NewCategory, NewPost, Post } from "./pages";
 import useAuthStore from "./stores/auth";
 import Admin from "./pages/Admin/Admin";
 
