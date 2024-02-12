@@ -41,7 +41,7 @@ export const Links = styled.div`
   display: flex;
   justify-content: space-around;
   word-wrap: break-word;
-  width: 30rem;
+  width:50rem;
   font-size: 1rem;
   a {
     font-family: ${fonts.Exo2};
@@ -52,7 +52,7 @@ export const Links = styled.div`
     }
   }
   @media (max-width: ${breakpoints.tablet}) {
-    width: 35rem;
+    gap:0;
     a {
       font-size:0.9rem;
     }

@@ -1,13 +1,12 @@
-import { useState } from "react";
-import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
-import { FaUpload } from "react-icons/fa";
 import { useForm } from "react-hook-form";
+import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import SubmitButton from "../../../common/SubmitButton/SubmitButton";
 import * as managerService from "../../../../services/ManagerService";
 import FormsTextArea from "../../../common/FormsTextArea/FormsTextArea";
+import FormImageInput from "../../../common/FormImageInput/FormImageInput";
 import FormInputBorder from "../../../common/FormInputBorder/FormInputBorder";
 import { buildEditPostErrorMessage, editPostValidationSchema } from "./utils";
 import { Container, Tittle, Label, ModalContent, Form, Section, LabelWraper, MultipleSelect } from "./Styles";
@@ -99,19 +98,6 @@ export default function ModalEditPost({ _id, post, close }) {
             </LabelWraper>
 
             <LabelWraper>
-              <Label>URL da imagem:</Label>
-              <FormInputBorder
-                name='imageUrl'
-                defaultValue={post.imageUrl}
-                placeholder='URL da imagem:'
-                icon={FaUpload}
-                errors={errors}
-                register={register}
-                onChange={(e) => setFormData({ ...formData, imageURL: e.target.value })}
-              />
-            </LabelWraper>
-
-            <LabelWraper>
               <Label>Descrição curta:</Label>
               <FormInputBorder
                 name='shortDescription'
@@ -136,6 +122,16 @@ export default function ModalEditPost({ _id, post, close }) {
               />
             </LabelWraper>
 
+            <LabelWraper>
+              <Label>URL da imagem:</Label>
+              <FormImageInput
+                name='imageUrl'
+                placeholder='   URL da imagem:'
+                errors={errors}
+                register={register}
+              />
+            </LabelWraper>
+            
             <LabelWraper>
               <Label>Características:</Label>
               <MultipleSelect

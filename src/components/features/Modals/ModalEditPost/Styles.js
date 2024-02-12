@@ -92,6 +92,7 @@ export const LabelWraper = styled.div`
   align-self: center;
   align-items:center;
   flex-direction: column;
+  
 `;
 
 export const MultipleSelect = styled(MultiSelect)`
