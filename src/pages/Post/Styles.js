@@ -21,7 +21,13 @@ export const Section = styled.div`
 `;
 
 export const Title = styled.div`
-  font-size: 2rem;
+  font-size: 3rem;
+  margin-bottom: 0.625rem;
+`;
+
+export const ErrorTitle = styled.div`
+  margin-top:20%;
+  font-size: 3rem;
   margin-bottom: 0.625rem;
 `;
 
@@ -41,19 +47,21 @@ export const Categories = styled.div`
   border-radius: 0.31rem;
   cursor: pointer;
 `;
+export const Image = styled.img`
+  width: 70%;
+  max-height: 32rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  margin-bottom:20px;
+  @media (max-width:${breakpoints.smallTablet}) {
+    width:100%;
+  }
+`;
 
 export const SmallDescription = styled.div`
   font-size: 1.125rem;
   line-height: 1.5;
   text-align: left;
-  width: 80%;
-`;
-
-export const Image = styled.img`
-  width: 80%;
-  max-height: 25rem;
-  object-fit: cover;
-  border-radius: 0.5rem;
   width: 80%;
 `;
 
@@ -85,7 +93,7 @@ export const Tag = styled.div`
   display: flex;
   width: auto;
   padding: 5px 1.5rem;
-  height: 2rem;
+  height: fit-content;
   border: 1px solid ${colors.white};
   color: ${colors.white};
   font-size: 15px;

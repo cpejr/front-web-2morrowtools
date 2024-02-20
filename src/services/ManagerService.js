@@ -431,6 +431,27 @@ export const useUpdatePost = async (_id, body) => {
   }
 };
 
+// Post
+
+export const useGetPostByName = async (name) => {
+  let Post;
+  await requesterService.getPostByName(name).then((res) => {
+    Post = res.data;
+  });
+  return { Post };
+};
+
+export const useGetPostImage = async (imageUrl) => {
+  try {
+    const response = await requesterService.getPostImage(imageUrl);
+    return response;
+  } catch (error) {
+    console.error("Error getting image", error);
+    throw error;
+  }
+};
+
+
 // image
 export const useGetImage = async (imageURL) => {
   try {

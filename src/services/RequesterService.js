@@ -107,11 +107,19 @@ export const createPost = async (body) => {
 
 export const getPosts = async () => api.get(`/posts`);
 
+
 export const deletePost = (id) => api.delete(`/posts/${id}`);
 
 export const updatePut = (_id, body) => api.put(`/posts/${_id}`, body);
 
+// Post
+
+export const getPostByName = (name) => api.get(`/posts/${name}`);
+
+export const getPostImage = (imageUrl) => api.post(`/PostImage`, { imageUrl });
+
 //image
+
 export const getImage = (imageURL) => api.post(`/IAImage`, { imageURL });
 
 //newsletter
