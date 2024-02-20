@@ -9,10 +9,18 @@ import FormsTextArea from "../../../common/FormsTextArea/FormsTextArea";
 import FormImageInput from "../../../common/FormImageInput/FormImageInput";
 import FormInputBorder from "../../../common/FormInputBorder/FormInputBorder";
 import { buildEditPostErrorMessage, editPostValidationSchema } from "./utils";
-import { Container, Tittle, Label, ModalContent, Form, Section, LabelWraper, MultipleSelect } from "./Styles";
+import {
+  Container,
+  Tittle,
+  Label,
+  ModalContent,
+  Form,
+  Section,
+  LabelWraper,
+  MultipleSelect,
+} from "./Styles";
 
 export default function ModalEditPost({ _id, post, close }) {
-  
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [idCategoriesFeature, setIdsCategoriesFeature] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
@@ -36,7 +44,7 @@ export default function ModalEditPost({ _id, post, close }) {
 
     try {
       await managerService.useUpdatePost(_id, body);
-      toast.success("Post editada com sucesso!");
+      toast.success("Post editado com sucesso!");
       toast.clearWaitingQueue();
       close();
     } catch (error) {
@@ -131,7 +139,7 @@ export default function ModalEditPost({ _id, post, close }) {
                 register={register}
               />
             </LabelWraper>
-            
+
             <LabelWraper>
               <Label>Características:</Label>
               <MultipleSelect
