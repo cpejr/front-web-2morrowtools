@@ -42,7 +42,7 @@ export const Links = styled.div`
   justify-content: space-around;
   word-wrap: break-word;
   width: 30rem;
-  font-size: 1rem;
+  font-size: 1.2rem;
   a {
     font-family: ${fonts.Exo2};
 
