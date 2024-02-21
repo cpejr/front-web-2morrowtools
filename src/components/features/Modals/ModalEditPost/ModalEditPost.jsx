@@ -129,6 +129,7 @@ export default function ModalEditPost({ _id, post, close }) {
                 placeholder='   URL da imagem:'
                 errors={errors}
                 register={register}
+                defaultValue={post.imageUrl}
               />
             </LabelWraper>
             

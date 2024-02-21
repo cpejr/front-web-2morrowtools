@@ -99,22 +99,18 @@ export const getByIaId = (aiId) => api.get(`/avaliation/${aiId}`);
 
 export const getAvaliation = () => api.get(`/avaliation`);
 
-// NewPost
+// NewPost & Post
 
 export const createPost = async (body) => {
   await api.post(`/posts`, { ...body });
 };
 
-export const getPosts = async () => api.get(`/posts`);
-
+export const getPostByName = (name) => api.put(`/posts/`, { name });
 
 export const deletePost = (id) => api.delete(`/posts/${id}`);
 
 export const updatePut = (_id, body) => api.put(`/posts/${_id}`, body);
 
-// Post
-
-export const getPostByName = (name) => api.get(`/posts/${name}`);
 
 export const getPostImage = (imageUrl) => api.post(`/PostImage`, { imageUrl });
 

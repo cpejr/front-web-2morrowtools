@@ -63,8 +63,8 @@ export default function NewPost() {
   async function getPosts() {
     const posts = await managerService.useGetPosts();
     setCurrentPosts(posts.Posts);
-    setFilteredPosts(posts.Posts);
-    setNamesArray(posts.Posts.name);
+    setFilteredPosts(posts.Post);
+    setNamesArray(posts.name);
   }
 
   // Modal Functions
@@ -84,6 +84,7 @@ export default function NewPost() {
     setSelectedText(null);
     setSelectedTextId(null);
     setEditModalOpen(false);
+    getPosts()
   };
 
   const handleCloseDeleteModal = () => {

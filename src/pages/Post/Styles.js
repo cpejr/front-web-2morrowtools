@@ -3,17 +3,13 @@ import { breakpoints, colors } from "../../styles/styleVariables";
 
 export const Container = styled.div`
   display: flex;
-  width: 80%;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 7rem auto;
+  margin: 6rem auto;
   gap: 2rem;
   text-align: center;
-
-  @media (max-width: ${breakpoints.desktop}) {
-    width: 90%;
-  }
 `;
 
 export const Section = styled.div`
@@ -22,39 +18,34 @@ export const Section = styled.div`
 
 export const Title = styled.div`
   font-size: 3rem;
-  margin-bottom: 0.625rem;
+  margin-bottom: 0.5rem;
 `;
 
 export const ErrorTitle = styled.div`
-  margin-top:20%;
+  margin-top: 20%;
   font-size: 3rem;
   margin-bottom: 0.625rem;
 `;
 
 export const Tags = styled.div`
   display: flex;
-  width: 100%;
-  align-items: center;
   justify-content: center;
-  gap: 2rem;
   text-align: center;
 `;
 
 export const Categories = styled.div`
-  font-size: 0.875rem;
   border: 1px solid;
   padding: 0.625rem;
   border-radius: 0.31rem;
   cursor: pointer;
 `;
 export const Image = styled.img`
-  width: 70%;
-  max-height: 32rem;
+  height: 22rem;
   object-fit: cover;
   border-radius: 0.5rem;
-  margin-bottom:20px;
-  @media (max-width:${breakpoints.smallTablet}) {
-    width:100%;
+  margin-bottom: 20px;
+  @media (max-width: ${breakpoints.smallTablet}) {
+    height:15rem;
   }
 `;
 
@@ -62,14 +53,20 @@ export const SmallDescription = styled.div`
   font-size: 1.125rem;
   line-height: 1.5;
   text-align: left;
-  width: 80%;
+  width: 60%;
+  @media (max-width: ${breakpoints.mobile}) {
+    width:80%;
+  }
 `;
 
 export const LargeDescription = styled.div`
   font-size: 1.25rem;
   line-height: 1.6;
   text-align: left;
-  width: 80%;
+  width: 60%;
+  @media (max-width: ${breakpoints.mobile}) {
+    width:80%;
+  }
 `;
 
 export const TagsLine = styled.div`

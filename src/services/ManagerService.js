@@ -394,21 +394,13 @@ export const useUpdateAvaliation = async (_id, body) => {
   }
 };
 
-// NewPost
+// NewPost & Post
 
 export const useCreatePost = async (body) => {
   const create = await requesterService.createPost(body).then((res) => {
     return res;
   });
   return create;
-};
-
-export const useGetPosts = async () => {
-  let Posts = {};
-  await requesterService.getPosts().then((res) => {
-    Posts = res.data;
-  });
-  return { Posts };
 };
 
 export const useDeletePost = async (_id) => {
@@ -431,9 +423,7 @@ export const useUpdatePost = async (_id, body) => {
   }
 };
 
-// Post
-
-export const useGetPostByName = async (name) => {
+export const useGetPosts = async (name) => {
   let Post;
   await requesterService.getPostByName(name).then((res) => {
     Post = res.data;
