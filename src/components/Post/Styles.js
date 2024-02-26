@@ -35,6 +35,7 @@ export const StyledCard = styled(Card)`
 export const ImageHolder = styled.div`
   display: flex;
   height: auto;
+  width: 20rem;
   border-radius: 20px;
   justify-content: center;
   align-items: center;
