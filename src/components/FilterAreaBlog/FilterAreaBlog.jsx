@@ -19,7 +19,6 @@ export default function FilterAreaBlog() {
   const filters = [
     { label: "Data", value: "date" },
     { label: "Nome", value: "name" },
-    { label: "Avaliação", value: "avaliation" },
   ];
   const categorieFeature = [
     {
@@ -31,20 +30,7 @@ export default function FilterAreaBlog() {
       name: "codigo",
     },
   ];
-  const categorieTime = [
-    {
-      _id: 1,
-      name: "5m-10m",
-    },
-    {
-      _id: 2,
-      name: "10m-30m",
-    },
-    {
-      _id: 3,
-      name: "30m-1h",
-    },
-  ];
+
   const categorieProfession = [
     {
       _id: 1,
@@ -70,13 +56,7 @@ export default function FilterAreaBlog() {
           className='w-full md:w-20rem'
           filter
         />
-        <MultipleSelect
-          options={transformArrayItems(categorieTime)}
-          optionLabel='label'
-          placeholder='Escolha o tempo de leitura'
-          className='w-full md:w-20rem'
-          filter
-        />
+
         <MultipleSelect
           options={transformArrayItems(categorieProfession)}
           optionLabel='label'

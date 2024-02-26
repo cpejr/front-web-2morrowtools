@@ -10,13 +10,20 @@ import {
 import { SearchOutlined } from "@ant-design/icons";
 import { Post } from "../../components";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useMediaQuery } from "react-responsive";
 import Pagination from "../../components/features/Pagination/Pagination";
 import { Newsletter, FilterAreaBlog } from "../../components";
+import { useGetAllPosts } from "../../services/ManagerService";
+import { toast } from "react-toastify";
 
 export default function Blog() {
+  const [blogPosts, setBlogPosts] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState([]);
+  const [postOptions, setPostOptions] = useState([]);
+  const [nameQuery, setNameQuery] = useState("");
+
   const posts = [
     {
       title: "Conheça essas 5novas funçoes do chat GPT",
@@ -109,6 +116,39 @@ export default function Blog() {
     },
   ];
 
+  // Getting posts
+  const getPosts = async () => {
+    const { response, error } = await useGetAllPosts();
+    if (error) {
+      toast.error("Não foi possível receber os posts.");
+    } else {
+      setBlogPosts(response.data);
+      setFilteredPosts(response.data);
+    }
+  };
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  //search
+  const search = ({ query }) => {
+    const filteredPosts = blogPosts.filter((post) =>
+      post.name.toLowerCase().includes(query.toLowerCase())
+    );
+    const filteredPostNames = filteredPosts.map((post) => post.name);
+    setPostOptions(filteredPostNames);
+    setFilteredPosts(filteredPosts);
+  };
+
+  useEffect(() => {
+    search({ query: nameQuery });
+  }, [nameQuery]);
+
+  useEffect(() => {
+    setVisiblePosts();
+  }, [filteredPosts]);
+
   // Pagination
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -126,23 +166,26 @@ export default function Blog() {
 
   // Rendering multiples Cards
 
-  const groupedData = [];
+  const [groupedData, setGroupedData] = useState([]);
   const isLargeDesktopScreen = useMediaQuery({ minWidth: 1371 });
   const isDesktopScreen = useMediaQuery({ minWidth: 1130 });
   const isMobileScreen = useMediaQuery({ maxWidth: 700 });
 
-  const itemsPerRow = isLargeDesktopScreen ? 2 : isDesktopScreen ? 2 : isMobileScreen ? 1 : 1;
+  const setVisiblePosts = () => {
+    setGroupedData([]);
+    const itemsPerRow = isLargeDesktopScreen ? 2 : isDesktopScreen ? 2 : isMobileScreen ? 1 : 1;
 
-  for (let i = 0; i < posts.length; i += itemsPerPage) {
-    const pageData = posts.slice(i, i + itemsPerPage);
-    const rows = [];
+    for (let i = 0; i < filteredPosts.length; i += itemsPerPage) {
+      const pageData = filteredPosts.slice(i, i + itemsPerPage);
+      let rows = [];
 
-    for (let j = 0; j < itemsPerPage / itemsPerRow; j++) {
-      rows.push(pageData.slice(j * itemsPerRow, (j + 1) * itemsPerRow));
+      for (let j = 0; j < itemsPerPage / itemsPerRow; j++) {
+        rows.push(pageData.slice(j * itemsPerRow, (j + 1) * itemsPerRow));
+        rows = rows.filter((item) => item[0]);
+      }
+      setGroupedData((prev) => [...prev, rows]);
     }
-
-    groupedData.push(rows);
-  }
+  };
 
   return (
     <Container>
@@ -151,7 +194,12 @@ export default function Blog() {
         <SVGDiv>
           <SearchOutlined />
         </SVGDiv>
-        <AutoCompleteInput />
+        <AutoCompleteInput
+          suggestions={postOptions}
+          completeMethod={search}
+          value={nameQuery}
+          onChange={(e) => setNameQuery(e.value)}
+        />
       </IconWrapper>
       <FilterAreaBlog />
 

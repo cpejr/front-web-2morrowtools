@@ -105,6 +105,7 @@ export const AutoCompleteInput = styled(AutoComplete)`
   > input {
     background-color: ${colors.blue.background};
     width: 100%;
+    box-shadow: none;
     height: 35px;
     font-size: 1.3rem;
     margin-bottom: 2rem;
