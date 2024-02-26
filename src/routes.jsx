@@ -8,7 +8,7 @@ import {
 
 import { AppLayout } from "./layouts";
 
-import { Home, IAProfile, Favorites, NewTool, Tools, NewCategory, Post } from "./pages";
+import { Home, IAProfile, Favorites, NewTool, Tools, NewCategory, NewPost, Post } from "./pages";
 import useAuthStore from "./stores/auth";
 import Admin from "./pages/Admin/Admin";
 
@@ -28,6 +28,10 @@ function Routes() {
           <Route
             path='/adicionar-categoria'
             element={user?.type === "Admin" ? <NewCategory /> : <Navigate to='/' />}
+          />
+          <Route
+            path='/newpost'
+            element={user?.type === "Admin" ? <NewPost /> : <Navigate to='/' />}
           />
           <Route path='/admin' element={user?.type === "Admin" ? <Admin /> : <Navigate to='/' />} />
           <Route path='/perfil-ia' element={<IAProfile />} />

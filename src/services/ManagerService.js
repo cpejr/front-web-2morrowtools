@@ -394,6 +394,54 @@ export const useUpdateAvaliation = async (_id, body) => {
   }
 };
 
+// NewPost & Post
+
+export const useCreatePost = async (body) => {
+  const create = await requesterService.createPost(body).then((res) => {
+    return res;
+  });
+  return create;
+};
+
+export const useDeletePost = async (_id) => {
+  try {
+    const response = await requesterService.deletePost(_id);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting post", error);
+    throw error;
+  }
+};
+
+export const useUpdatePost = async (_id, body) => {
+  try {
+    const response = await requesterService.updatePut(_id, body);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating post", error);
+    throw error;
+  }
+};
+
+export const useGetPosts = async (name) => {
+  let Post;
+  await requesterService.getPostByName(name).then((res) => {
+    Post = res.data;
+  });
+  return { Post };
+};
+
+export const useGetPostImage = async (imageUrl) => {
+  try {
+    const response = await requesterService.getPostImage(imageUrl);
+    return response;
+  } catch (error) {
+    console.error("Error getting image", error);
+    throw error;
+  }
+};
+
+
 // image
 export const useGetImage = async (imageURL) => {
   try {

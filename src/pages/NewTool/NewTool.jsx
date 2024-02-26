@@ -253,7 +253,7 @@ export default function NewTool() {
 
   const columns = [
     { field: "name", header: "Nome" },
-    { field: "shortDescription", header: "Descrisção" },
+    { field: "shortDescription", header: "Descrição" },
     { field: "manage", header: "Manage" },
   ];
 

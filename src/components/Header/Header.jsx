@@ -77,6 +77,11 @@ export default function Header() {
               </span>
             </Link>
             <Link>
+              <span onClick={() => (window.location.href = "/newpost")}>
+                Adicionar Post
+              </span>
+            </Link>
+            <Link>
               <span onClick={() => (window.location.href = "/admin")}>Usuários</span>
             </Link>
           </React.Fragment>

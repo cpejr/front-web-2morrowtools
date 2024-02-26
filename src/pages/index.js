@@ -5,3 +5,4 @@ export { default as NewTool } from "./NewTool/NewTool";
 export { default as Tools } from "./Tools/Tools";
 export { default as NewCategory } from "./NewCategory/NewCategory";
 export { default as Post } from "./Post/Post";
+export { default as NewPost } from "./NewPost/NewPost";
