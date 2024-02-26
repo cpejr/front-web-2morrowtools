@@ -116,7 +116,7 @@ export const Tag = styled.div`
 export const Title = styled.div`
   width: 100%;
   text-align: center;
-  font-size: 25px;
+  font-size: 1.5rem;
   font-weight: bold;
   @media (max-width: ${breakpoints.tablet}) {
     font-size: 20px;
