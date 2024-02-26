@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useGetPostImage } from "../../services/ManagerService";
 import { RiLoader2Fill } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 
 export default function Post({ data }) {
+  const navigate = useNavigate();
   const { name, imageUrl, shortDescription } = data;
   const categories = [...data.id_categoryprofessions, ...data.id_categoryfeatures];
   const [image, setImage] = useState("");
@@ -23,7 +25,7 @@ export default function Post({ data }) {
   }, []);
 
   return (
-    <StyledCard>
+    <StyledCard onClick={() => navigate(`/post/${name}`)}>
       <ImageHolder>{loading ? <RiLoader2Fill /> : <img src={image} alt={name} />}</ImageHolder>
       <Tags>
         {categories?.map((category, index) => (
