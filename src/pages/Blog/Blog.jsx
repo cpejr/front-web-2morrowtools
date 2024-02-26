@@ -10,13 +10,17 @@ import {
 import { SearchOutlined } from "@ant-design/icons";
 import { Post } from "../../components";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useMediaQuery } from "react-responsive";
 import Pagination from "../../components/features/Pagination/Pagination";
 import { Newsletter, FilterAreaBlog } from "../../components";
+import { useGetAllPosts } from "../../services/ManagerService";
+import { toast } from "react-toastify";
 
 export default function Blog() {
+  const [blogPosts, setBlogPosts] = useState([]);
+  const [postNames, setPostNames] = useState([]);
   const posts = [
     {
       title: "Conheça essas 5novas funçoes do chat GPT",
@@ -108,6 +112,23 @@ export default function Blog() {
       tagFeature: "review de codigo",
     },
   ];
+
+  // Getting posts
+  const getPosts = async () => {
+    const { response, error } = await useGetAllPosts();
+    if (error) {
+      toast.error("Não foi possível receber os posts.");
+    } else {
+      setBlogPosts(response.data);
+      setPostNames(response.data.map((post) => post.name));
+    }
+  };
+  console.log("BlogPosts", blogPosts);
+  console.log("postNames", postNames);
+
+  useEffect(() => {
+    getPosts();
+  }, []);
 
   // Pagination
 

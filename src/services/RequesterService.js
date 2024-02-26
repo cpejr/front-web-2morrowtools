@@ -111,6 +111,7 @@ export const deletePost = (id) => api.delete(`/posts/${id}`);
 
 export const updatePut = (_id, body) => api.put(`/posts/${_id}`, body);
 
+export const getAllPosts = () => api.get(`/post`);
 
 export const getPostImage = (imageUrl) => api.post(`/PostImage`, { imageUrl });
 
