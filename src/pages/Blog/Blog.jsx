@@ -21,6 +21,7 @@ import { toast } from "react-toastify";
 export default function Blog() {
   const [blogPosts, setBlogPosts] = useState([]);
   const [postNames, setPostNames] = useState([]);
+
   const posts = [
     {
       title: "Conheça essas 5novas funçoes do chat GPT",
@@ -123,8 +124,6 @@ export default function Blog() {
       setPostNames(response.data.map((post) => post.name));
     }
   };
-  console.log("BlogPosts", blogPosts);
-  console.log("postNames", postNames);
 
   useEffect(() => {
     getPosts();
@@ -154,8 +153,8 @@ export default function Blog() {
 
   const itemsPerRow = isLargeDesktopScreen ? 2 : isDesktopScreen ? 2 : isMobileScreen ? 1 : 1;
 
-  for (let i = 0; i < posts.length; i += itemsPerPage) {
-    const pageData = posts.slice(i, i + itemsPerPage);
+  for (let i = 0; i < blogPosts.length; i += itemsPerPage) {
+    const pageData = blogPosts.slice(i, i + itemsPerPage);
     const rows = [];
 
     for (let j = 0; j < itemsPerPage / itemsPerRow; j++) {

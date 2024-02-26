@@ -35,8 +35,8 @@ export const StyledCard = styled(Card)`
 export const ImageHolder = styled.div`
   display: flex;
   height: auto;
-  width: 27rem;
   border-radius: 20px;
+  justify-content: center;
   align-items: center;
   align-self: center;
 
@@ -64,14 +64,17 @@ export const ImageHolder = styled.div`
     }
   }
 `;
-export const LineTags = styled.div`
+
+export const Tags = styled.div`
   display: flex;
   flex-direction: row;
   width: 90%;
   justify-content: first baseline;
   height: auto;
   gap: 10px;
+  flex-wrap: wrap;
 `;
+
 export const Tag = styled.div`
   display: flex;
   width: auto;
@@ -83,23 +86,22 @@ export const Tag = styled.div`
   border-radius: 20px;
   align-items: center;
   text-align: center;
-  cursor: pointer;
   @media (max-width: ${breakpoints.desktop}) {
     height: 32px;
     font-size: 12px;
   }
   @media (max-width: ${breakpoints.tablet}) {
     height: 24px;
-    font-size: 11px;
+    font-size: 9px;
   }
 
   @media (max-width: ${breakpoints.smallTablet}) {
     height: 21.6px;
-    font-size: 10px;
+    font-size: 12px;
   }
   @media (max-width: ${breakpoints.mobile}) {
     height: 32px;
-    font-size: 10px;
+    font-size: 12px;
   }
   @media (max-width: ${breakpoints.smallDevice}) {
     font-size: 9px;
