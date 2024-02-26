@@ -1,16 +1,34 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useEffect, useState } from "react";
-import { useDeleteUsers, useGetUsers, useUpdateUser } from "../../services/ManagerService";
-import { Container, Select, ProfilePic, Table, TableColumn, ModalStyle } from "./Styles";
+import {
+  useDeleteUsers,
+  useGetUsers,
+  useUpdateUser,
+  useGetNewsletter,
+} from "../../services/ManagerService";
+import {
+  Container,
+  Select,
+  ProfilePic,
+  Table,
+  TableColumn,
+  ModalStyle,
+  Button,
+  NewsLetter,
+} from "./Styles";
 import { toast } from "react-toastify";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import ModalDeleteUser from "../../components/features/Modals/ModalDeleteUser/ModalDeleteUser";
 import { CloseOutlined } from "@ant-design/icons";
 import { colors } from "../../styles/styleVariables";
+import { saveAs } from "file-saver";
+import { CiExport } from "react-icons/ci";
 export default function Admin() {
   const [users, setUsers] = useState([]);
   const [modalDelete, setModalDelete] = useState(false);
   const [userID, setUserID] = useState("");
+  const [newsletterData, setNewsletterData] = useState([]);
   const openModalDelete = () => setModalDelete(true);
   const closeModalDelete = () => setModalDelete(false);
   const modalCloseButton = <CloseOutlined style={{ color: colors.white }} />;
@@ -56,8 +74,14 @@ export default function Admin() {
     }));
     setUsers(formattedUsers);
   }
+  async function getNewsletterData() {
+    const newsletter = await useGetNewsletter();
+    console.log("Dados do newsletter:", newsletter);
+    setNewsletterData(newsletter.Newsletters);
+  }
   useEffect(() => {
     getAllUsers();
+    getNewsletterData();
   }, []);
 
   const handleTypeChange = (_id, type) => {
@@ -67,7 +91,6 @@ export default function Admin() {
   const handleUserDelete = (_id) => {
     DeletingUsers(_id);
   };
-
   const UpdatingUsers = async (_id, body) => {
     try {
       await useUpdateUser(_id, body);
@@ -89,7 +112,19 @@ export default function Admin() {
       toast.clearWaitingQueue();
     }
   };
+  const exportNewsletterData = () => {
+    const csvContent =
+      "Nome,Email,Mensagem\n" +
+      newsletterData
+        .map((newsletterUser) =>
+          [newsletterUser.name, newsletterUser.email, newsletterUser.message].join(",")
+        )
+        .join("\n");
 
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    saveAs(blob, "newsletter_data.csv");
+  };
+  console.log(newsletterData);
   return (
     <Container>
       <Table value={users} paginator rows={10} removableSort>
@@ -110,6 +145,13 @@ export default function Admin() {
       >
         <ModalDeleteUser close={closeModalDelete} handleUserDelete={handleUserDelete} id={userID} />
       </ModalStyle>
+      <NewsLetter>
+        <h1>Newsletter</h1>
+        <Button onClick={exportNewsletterData} type='secondary'>
+          <CiExport />
+          EXPORTAR
+        </Button>
+      </NewsLetter>
     </Container>
   );
 }
