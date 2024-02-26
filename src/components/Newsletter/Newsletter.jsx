@@ -34,8 +34,9 @@ export default function Newsletter() {
       <Texts>
         <Title>Descubra novas ferramentas de tecnologia toda semana! </Title>
         <Description>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua
+          Fique por dentro das mais recentes ferramentas de inteligência artificial e descubra como
+          elas podem transformar o seu negócio. Assine nossa newsletter e receba conteúdo exclusivo
+          diretamente na sua caixa de entrada
         </Description>
       </Texts>
       <Inputs>
