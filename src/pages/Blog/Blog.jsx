@@ -20,7 +20,9 @@ import { toast } from "react-toastify";
 
 export default function Blog() {
   const [blogPosts, setBlogPosts] = useState([]);
-  const [postNames, setPostNames] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState([]);
+  const [postOptions, setPostOptions] = useState([]);
+  const [nameQuery, setNameQuery] = useState("");
 
   const posts = [
     {
@@ -121,13 +123,31 @@ export default function Blog() {
       toast.error("Não foi possível receber os posts.");
     } else {
       setBlogPosts(response.data);
-      setPostNames(response.data.map((post) => post.name));
+      setFilteredPosts(response.data);
     }
   };
 
   useEffect(() => {
     getPosts();
   }, []);
+
+  //search
+  const search = ({ query }) => {
+    const filteredPosts = blogPosts.filter((post) =>
+      post.name.toLowerCase().includes(query.toLowerCase())
+    );
+    const filteredPostNames = filteredPosts.map((post) => post.name);
+    setPostOptions(filteredPostNames);
+    setFilteredPosts(filteredPosts);
+  };
+
+  useEffect(() => {
+    search({ query: nameQuery });
+  }, [nameQuery]);
+
+  useEffect(() => {
+    setVisiblePosts();
+  }, [filteredPosts]);
 
   // Pagination
 
@@ -146,23 +166,26 @@ export default function Blog() {
 
   // Rendering multiples Cards
 
-  const groupedData = [];
+  const [groupedData, setGroupedData] = useState([]);
   const isLargeDesktopScreen = useMediaQuery({ minWidth: 1371 });
   const isDesktopScreen = useMediaQuery({ minWidth: 1130 });
   const isMobileScreen = useMediaQuery({ maxWidth: 700 });
 
-  const itemsPerRow = isLargeDesktopScreen ? 2 : isDesktopScreen ? 2 : isMobileScreen ? 1 : 1;
+  const setVisiblePosts = () => {
+    setGroupedData([]);
+    const itemsPerRow = isLargeDesktopScreen ? 2 : isDesktopScreen ? 2 : isMobileScreen ? 1 : 1;
 
-  for (let i = 0; i < blogPosts.length; i += itemsPerPage) {
-    const pageData = blogPosts.slice(i, i + itemsPerPage);
-    const rows = [];
+    for (let i = 0; i < filteredPosts.length; i += itemsPerPage) {
+      const pageData = filteredPosts.slice(i, i + itemsPerPage);
+      let rows = [];
 
-    for (let j = 0; j < itemsPerPage / itemsPerRow; j++) {
-      rows.push(pageData.slice(j * itemsPerRow, (j + 1) * itemsPerRow));
+      for (let j = 0; j < itemsPerPage / itemsPerRow; j++) {
+        rows.push(pageData.slice(j * itemsPerRow, (j + 1) * itemsPerRow));
+        rows = rows.filter((item) => item[0]);
+      }
+      setGroupedData((prev) => [...prev, rows]);
     }
-
-    groupedData.push(rows);
-  }
+  };
 
   return (
     <Container>
@@ -171,7 +194,12 @@ export default function Blog() {
         <SVGDiv>
           <SearchOutlined />
         </SVGDiv>
-        <AutoCompleteInput />
+        <AutoCompleteInput
+          suggestions={postOptions}
+          completeMethod={search}
+          value={nameQuery}
+          onChange={(e) => setNameQuery(e.value)}
+        />
       </IconWrapper>
       <FilterAreaBlog />
 
