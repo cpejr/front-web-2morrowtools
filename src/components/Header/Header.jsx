@@ -63,6 +63,7 @@ export default function Header() {
         )}
       </ContainerMenu>
       <Links>
+        <Link to='/blog'>Blog</Link>
         <Link>
           <span onClick={() => (window.location.href = "/favoritos")}>Favoritos</span>
         </Link>

@@ -8,7 +8,17 @@ import {
 
 import { AppLayout } from "./layouts";
 
-import { Home, IAProfile, Favorites, NewTool, Tools, NewCategory, NewPost, Post } from "./pages";
+import {
+  Home,
+  IAProfile,
+  Favorites,
+  NewTool,
+  Tools,
+  NewCategory,
+  NewPost,
+  Post,
+  Blog,
+} from "./pages";
 import useAuthStore from "./stores/auth";
 import Admin from "./pages/Admin/Admin";
 
@@ -36,9 +46,12 @@ function Routes() {
           <Route path='/admin' element={user?.type === "Admin" ? <Admin /> : <Navigate to='/' />} />
           <Route path='/perfil-ia' element={<IAProfile />} />
           <Route path='/ferramenta/:name' element={<Tools />} />
+
+          <Route path='/post/:name' element={<Post />} />
+          <Route path='/blog' element={<Blog />} />
+
           <Route index element={<Home />} />
           <Route path='*' element={<Home />} />
-          <Route path='/post/:name' element={<Post />} />
         </Route>
       </Route>
     )
