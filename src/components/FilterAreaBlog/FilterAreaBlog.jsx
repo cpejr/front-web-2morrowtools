@@ -47,7 +47,7 @@ export default function FilterAreaBlog() {
   ];
 
   return (
-    <ContainerFilter>
+    <ContainerFilter style={{ display: "none" }}>
       <DivSelect>
         <MultipleSelect
           options={transformArrayItems(categorieFeature)}

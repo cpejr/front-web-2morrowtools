@@ -143,11 +143,8 @@ export default function Blog() {
 
   useEffect(() => {
     search({ query: nameQuery });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nameQuery]);
-
-  useEffect(() => {
-    setVisiblePosts();
-  }, [filteredPosts]);
 
   // Pagination
 
@@ -186,6 +183,11 @@ export default function Blog() {
       setGroupedData((prev) => [...prev, rows]);
     }
   };
+
+  useEffect(() => {
+    setVisiblePosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filteredPosts, isLargeDesktopScreen, isDesktopScreen, isMobileScreen]);
 
   return (
     <Container>
