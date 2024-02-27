@@ -156,11 +156,10 @@ export const Buttons = styled(Button)`
 
 export const UniSelect = styled(Dropdown)`
   background-color: ${colors.black};
-
   .p-dropdown-label {
     color: ${colors.white};
     width: 200px;
-    overflow-x: scroll;
+    overflow-x: hidden;
   }
   .p-inputtext {
     color: ${colors.white};

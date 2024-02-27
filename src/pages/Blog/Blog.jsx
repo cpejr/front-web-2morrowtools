@@ -189,6 +189,8 @@ export default function Blog() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filteredPosts, isLargeDesktopScreen, isDesktopScreen, isMobileScreen]);
 
+  const [sort, setSort] = useState("date");
+
   return (
     <Container>
       <h1>Posts do Nosso Blog</h1>
@@ -203,7 +205,7 @@ export default function Blog() {
           onChange={(e) => setNameQuery(e.value)}
         />
       </IconWrapper>
-      <FilterAreaBlog />
+      <FilterAreaBlog setSort={setSort} />
 
       {groupedData.map((page, pageIndex) => (
         <DivLine key={pageIndex} isCurrentPage={pageIndex === currentPage}>

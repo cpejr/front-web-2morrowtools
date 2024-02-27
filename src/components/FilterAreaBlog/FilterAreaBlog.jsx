@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   ContainerFilter,
   MultipleSelect,
@@ -7,7 +8,8 @@ import {
   Buttons,
 } from "./Styles";
 
-export default function FilterAreaBlog() {
+export default function FilterAreaBlog({ setSort }) {
+  const [selectedSort, setSelectedSort] = useState();
   const transformArrayItems = (OriginalArray) => {
     const newArray = OriginalArray.map((item) => ({
       value: item?._id,
@@ -16,9 +18,9 @@ export default function FilterAreaBlog() {
     return newArray;
   };
 
-  const filters = [
-    { label: "Data", value: "date" },
-    { label: "Nome", value: "name" },
+  const sortTypes = [
+    { name: "Data", label: "date" },
+    { name: "Nome", label: "name" },
   ];
   const categorieFeature = [
     {
@@ -47,7 +49,7 @@ export default function FilterAreaBlog() {
   ];
 
   return (
-    <ContainerFilter style={{ display: "none" }}>
+    <ContainerFilter>
       <DivSelect>
         <MultipleSelect
           options={transformArrayItems(categorieFeature)}
@@ -66,13 +68,24 @@ export default function FilterAreaBlog() {
         />
 
         <UniSelect
-          options={filters}
+          options={sortTypes}
           optionLabel='label'
           editable
           showClear
           placeholder='Ordenar Por'
           className='w-full md:w-14rem'
+          onSelect={(e) => console.log(e.target)}
+          filter
         ></UniSelect>
+
+        <UniSelect
+          value={selectedSort}
+          onChange={(e) => setSelectedSort(e.value)}
+          options={sortTypes}
+          optionLabel='name'
+          placeholder='Ordenar por'
+          className='w-full md:w-14rem'
+        />
       </DivSelect>
       <ButtonsDiv>
         <Buttons>Filtrar</Buttons>
