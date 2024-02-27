@@ -63,6 +63,7 @@ export default function Header() {
         )}
       </ContainerMenu>
       <Links>
+        <Link to='/blog'>Blog</Link>
         <Link>
           <span onClick={() => (window.location.href = "/favoritos")}>Favoritos</span>
         </Link>
@@ -74,6 +75,11 @@ export default function Header() {
             <Link>
               <span onClick={() => (window.location.href = "/adicionar-categoria")}>
                 Categorias
+              </span>
+            </Link>
+            <Link>
+              <span onClick={() => (window.location.href = "/newpost")}>
+                Adicionar Post
               </span>
             </Link>
             <Link>
