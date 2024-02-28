@@ -146,7 +146,6 @@ export default function FilterArea({
       </DivSelect>
       <SelectedTags selectedItems={showFilters} />
       <ButtonsDiv>
-        <Buttons onClick={() => onFilterClick()}>Filtrar</Buttons>
         <Buttons onClick={handleClearFilters}>Limpar Filtros</Buttons>
       </ButtonsDiv>
     </ContainerFilter>
