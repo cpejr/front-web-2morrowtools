@@ -24,6 +24,8 @@ import { CloseOutlined } from "@ant-design/icons";
 import { colors } from "../../styles/styleVariables";
 import { saveAs } from "file-saver";
 import { CiExport } from "react-icons/ci";
+import DateFormat from "../../utils/DateFormat";
+
 export default function Admin() {
   const [users, setUsers] = useState([]);
   const [modalDelete, setModalDelete] = useState(false);
@@ -76,8 +78,8 @@ export default function Admin() {
   }
   async function getNewsletterData() {
     const newsletter = await useGetNewsletter();
-    console.log("Dados do newsletter:", newsletter);
-    setNewsletterData(newsletter.Newsletters);
+    const newsletterFormat = DateFormat(newsletter.Newsletters);
+    setNewsletterData(newsletterFormat);
   }
   useEffect(() => {
     getAllUsers();
@@ -114,17 +116,21 @@ export default function Admin() {
   };
   const exportNewsletterData = () => {
     const csvContent =
-      "Nome,Email,Mensagem\n" +
+      "Nome,Email,Mensagem,Data\n" +
       newsletterData
         .map((newsletterUser) =>
-          [newsletterUser.name, newsletterUser.email, newsletterUser.message].join(",")
+          [
+            newsletterUser.name,
+            newsletterUser.email,
+            newsletterUser.message,
+            newsletterUser.createdAt,
+          ].join(",")
         )
         .join("\n");
 
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     saveAs(blob, "newsletter_data.csv");
   };
-  console.log(newsletterData);
   return (
     <Container>
       <Table value={users} paginator rows={10} removableSort>
