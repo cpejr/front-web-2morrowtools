@@ -6,6 +6,7 @@ import {
   BulbOutlined,
   ArrowUpOutlined,
   UserOutlined,
+  FileTextOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { HamburgerMenu } from "./Styles";
@@ -31,6 +32,7 @@ export default function MenuHeader({ globalColor, setGlobalColor }) {
   const menuItems = [
     getItem("", "hamburger", <MenuOutlined />, [
       getItem(" Meus Favoritos", "/favoritos", <HeartOutlined style={{ fontSize: "1.3rem" }} />),
+      getItem(" Blog", "/blog", <FileTextOutlined style={{ fontSize: "1.3rem" }} />),
       ...(getUser()?.type === "Admin"
         ? [
             getItem(
@@ -39,15 +41,16 @@ export default function MenuHeader({ globalColor, setGlobalColor }) {
               <ToolOutlined style={{ fontSize: "1.3rem" }} />
             ),
             getItem(
+              "Gerenciar Posts",
+              "/newpost",
+              <FileTextOutlined style={{ fontSize: "1.3rem" }} />
+            ),
+            getItem(
               "Gerenciar Categorias",
               "/adicionar-categoria",
               <ToolOutlined style={{ fontSize: "1.3rem" }} />
             ),
-            getItem(
-              "Adicionar Posts",
-              "/newpost",
-              <ToolOutlined style={{ fontSize: "1.3rem" }} />
-            ),
+            getItem("Adicionar Posts", "/newpost", <ToolOutlined style={{ fontSize: "1.3rem" }} />),
             getItem("Usuários", "/admin", <UserOutlined style={{ fontSize: "1.3rem" }} />),
           ]
         : []),
