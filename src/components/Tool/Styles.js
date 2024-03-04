@@ -35,7 +35,7 @@ export const Image = styled.div`
   > img {
     width: 80%;
     border-radius: 1rem;
-    max-width: 100%;
+    max-width: 90%;
   }
 `;
 export const DataCollumn = styled.div`
