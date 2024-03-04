@@ -9,6 +9,9 @@ import {
 } from "../../services/ManagerService";
 import {
   Container,
+  IconWrapper,
+  SVGDiv,
+  AutoCompleteInput,
   Select,
   ProfilePic,
   Table,
@@ -21,11 +24,15 @@ import { toast } from "react-toastify";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import ModalDeleteUser from "../../components/features/Modals/ModalDeleteUser/ModalDeleteUser";
 import { CloseOutlined } from "@ant-design/icons";
+import { SearchOutlined } from "@ant-design/icons";
 import { colors } from "../../styles/styleVariables";
 import { saveAs } from "file-saver";
 import { CiExport } from "react-icons/ci";
+import formatDate from "../../utils/formatDate";
 export default function Admin() {
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
   const [modalDelete, setModalDelete] = useState(false);
   const [userID, setUserID] = useState("");
   const [newsletterData, setNewsletterData] = useState([]);
@@ -74,6 +81,7 @@ export default function Admin() {
     }));
     setUsers(formattedUsers);
   }
+
   async function getNewsletterData() {
     const newsletter = await useGetNewsletter();
     setNewsletterData(newsletter.Newsletters);
@@ -82,6 +90,13 @@ export default function Admin() {
     getAllUsers();
     getNewsletterData();
   }, []);
+
+  const handleSearchInputChange = (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    setSearchInput(searchTerm);
+    const filtered = users.filter((user) => user.name.toLowerCase().includes(searchTerm));
+    setFilteredUsers(filtered);
+  };
 
   const handleTypeChange = (_id, type) => {
     const body = { type };
@@ -113,10 +128,16 @@ export default function Admin() {
   };
   const exportNewsletterData = () => {
     const csvContent =
-      "Nome,Email\n" +
+      "Nome,Email,Data de Inscrição,Primeiro Login,Ultimo Login\n" +
       newsletterData
         .map((newsletterUser) =>
-          [newsletterUser.name, newsletterUser.email].join(",")
+          [
+            newsletterUser.name,
+            newsletterUser.email,
+            formatDate({ value: newsletterUser.createdAt }),
+            formatDate({ value: newsletterUser.userID.createdAt }),
+            formatDate({ value: newsletterUser.userID.lastLogin }),
+          ].join(",")
         )
         .join("\n");
 
@@ -125,7 +146,17 @@ export default function Admin() {
   };
   return (
     <Container>
-      <Table value={users} paginator rows={10} removableSort>
+      <h1>USUÁRIOS</h1>
+      <IconWrapper>
+        <SVGDiv>
+          <SearchOutlined />
+        </SVGDiv>
+        <AutoCompleteInput
+          value={searchInput}
+          onChange={handleSearchInputChange}
+        ></AutoCompleteInput>
+      </IconWrapper>
+      <Table value={searchInput ? filteredUsers : users} paginator rows={10} removableSort>
         {columns.map((data) => (
           <TableColumn sortable key={data.field} field={data.field} header={data.header} />
         ))}
