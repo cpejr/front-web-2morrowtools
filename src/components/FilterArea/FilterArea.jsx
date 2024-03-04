@@ -80,7 +80,7 @@ export default function FilterArea({
     handleFilterChange();
     onFilterClick();
     Finder();
-  }, [features, prices, profession]);
+  }, [features, prices, profession, filter]);
 
   useEffect(() => {
     onFilterClick();

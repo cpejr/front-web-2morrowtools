@@ -28,10 +28,11 @@ import { SearchOutlined } from "@ant-design/icons";
 import { colors } from "../../styles/styleVariables";
 import { saveAs } from "file-saver";
 import { CiExport } from "react-icons/ci";
+import formatDate from "../../utils/formatDate";
 export default function Admin() {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
-  const [searchInput, setSearchInput] = useState(""); 
+  const [searchInput, setSearchInput] = useState("");
   const [modalDelete, setModalDelete] = useState(false);
   const [userID, setUserID] = useState("");
   const [newsletterData, setNewsletterData] = useState([]);
@@ -83,7 +84,6 @@ export default function Admin() {
 
   async function getNewsletterData() {
     const newsletter = await useGetNewsletter();
-    console.log("Dados do newsletter:", newsletter);
     setNewsletterData(newsletter.Newsletters);
   }
   useEffect(() => {
@@ -94,12 +94,9 @@ export default function Admin() {
   const handleSearchInputChange = (e) => {
     const searchTerm = e.target.value.toLowerCase();
     setSearchInput(searchTerm);
-    const filtered = users.filter((user) =>
-      user.name.toLowerCase().includes(searchTerm)
-    );
+    const filtered = users.filter((user) => user.name.toLowerCase().includes(searchTerm));
     setFilteredUsers(filtered);
   };
-
 
   const handleTypeChange = (_id, type) => {
     const body = { type };
@@ -131,17 +128,22 @@ export default function Admin() {
   };
   const exportNewsletterData = () => {
     const csvContent =
-      "Nome,Email,Mensagem,PrimeiroLogin,UltimoLogin\n" +
+      "Nome,Email,Data de Inscrição,Primeiro Login,Ultimo Login\n" +
       newsletterData
         .map((newsletterUser) =>
-          [newsletterUser.name, newsletterUser.email, newsletterUser.message, newsletterUser.createdAt, newsletterUser.updatedAt].join(",")
+          [
+            newsletterUser.name,
+            newsletterUser.email,
+            formatDate({ value: newsletterUser.createdAt }),
+            formatDate({ value: newsletterUser.userID.createdAt }),
+            formatDate({ value: newsletterUser.userID.lastLogin }),
+          ].join(",")
         )
         .join("\n");
 
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     saveAs(blob, "newsletter_data.csv");
   };
-  console.log(newsletterData);
   return (
     <Container>
       <h1>USUÁRIOS</h1>

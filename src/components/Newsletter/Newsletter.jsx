@@ -2,11 +2,14 @@ import { Container, Title, Description, Texts, Inputs, Break, Input, Button } fr
 import { usePostNewsletter } from "../../services/ManagerService";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import useAuthStore from "../../stores/auth";
 
 export default function Newsletter() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, SetMessage] = useState("");
+  const { getUser } = useAuthStore();
+  const userID = getUser()?._id;
 
   const PostNewsletter = async () => {
     try {
@@ -14,6 +17,7 @@ export default function Newsletter() {
         name: name,
         email: email,
         message: message,
+        userID: userID,
       });
       toast.success("Email postado com sucesso");
     } catch (error) {
@@ -24,9 +28,11 @@ export default function Newsletter() {
 
   const handleSubmit = () => {
     PostNewsletter();
-    setName("");
-    setEmail("");
-    SetMessage("");
+    setTimeout(() => {
+      setName("");
+      setEmail("");
+      SetMessage("");
+    }, 1000);
   };
 
   return (

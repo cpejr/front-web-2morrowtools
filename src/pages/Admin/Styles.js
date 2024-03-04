@@ -12,7 +12,7 @@ export const Container = styled.div`
   flex-direction: column;
   margin-top: 85px;
   color: ${colors.white};
-  >h1{
+  > h1 {
     margin-left: 7rem;
   }
 `;
@@ -90,14 +90,14 @@ export const Button = styled(AntdButton)`
   }
 `;
 export const IconWrapper = styled.div`
-  width: 60%;
+  width: 90%;
   height: 3rem;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-left: 7rem;
-  margin-bottom:1rem;
+  align-self: center;
+  margin-bottom: 1rem;
   gap: 0.5rem;
   border: 2px solid ${colors.white};
   border-radius: 6px;
