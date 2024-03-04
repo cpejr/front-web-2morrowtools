@@ -23,102 +23,13 @@ export default function Blog() {
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [postOptions, setPostOptions] = useState([]);
   const [nameQuery, setNameQuery] = useState("");
-
-  const posts = [
-    {
-      title: "Conheça essas 5novas funçoes do chat GPT",
-      shortDescription:
-        "O chat Glorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipson",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription: "textotextotextotextotexto",
-      tagProfession: "engenharia",
-      tagPrice: "10",
-      tagFeature: "review de codigo",
-    },
-    {
-      title: "Conheça essas 5novas funçoes do chat GPT",
-      shortDescription:
-        "O chat GPt amplamente utilizado nos dias de hj possui  funçoes que vc nao faz ideia lorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipson",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription: "textotextotextotextotexto",
-      tagProfession: "engenharia",
-      tagPrice: "10",
-      tagFeature: "review de codigo",
-    },
-    {
-      title: "Conheça essas 5novas funçoes do chat GPT",
-      shortDescription: "bem pequeno pra ver",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription: "textotextotextotextotexto",
-      tagProfession: "engenharia",
-      tagPrice: "10",
-      tagFeature: "review de codigo",
-    },
-    {
-      title: "Conheça essas 5novas funçoes do chat GPT",
-      shortDescription:
-        "O chat GPt amplamente utilizado nos dias de hj possui  funçoes que vc nao faz ideia lorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipson",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription: "textotextotextotextotexto",
-      tagProfession: "engenharia",
-      tagPrice: "10",
-      tagFeature: "review de codigo",
-    },
-    {
-      title: "Conheça essas 5novas funçoes do chat GPT",
-      shortDescription:
-        "O chat GPt amplamente utilizado nos dias de hj possui  funçoes que vc nao faz ideia lorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipson",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription: "textotextotextotextotexto",
-      tagProfession: "engenharia",
-      tagPrice: "10",
-      tagFeature: "review de codigo",
-    },
-    {
-      title: "Conheça essas 5novas funçoes do chat GPT",
-      shortDescription:
-        "O chat GPt amplamente utilizado nos dias de hj possui  funçoes que vc nao faz ideia lorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipson",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription: "textotextotextotextotexto",
-      tagProfession: "engenharia",
-      tagPrice: "10",
-      tagFeature: "review de codigo",
-    },
-    {
-      title: "Conheça essas 5novas funçoes do chat GPT",
-      shortDescription:
-        "O chat GPt amplamente utilizado nos dias de hj possui  funçoes que vc nao faz ideia lorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipson",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription: "textotextotextotextotexto",
-      tagProfession: "engenharia",
-      tagPrice: "10",
-      tagFeature: "review de codigo",
-    },
-    {
-      title: "Conheça essas 5novas funçoes do chat GPT",
-      shortDescription:
-        "O chat GPt amplamente utilizado nos dias de hj possui  funçoes que vc nao faz ideia lorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipson",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription: "textotextotextotextotexto",
-      tagProfession: "engenharia",
-      tagPrice: "10",
-      tagFeature: "review de codigo",
-    },
-    {
-      title: "Conheça essas 5novas funçoes do chat GPT",
-      shortDescription:
-        "O chat GPt amplamente utilizado nos dias de hj possui  funçoes que vc nao faz ideia lorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipsonlorem ipson lorem ipson",
-      imageUrl: "https://picsum.photos/id/237/536/354",
-      longDescription: "textotextotextotextotexto",
-      tagProfession: "engenharia",
-      tagPrice: "10",
-      tagFeature: "review de codigo",
-    },
-  ];
+  const [filters, setFilters] = useState({
+    sort: "date",
+  });
 
   // Getting posts
-  const getPosts = async () => {
-    const { response, error } = await useGetAllPosts();
+  const getPosts = async (filters) => {
+    const { response, error } = await useGetAllPosts(filters);
     if (error) {
       toast.error("Não foi possível receber os posts.");
     } else {
@@ -128,10 +39,8 @@ export default function Blog() {
   };
 
   useEffect(() => {
-    getPosts();
-  }, []);
-
-  //search
+    getPosts(filters);
+  }, [filters]);
   const search = ({ query }) => {
     const filteredPosts = blogPosts.filter((post) =>
       post.name.toLowerCase().includes(query.toLowerCase())
@@ -151,7 +60,7 @@ export default function Blog() {
   const [currentPage, setCurrentPage] = useState(0);
 
   const itemsPerPage = 8;
-  const totalPages = Math.ceil(posts.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredPosts.length / itemsPerPage);
 
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
@@ -188,9 +97,6 @@ export default function Blog() {
     setVisiblePosts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filteredPosts, isLargeDesktopScreen, isDesktopScreen, isMobileScreen]);
-
-  const [sort, setSort] = useState("date");
-
   return (
     <Container>
       <h1>Posts do Nosso Blog</h1>
@@ -205,7 +111,7 @@ export default function Blog() {
           onChange={(e) => setNameQuery(e.value)}
         />
       </IconWrapper>
-      <FilterAreaBlog setSort={setSort} />
+      <FilterAreaBlog filterChanger={setFilters} />
 
       {groupedData.map((page, pageIndex) => (
         <DivLine key={pageIndex} isCurrentPage={pageIndex === currentPage}>

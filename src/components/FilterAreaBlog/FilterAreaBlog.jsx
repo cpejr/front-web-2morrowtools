@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ContainerFilter,
   MultipleSelect,
@@ -7,9 +7,18 @@ import {
   ButtonsDiv,
   Buttons,
 } from "./Styles";
+import PropTypes from "prop-types";
 
-export default function FilterAreaBlog({ setSort }) {
-  const [selectedSort, setSelectedSort] = useState();
+export default function FilterAreaBlog({ filterChanger }) {
+  const [selectedSort, setSelectedSort] = useState({ name: "data", label: "date" });
+
+  useEffect(() => {
+    filterChanger((prev) => {
+      return { ...prev, sort: selectedSort.label };
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedSort]);
+
   const transformArrayItems = (OriginalArray) => {
     const newArray = OriginalArray.map((item) => ({
       value: item?._id,
@@ -19,8 +28,8 @@ export default function FilterAreaBlog({ setSort }) {
   };
 
   const sortTypes = [
-    { name: "Data", label: "date" },
-    { name: "Nome", label: "name" },
+    { name: "data", label: "date" },
+    { name: "nome", label: "name" },
   ];
   const categorieFeature = [
     {
@@ -68,29 +77,21 @@ export default function FilterAreaBlog({ setSort }) {
         />
 
         <UniSelect
-          options={sortTypes}
-          optionLabel='label'
-          editable
-          showClear
-          placeholder='Ordenar Por'
-          className='w-full md:w-14rem'
-          onSelect={(e) => console.log(e.target)}
-          filter
-        ></UniSelect>
-
-        <UniSelect
-          value={selectedSort}
           onChange={(e) => setSelectedSort(e.value)}
           options={sortTypes}
           optionLabel='name'
-          placeholder='Ordenar por'
+          placeholder={`Ordenar por ${selectedSort.name}`}
           className='w-full md:w-14rem'
+          filter
         />
       </DivSelect>
       <ButtonsDiv>
-        <Buttons>Filtrar</Buttons>
         <Buttons>Limpar Filtros</Buttons>
       </ButtonsDiv>
     </ContainerFilter>
   );
 }
+
+FilterAreaBlog.propTypes = {
+  filterChanger: PropTypes.func.isRequired,
+};

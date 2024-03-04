@@ -25,7 +25,6 @@ export default function Post() {
       try {
         const tempPost = await managerService.useGetPosts(name);
         setPost(tempPost.Post);
-        console.log(tempPost);
         const postImage = await managerService.useGetPostImage(tempPost.Post.imageUrl);
         setImage(postImage.data.image);
       } catch (error) {
