@@ -35,10 +35,12 @@ export default function Tools() {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
   const similarIDs = [
-    aiToolsByName?.aiTools?.[0]?.id_categoryfeature?._id,
-    aiToolsByName?.aiTools?.[0]?.id_categoryprice?._id,
-    aiToolsByName?.aiTools?.[0]?.id_categoryprofession?._id,
+    ...(aiToolsByName?.aiTools?.[0]?.id_categoryfeatures || []),
+    ...(aiToolsByName?.aiTools?.[0]?.id_categoryprices || []),
+    ...(aiToolsByName?.aiTools?.[0]?.id_categoryprofessions || []),
   ];
+
+  const extractedIDs = similarIDs.flatMap((obj) => obj._id);
 
   //Backend calls
 
@@ -64,7 +66,7 @@ export default function Tools() {
     return array.join(",");
   };
   async function similarAITools() {
-    const idsString = convertArrayToString(similarIDs);
+    const idsString = convertArrayToString(extractedIDs);
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const aiTools = await useGetAIToolsByCategoryId({
       id: idsString,
@@ -116,38 +118,38 @@ export default function Tools() {
           ))}
         </CommentContainer>
       </CommentSection>
-    <OtherTools>
-      <h1>OUTRAS FERRAMENTAS SIMILARES:</h1>
-      {aiTools?.aiTools && aiTools.aiTools.length > 0 ? (
-        <div>
-          <DivLine>
-            <Line>
-              {aiTools?.aiTools
-                ?.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
-                .map((content, index) => (
-                  <Card
-                    data={{
-                      ...content,
-                    }}
-                    key={index}
-                  />
-                ))}
-            </Line>
-          </DivLine>
-          <ButtonDiv>
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              handlePrevPage={handlePrevPage}
-              handleNextPage={handleNextPage}
-              setCurrentPage={setCurrentPage}
-            />
-          </ButtonDiv>
-        </div>
-      ) : (
-        <h2>Nenhuma IA semelhante encontrada</h2>
-      )}
-    </OtherTools>
+      <OtherTools>
+        <h1>OUTRAS FERRAMENTAS SIMILARES:</h1>
+        {aiTools?.aiTools && aiTools.aiTools.length > 0 ? (
+          <div>
+            <DivLine>
+              <Line>
+                {aiTools?.aiTools
+                  ?.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
+                  .map((content, index) => (
+                    <Card
+                      data={{
+                        ...content,
+                      }}
+                      key={index}
+                    />
+                  ))}
+              </Line>
+            </DivLine>
+            <ButtonDiv>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                handlePrevPage={handlePrevPage}
+                handleNextPage={handleNextPage}
+                setCurrentPage={setCurrentPage}
+              />
+            </ButtonDiv>
+          </div>
+        ) : (
+          <h2>Nenhuma IA semelhante encontrada</h2>
+        )}
+      </OtherTools>
     </Container>
   );
 }

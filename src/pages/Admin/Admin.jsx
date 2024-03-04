@@ -78,6 +78,8 @@ export default function Admin() {
           }}
         />
       ),
+      firstLogin: user.createdAt,
+      lastLogin: user.lastLogin,
     }));
     setUsers(formattedUsers);
   }
@@ -144,6 +146,23 @@ export default function Admin() {
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     saveAs(blob, "newsletter_data.csv");
   };
+  const exportUsersData = () => {
+    const csvContent =
+      "Nome,Email,Primeiro Login,Ultimo Login\n" +
+      users
+        .map((user) =>
+          [
+            user.name,
+            user.email,
+            formatDate({ value: user.firstLogin }),
+            formatDate({ value: user.lastLogin }),
+          ].join(",")
+        )
+        .join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    saveAs(blob, "users_data.csv");
+  };
   return (
     <Container>
       <h1>USUÁRIOS</h1>
@@ -174,6 +193,13 @@ export default function Admin() {
       >
         <ModalDeleteUser close={closeModalDelete} handleUserDelete={handleUserDelete} id={userID} />
       </ModalStyle>
+      <NewsLetter>
+        <h1>Exportar Lista de Usuarios</h1>
+        <Button onClick={exportUsersData} type='secondary'>
+          <CiExport />
+          EXPORTAR
+        </Button>
+      </NewsLetter>
       <NewsLetter>
         <h1>Newsletter</h1>
         <Button onClick={exportNewsletterData} type='secondary'>
