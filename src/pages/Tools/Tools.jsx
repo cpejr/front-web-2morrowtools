@@ -116,33 +116,38 @@ export default function Tools() {
           ))}
         </CommentContainer>
       </CommentSection>
-      <OtherTools>
-        <h1>OUTRAS FERRAMENTAS SIMILARES:</h1>
-        <DivLine>
-          <Line>
-            {aiTools?.aiTools
-              ?.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
-              .map((content, index) => (
-                <Card
-                  data={{
-                    ...content,
-                  }}
-                  key={index}
-                />
-              ))}
-          </Line>
-        </DivLine>
-
-        <ButtonDiv>
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            handlePrevPage={handlePrevPage}
-            handleNextPage={handleNextPage}
-            setCurrentPage={setCurrentPage}
-          />
-        </ButtonDiv>
-      </OtherTools>
+    <OtherTools>
+      <h1>OUTRAS FERRAMENTAS SIMILARES:</h1>
+      {aiTools?.aiTools && aiTools.aiTools.length > 0 ? (
+        <div>
+          <DivLine>
+            <Line>
+              {aiTools?.aiTools
+                ?.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
+                .map((content, index) => (
+                  <Card
+                    data={{
+                      ...content,
+                    }}
+                    key={index}
+                  />
+                ))}
+            </Line>
+          </DivLine>
+          <ButtonDiv>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              handlePrevPage={handlePrevPage}
+              handleNextPage={handleNextPage}
+              setCurrentPage={setCurrentPage}
+            />
+          </ButtonDiv>
+        </div>
+      ) : (
+        <h2>Nenhuma IA semelhante encontrada</h2>
+      )}
+    </OtherTools>
     </Container>
   );
 }

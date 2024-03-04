@@ -74,11 +74,17 @@ export default function FilterArea({
   const handleFilterChange = () => {
     const newArray = [...features, ...prices, ...profession];
     setArray(newArray);
+    Finder();
   };
   useEffect(() => {
     handleFilterChange();
+    onFilterClick();
     Finder();
-  }, [features, prices, profession]);
+  }, [features, prices, profession, filter]);
+
+  useEffect(() => {
+    onFilterClick();
+  }, [showFilters]);
 
   const Finder = () => {
     const filteredNames = [];
@@ -146,7 +152,6 @@ export default function FilterArea({
       </DivSelect>
       <SelectedTags selectedItems={showFilters} />
       <ButtonsDiv>
-        <Buttons onClick={() => onFilterClick()}>Filtrar</Buttons>
         <Buttons onClick={handleClearFilters}>Limpar Filtros</Buttons>
       </ButtonsDiv>
     </ContainerFilter>
