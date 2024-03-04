@@ -66,6 +66,7 @@ export default function FilterAreaBlog({ filterChanger }) {
           placeholder='Escolha as características'
           className='w-full md:w-20rem'
           filter
+          style={{ display: "none" }}
         />
 
         <MultipleSelect
@@ -74,6 +75,7 @@ export default function FilterAreaBlog({ filterChanger }) {
           placeholder='Escolha as profissões'
           className='w-full md:w-20rem'
           filter
+          style={{ display: "none" }}
         />
 
         <UniSelect
@@ -85,9 +87,6 @@ export default function FilterAreaBlog({ filterChanger }) {
           filter
         />
       </DivSelect>
-      <ButtonsDiv>
-        <Buttons>Limpar Filtros</Buttons>
-      </ButtonsDiv>
     </ContainerFilter>
   );
 }
