@@ -151,6 +151,7 @@ export default function Card({ data }) {
           count={5}
           value={starsValue}
           character={({ index }) => renderStarIcon(index)}
+          disabled
         />
         <span>({starsValue})</span>
       </Line>

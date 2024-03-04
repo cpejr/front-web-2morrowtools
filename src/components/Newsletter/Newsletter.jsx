@@ -54,11 +54,6 @@ export default function Newsletter() {
             placeholder='Email:'
           ></Input>
         </Break>
-        <Input
-          onChange={(e) => SetMessage(e.target.value)}
-          value={message}
-          placeholder='Mensagem:'
-        ></Input>
         <Button onClick={handleSubmit} type='submit'>
           ENVIAR
         </Button>
