@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   ContainerFilter,
   MultipleSelect,
@@ -6,8 +7,18 @@ import {
   ButtonsDiv,
   Buttons,
 } from "./Styles";
+import PropTypes from "prop-types";
 
-export default function FilterAreaBlog() {
+export default function FilterAreaBlog({ filterChanger }) {
+  const [selectedSort, setSelectedSort] = useState({ name: "data", label: "date" });
+
+  useEffect(() => {
+    filterChanger((prev) => {
+      return { ...prev, sort: selectedSort.label };
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedSort]);
+
   const transformArrayItems = (OriginalArray) => {
     const newArray = OriginalArray.map((item) => ({
       value: item?._id,
@@ -16,9 +27,9 @@ export default function FilterAreaBlog() {
     return newArray;
   };
 
-  const filters = [
-    { label: "Data", value: "date" },
-    { label: "Nome", value: "name" },
+  const sortTypes = [
+    { name: "data", label: "date" },
+    { name: "nome", label: "name" },
   ];
   const categorieFeature = [
     {
@@ -47,7 +58,7 @@ export default function FilterAreaBlog() {
   ];
 
   return (
-    <ContainerFilter style={{ display: "none" }}>
+    <ContainerFilter>
       <DivSelect>
         <MultipleSelect
           options={transformArrayItems(categorieFeature)}
@@ -55,6 +66,7 @@ export default function FilterAreaBlog() {
           placeholder='Escolha as características'
           className='w-full md:w-20rem'
           filter
+          style={{ display: "none" }}
         />
 
         <MultipleSelect
@@ -63,21 +75,22 @@ export default function FilterAreaBlog() {
           placeholder='Escolha as profissões'
           className='w-full md:w-20rem'
           filter
+          style={{ display: "none" }}
         />
 
         <UniSelect
-          options={filters}
-          optionLabel='label'
-          editable
-          showClear
-          placeholder='Ordenar Por'
+          onChange={(e) => setSelectedSort(e.value)}
+          options={sortTypes}
+          optionLabel='name'
+          placeholder={`Ordenar por ${selectedSort.name}`}
           className='w-full md:w-14rem'
-        ></UniSelect>
+          filter
+        />
       </DivSelect>
-      <ButtonsDiv>
-        <Buttons>Filtrar</Buttons>
-        <Buttons>Limpar Filtros</Buttons>
-      </ButtonsDiv>
     </ContainerFilter>
   );
 }
+
+FilterAreaBlog.propTypes = {
+  filterChanger: PropTypes.func.isRequired,
+};

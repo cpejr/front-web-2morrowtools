@@ -76,7 +76,6 @@ export default function Admin() {
   }
   async function getNewsletterData() {
     const newsletter = await useGetNewsletter();
-    console.log("Dados do newsletter:", newsletter);
     setNewsletterData(newsletter.Newsletters);
   }
   useEffect(() => {
