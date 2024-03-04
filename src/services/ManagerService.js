@@ -441,9 +441,9 @@ export const useGetPostImage = async (imageUrl) => {
   }
 };
 
-export const useGetAllPosts = async () => {
+export const useGetAllPosts = async (filters = {}) => {
   try {
-    const response = await requesterService.getAllPosts();
+    const response = await requesterService.getAllPosts(filters);
     return { response };
   } catch (error) {
     console.error("Error getting post");

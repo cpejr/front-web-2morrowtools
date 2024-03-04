@@ -76,7 +76,6 @@ export default function Admin() {
   }
   async function getNewsletterData() {
     const newsletter = await useGetNewsletter();
-    console.log("Dados do newsletter:", newsletter);
     setNewsletterData(newsletter.Newsletters);
   }
   useEffect(() => {
@@ -114,17 +113,16 @@ export default function Admin() {
   };
   const exportNewsletterData = () => {
     const csvContent =
-      "Nome,Email,Mensagem\n" +
+      "Nome,Email\n" +
       newsletterData
         .map((newsletterUser) =>
-          [newsletterUser.name, newsletterUser.email, newsletterUser.message].join(",")
+          [newsletterUser.name, newsletterUser.email].join(",")
         )
         .join("\n");
 
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     saveAs(blob, "newsletter_data.csv");
   };
-  console.log(newsletterData);
   return (
     <Container>
       <Table value={users} paginator rows={10} removableSort>
