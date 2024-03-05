@@ -22,6 +22,7 @@ import {
   ModalEditPost,
   FormImageInput,
   FormInputBorder,
+  Editor,
 } from "../../components";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
@@ -32,7 +33,6 @@ import * as managerService from "../../services/ManagerService";
 import { newPostValidationSchema, buildNewPostErrorMessage } from "./utils";
 
 export default function NewPost() {
-
   // Set variables
   const [nameQuery, setNameQuery] = useState("");
   const [namesArray, setNamesArray] = useState([]);
@@ -84,7 +84,7 @@ export default function NewPost() {
     setSelectedText(null);
     setSelectedTextId(null);
     setEditModalOpen(false);
-    getPosts()
+    getPosts();
   };
 
   const handleCloseDeleteModal = () => {
@@ -142,7 +142,7 @@ export default function NewPost() {
       ...data,
       id_categoryfeature: idCategoriesFeature,
       id_categoryprofession: idCategoriesProfession,
-    };  
+    };
     handleCreatePost(combinedData);
   };
 
@@ -184,6 +184,7 @@ export default function NewPost() {
             placeholder='Descrição longa:'
             errors={errors}
           />
+          <Editor />
 
           <Selects>
             <MultipleSelect
@@ -211,7 +212,7 @@ export default function NewPost() {
               className='w-full md:w-20rem'
               filter
               errors={errors}
-          />
+            />
           </Selects>
 
           <SubmitButton>
