@@ -7,7 +7,6 @@ import useAuthStore from "../../stores/auth";
 export default function Newsletter() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [message, SetMessage] = useState("");
   const { getUser } = useAuthStore();
   const userID = getUser()?._id;
 
@@ -16,7 +15,6 @@ export default function Newsletter() {
       await usePostNewsletter({
         name: name,
         email: email,
-        message: message,
         userID: userID,
       });
       toast.success("Email postado com sucesso");
@@ -31,7 +29,6 @@ export default function Newsletter() {
     setTimeout(() => {
       setName("");
       setEmail("");
-      SetMessage("");
     }, 1000);
   };
 
