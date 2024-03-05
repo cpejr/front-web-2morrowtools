@@ -121,5 +121,5 @@ export const getImage = (imageURL) => api.post(`/IAImage`, { imageURL });
 
 //newsletter
 
-export const postNewsletter = async (body) => await api.post(`/newsletter`, { ...body });
+export const postNewsletter = (body) => api.post(`/newsletter`, { ...body });
 export const getNewsletter = () => api.get(`/newsletter`);

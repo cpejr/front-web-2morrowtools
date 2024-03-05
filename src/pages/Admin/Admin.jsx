@@ -130,15 +130,13 @@ export default function Admin() {
   };
   const exportNewsletterData = () => {
     const csvContent =
-      "Nome,Email,Data de Inscrição,Primeiro Login,Ultimo Login\n" +
+      "Nome,Email,Data de Inscrição\n" +
       newsletterData
         .map((newsletterUser) =>
           [
             newsletterUser.name,
             newsletterUser.email,
             formatDate({ value: newsletterUser.createdAt }),
-            formatDate({ value: newsletterUser.userID.createdAt }),
-            formatDate({ value: newsletterUser.userID.lastLogin }),
           ].join(",")
         )
         .join("\n");
