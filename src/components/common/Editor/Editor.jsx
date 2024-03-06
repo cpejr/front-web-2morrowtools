@@ -6,6 +6,7 @@ import htmlToDraft from "html-to-draftjs";
 
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Container } from "./Styles";
+import { usePostImage } from "../../../services/ManagerService";
 
 export default function EditorConvertToHTML() {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
@@ -13,8 +14,21 @@ export default function EditorConvertToHTML() {
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
   };
-  const test = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-  console.log(test);
+
+  function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        resolve(reader.result.split(",")[1]);
+      };
+
+      reader.onerror = reject;
+
+      reader.readAsDataURL(file);
+    });
+  }
+
   return (
     <Container>
       <Editor
@@ -36,10 +50,25 @@ export default function EditorConvertToHTML() {
             "history",
             "image",
           ],
+          image: {
+            urlEnabled: true,
+            //uploadEnabled: true,
+            alignmentEnabled: true,
+            previewImage: true,
+            // uploadCallback: async (file) => {
+            //   const base64File = await fileToBase64(file);
+            //   const result = await usePostImage(base64File);
+            //   return { data: { link: result.data.imageURL } };
+            // },
+            alt: { present: false, mandatory: false },
+            defaultSize: {
+              height: "100%",
+              width: "100%",
+            },
+          },
         }}
       />
       <textarea disabled value={draftToHtml(convertToRaw(editorState.getCurrentContent()))} />
-      <div className='content' dangerouslySetInnerHTML={{ __html: test }}></div>
     </Container>
   );
 }

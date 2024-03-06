@@ -462,6 +462,16 @@ export const useGetImage = async (imageURL) => {
   }
 };
 
+export const usePostImage = async (file) => {
+  try {
+    const respose = await requesterService.postImage({ file });
+    return { respose };
+  } catch (error) {
+    console.error(error);
+    return { error };
+  }
+};
+
 export const usePostNewsletter = async (body) => {
   const create = await requesterService.postNewsletter(body).then((res) => {
     return res;

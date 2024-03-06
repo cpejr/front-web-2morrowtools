@@ -118,6 +118,7 @@ export const getPostImage = (imageUrl) => api.post(`/PostImage`, { imageUrl });
 //image
 
 export const getImage = (imageURL) => api.post(`/IAImage`, { imageURL });
+export const postImage = (body) => api.post(`/image`, body);
 
 //newsletter
 
