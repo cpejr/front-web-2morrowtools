@@ -7,8 +7,8 @@ export const newPostValidationSchema = z.object({
     .string({ required_error: "O título é obrigatório" })
     .min(2, { message: "O título deve ter pelo menos 2 caracteres" })
     .max(60, { message: "O título não pode exceder 60 caracteres" }),
-  imageUrl: 
-    z.string({ required_error: "A URL da imagem é obrigatória" })
+  imageUrl: z
+    .string({ required_error: "A URL da imagem é obrigatória" })
     .min(1, { message: "O URL deve ter pelo menos 1 caractere" }),
   shortDescription: z
     .string({ required_error: "A descrição curta é obrigatória" })
@@ -18,7 +18,6 @@ export const newPostValidationSchema = z.object({
     .min(20, { message: "A descrição longa deve ter pelo menos 20 caracteres" })
     .max(750, { message: "A descrição longa não pode exceder 750 caracteres" }),
 });
-
 
 // Error Handling
 const newPostErrorMessages = {

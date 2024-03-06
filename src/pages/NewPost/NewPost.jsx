@@ -47,9 +47,11 @@ export default function NewPost() {
   const [categoriesProfession, setCategoriesProfession] = useState([]);
   const [idCategoriesProfession, setIdsCategoriesProfession] = useState([]);
 
+  const [editorValue, setEditorValue] = useState();
+
   async function handleCreatePost(data) {
     try {
-      await managerService.useCreatePost(data);
+      await managerService.useCreatePost({ ...data, html: editorValue });
       toast.success("Post criado com sucesso!");
       toast.clearWaitingQueue();
       getPosts();
@@ -153,7 +155,7 @@ export default function NewPost() {
     }));
     return newArray;
   };
-
+  console.log(filteredPosts);
   return (
     <Container>
       <Title>SUBMETER NOVO POST</Title>
@@ -184,7 +186,7 @@ export default function NewPost() {
             placeholder='Descrição longa:'
             errors={errors}
           />
-          <Editor />
+          <Editor setEditorValue={setEditorValue} />
 
           <Selects>
             <MultipleSelect
