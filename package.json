@@ -14,6 +14,7 @@
     "@hookform/resolvers": "^3.3.2",
     "antd": "^5.11.0",
     "axios": "^1.6.2",
+    "dompurify": "^3.0.9",
     "draft-js": "^0.11.7",
     "draftjs-to-html": "^0.9.1",
     "file-saver": "^2.0.5",

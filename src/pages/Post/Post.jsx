@@ -10,8 +10,8 @@ import {
   Container,
   ErrorTitle,
   SmallDescription,
-  LargeDescription,
 } from "./Styles";
+import DOMPurify from "dompurify";
 
 export default function Post() {
   const { name } = useParams();
@@ -67,8 +67,7 @@ export default function Post() {
           </TagsLine>
         </Section>
         <SmallDescription>{post.shortDescription}</SmallDescription>
-
-        <LargeDescription>{post.longDescription}</LargeDescription>
+        <section dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.html) }} />
       </Container>
     );
   }

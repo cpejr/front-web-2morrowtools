@@ -5,18 +5,19 @@ import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import SubmitButton from "../../../common/SubmitButton/SubmitButton";
 import * as managerService from "../../../../services/ManagerService";
-import FormsTextArea from "../../../common/FormsTextArea/FormsTextArea";
 import FormImageInput from "../../../common/FormImageInput/FormImageInput";
 import FormInputBorder from "../../../common/FormInputBorder/FormInputBorder";
 import { buildEditPostErrorMessage, editPostValidationSchema } from "./utils";
-import { Container, Tittle, Label, ModalContent, Form, Section, LabelWraper, MultipleSelect } from "./Styles";
+import { Container, Label, Form, Section, LabelWraper, MultipleSelect } from "./Styles";
+import { Editor } from "../../..";
 
 export default function ModalEditPost({ _id, post, close }) {
-  
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [idCategoriesFeature, setIdsCategoriesFeature] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
   const [idCategoriesProfession, setIdsCategoriesProfession] = useState([]);
+
+  const [editorValue, setEditorValue] = useState();
 
   // Forms values
   const [formData, setFormData] = useState({
@@ -28,11 +29,12 @@ export default function ModalEditPost({ _id, post, close }) {
 
   // On Submit
   const onSubmit = async (data) => {
-    const body = {
+    let body = {
       ...data,
       id_categoryfeature: idCategoriesFeature,
       id_categoryprofession: idCategoriesProfession,
     };
+    if (editorValue) body = { ...body, html: editorValue };
 
     try {
       await managerService.useUpdatePost(_id, body);
@@ -82,93 +84,77 @@ export default function ModalEditPost({ _id, post, close }) {
   return (
     <Container>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <ModalContent>
-          <Tittle>Editar Informações</Tittle>
-          <Section>
-            <LabelWraper>
-              <Label>Nome:</Label>
-              <FormInputBorder
-                name='name'
-                defaultValue={post.name}
-                placeholder='Título:'
-                errors={errors}
-                register={register}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              />
-            </LabelWraper>
+        <Section>
+          <LabelWraper>
+            <Label>Nome:</Label>
+            <FormInputBorder
+              name='name'
+              defaultValue={post.name}
+              placeholder='Título:'
+              errors={errors}
+              register={register}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            />
+          </LabelWraper>
 
-            <LabelWraper>
-              <Label>Descrição curta:</Label>
-              <FormInputBorder
-                name='shortDescription'
-                defaultValue={post.shortDescription}
-                placeholder='Descrição curta:'
-                errors={errors}
-                register={register}
-                onChange={(e) => setFormData({ ...formData, shortDescription: e.target.value })}
-              />
-            </LabelWraper>
+          <LabelWraper>
+            <Label>Descrição curta:</Label>
+            <FormInputBorder
+              name='shortDescription'
+              defaultValue={post.shortDescription}
+              placeholder='Descrição curta:'
+              errors={errors}
+              register={register}
+              onChange={(e) => setFormData({ ...formData, shortDescription: e.target.value })}
+            />
+          </LabelWraper>
 
-            <LabelWraper>
-              <Label>Descrição longa:</Label>
-              <FormsTextArea
-                name='longDescription'
-                rows={4}
-                defaultValue={post.longDescription}
-                placeholder='Descrição longa:'
-                errors={errors}
-                register={register}
-                onChange={(e) => setFormData({ ...formData, longDescription: e.target.value })}
-              />
-            </LabelWraper>
+          <LabelWraper>
+            <Label>URL da imagem:</Label>
+            <FormImageInput
+              name='imageUrl'
+              placeholder='   URL da imagem:'
+              errors={errors}
+              register={register}
+              defaultValue={post.imageUrl}
+            />
+          </LabelWraper>
 
-            <LabelWraper>
-              <Label>URL da imagem:</Label>
-              <FormImageInput
-                name='imageUrl'
-                placeholder='   URL da imagem:'
-                errors={errors}
-                register={register}
-                defaultValue={post.imageUrl}
-              />
-            </LabelWraper>
-            
-            <LabelWraper>
-              <Label>Características:</Label>
-              <MultipleSelect
-                value={idCategoriesFeature}
-                name='id_categoryfeature'
-                onChange={(e) => {
-                  setIdsCategoriesFeature(e.value);
-                }}
-                options={transformArrayItems(categoriesFeature)}
-                optionLabel='label'
-                placeholder='Escolha as características'
-                className='w-full md:w-20rem'
-                filter
-              />
-            </LabelWraper>
+          <Editor setEditorValue={setEditorValue} html={post.html} />
 
-            <LabelWraper>
-              <Label>Profissões:</Label>
-              <MultipleSelect
-                value={idCategoriesProfession}
-                name='id_categoryprofession'
-                onChange={(e) => {
-                  setIdsCategoriesProfession(e.value);
-                }}
-                options={transformArrayItems(categoriesProfession)}
-                optionLabel='label'
-                placeholder='Escolha as características'
-                className='w-full md:w-20rem'
-                filter
-              />
-            </LabelWraper>
-          </Section>
-          <SubmitButton type='submit'>
-            <p>Salvar</p>
-          </SubmitButton>
-        </ModalContent>
+          <LabelWraper>
+            <Label>Características:</Label>
+            <MultipleSelect
+              value={idCategoriesFeature}
+              name='id_categoryfeature'
+              onChange={(e) => {
+                setIdsCategoriesFeature(e.value);
+              }}
+              options={transformArrayItems(categoriesFeature)}
+              optionLabel='label'
+              placeholder='Escolha as características'
+              className='w-full md:w-20rem'
+              filter
+            />
+          </LabelWraper>
+
+          <LabelWraper>
+            <Label>Profissões:</Label>
+            <MultipleSelect
+              value={idCategoriesProfession}
+              name='id_categoryprofession'
+              onChange={(e) => {
+                setIdsCategoriesProfession(e.value);
+              }}
+              options={transformArrayItems(categoriesProfession)}
+              optionLabel='label'
+              placeholder='Escolha as características'
+              className='w-full md:w-20rem'
+              filter
+            />
+          </LabelWraper>
+        </Section>
+        <SubmitButton type='submit'>Salvar</SubmitButton>
       </Form>
     </Container>
   );

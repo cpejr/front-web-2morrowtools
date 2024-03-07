@@ -10,7 +10,6 @@ export const Container = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
-  padding: 2rem 2.4rem;
 `;
 
 export const Form = styled.form`
@@ -27,7 +26,6 @@ export const Tittle = styled.p`
   align-self: center;
 
   color: ${colors.white};
-  padding-bottom: 2.5rem;
 `;
 
 export const ModalContent = styled.div`
@@ -44,13 +42,12 @@ export const Label = styled.label`
   align-self: baseline;
 
   color: ${colors.white};
-  padding-bottom: 1rem;
+  padding-bottom: 0.5rem;
 `;
 
 export const StyledInput = styled(Input)`
   height: 6rem;
   font-size: 2rem;
-  padding: 0.8rem 1.6rem;
   border-radius: 0.4rem;
   color: ${colors.white};
   width: 100%;
@@ -80,19 +77,15 @@ export const Section = styled.section`
   width: 100%;
   height: 100%;
   gap: 2rem;
-
-  @media (max-width: 700px) {
-    width: 80%;
-  }
+  padding-bottom: 1rem;
 `;
 
 export const LabelWraper = styled.div`
   display: flex;
   width: 100%;
   align-self: center;
-  align-items:center;
+  align-items: center;
   flex-direction: column;
-  
 `;
 
 export const MultipleSelect = styled(MultiSelect)`

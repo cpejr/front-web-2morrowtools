@@ -36,13 +36,13 @@ export const Title = styled.p`
     font-size: 2.5rem;
     line-height: 3.9rem;
     height: 3.9rem;
-    margin-top:50px;
-    margin-inline:auto;
+    margin-top: 50px;
+    margin-inline: auto;
   }
 
   @media (max-width: 370px) {
     font-size: 2.5rem;
-    margin-top:80px;
+    margin-top: 80px;
   }
 `;
 
@@ -58,19 +58,32 @@ export const Section = styled.section`
   }
 `;
 
+export const Section3 = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  width: 70%;
+  margin: 0 auto;
+
+  @media (max-width: 700px) {
+    width: 80%;
+  }
+`;
+
 export const Selects = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
   gap: 5rem;
   padding-inline: 15%;
-  justify-content:space-around;
+  justify-content: space-around;
 
   @media (max-width: 850px) {
     flex-direction: column;
     padding: 0;
     gap: 1rem;
-    align-items:center;
+    align-items: center;
   }
 `;
 
@@ -118,8 +131,9 @@ export const Section2 = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%;
-  height: 100%;
+
+  width: 70%;
+  margin: 0 auto;
 
   @media (max-width: 700px) {
     width: 80%;
@@ -128,31 +142,24 @@ export const Section2 = styled.section`
 
 export const StyledModal = styled(Modal)`
   .ant-modal-content {
-    background-color: ${colors.grey.cardBackground};  
+    background-color: ${colors.grey.cardBackground};
     @media (max-width: ${breakpoints.tablet}) {
       width: 90%;
-      margin-inline:auto;
+      margin-inline: auto;
     }
   }
   .ant-modal-body {
     color: ${colors.white};
     border-radius: none;
-  }  
-
+  }
 `;
 
 export const TextList = styled.ul`
   list-style-type: none;
   padding: 0;
-  width: 50%;
   height: fit-content;
   font-size: 2rem;
-  margin-left: 4rem;
   color: ${colors.white};
-  @media (max-width: ${breakpoints.mobile}) {
-    width: 80%;
-    margin-left: 1rem;
-  }
 `;
 
 export const IconWrapper = styled.div`

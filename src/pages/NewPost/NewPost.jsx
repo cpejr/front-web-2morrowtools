@@ -14,11 +14,11 @@ import {
   TextListItem,
   MultipleSelect,
   AutoCompleteInput,
+  Section3,
 } from "./Styles";
 import {
   ModalDelete,
   SubmitButton,
-  FormsTextArea,
   ModalEditPost,
   FormImageInput,
   FormInputBorder,
@@ -40,7 +40,7 @@ export default function NewPost() {
   const [selectedText, setSelectedText] = useState(null);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [selectedTextId, setSelectedTextId] = useState(null);
-  const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [isEditSectionOpen, setEditSectionOpen] = useState(false);
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [idCategoriesFeature, setIdsCategoriesFeature] = useState([]);
@@ -82,16 +82,15 @@ export default function NewPost() {
   };
 
   const handleOpenEditModal = (post) => {
+    if (isEditSectionOpen) {
+      setSelectedText("");
+      setSelectedTextId("");
+      setEditSectionOpen(false);
+      return;
+    }
     setSelectedTextId(post._id);
     setSelectedText(post);
-    setEditModalOpen(true);
-  };
-
-  const handleCloseEditModal = async () => {
-    setSelectedText(null);
-    setSelectedTextId(null);
-    setEditModalOpen(false);
-    getPosts();
+    setEditSectionOpen(true);
   };
 
   const handleCloseDeleteModal = () => {
@@ -136,6 +135,7 @@ export default function NewPost() {
 
   useEffect(() => {
     search({ query: nameQuery });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nameQuery]);
 
   const {
@@ -243,27 +243,7 @@ export default function NewPost() {
             />
           </StyledModal>
         )}
-        {isEditModalOpen && (
-          <StyledModal
-            open={isEditModalOpen}
-            onCancel={handleCloseEditModal}
-            width={500}
-            height={250}
-            padding={0}
-            footer={null}
-            closeIcon={true}
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: "100px",
-              marginBottom: "80%",
-            }}
-            centered
-            destroyOnClose
-          >
-            <ModalEditPost _id={selectedTextId} post={selectedText} close={handleCloseEditModal} />
-          </StyledModal>
-        )}
+
         <TextList>
           <IconWrapper>
             <SVGDiv>
@@ -287,6 +267,13 @@ export default function NewPost() {
           ))}
         </TextList>
       </Section2>
+
+      {isEditSectionOpen && (
+        <Section3>
+          <Title>EDITAR POST</Title>
+          <ModalEditPost _id={selectedTextId} post={selectedText} />
+        </Section3>
+      )}
     </Container>
   );
 }

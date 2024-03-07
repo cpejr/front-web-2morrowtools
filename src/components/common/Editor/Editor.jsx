@@ -1,14 +1,20 @@
 import { useEffect, useState } from "react";
-import { EditorState, convertToRaw } from "draft-js";
+import { ContentState, EditorState, convertFromHTML, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
-
+import PropTypes from "prop-types";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Container, ErrorMessage } from "./Styles";
 
-export default function EditorConvertToHTML({ setEditorValue, error }) {
-  const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
-
+export default function EditorConvertToHTML({ setEditorValue, error, html = "" }) {
+  const [editorState, setEditorState] = useState(() => {
+    const blocksFromHTML = convertFromHTML(html);
+    const state = ContentState.createFromBlockArray(
+      blocksFromHTML.contentBlocks,
+      blocksFromHTML.entityMap
+    );
+    return EditorState.createWithContent(state);
+  });
   useEffect(() => {
     setEditorValue(draftToHtml(convertToRaw(editorState.getCurrentContent())));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -55,6 +61,10 @@ export default function EditorConvertToHTML({ setEditorValue, error }) {
     </Container>
   );
 }
-{
-  /* <textarea value={draftToHtml(convertToRaw(editorState.getCurrentContent()))} /> */
-}
+
+EditorConvertToHTML.propTypes = {
+  data: PropTypes.object.isRequired,
+  setEditorValue: PropTypes.func.isRequired,
+  error: PropTypes.object,
+  html: PropTypes.string,
+};
