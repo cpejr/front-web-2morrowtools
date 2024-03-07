@@ -27,6 +27,33 @@ export const ErrorTitle = styled.div`
   margin-bottom: 0.625rem;
 `;
 
+export const HtmlContainer = styled.section`
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  > * {
+    width: 100%;
+  }
+
+  width: 60%;
+  p:has(img) {
+    text-align: center;
+  }
+
+  img {
+    width: 40vw;
+    height: auto;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    width: 90%;
+    img {
+      width: 80vw;
+    }
+  }
+`;
+
 export const Tags = styled.div`
   display: flex;
   justify-content: center;
@@ -45,7 +72,7 @@ export const Image = styled.img`
   border-radius: 0.5rem;
   margin-bottom: 20px;
   @media (max-width: ${breakpoints.smallTablet}) {
-    height:15rem;
+    height: 15rem;
   }
 `;
 
@@ -55,7 +82,7 @@ export const SmallDescription = styled.div`
   text-align: left;
   width: 60%;
   @media (max-width: ${breakpoints.mobile}) {
-    width:80%;
+    width: 80%;
   }
 `;
 
@@ -65,7 +92,7 @@ export const LargeDescription = styled.div`
   text-align: left;
   width: 60%;
   @media (max-width: ${breakpoints.mobile}) {
-    width:80%;
+    width: 80%;
   }
 `;
 
