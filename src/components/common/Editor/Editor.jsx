@@ -2,39 +2,24 @@ import { useEffect, useState } from "react";
 import { EditorState, convertToRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
-import htmlToDraft from "html-to-draftjs";
 
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Container } from "./Styles";
-import { usePostImage } from "../../../services/ManagerService";
+import { Container, ErrorMessage } from "./Styles";
 
-export default function EditorConvertToHTML({ setEditorValue }) {
+export default function EditorConvertToHTML({ setEditorValue, error }) {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
 
   useEffect(() => {
     setEditorValue(draftToHtml(convertToRaw(editorState.getCurrentContent())));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editorState]);
 
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
   };
 
-  function fileToBase64(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        resolve(reader.result.split(",")[1]);
-      };
-
-      reader.onerror = reject;
-
-      reader.readAsDataURL(file);
-    });
-  }
-
   return (
-    <Container>
+    <Container error={error}>
       <Editor
         editorState={editorState}
         onEditorStateChange={onEditorStateChange}
@@ -58,12 +43,6 @@ export default function EditorConvertToHTML({ setEditorValue }) {
             urlEnabled: true,
             alignmentEnabled: true,
             previewImage: true,
-            //uploadEnabled: true,
-            // uploadCallback: async (file) => {
-            //   const base64File = await fileToBase64(file);
-            //   const result = await usePostImage(base64File);
-            //   return { data: { link: result.data.imageURL } };
-            // },
             alt: { present: false, mandatory: false },
             defaultSize: {
               height: "100%",
@@ -72,7 +51,10 @@ export default function EditorConvertToHTML({ setEditorValue }) {
           },
         }}
       />
-      <textarea value={draftToHtml(convertToRaw(editorState.getCurrentContent()))} />
+      <ErrorMessage>{error && "O texto do post deve ser preenchido"}</ErrorMessage>
     </Container>
   );
+}
+{
+  /* <textarea value={draftToHtml(convertToRaw(editorState.getCurrentContent()))} /> */
 }

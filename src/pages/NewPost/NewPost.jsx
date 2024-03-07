@@ -48,9 +48,14 @@ export default function NewPost() {
   const [idCategoriesProfession, setIdsCategoriesProfession] = useState([]);
 
   const [editorValue, setEditorValue] = useState();
+  const [editorError, setEditorError] = useState(false);
 
   async function handleCreatePost(data) {
     try {
+      if (!editorValue || editorValue === "<p></p>\n") {
+        setEditorError(true);
+        throw new Error("O html deve ser preenchido");
+      }
       await managerService.useCreatePost({ ...data, html: editorValue });
       toast.success("Post criado com sucesso!");
       toast.clearWaitingQueue();
@@ -180,13 +185,7 @@ export default function NewPost() {
             placeholder='Descrição curta:'
             errors={errors}
           />
-          <FormsTextArea
-            name='longDescription'
-            register={register}
-            placeholder='Descrição longa:'
-            errors={errors}
-          />
-          <Editor setEditorValue={setEditorValue} />
+          <Editor setEditorValue={setEditorValue} error={editorError} />
 
           <Selects>
             <MultipleSelect
