@@ -66,7 +66,7 @@ export const Categories = styled.div`
 export const Image = styled.img`
   object-fit: cover;
   margin-bottom: 20px;
-  width: 99vw;
+  width: 100vw;
   height: auto;
   max-height: 38vh;
   @media (max-width: ${breakpoints.smallTablet}) {
