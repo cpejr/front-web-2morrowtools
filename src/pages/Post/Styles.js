@@ -7,13 +7,10 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 6rem auto;
+  margin: 8rem 0;
   gap: 2rem;
   text-align: center;
-`;
-
-export const Section = styled.div`
-  width: 80%;
+  overflow-x: hidden;
 `;
 
 export const Title = styled.div`
@@ -67,12 +64,16 @@ export const Categories = styled.div`
   cursor: pointer;
 `;
 export const Image = styled.img`
-  height: 22rem;
   object-fit: cover;
-  border-radius: 0.5rem;
   margin-bottom: 20px;
+  width: 99vw;
+  height: auto;
+  max-height: 38vh;
   @media (max-width: ${breakpoints.smallTablet}) {
-    height: 15rem;
+    max-height: 20rem;
+  }
+  @media (max-width: ${breakpoints.smallMobile}) {
+    max-height: 10rem;
   }
 `;
 

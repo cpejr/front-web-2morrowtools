@@ -5,7 +5,6 @@ import {
   Tag,
   Title,
   Image,
-  Section,
   TagsLine,
   Container,
   ErrorTitle,
@@ -53,20 +52,16 @@ export default function Post() {
   } else {
     return (
       <Container>
-        <Section>
-          <Title>{post.name}</Title>
-
-          <Image src={image} />
-
-          <TagsLine>
-            {post.id_categoryfeatures?.map((category) => (
-              <Tag key={category._id}>{category.name}</Tag>
-            ))}
-            {post.id_categoryprofessions?.map((category) => (
-              <Tag key={category._id}>{category.name}</Tag>
-            ))}
-          </TagsLine>
-        </Section>
+        <Image src={image} alt='Main post image' />
+        <Title>{post.name}</Title>
+        <TagsLine>
+          {post.id_categoryfeatures?.map((category) => (
+            <Tag key={category._id}>{category.name}</Tag>
+          ))}
+          {post.id_categoryprofessions?.map((category) => (
+            <Tag key={category._id}>{category.name}</Tag>
+          ))}
+        </TagsLine>
         <SmallDescription>{post.shortDescription}</SmallDescription>
         <HtmlContainer dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.html) }} />
       </Container>
