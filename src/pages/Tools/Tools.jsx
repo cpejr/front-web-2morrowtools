@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import {
   BlueButton,
-  ButtonDiv,
   CommentContainer,
   CommentSection,
   CommentInput,
@@ -23,7 +22,6 @@ import {
 } from "../../services/ManagerService";
 import { useParams } from "react-router-dom";
 import useAuthStore from "../../stores/auth";
-import Pagination from "../../components/features/Pagination/Pagination";
 
 export default function Tools() {
   // Variables
@@ -84,18 +82,6 @@ export default function Tools() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [aiToolsByName]);
 
-  // Grouping Data
-
-  const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 12;
-  const totalPages = Math.ceil(aiTools?.aiTools?.length / itemsPerPage);
-  const handlePrevPage = () => {
-    setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
-  };
-  const handleNextPage = () => {
-    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
-  };
-
   return (
     <Container>
       <ToolCollumn>{aiToolsByName.aiTools && <Tool data={aiToolsByName} />}</ToolCollumn>
@@ -125,7 +111,7 @@ export default function Tools() {
             <DivLine>
               <Line>
                 {aiTools?.aiTools
-                  ?.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
+                  ?.slice(0, 8) // Aqui estamos renderizando apenas os primeiros 8 elementos
                   .map((content, index) => (
                     <Card
                       data={{
@@ -136,15 +122,6 @@ export default function Tools() {
                   ))}
               </Line>
             </DivLine>
-            <ButtonDiv>
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                handlePrevPage={handlePrevPage}
-                handleNextPage={handleNextPage}
-                setCurrentPage={setCurrentPage}
-              />
-            </ButtonDiv>
           </div>
         ) : (
           <h2>Nenhuma IA semelhante encontrada</h2>
