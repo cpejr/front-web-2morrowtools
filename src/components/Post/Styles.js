@@ -1,8 +1,30 @@
-import { Card } from "antd";
+import { Card as AntdCard } from "antd";
 import styled from "styled-components";
 import { breakpoints, colors } from "../../styles/styleVariables";
+export const Card = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 2rem;
+  gap: 1.5rem;
+  width: 25rem;
+  box-shadow: 0px 4px 4px 0px ${colors.shadow};
+  background-color: ${colors.grey.cardBackground};
+  border-radius: 20px;
+  &:hover {
+    background-color: ${colors.grey.cardHover};
+  }
+`;
 
-export const StyledCard = styled(Card)`
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 80%;
+  margin: 0 auto;
+`;
+
+export const StyledCard = styled(AntdCard)`
   display: flex;
   flex-direction: column;
   width: 36rem;
@@ -35,8 +57,7 @@ export const StyledCard = styled(Card)`
 export const ImageHolder = styled.div`
   display: flex;
   height: auto;
-  width: 20rem;
-  border-radius: 20px;
+  width: 100%;
   justify-content: center;
   align-items: center;
   align-self: center;
@@ -53,7 +74,8 @@ export const ImageHolder = styled.div`
   > img {
     width: 100%;
     height: 16rem;
-    border-radius: 20px;
+    border-radius: 20px 20px 0 0;
+
     @media (max-width: ${breakpoints.desktop}) {
       height: 14rem;
     }
