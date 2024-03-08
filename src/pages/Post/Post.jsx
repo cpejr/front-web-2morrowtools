@@ -12,6 +12,7 @@ import {
   SmallDescription,
 } from "./Styles";
 import DOMPurify from "dompurify";
+import Comments from "./Comments";
 
 export default function Post() {
   const { name } = useParams();
@@ -64,6 +65,7 @@ export default function Post() {
         </TagsLine>
         <SmallDescription>{post.shortDescription}</SmallDescription>
         <HtmlContainer dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.html) }} />
+        <Comments />
       </Container>
     );
   }

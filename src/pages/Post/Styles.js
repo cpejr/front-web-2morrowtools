@@ -1,21 +1,21 @@
 import styled from "styled-components";
 import { breakpoints, colors } from "../../styles/styleVariables";
+import { Button, Input } from "antd";
 
 export const Container = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   margin: 8rem 0;
   gap: 2rem;
-  text-align: center;
   overflow-x: hidden;
 `;
 
 export const Title = styled.div`
   font-size: 3rem;
   margin-bottom: 0.5rem;
+  font-weight: bold;
 `;
 
 export const ErrorTitle = styled.div`
@@ -135,4 +135,78 @@ export const Tag = styled.div`
     border: 1px solid ${colors.blue.light};
     color: ${colors.blue.light};
   }
+`;
+
+export const CommentSection = styled.div`
+  display: flex;
+  width: 60%;
+  flex-direction: column;
+  align-self: center;
+  gap: 1rem;
+  height: auto;
+  > h1 {
+    font-size: 40px;
+
+    @media (max-width: ${breakpoints.smallTablet}) {
+      align-self: center;
+      font-size: 40px;
+    }
+    @media (max-width: ${breakpoints.mobile}) {
+      font-size: 35px;
+    }
+    @media (max-width: ${breakpoints.smallDevice}) {
+      font-size: 30px;
+    }
+  }
+`;
+
+export const CommentContainer = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 2rem;
+  border-radius: 6px;
+  border: 2px solid ${colors.white};
+  max-height: 40rem;
+  overflow-y: scroll;
+`;
+
+export const LetComment = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 1rem;
+  align-self: center;
+  > h2 {
+    font-size: 35px;
+    @media (max-width: ${breakpoints.desktop}) {
+    }
+    @media (max-width: ${breakpoints.tablet}) {
+    }
+    @media (max-width: ${breakpoints.smallTablet}) {
+    }
+    @media (max-width: ${breakpoints.mobile}) {
+      font-size: 30px;
+    }
+    @media (max-width: ${breakpoints.smallDevice}) {
+      font-size: 25px;
+    }
+  }
+`;
+
+export const CommentInput = styled(Input)`
+  width: 100%;
+  height: 3rem;
+  padding-left: 1rem;
+  border: 1px solid ${colors.white};
+  @media (max-width: ${breakpoints.smallDevice}) {
+    font-size: 13px;
+  }
+`;
+
+export const BlueButton = styled(Button)`
+  width: 13rem;
+  height: 3rem;
+  align-self: center;
+  font-size: 24px;
 `;
