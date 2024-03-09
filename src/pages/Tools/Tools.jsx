@@ -110,16 +110,14 @@ export default function Tools() {
           <div>
             <DivLine>
               <Line>
-                {aiTools?.aiTools
-                  ?.slice(0, 8) // Aqui estamos renderizando apenas os primeiros 8 elementos
-                  .map((content, index) => (
-                    <Card
-                      data={{
-                        ...content,
-                      }}
-                      key={index}
-                    />
-                  ))}
+                {aiTools?.aiTools?.slice(0, 8).map((content, index) => (
+                  <Card
+                    data={{
+                      ...content,
+                    }}
+                    key={index}
+                  />
+                ))}
               </Line>
             </DivLine>
           </div>
