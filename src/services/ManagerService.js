@@ -472,6 +472,14 @@ export const usePostImage = async (file) => {
   }
 };
 
+export const useGetPostsByID = async (id) => {
+  let filteredPosts = {};
+  await requesterService.findPostsByID(id).then((res) => {
+    filteredPosts = res.data;
+  });
+  return filteredPosts;
+};
+
 export const usePostNewsletter = async (body) => {
   const create = await requesterService.postNewsletter(body).then((res) => {
     return res;

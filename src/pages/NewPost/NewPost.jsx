@@ -160,7 +160,6 @@ export default function NewPost() {
     }));
     return newArray;
   };
-  console.log(filteredPosts);
   return (
     <Container>
       <Title>SUBMETER NOVO POST</Title>

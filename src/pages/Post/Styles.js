@@ -210,3 +210,51 @@ export const BlueButton = styled(Button)`
   align-self: center;
   font-size: 24px;
 `;
+export const OtherTools = styled.div`
+  display: flex;
+  width: 95%;
+  flex-direction: column;
+  align-self: center;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  height: auto;
+  > h1 {
+    font-size: 50px;
+    @media (max-width: ${breakpoints.tablet}) {
+      font-size: 40px;
+    }
+    @media (max-width: ${breakpoints.smallTablet}) {
+      align-self: center;
+      text-align: center;
+      font-size: 32px;
+    }
+    @media (max-width: ${breakpoints.mobile}) {
+      font-size: 30px;
+    }
+    @media (max-width: ${breakpoints.smallDevice}) {
+      font-size: 25px;
+    }
+  }
+`;
+export const DivLine = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+`;
+export const Line = styled.div`
+  display: flex;
+  width: 100%;
+  height: auto;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  @media (max-width: ${breakpoints.mobile}) {
+    margin-bottom: 0;
+  }
+`;

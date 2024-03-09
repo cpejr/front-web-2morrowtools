@@ -10,16 +10,25 @@ import {
   ErrorTitle,
   HtmlContainer,
   SmallDescription,
+  OtherTools,
+  DivLine,
+  Line,
 } from "./Styles";
 import DOMPurify from "dompurify";
 import Comments from "./Comments";
+import { Post as PostCard } from "../../components";
 
 export default function Post() {
   const { name } = useParams();
   const [post, setPost] = useState({});
+  const [similarPost, setSimilarPost] = useState({});
   const [erro, setErro] = useState(false);
   const [loading, setLoading] = useState(true);
   const [image, setImage] = useState(post?.imageURL);
+
+  const convertArrayToString = (array) => {
+    return array.join(",");
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,15 +37,25 @@ export default function Post() {
         setPost(tempPost.Post);
         const postImage = await managerService.useGetPostImage(tempPost.Post.imageUrl);
         setImage(postImage.data.image);
+        const ids = [
+          ...(tempPost.Post.id_categoryfeatures || []),
+          ...(tempPost.Post.id_categoryprofessions || []),
+        ].flatMap((obj) => obj._id);
+        const idsString = convertArrayToString(ids);
+        const filterdPosts = await managerService.useGetPostsByID({ id: idsString });
+        const filteredSimilarPosts = filterdPosts.filter(
+          (similar) => similar._id !== tempPost.Post._id
+        );
+        setSimilarPost(filteredSimilarPosts);
+        setLoading(false);
       } catch (error) {
         console.error("Erro ao carregar post", error);
         setErro(true);
       }
     };
+
     fetchData();
-    setLoading(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [name]); // Adicione name como uma dependência se você estiver usando-o dentro de fetchData
 
   if (loading) {
     return (
@@ -66,6 +85,27 @@ export default function Post() {
         <SmallDescription>{post.shortDescription}</SmallDescription>
         <HtmlContainer dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.html) }} />
         <Comments />
+        <OtherTools>
+          <h1>OUTROS POSTS SIMILARES:</h1>
+          {similarPost && similarPost.length > 0 ? (
+            <div>
+              <DivLine>
+                <Line>
+                  {similarPost?.slice(0, 8).map((content, index) => (
+                    <PostCard
+                      data={{
+                        ...content,
+                      }}
+                      key={index}
+                    />
+                  ))}
+                </Line>
+              </DivLine>
+            </div>
+          ) : (
+            <h2>Nenhum Post semelhante encontrado</h2>
+          )}
+        </OtherTools>
       </Container>
     );
   }
