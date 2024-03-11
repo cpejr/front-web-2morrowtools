@@ -9,6 +9,9 @@ import {
 } from "../../services/ManagerService";
 import {
   Container,
+  IconWrapper,
+  SVGDiv,
+  AutoCompleteInput,
   Select,
   ProfilePic,
   Table,
@@ -21,11 +24,15 @@ import { toast } from "react-toastify";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import ModalDeleteUser from "../../components/features/Modals/ModalDeleteUser/ModalDeleteUser";
 import { CloseOutlined } from "@ant-design/icons";
+import { SearchOutlined } from "@ant-design/icons";
 import { colors } from "../../styles/styleVariables";
 import { saveAs } from "file-saver";
 import { CiExport } from "react-icons/ci";
+import formatDate from "../../utils/formatDate";
 export default function Admin() {
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
   const [modalDelete, setModalDelete] = useState(false);
   const [userID, setUserID] = useState("");
   const [newsletterData, setNewsletterData] = useState([]);
@@ -71,9 +78,12 @@ export default function Admin() {
           }}
         />
       ),
+      firstLogin: user.createdAt,
+      lastLogin: user.lastLogin,
     }));
     setUsers(formattedUsers);
   }
+
   async function getNewsletterData() {
     const newsletter = await useGetNewsletter();
     setNewsletterData(newsletter.Newsletters);
@@ -82,6 +92,13 @@ export default function Admin() {
     getAllUsers();
     getNewsletterData();
   }, []);
+
+  const handleSearchInputChange = (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    setSearchInput(searchTerm);
+    const filtered = users.filter((user) => user.name.toLowerCase().includes(searchTerm));
+    setFilteredUsers(filtered);
+  };
 
   const handleTypeChange = (_id, type) => {
     const body = { type };
@@ -113,19 +130,50 @@ export default function Admin() {
   };
   const exportNewsletterData = () => {
     const csvContent =
-      "Nome,Email,Mensagem\n" +
+      "Nome,Email,Data de Inscrição\n" +
       newsletterData
         .map((newsletterUser) =>
-          [newsletterUser.name, newsletterUser.email, newsletterUser.message].join(",")
+          [
+            newsletterUser.name,
+            newsletterUser.email,
+            formatDate({ value: newsletterUser.createdAt }),
+          ].join(",")
         )
         .join("\n");
 
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     saveAs(blob, "newsletter_data.csv");
   };
+  const exportUsersData = () => {
+    const csvContent =
+      "Nome,Email,Primeiro Login,Ultimo Login\n" +
+      users
+        .map((user) =>
+          [
+            user.name,
+            user.email,
+            formatDate({ value: user.firstLogin }),
+            formatDate({ value: user.lastLogin }),
+          ].join(",")
+        )
+        .join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    saveAs(blob, "users_data.csv");
+  };
   return (
     <Container>
-      <Table value={users} paginator rows={10} removableSort>
+      <h1>USUÁRIOS</h1>
+      <IconWrapper>
+        <SVGDiv>
+          <SearchOutlined />
+        </SVGDiv>
+        <AutoCompleteInput
+          value={searchInput}
+          onChange={handleSearchInputChange}
+        ></AutoCompleteInput>
+      </IconWrapper>
+      <Table value={searchInput ? filteredUsers : users} paginator rows={10} removableSort>
         {columns.map((data) => (
           <TableColumn sortable key={data.field} field={data.field} header={data.header} />
         ))}
@@ -143,6 +191,13 @@ export default function Admin() {
       >
         <ModalDeleteUser close={closeModalDelete} handleUserDelete={handleUserDelete} id={userID} />
       </ModalStyle>
+      <NewsLetter>
+        <h1>Exportar Lista de Usuarios</h1>
+        <Button onClick={exportUsersData} type='secondary'>
+          <CiExport />
+          EXPORTAR
+        </Button>
+      </NewsLetter>
       <NewsLetter>
         <h1>Newsletter</h1>
         <Button onClick={exportNewsletterData} type='secondary'>

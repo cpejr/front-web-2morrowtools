@@ -124,5 +124,5 @@ export const postImage = (body) => api.post(`/image`, body);
 
 //newsletter
 
-export const postNewsletter = async (body) => await api.post(`/newsletter`, { ...body });
+export const postNewsletter = (body) => api.post(`/newsletter`, { ...body });
 export const getNewsletter = () => api.get(`/newsletter`);

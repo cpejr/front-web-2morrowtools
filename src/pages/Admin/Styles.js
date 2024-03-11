@@ -4,6 +4,7 @@ import { breakpoints, colors } from "../../styles/styleVariables";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Dropdown } from "primereact/dropdown";
+import { AutoComplete } from "primereact/autocomplete";
 import { Modal } from "antd";
 
 export const Container = styled.div`
@@ -11,6 +12,9 @@ export const Container = styled.div`
   flex-direction: column;
   margin-top: 85px;
   color: ${colors.white};
+  > h1 {
+    margin-left: 7rem;
+  }
 `;
 export const ProfilePic = styled.img`
   border-radius: 50%;
@@ -83,5 +87,77 @@ export const Button = styled(AntdButton)`
   }
   > svg {
     font-size: larger;
+  }
+`;
+export const IconWrapper = styled.div`
+  width: 90%;
+  height: 3rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  margin-bottom: 1rem;
+  gap: 0.5rem;
+  border: 2px solid ${colors.white};
+  border-radius: 6px;
+  @media (max-width: ${breakpoints.smallMobile}) {
+    width: 60%;
+  }
+  @media (max-width: ${breakpoints.smallDevice}) {
+    width: 70%;
+  }
+`;
+export const SVGDiv = styled.div`
+  display: flex;
+  width: 3%;
+  padding-left: 0.7%;
+  > span {
+    > svg {
+      font-size: 1.7rem;
+      @media (max-width: ${breakpoints.desktop}) {
+        font-size: 1.5rem;
+      }
+
+      @media (max-width: ${breakpoints.smallMobile}) {
+        font-size: 1.3rem;
+      }
+    }
+  }
+  @media (max-width: ${breakpoints.desktop}) {
+    width: 10%;
+  }
+  @media (max-width: ${breakpoints.smallMobile}) {
+    width: 13%;
+  }
+`;
+export const AutoCompleteInput = styled(AutoComplete)`
+  width: 95%;
+  align-self: center;
+  > input {
+    background-color: ${colors.blue.background};
+    width: 100%;
+    height: 35px;
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    color: ${colors.white};
+    border: none;
+    box-shadow: none;
+    margin: 0;
+
+    &:focus {
+      outline: none;
+      border: none;
+    }
+    @media (max-width: ${breakpoints.mobile}) {
+      height: 2rem;
+    }
+  }
+  @media (max-width: ${breakpoints.desktop}) {
+    width: 90%;
+  }
+
+  @media (max-width: ${breakpoints.smallMobile}) {
+    width: 87%;
   }
 `;

@@ -74,6 +74,7 @@ export default function FilterArea({
   const handleFilterChange = () => {
     const newArray = [...features, ...prices, ...profession];
     setArray(newArray);
+    Finder();
   };
   useEffect(() => {
     handleFilterChange();

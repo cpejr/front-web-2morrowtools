@@ -22,6 +22,7 @@ import { useGetTrueOrFalse, usePostFavorite } from "../../services/ManagerServic
 import { signInWithGooglePopup } from "./../../services/firebase";
 import { usePostUser, useGetAvaliationByAIId, useGetImage } from "../../services/ManagerService";
 import useAuthStore from "../../stores/auth";
+
 export default function Card({ data }) {
   const [starsValue, setStarsValue] = useState(0);
   const [favoriteIcon, setFavoriteIcon] = useState(
@@ -64,9 +65,13 @@ export default function Card({ data }) {
   const getByIaId = async () => {
     if (hasPrevRating) {
       const result = await useGetAvaliationByAIId(data?._id);
-      const averageRate = result?.averagerate || 0;
+      const averageRate = (await result?.averagerate) || 0;
       const roundedRating = Math?.ceil(averageRate.averageRating * 2) / 2;
-      setStarsValue(roundedRating?.toFixed(1));
+      setTimeout(() => {
+        setStarsValue(roundedRating?.toFixed(1));
+      }, 100);
+    } else {
+      setStarsValue(0);
     }
   };
 
@@ -83,7 +88,15 @@ export default function Card({ data }) {
     }, 10000);
 
     return () => clearInterval(interval);
-  }, [hasPrevRating]);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getByIaId();
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const saveFavorite = async (event) => {
     event.stopPropagation();
@@ -138,8 +151,9 @@ export default function Card({ data }) {
     window.location.reload();
     window.scrollTo(0, 0);
   };
+
   return (
-    <StyledCard onClick={handleLineClick}>
+    <StyledCard onClick={() => console.log(starsValue)}>
       <Image>{loading ? <RiLoader2Fill /> : <img src={image} alt={data?.name} />}</Image>
       <Group>
         <Line onClick={handleLineClick}>{data?.name}</Line>
@@ -151,6 +165,7 @@ export default function Card({ data }) {
           count={5}
           value={starsValue}
           character={({ index }) => renderStarIcon(index)}
+          disabled
         />
         <span>({starsValue})</span>
       </Line>

@@ -114,6 +114,9 @@ export const OtherTools = styled.div`
       font-size: 25px;
     }
   }
+  >h2 {
+    font-size: 32px;
+  }
 `;
 export const CardLine = styled.div`
   display: flex;

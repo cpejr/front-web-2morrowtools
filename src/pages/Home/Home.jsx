@@ -167,7 +167,7 @@ export default function Home() {
         setFilter={setFilter}
       />
       {filteredAiTools?.aiTools && filteredAiTools?.aiTools.length === 0 && (
-        <IANotFound>Nenhuma IA encontrada</IANotFound>
+        <IANotFound>Nenhuma ferramenta ou IAs encontradas</IANotFound>
       )}
       <TrendingTools>
         <DivLine>
