@@ -82,6 +82,17 @@ export default function Tools() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [aiToolsByName]);
 
+  // Grouping Data
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 12;
+  const totalPages = Math.ceil(aiTools?.aiTools?.length / itemsPerPage);
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
+  };
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
+  };
   return (
     <Container>
       <ToolCollumn>{aiToolsByName.aiTools && <Tool data={aiToolsByName} />}</ToolCollumn>

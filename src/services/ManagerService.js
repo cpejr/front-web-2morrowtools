@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import * as requesterService from "./RequesterService";
 
 // AI
@@ -285,6 +286,7 @@ export const usePostComments = async (body) => {
     return { comments };
   } catch (error) {
     console.error("Error editing comment", error);
+    toast.error("Erro ao criar comentário");
     throw error;
   }
 };
@@ -460,6 +462,24 @@ export const useGetImage = async (imageURL) => {
     console.error("Error getting image", error);
     throw error;
   }
+};
+
+export const usePostImage = async (file) => {
+  try {
+    const respose = await requesterService.postImage({ file });
+    return { respose };
+  } catch (error) {
+    console.error(error);
+    return { error };
+  }
+};
+
+export const useGetPostsByID = async (id) => {
+  let filteredPosts = {};
+  await requesterService.findPostsByID(id).then((res) => {
+    filteredPosts = res.data;
+  });
+  return filteredPosts;
 };
 
 export const usePostNewsletter = async (body) => {

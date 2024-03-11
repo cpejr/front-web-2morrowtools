@@ -7,7 +7,7 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { ToastContainer } from "react-toastify";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  <>
     <PrimeReactProvider>
       <GlobalStyles />
       <AppProvider />
@@ -25,5 +25,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       pauseOnHover={false}
       theme='dark'
     />
-  </React.StrictMode>
+  </>
 );

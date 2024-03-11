@@ -1,4 +1,4 @@
-import { ImageHolder, StyledCard, Tag, Title, Text, Link, Tags } from "./Styles";
+import { ImageHolder, Tag, Title, Text, Link, Tags, Card, Container } from "./Styles";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useGetPostImage } from "../../services/ManagerService";
@@ -25,19 +25,21 @@ export default function Post({ data }) {
   }, []);
 
   return (
-    <StyledCard onClick={() => navigate(`/post/${name}`)}>
+    <Card onClick={() => navigate(`/post/${name}`)}>
       <ImageHolder>{loading ? <RiLoader2Fill /> : <img src={image} alt={name} />}</ImageHolder>
-      <Tags>
-        {categories?.map((category, index) => (
-          <Tag key={index} onClick={(event) => event.stopPropagation()}>
-            {category?.name}
-          </Tag>
-        ))}
-      </Tags>
-      <Title>{name}</Title>
-      <Text>{shortDescription}</Text>
-      <Link>Ler mais</Link>
-    </StyledCard>
+      <Container>
+        <Title>{name}</Title>
+        <Text>{shortDescription}</Text>
+        <Tags>
+          {categories?.map((category, index) => (
+            <Tag key={index} onClick={(event) => event.stopPropagation()}>
+              {category?.name}
+            </Tag>
+          ))}
+        </Tags>
+        <Link>Ler mais</Link>
+      </Container>
+    </Card>
   );
 }
 

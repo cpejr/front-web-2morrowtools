@@ -1,68 +1,46 @@
-import { Card } from "antd";
+import { Card as AntdCard } from "antd";
 import styled from "styled-components";
 import { breakpoints, colors } from "../../styles/styleVariables";
 
-export const StyledCard = styled(Card)`
+export const Card = styled.div`
   display: flex;
   flex-direction: column;
-  width: 36rem;
-  height: auto;
-  align-items: center;
-  border-radius: 24px;
-  gap: 3.33rem;
-  margin-left: 50px;
-  margin-right: 40px;
+  justify-content: space-between;
+  padding-bottom: 2rem;
+  gap: 1.5rem;
+  width: 25rem;
   box-shadow: 0px 4px 4px 0px ${colors.shadow};
   background-color: ${colors.grey.cardBackground};
+  border-radius: 20px;
   &:hover {
     background-color: ${colors.grey.cardHover};
   }
-  @media (max-width: ${breakpoints.tablet}) {
-    width: 30rem;
-  }
+
   @media (max-width: ${breakpoints.smallTablet}) {
-    width: 25rem;
-  }
-  @media (max-width: ${breakpoints.mobile}) {
-    width: 22rem;
-  }
-  > div {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    width: 20rem;
   }
 `;
+
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 80%;
+  margin: 0 auto;
+`;
+
 export const ImageHolder = styled.div`
   display: flex;
   height: auto;
-  width: 20rem;
-  border-radius: 20px;
+  width: 100%;
   justify-content: center;
   align-items: center;
   align-self: center;
 
-  @media (max-width: ${breakpoints.tablet}) {
-    width: 25rem;
-  }
-  @media (max-width: ${breakpoints.smallTablet}) {
-    width: 21rem;
-  }
-  @media (max-width: ${breakpoints.mobile}) {
-    width: 19rem;
-  }
   > img {
     width: 100%;
     height: 16rem;
-    border-radius: 20px;
-    @media (max-width: ${breakpoints.desktop}) {
-      height: 14rem;
-    }
-    @media (max-width: ${breakpoints.smallTablet}) {
-      height: 14rem;
-    }
-    @media (max-width: ${breakpoints.mobile}) {
-      height: 11rem;
-    }
+    border-radius: 20px 20px 0 0;
   }
 `;
 
