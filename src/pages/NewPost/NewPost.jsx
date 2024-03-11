@@ -14,14 +14,15 @@ import {
   TextListItem,
   MultipleSelect,
   AutoCompleteInput,
+  Section3,
 } from "./Styles";
 import {
   ModalDelete,
   SubmitButton,
-  FormsTextArea,
   ModalEditPost,
   FormImageInput,
   FormInputBorder,
+  Editor,
 } from "../../components";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
@@ -32,7 +33,6 @@ import * as managerService from "../../services/ManagerService";
 import { newPostValidationSchema, buildNewPostErrorMessage } from "./utils";
 
 export default function NewPost() {
-
   // Set variables
   const [nameQuery, setNameQuery] = useState("");
   const [namesArray, setNamesArray] = useState([]);
@@ -40,16 +40,23 @@ export default function NewPost() {
   const [selectedText, setSelectedText] = useState(null);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [selectedTextId, setSelectedTextId] = useState(null);
-  const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [isEditSectionOpen, setEditSectionOpen] = useState(false);
   const [categoriesFeature, setCategoriesFeature] = useState([]);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [idCategoriesFeature, setIdsCategoriesFeature] = useState([]);
   const [categoriesProfession, setCategoriesProfession] = useState([]);
   const [idCategoriesProfession, setIdsCategoriesProfession] = useState([]);
 
+  const [editorValue, setEditorValue] = useState();
+  const [editorError, setEditorError] = useState(false);
+
   async function handleCreatePost(data) {
     try {
-      await managerService.useCreatePost(data);
+      if (!editorValue || editorValue === "<p></p>\n") {
+        setEditorError(true);
+        throw new Error("O html deve ser preenchido");
+      }
+      await managerService.useCreatePost({ ...data, html: editorValue });
       toast.success("Post criado com sucesso!");
       toast.clearWaitingQueue();
       getPosts();
@@ -75,16 +82,15 @@ export default function NewPost() {
   };
 
   const handleOpenEditModal = (post) => {
+    if (isEditSectionOpen) {
+      setSelectedText("");
+      setSelectedTextId("");
+      setEditSectionOpen(false);
+      return;
+    }
     setSelectedTextId(post._id);
     setSelectedText(post);
-    setEditModalOpen(true);
-  };
-
-  const handleCloseEditModal = async () => {
-    setSelectedText(null);
-    setSelectedTextId(null);
-    setEditModalOpen(false);
-    getPosts()
+    setEditSectionOpen(true);
   };
 
   const handleCloseDeleteModal = () => {
@@ -129,6 +135,7 @@ export default function NewPost() {
 
   useEffect(() => {
     search({ query: nameQuery });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nameQuery]);
 
   const {
@@ -142,7 +149,7 @@ export default function NewPost() {
       ...data,
       id_categoryfeature: idCategoriesFeature,
       id_categoryprofession: idCategoriesProfession,
-    };  
+    };
     handleCreatePost(combinedData);
   };
 
@@ -153,7 +160,6 @@ export default function NewPost() {
     }));
     return newArray;
   };
-
   return (
     <Container>
       <Title>SUBMETER NOVO POST</Title>
@@ -178,12 +184,7 @@ export default function NewPost() {
             placeholder='Descrição curta:'
             errors={errors}
           />
-          <FormsTextArea
-            name='longDescription'
-            register={register}
-            placeholder='Descrição longa:'
-            errors={errors}
-          />
+          <Editor setEditorValue={setEditorValue} error={editorError} />
 
           <Selects>
             <MultipleSelect
@@ -211,7 +212,7 @@ export default function NewPost() {
               className='w-full md:w-20rem'
               filter
               errors={errors}
-          />
+            />
           </Selects>
 
           <SubmitButton>
@@ -241,27 +242,7 @@ export default function NewPost() {
             />
           </StyledModal>
         )}
-        {isEditModalOpen && (
-          <StyledModal
-            open={isEditModalOpen}
-            onCancel={handleCloseEditModal}
-            width={500}
-            height={250}
-            padding={0}
-            footer={null}
-            closeIcon={true}
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: "100px",
-              marginBottom: "80%",
-            }}
-            centered
-            destroyOnClose
-          >
-            <ModalEditPost _id={selectedTextId} post={selectedText} close={handleCloseEditModal} />
-          </StyledModal>
-        )}
+
         <TextList>
           <IconWrapper>
             <SVGDiv>
@@ -285,6 +266,13 @@ export default function NewPost() {
           ))}
         </TextList>
       </Section2>
+
+      {isEditSectionOpen && (
+        <Section3>
+          <Title>EDITAR POST</Title>
+          <ModalEditPost _id={selectedTextId} post={selectedText} />
+        </Section3>
+      )}
     </Container>
   );
 }

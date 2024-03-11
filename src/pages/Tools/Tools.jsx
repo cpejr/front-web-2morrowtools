@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import {
   BlueButton,
-  ButtonDiv,
   CommentContainer,
   CommentSection,
   CommentInput,
@@ -23,7 +22,6 @@ import {
 } from "../../services/ManagerService";
 import { useParams } from "react-router-dom";
 import useAuthStore from "../../stores/auth";
-import Pagination from "../../components/features/Pagination/Pagination";
 
 export default function Tools() {
   // Variables
@@ -95,7 +93,6 @@ export default function Tools() {
   const handleNextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
   };
-
   return (
     <Container>
       <ToolCollumn>{aiToolsByName.aiTools && <Tool data={aiToolsByName} />}</ToolCollumn>
@@ -124,27 +121,16 @@ export default function Tools() {
           <div>
             <DivLine>
               <Line>
-                {aiTools?.aiTools
-                  ?.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
-                  .map((content, index) => (
-                    <Card
-                      data={{
-                        ...content,
-                      }}
-                      key={index}
-                    />
-                  ))}
+                {aiTools?.aiTools?.slice(0, 8).map((content, index) => (
+                  <Card
+                    data={{
+                      ...content,
+                    }}
+                    key={index}
+                  />
+                ))}
               </Line>
             </DivLine>
-            <ButtonDiv>
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                handlePrevPage={handlePrevPage}
-                handleNextPage={handleNextPage}
-                setCurrentPage={setCurrentPage}
-              />
-            </ButtonDiv>
           </div>
         ) : (
           <h2>Nenhuma IA semelhante encontrada</h2>

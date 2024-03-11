@@ -147,7 +147,7 @@ export const Line = styled.div`
   height: auto;
   flex-direction: row;
   justify-content: center;
-  gap: 2rem;
+  gap: 4rem;
   @media (max-width: ${breakpoints.mobile}) {
     margin-bottom: 0;
   }

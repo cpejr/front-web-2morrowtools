@@ -115,9 +115,12 @@ export const getAllPosts = (filters) => api.get(`/post/`, { params: { filters } 
 
 export const getPostImage = (imageUrl) => api.post(`/PostImage`, { imageUrl });
 
+export const findPostsByID = (id) => api.get(`/posts/find-by-id`, { params: id });
+
 //image
 
 export const getImage = (imageURL) => api.post(`/IAImage`, { imageURL });
+export const postImage = (body) => api.post(`/image`, body);
 
 //newsletter
 
