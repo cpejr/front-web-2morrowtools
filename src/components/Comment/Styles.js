@@ -36,6 +36,7 @@ export const Image = styled.img`
 `;
 export const CommentCollumn = styled.div`
   display: flex;
+  text-align: left;
   flex-direction: column;
   width: 95%;
   font-size: 25px;

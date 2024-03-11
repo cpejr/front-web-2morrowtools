@@ -1,21 +1,40 @@
 import { useState, useEffect } from "react";
 
-import { BlueButton, CommentContainer, CommentInput, CommentSection, LetComment } from "./Styles";
+import {
+  BlueButton,
+  CommentContainer,
+  CommentInput,
+  CommentSection,
+  LetComment,
+  Title,
+  ErrorTitle,
+} from "./Styles";
 import { Comment } from "../../components";
-import { useGetComments } from "../../services/ManagerService";
+import { useGetComments, usePostComments } from "../../services/ManagerService";
+import useAuthStore from "../../stores/auth";
 
 export default function Comments({ postId }) {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { getUser } = useAuthStore();
 
   async function postComment() {
-    console.log(comment);
+    setLoading(true);
+    const result = await usePostComments({
+      comment,
+      id_user: getUser()?._id,
+      id_post: postId,
+    });
+    setLoading(false);
+    getComments();
   }
-
   async function getComments() {
-    //const comments = await useGetComments();
+    setLoading(true);
+    const comments = await useGetComments(postId);
+    setComments(comments);
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -24,15 +43,15 @@ export default function Comments({ postId }) {
 
   if (loading) {
     return (
-      <Container>
-        <Title>Carregando...</Title>
-      </Container>
+      <CommentSection>
+        <h2>Carregando...</h2>
+      </CommentSection>
     );
   } else if (error) {
     return (
-      <Container>
-        <ErrorTitle>Erro ao carregar post, tente novamente com outro nome.</ErrorTitle>
-      </Container>
+      <CommentSection>
+        <h2>Erro ao carregar comentários, tente novamente com outro nome.</h2>
+      </CommentSection>
     );
   } else {
     return (
@@ -50,7 +69,7 @@ export default function Comments({ postId }) {
         </LetComment>
         <CommentContainer>
           {comments?.comments?.map((comment) => (
-            <Comment key={comment?._id} data={comment} onDelete={gettingComments} />
+            <Comment key={comment?._id} data={comment} onDelete={getComments} />
           ))}
         </CommentContainer>
       </CommentSection>

@@ -51,7 +51,7 @@ export default function Tools() {
     usePostComments({
       comment,
       id_user: getUser()?._id,
-      id_post: aiToolsByName.aiTools[0]._id,
+      id_ia: aiToolsByName.aiTools[0]._id,
     });
     gettingComments();
   }
@@ -93,7 +93,6 @@ export default function Tools() {
   const handleNextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
   };
-
   return (
     <Container>
       <ToolCollumn>{aiToolsByName.aiTools && <Tool data={aiToolsByName} />}</ToolCollumn>

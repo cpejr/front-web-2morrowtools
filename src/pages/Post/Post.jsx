@@ -87,7 +87,7 @@ export default function Post() {
         </TagsLine>
         <SmallDescription>{post.shortDescription}</SmallDescription>
         <HtmlContainer dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.html) }} />
-        <Comments />
+        <Comments postId={post?._id} />
         <OtherTools>
           <h1>OUTROS POSTS SIMILARES:</h1>
           {similarPost && similarPost.length > 0 ? (

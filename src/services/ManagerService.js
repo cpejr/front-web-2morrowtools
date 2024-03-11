@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import * as requesterService from "./RequesterService";
 
 // AI
@@ -285,6 +286,7 @@ export const usePostComments = async (body) => {
     return { comments };
   } catch (error) {
     console.error("Error editing comment", error);
+    toast.error("Erro ao criar comentário");
     throw error;
   }
 };

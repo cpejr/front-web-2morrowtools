@@ -1,4 +1,4 @@
-import { ImageHolder, StyledCard, Tag, Title, Text, Link, Tags, Card, Container } from "./Styles";
+import { ImageHolder, Tag, Title, Text, Link, Tags, Card, Container } from "./Styles";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useGetPostImage } from "../../services/ManagerService";

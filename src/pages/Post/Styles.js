@@ -142,11 +142,11 @@ export const CommentSection = styled.div`
   width: 60%;
   flex-direction: column;
   align-self: center;
-  gap: 1rem;
+  gap: 2rem;
+  text-align: center;
   height: auto;
   > h1 {
     font-size: 40px;
-
     @media (max-width: ${breakpoints.smallTablet}) {
       align-self: center;
       font-size: 40px;
@@ -179,6 +179,7 @@ export const LetComment = styled.div`
   align-self: center;
   > h2 {
     font-size: 35px;
+    margin: 0;
     @media (max-width: ${breakpoints.desktop}) {
     }
     @media (max-width: ${breakpoints.tablet}) {
