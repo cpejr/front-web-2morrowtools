@@ -16,12 +16,13 @@ import {
 } from "./Styles";
 import DOMPurify from "dompurify";
 import Comments from "./Comments";
-import { Post as PostCard } from "../../components";
+import { Card, Post as PostCard } from "../../components";
 
 export default function Post() {
   const { name } = useParams();
   const [post, setPost] = useState({});
   const [similarPost, setSimilarPost] = useState({});
+  const [similarTool, setSimilarTool] = useState({});
   const [erro, setErro] = useState(false);
   const [loading, setLoading] = useState(true);
   const [image, setImage] = useState(post?.imageURL);
@@ -47,6 +48,8 @@ export default function Post() {
           (similar) => similar._id !== tempPost.Post._id
         );
         setSimilarPost(filteredSimilarPosts);
+        const filteredTools = await managerService.useGetAIToolsByCategoryId({ id: idsString });
+        setSimilarTool(filteredTools);
         setLoading(false);
       } catch (error) {
         console.error("Erro ao carregar post", error);
@@ -91,7 +94,7 @@ export default function Post() {
             <div>
               <DivLine>
                 <Line>
-                  {similarPost?.slice(0, 8).map((content, index) => (
+                  {similarPost?.slice(0, 4).map((content, index) => (
                     <PostCard
                       data={{
                         ...content,
@@ -104,6 +107,27 @@ export default function Post() {
             </div>
           ) : (
             <h2>Nenhum Post semelhante encontrado</h2>
+          )}
+        </OtherTools>
+        <OtherTools>
+          <h1>Ferramentas Similares</h1>
+          {similarTool?.aiTools && similarTool.aiTools.length > 0 ? (
+            <div>
+              <DivLine>
+                <Line>
+                  {similarTool?.aiTools?.slice(0, 8).map((content, index) => (
+                    <Card
+                      data={{
+                        ...content,
+                      }}
+                      key={index}
+                    />
+                  ))}
+                </Line>
+              </DivLine>
+            </div>
+          ) : (
+            <h2>Nenhuma IA semelhante encontrada</h2>
           )}
         </OtherTools>
       </Container>
