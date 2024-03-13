@@ -15,7 +15,7 @@ import {
 } from "./Styles";
 import { FaRegBookmark } from "react-icons/fa";
 import { FaBookmark, FaStarHalfStroke } from "react-icons/fa6";
-import { RiStarSLine, RiStarSFill, RiLoader2Fill } from "react-icons/ri";
+import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { useGetTrueOrFalse, usePostFavorite } from "../../services/ManagerService";
@@ -35,7 +35,6 @@ export default function Card({ data }) {
   const [hasPrevRating, setHasPrevRating] = useState(false);
   const navigate = useNavigate();
   const [image, setImage] = useState(data?.imageURL);
-  const [loading, setLoading] = useState(false);
   let categories = [
     ...data.id_categoryprices,
     ...data.id_categoryfeatures,
@@ -45,10 +44,8 @@ export default function Card({ data }) {
   const getImage = async () => {
     try {
       if (data?.imageURL.includes("2morrowstorage.blob.core.windows.net")) {
-        setLoading(true);
         const azureImage = await useGetImage(data.imageURL);
         setImage(azureImage.data.image);
-        setLoading(false);
       }
     } catch (error) {
       console.error("Erro ao buscar imagem de ferramenta", error);
@@ -154,7 +151,9 @@ export default function Card({ data }) {
 
   return (
     <StyledCard onClick={() => console.log(starsValue)}>
-      <Image>{loading ? <RiLoader2Fill /> : <img src={image} alt={data?.name} />}</Image>
+      <Image>
+        <img src={image} alt={data?.name} />
+      </Image>
       <Group>
         <Line onClick={handleLineClick}>{data?.name}</Line>
         <LineSVG onClick={saveFavorite}>{favoriteIcon}</LineSVG>
