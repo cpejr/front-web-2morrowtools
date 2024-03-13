@@ -1,5 +1,5 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect } from "react";
 import {
   StyledCard,
@@ -57,43 +57,36 @@ export default function Card({ data }) {
   async function GetTrueOrFalse() {
     const { result } = await useGetTrueOrFalse(data?._id);
     setHasPrevRating(result);
+    await getByIaId();
   }
 
   const getByIaId = async () => {
     if (hasPrevRating) {
+      setStarsValue(0);
       const result = await useGetAvaliationByAIId(data?._id);
-      const averageRate = (await result?.averagerate) || 0;
+      const averageRate = result?.averagerate || 0;
       const roundedRating = Math?.ceil(averageRate.averageRating * 2) / 2;
-      setTimeout(() => {
-        setStarsValue(roundedRating?.toFixed(1));
-      }, 100);
-    } else {
+      setStarsValue(roundedRating.toFixed(1));
+    }
+    if (!hasPrevRating) {
       setStarsValue(0);
     }
   };
 
   useEffect(() => {
+    const interval = setInterval(() => {
+      getByIaId();
+    }, 10000);
+    return () => clearInterval(interval);
+  }, [hasPrevRating]);
+
+  useEffect(() => {
     GetTrueOrFalse();
   }, []);
+
   useEffect(() => {
-    getByIaId();
     getImage();
   }, [data]);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      getByIaId();
-    }, 10000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      getByIaId();
-    }, 10000);
-
-    return () => clearInterval(interval);
-  }, []);
 
   const saveFavorite = async (event) => {
     event.stopPropagation();
@@ -150,7 +143,7 @@ export default function Card({ data }) {
   };
 
   return (
-    <StyledCard onClick={() => console.log(starsValue)}>
+    <StyledCard onClick={handleLineClick}>
       <Image>
         <img src={image} alt={data?.name} />
       </Image>
