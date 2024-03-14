@@ -6,6 +6,10 @@ import { PrimeReactProvider } from "primereact/api";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import { ToastContainer } from "react-toastify";
 
+console.error = () => {};
+console.warn = () => {};
+console.log = () => {};
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <>
     <PrimeReactProvider>
