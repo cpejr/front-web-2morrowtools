@@ -139,15 +139,15 @@ export const DivLine = styled.div`
   align-items: center;
   justify-content: center;
   gap: 2rem;
-  display: ${({ isCurrentPage }) => (isCurrentPage ? "flex" : "none")};
 `;
 export const Line = styled.div`
   display: flex;
-  width: 50%;
+  width: 90%;
   height: auto;
   flex-direction: row;
   justify-content: center;
-  gap: 4rem;
+  gap: 2rem;
+  flex-wrap: wrap;
   @media (max-width: ${breakpoints.mobile}) {
     margin-bottom: 0;
   }
