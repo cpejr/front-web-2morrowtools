@@ -405,6 +405,14 @@ export const useCreatePost = async (body) => {
   return create;
 };
 
+export const useFilterCategoryPosts = async (filters) => {
+  let posts = {};
+  await requesterService.getNameCategoryPostFilter(filters).then((res) => {
+    posts = res.data;
+  });
+  return posts;
+};
+
 export const useDeletePost = async (_id) => {
   try {
     const response = await requesterService.deletePost(_id);

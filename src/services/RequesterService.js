@@ -113,6 +113,9 @@ export const updatePut = (_id, body) => api.put(`/posts/${_id}`, body);
 
 export const getAllPosts = (filters) => api.get(`/post/`, { params: { filters } });
 
+export const getNameCategoryPostFilter = (filters) =>
+  api.get(`/posts/filterCategories`, { params: filters });
+
 export const getPostImage = (imageUrl) => api.post(`/PostImage`, { imageUrl });
 
 export const findPostsByID = (id) => api.get(`/posts/find-by-id`, { params: id });

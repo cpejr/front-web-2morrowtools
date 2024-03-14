@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { ImageHolder, Tag, Title, Text, Link, Tags, Card, Container } from "./Styles";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
@@ -22,6 +23,7 @@ export default function Post({ data }) {
 
   useEffect(() => {
     getImage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
