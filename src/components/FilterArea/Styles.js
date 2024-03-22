@@ -97,7 +97,7 @@ export const MultipleSelect = styled(MultiSelect)`
   background-color: ${colors.black};
 
   .p-multiselect-label {
-    color: ${colors.white};
+    color: ${colors.blue};
 
     width: 215px;
   }
@@ -137,9 +137,20 @@ export const Buttons = styled(Button)`
   width: 130px;
   margin-left: 10px;
   margin-right: 10px;
-  background-color: ${colors.black};
+  background-color: ${colors.blue};
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
-
+  @media (max-width: ${breakpoints.tablet}) {
+    font-size: 90%;
+  }
+`;
+export const ButtonsFilter = styled(Button)`
+  border: 1px solid #d1d5db;
+  width: 130px;
+  margin-left: 10px;
+  margin-right: 10px;
+  background-color: ${colors.blue.whiteBlue};
+  color: ${colors.black};
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
   @media (max-width: ${breakpoints.tablet}) {
     font-size: 90%;
   }

@@ -9,6 +9,7 @@ import {
   UniSelect,
   ButtonsDiv,
   Buttons,
+  ButtonsFilter,
   ShowTags,
   Tags,
 } from "./Styles";
@@ -146,7 +147,7 @@ export default function FilterArea({
       </DivSelect>
       <SelectedTags selectedItems={showFilters} />
       <ButtonsDiv>
-        <Buttons onClick={() => onFilterClick()}>Filtrar</Buttons>
+        <ButtonsFilter onClick={() => onFilterClick()}>Filtrar</ButtonsFilter>
         <Buttons onClick={handleClearFilters}>Limpar Filtros</Buttons>
       </ButtonsDiv>
     </ContainerFilter>
