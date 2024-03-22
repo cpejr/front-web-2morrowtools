@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import {
   Form,
   Title,
@@ -31,6 +31,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as managerService from "../../services/ManagerService";
 import { newPostValidationSchema, buildNewPostErrorMessage } from "./utils";
+import JoditEditor from "jodit-react";
 
 export default function NewPost() {
   // Set variables
@@ -48,7 +49,9 @@ export default function NewPost() {
   const [idCategoriesProfession, setIdsCategoriesProfession] = useState([]);
 
   const [editorValue, setEditorValue] = useState();
+  console.log("✌️editorValue --->", editorValue);
   const [editorError, setEditorError] = useState(false);
+  const editor = useRef(null);
 
   async function handleCreatePost(data) {
     try {
@@ -56,7 +59,7 @@ export default function NewPost() {
         setEditorError(true);
         throw new Error("O html deve ser preenchido");
       }
-      await managerService.useCreatePost({ ...data, html: editorValue });
+      await managerService.useCreatePost({ ...data, html: { html: editorValue } });
       toast.success("Post criado com sucesso!");
       toast.clearWaitingQueue();
       getPosts();
@@ -184,8 +187,12 @@ export default function NewPost() {
             placeholder='Descrição curta:'
             errors={errors}
           />
-          <Editor setEditorValue={setEditorValue} error={editorError} />
-
+          {/* <Editor setEditorValue={setEditorValue} error={editorError} /> */}
+          <JoditEditor
+            ref={editor}
+            value={editorValue}
+            onBlur={(newContent) => setEditorValue(newContent)}
+          />
           <Selects>
             <MultipleSelect
               value={idCategoriesFeature}
@@ -214,7 +221,6 @@ export default function NewPost() {
               errors={errors}
             />
           </Selects>
-
           <SubmitButton>
             <p>Enviar</p>
           </SubmitButton>

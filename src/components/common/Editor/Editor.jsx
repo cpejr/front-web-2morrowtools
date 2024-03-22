@@ -6,9 +6,9 @@ import PropTypes from "prop-types";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Container, ErrorMessage } from "./Styles";
 
-export default function EditorConvertToHTML({ setEditorValue, error, html = "" }) {
+export default function EditorConvertToHTML({ setEditorValue, error, html = {} }) {
   const [editorState, setEditorState] = useState(() => {
-    const blocksFromHTML = convertFromHTML(html);
+    const blocksFromHTML = convertFromHTML(html.html);
     const state = ContentState.createFromBlockArray(
       blocksFromHTML.contentBlocks,
       blocksFromHTML.entityMap

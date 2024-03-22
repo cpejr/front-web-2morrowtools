@@ -34,7 +34,7 @@ export default function ModalEditPost({ _id, post, close }) {
       id_categoryfeature: idCategoriesFeature,
       id_categoryprofession: idCategoriesProfession,
     };
-    if (editorValue) body = { ...body, html: editorValue };
+    if (editorValue) body = { ...body, html: { html: editorValue } };
 
     try {
       await managerService.useUpdatePost(_id, body);
