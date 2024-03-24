@@ -49,7 +49,6 @@ export default function NewPost() {
   const [idCategoriesProfession, setIdsCategoriesProfession] = useState([]);
 
   const [editorValue, setEditorValue] = useState();
-  console.log("✌️editorValue --->", editorValue);
   const [editorError, setEditorError] = useState(false);
   const editor = useRef(null);
 
@@ -188,7 +187,9 @@ export default function NewPost() {
             errors={errors}
           />
           {/* <Editor setEditorValue={setEditorValue} error={editorError} /> */}
+
           <JoditEditor
+            //config={{ theme: "dark" }}
             ref={editor}
             value={editorValue}
             onBlur={(newContent) => setEditorValue(newContent)}

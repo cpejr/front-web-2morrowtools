@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import SubmitButton from "../../../common/SubmitButton/SubmitButton";
 import * as managerService from "../../../../services/ManagerService";
@@ -10,6 +10,7 @@ import FormInputBorder from "../../../common/FormInputBorder/FormInputBorder";
 import { buildEditPostErrorMessage, editPostValidationSchema } from "./utils";
 import { Container, Label, Form, Section, LabelWraper, MultipleSelect } from "./Styles";
 import { Editor } from "../../..";
+import JoditEditor from "jodit-react";
 
 export default function ModalEditPost({ _id, post, close }) {
   const [categoriesFeature, setCategoriesFeature] = useState([]);
@@ -17,7 +18,8 @@ export default function ModalEditPost({ _id, post, close }) {
   const [categoriesProfession, setCategoriesProfession] = useState([]);
   const [idCategoriesProfession, setIdsCategoriesProfession] = useState([]);
 
-  const [editorValue, setEditorValue] = useState();
+  const [editorValue, setEditorValue] = useState(post.html);
+  const editor = useRef(null);
 
   // Forms values
   const [formData, setFormData] = useState({
@@ -34,7 +36,7 @@ export default function ModalEditPost({ _id, post, close }) {
       id_categoryfeature: idCategoriesFeature,
       id_categoryprofession: idCategoriesProfession,
     };
-    if (editorValue) body = { ...body, html: { html: editorValue } };
+    if (editorValue) body = { ...body, html: editorValue };
 
     try {
       await managerService.useUpdatePost(_id, body);
@@ -120,7 +122,12 @@ export default function ModalEditPost({ _id, post, close }) {
             />
           </LabelWraper>
 
-          <Editor setEditorValue={setEditorValue} html={post.html} />
+          {/* <Editor setEditorValue={setEditorValue} html={post.html} /> */}
+          <JoditEditor
+            ref={editor}
+            value={editorValue}
+            onBlur={(newContent) => setEditorValue(newContent)}
+          />
 
           <LabelWraper>
             <Label>Características:</Label>

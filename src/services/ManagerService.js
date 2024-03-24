@@ -399,7 +399,6 @@ export const useUpdateAvaliation = async (_id, body) => {
 // NewPost & Post
 
 export const useCreatePost = async (body) => {
-  console.log("✌️body --->", body);
   const create = await requesterService.createPost(body).then((res) => {
     return res;
   });
