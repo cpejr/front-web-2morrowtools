@@ -1,24 +1,17 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import {
   BlueButton,
-  ButtonDiv,
   CommentContainer,
   CommentSection,
   CommentInput,
   Container,
-  DiscoverData,
-  DiscoverDiv,
-  DiscoverInputs,
-  DiscoverLine,
   DivLine,
-  FullInput,
-  HalfInput,
   LetComment,
   Line,
   OtherTools,
   ToolCollumn,
 } from "./Styles";
-import { Card, Comment, Tool } from "../../components";
+import { Card, Comment, Newsletter, Tool } from "../../components";
 import { useState } from "react";
 import { useEffect } from "react";
 import {
@@ -29,7 +22,6 @@ import {
 } from "../../services/ManagerService";
 import { useParams } from "react-router-dom";
 import useAuthStore from "../../stores/auth";
-import Pagination from "../../components/features/Pagination/Pagination";
 
 export default function Tools() {
   // Variables
@@ -41,10 +33,12 @@ export default function Tools() {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
   const similarIDs = [
-    aiToolsByName?.aiTools?.[0]?.id_categoryfeature?._id,
-    aiToolsByName?.aiTools?.[0]?.id_categoryprice?._id,
-    aiToolsByName?.aiTools?.[0]?.id_categoryprofession?._id,
+    ...(aiToolsByName?.aiTools?.[0]?.id_categoryfeatures || []),
+    ...(aiToolsByName?.aiTools?.[0]?.id_categoryprices || []),
+    ...(aiToolsByName?.aiTools?.[0]?.id_categoryprofessions || []),
   ];
+
+  const extractedIDs = similarIDs.flatMap((obj) => obj._id);
 
   //Backend calls
 
@@ -70,7 +64,7 @@ export default function Tools() {
     return array.join(",");
   };
   async function similarAITools() {
-    const idsString = convertArrayToString(similarIDs);
+    const idsString = convertArrayToString(extractedIDs);
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const aiTools = await useGetAIToolsByCategoryId({
       id: idsString,
@@ -99,27 +93,10 @@ export default function Tools() {
   const handleNextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
   };
-
   return (
     <Container>
       <ToolCollumn>{aiToolsByName.aiTools && <Tool data={aiToolsByName} />}</ToolCollumn>
-      <DiscoverDiv style={{ display: "none" }}>
-        <DiscoverData>
-          <h6>Descubra novas ferramentas de tecnologia toda semana! </h6>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua
-          </p>
-        </DiscoverData>
-        <DiscoverInputs>
-          <DiscoverLine>
-            <HalfInput placeholder='Nome:' />
-            <HalfInput placeholder='E-mail:' type='email' />
-          </DiscoverLine>
-          <FullInput placeholder='Mensagem:' />
-          <BlueButton type='primary'>ENVIAR</BlueButton>
-        </DiscoverInputs>
-      </DiscoverDiv>
+      <Newsletter />
       <LetComment>
         <h2>Deixe seu comentário</h2>
         <CommentInput
@@ -140,30 +117,24 @@ export default function Tools() {
       </CommentSection>
       <OtherTools>
         <h1>OUTRAS FERRAMENTAS SIMILARES:</h1>
-        <DivLine>
-          <Line>
-            {aiTools?.aiTools
-              ?.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
-              .map((content, index) => (
-                <Card
-                  data={{
-                    ...content,
-                  }}
-                  key={index}
-                />
-              ))}
-          </Line>
-        </DivLine>
-
-        <ButtonDiv>
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            handlePrevPage={handlePrevPage}
-            handleNextPage={handleNextPage}
-            setCurrentPage={setCurrentPage}
-          />
-        </ButtonDiv>
+        {aiTools?.aiTools && aiTools.aiTools.length > 0 ? (
+          <div>
+            <DivLine>
+              <Line>
+                {aiTools?.aiTools?.slice(0, 8).map((content, index) => (
+                  <Card
+                    data={{
+                      ...content,
+                    }}
+                    key={index}
+                  />
+                ))}
+              </Line>
+            </DivLine>
+          </div>
+        ) : (
+          <h2>Nenhuma IA semelhante encontrada</h2>
+        )}
       </OtherTools>
     </Container>
   );

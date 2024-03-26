@@ -16,6 +16,7 @@ export const ToolCollumn = styled.div`
   width: 95%;
   height: auto;
   justify-content: center;
+  margin-bottom: 2rem;
 `;
 
 export const LetComment = styled.div`
@@ -112,6 +113,9 @@ export const OtherTools = styled.div`
     @media (max-width: ${breakpoints.smallDevice}) {
       font-size: 25px;
     }
+  }
+  >h2 {
+    font-size: 32px;
   }
 `;
 export const CardLine = styled.div`

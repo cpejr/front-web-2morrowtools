@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import * as requesterService from "./RequesterService";
 
 // AI
@@ -285,6 +286,7 @@ export const usePostComments = async (body) => {
     return { comments };
   } catch (error) {
     console.error("Error editing comment", error);
+    toast.error("Erro ao criar comentário");
     throw error;
   }
 };
@@ -394,6 +396,71 @@ export const useUpdateAvaliation = async (_id, body) => {
   }
 };
 
+// NewPost & Post
+
+export const useCreatePost = async (body) => {
+  const create = await requesterService.createPost(body).then((res) => {
+    return res;
+  });
+  return create;
+};
+
+export const useFilterCategoryPosts = async (filters) => {
+  let posts = {};
+  await requesterService.getNameCategoryPostFilter(filters).then((res) => {
+    posts = res.data;
+  });
+  return posts;
+};
+
+export const useDeletePost = async (_id) => {
+  try {
+    const response = await requesterService.deletePost(_id);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting post", error);
+    throw error;
+  }
+};
+
+export const useUpdatePost = async (_id, body) => {
+  try {
+    const response = await requesterService.updatePut(_id, body);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating post", error);
+    throw error;
+  }
+};
+
+export const useGetPosts = async (name) => {
+  let Post;
+  await requesterService.getPostByName(name).then((res) => {
+    Post = res.data;
+  });
+  return { Post };
+};
+
+export const useGetPostImage = async (imageUrl) => {
+  try {
+    const response = await requesterService.getPostImage(imageUrl);
+    return response;
+  } catch (error) {
+    console.error("Error getting image", error);
+    throw error;
+  }
+};
+
+export const useGetAllPosts = async (filters = {}) => {
+  try {
+    const response = await requesterService.getAllPosts(filters);
+    return { response };
+  } catch (error) {
+    console.error("Error getting post");
+    return { error };
+  }
+};
+
 // image
 export const useGetImage = async (imageURL) => {
   try {
@@ -403,4 +470,37 @@ export const useGetImage = async (imageURL) => {
     console.error("Error getting image", error);
     throw error;
   }
+};
+
+export const usePostImage = async (file) => {
+  try {
+    const respose = await requesterService.postImage({ file });
+    return { respose };
+  } catch (error) {
+    console.error(error);
+    return { error };
+  }
+};
+
+export const useGetPostsByID = async (id) => {
+  let filteredPosts = {};
+  await requesterService.findPostsByID(id).then((res) => {
+    filteredPosts = res.data;
+  });
+  return filteredPosts;
+};
+
+export const usePostNewsletter = async (body) => {
+  const create = await requesterService.postNewsletter(body).then((res) => {
+    return res;
+  });
+  return create;
+};
+
+export const useGetNewsletter = async () => {
+  let Newsletters = {};
+  await requesterService.getNewsletter().then((res) => {
+    Newsletters = res.data;
+  });
+  return { Newsletters };
 };

@@ -1,5 +1,5 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect } from "react";
 import {
   StyledCard,
@@ -15,13 +15,14 @@ import {
 } from "./Styles";
 import { FaRegBookmark } from "react-icons/fa";
 import { FaBookmark, FaStarHalfStroke } from "react-icons/fa6";
-import { RiStarSLine, RiStarSFill, RiLoader2Fill } from "react-icons/ri";
+import { RiStarSLine, RiStarSFill } from "react-icons/ri";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { useGetTrueOrFalse, usePostFavorite } from "../../services/ManagerService";
 import { signInWithGooglePopup } from "./../../services/firebase";
 import { usePostUser, useGetAvaliationByAIId, useGetImage } from "../../services/ManagerService";
 import useAuthStore from "../../stores/auth";
+
 export default function Card({ data }) {
   const [starsValue, setStarsValue] = useState(0);
   const [favoriteIcon, setFavoriteIcon] = useState(
@@ -34,7 +35,6 @@ export default function Card({ data }) {
   const [hasPrevRating, setHasPrevRating] = useState(false);
   const navigate = useNavigate();
   const [image, setImage] = useState(data?.imageURL);
-  const [loading, setLoading] = useState(false);
   let categories = [
     ...data.id_categoryprices,
     ...data.id_categoryfeatures,
@@ -44,10 +44,8 @@ export default function Card({ data }) {
   const getImage = async () => {
     try {
       if (data?.imageURL.includes("2morrowstorage.blob.core.windows.net")) {
-        setLoading(true);
         const azureImage = await useGetImage(data.imageURL);
         setImage(azureImage.data.image);
-        setLoading(false);
       }
     } catch (error) {
       console.error("Erro ao buscar imagem de ferramenta", error);
@@ -59,31 +57,36 @@ export default function Card({ data }) {
   async function GetTrueOrFalse() {
     const { result } = await useGetTrueOrFalse(data?._id);
     setHasPrevRating(result);
+    await getByIaId();
   }
 
   const getByIaId = async () => {
     if (hasPrevRating) {
+      setStarsValue(0);
       const result = await useGetAvaliationByAIId(data?._id);
       const averageRate = result?.averagerate || 0;
       const roundedRating = Math?.ceil(averageRate.averageRating * 2) / 2;
-      setStarsValue(roundedRating?.toFixed(1));
+      setStarsValue(roundedRating.toFixed(1));
+    }
+    if (!hasPrevRating) {
+      setStarsValue(0);
     }
   };
 
   useEffect(() => {
-    GetTrueOrFalse();
-  }, []);
-  useEffect(() => {
-    getByIaId();
-    getImage();
-  }, [data]);
-  useEffect(() => {
     const interval = setInterval(() => {
       getByIaId();
     }, 10000);
-
     return () => clearInterval(interval);
   }, [hasPrevRating]);
+
+  useEffect(() => {
+    GetTrueOrFalse();
+  }, []);
+
+  useEffect(() => {
+    getImage();
+  }, [data]);
 
   const saveFavorite = async (event) => {
     event.stopPropagation();
@@ -138,9 +141,12 @@ export default function Card({ data }) {
     window.location.reload();
     window.scrollTo(0, 0);
   };
+
   return (
     <StyledCard onClick={handleLineClick}>
-      <Image>{loading ? <RiLoader2Fill /> : <img src={image} alt={data?.name} />}</Image>
+      <Image>
+        <img src={image} alt={data?.name} />
+      </Image>
       <Group>
         <Line onClick={handleLineClick}>{data?.name}</Line>
         <LineSVG onClick={saveFavorite}>{favoriteIcon}</LineSVG>
@@ -151,6 +157,7 @@ export default function Card({ data }) {
           count={5}
           value={starsValue}
           character={({ index }) => renderStarIcon(index)}
+          disabled
         />
         <span>({starsValue})</span>
       </Line>

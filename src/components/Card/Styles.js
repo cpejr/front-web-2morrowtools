@@ -12,7 +12,6 @@ export const StyledCard = styled(Card)`
   gap: 3.33rem;
   box-shadow: 0px 4px 4px 0px ${colors.shadow};
   background-color: ${colors.grey.cardBackground};
-
   &:hover {
     background-color: ${colors.grey.cardHover};
   }
@@ -42,6 +41,11 @@ export const StyledCard = styled(Card)`
 export const Stars = styled(Rate)`
   color: ${colors.white};
   font-size: 30px;
+  &:hover {
+    transform: none !important;
+    transition: none !important;
+    color: ${colors.white};
+  }
   .ant-rate-star-second {
     color: ${colors.white};
   }

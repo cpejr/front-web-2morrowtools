@@ -258,6 +258,7 @@ export default function Tool({ data }) {
                   count={5}
                   value={starsValue2}
                   character={({ index }) => renderStarIcon2(index)}
+                  disabled
                 />
                 <span>({starsValue2})</span>
               </Line>

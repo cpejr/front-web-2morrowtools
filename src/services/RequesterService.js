@@ -99,5 +99,33 @@ export const getByIaId = (aiId) => api.get(`/avaliation/${aiId}`);
 
 export const getAvaliation = () => api.get(`/avaliation`);
 
+// NewPost & Post
+
+export const createPost = async (body) => {
+  await api.post(`/posts`, { ...body });
+};
+
+export const getPostByName = (name) => api.put(`/posts/`, { name });
+
+export const deletePost = (id) => api.delete(`/posts/${id}`);
+
+export const updatePut = (_id, body) => api.put(`/posts/${_id}`, body);
+
+export const getAllPosts = (filters) => api.get(`/post/`, { params: { filters } });
+
+export const getNameCategoryPostFilter = (filters) =>
+  api.get(`/posts/filterCategories`, { params: filters });
+
+export const getPostImage = (imageUrl) => api.post(`/PostImage`, { imageUrl });
+
+export const findPostsByID = (id) => api.get(`/posts/find-by-id`, { params: id });
+
 //image
+
 export const getImage = (imageURL) => api.post(`/IAImage`, { imageURL });
+export const postImage = (body) => api.post(`/image`, body);
+
+//newsletter
+
+export const postNewsletter = (body) => api.post(`/newsletter`, { ...body });
+export const getNewsletter = () => api.get(`/newsletter`);

@@ -41,7 +41,7 @@ export const Links = styled.div`
   display: flex;
   justify-content: space-around;
   word-wrap: break-word;
-  width: 30rem;
+  width:50rem;
   font-size: 1rem;
   a {
     font-family: ${fonts.Exo2};
@@ -52,7 +52,10 @@ export const Links = styled.div`
     }
   }
   @media (max-width: ${breakpoints.tablet}) {
-    width: 30rem;
+    gap:0;
+    a {
+      font-size:0.9rem;
+    }
   }
   @media (max-width: ${breakpoints.smallTablet}) {
     display: none;
@@ -63,9 +66,11 @@ export const LoginSocial = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 20rem;
+  width:20%;
+  min-width:15rem;
   @media (max-width: ${breakpoints.tablet}) {
-    width: 18rem;
+    width: 17rem;
+    min-width:0;
   }
   @media (max-width: ${breakpoints.smallTablet}) {
     width: 10rem;
@@ -100,6 +105,7 @@ export const SubmitButton = styled.button`
     display: none;
   }
 `;
+
 export const LoginButton = styled.button`
   display: flex;
   justify-content: space-around;
@@ -204,8 +210,9 @@ export const Selected = styled.div`
   flex-direction: row;
   align-items: center;
   min-width: 4.2rem;
+  padding-left:5%;
   @media (max-width: ${breakpoints.smallTablet}) {
-    padding-left: 1.4rem;
+    padding-left: 0.4rem;
     p {
       text-align: center;
     }
