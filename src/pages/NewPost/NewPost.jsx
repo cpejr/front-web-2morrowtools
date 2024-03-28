@@ -178,12 +178,12 @@ export default function NewPost() {
             errors={errors}
             register={register}
           />
-          <FormInputBorder
+          {/* <FormInputBorder
             name='shortDescription'
             register={register}
             placeholder='Descrição curta:'
             errors={errors}
-          />
+          /> */}
           <Editor setEditorValue={setEditorValue} error={editorError} />
 
           <Selects>

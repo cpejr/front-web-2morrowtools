@@ -1,14 +1,24 @@
-import { Container, Title, Description, Texts, Inputs, Break, Input, Button } from "./Styles";
+import {
+  Container,
+  Title,
+  Description,
+  Texts,
+  Inputs,
+  Break,
+  Input,
+  Button,
+  MessageError,
+} from "./Styles";
 import { usePostNewsletter } from "../../services/ManagerService";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import useAuthStore from "../../stores/auth";
-
 export default function Newsletter() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const { getUser } = useAuthStore();
   const userID = getUser()?._id;
+  const [error, setError] = useState(undefined);
 
   const PostNewsletter = async () => {
     try {
@@ -21,6 +31,7 @@ export default function Newsletter() {
     } catch (error) {
       toast.error("Erro ao postar email");
       toast.clearWaitingQueue();
+      setError(error);
     }
   };
 
@@ -31,6 +42,7 @@ export default function Newsletter() {
       setEmail("");
     }, 1000);
   };
+  // console.log(error);
 
   return (
     <Container>
@@ -45,10 +57,12 @@ export default function Newsletter() {
       <Inputs>
         <Break>
           <Input onChange={(e) => setName(e.target.value)} value={name} placeholder='Nome:'></Input>
+          {error && <MessageError>credenciais inválidas</MessageError>}
           <Input
             onChange={(e) => setEmail(e.target.value)}
             value={email}
             placeholder='Email:'
+            error={error}
           ></Input>
         </Break>
         <Button onClick={handleSubmit} type='submit'>

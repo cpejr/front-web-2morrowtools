@@ -24,6 +24,10 @@ export const Input = styled(AntdInput)`
   font-weight: 300;
   font-size: large;
   border: 2px solid ${colors.white};
+  border: ${(props) => (props?.error ? "0.1rem red solid" : `0.1rem ${colors.white} solid`)};
+  ::placeholder {
+    font-weight: 400;
+  }
 `;
 
 export const Button = styled(AntdButton)`
@@ -67,4 +71,10 @@ export const Inputs = styled.div`
 export const Break = styled.div`
   display: flex;
   gap: 10px;
+`;
+
+export const MessageError = styled.div`
+  font-size: 1.3rem;
+  color: red;
+  font-weight: 400;
 `;

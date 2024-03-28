@@ -10,9 +10,6 @@ export const newPostValidationSchema = z.object({
   imageUrl: z
     .string({ required_error: "A URL da imagem é obrigatória" })
     .min(1, { message: "O URL deve ter pelo menos 1 caractere" }),
-  shortDescription: z
-    .string({ required_error: "A descrição curta é obrigatória" })
-    .min(1, { message: "Campo obrigatório" }),
 });
 
 // Error Handling

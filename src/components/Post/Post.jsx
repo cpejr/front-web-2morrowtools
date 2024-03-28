@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { ImageHolder, Tag, Title, Text, Link, Tags, Card, Container } from "./Styles";
+import { ImageHolder, Tag, Title, Link, Tags, Card, Container } from "./Styles";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useGetPostImage } from "../../services/ManagerService";
@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Post({ data }) {
   const navigate = useNavigate();
-  const { name, imageUrl, shortDescription } = data;
+  const { name, imageUrl } = data;
   const categories = [...data.id_categoryprofessions, ...data.id_categoryfeatures];
   const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -31,7 +31,6 @@ export default function Post({ data }) {
       <ImageHolder>{loading ? <RiLoader2Fill /> : <img src={image} alt={name} />}</ImageHolder>
       <Container>
         <Title>{name}</Title>
-        <Text>{shortDescription}</Text>
         <Tags>
           {categories?.map((category, index) => (
             <Tag key={index} onClick={(event) => event.stopPropagation()}>

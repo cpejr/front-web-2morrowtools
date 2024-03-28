@@ -135,18 +135,6 @@ export default function ModalEdit({ _id, tool, close, transformArrayItems }) {
             </LabelWraper>
 
             <LabelWraper>
-              <Label>Descrição curta:</Label>
-              <FormInputBorder
-                name='shortDescription'
-                defaultValue={tool.shortDescription}
-                placeholder='Descrição curta:'
-                errors={errors}
-                register={register}
-                onChange={(e) => setFormData({ ...formData, shortDescription: e.target.value })}
-              />
-            </LabelWraper>
-
-            <LabelWraper>
               <Label>Descrição longa:</Label>
               <FormsTextArea
                 name='longDescription'
